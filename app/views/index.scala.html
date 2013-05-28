@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+@import play.mvc.Http.Context.Implicit._
+
+<html>
+<head>
+    <title>Reactive Stock Tweets Dashboard</title>
+    <link rel='stylesheet' href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.min.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.flot.js"))'></script>
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
+</head>
+@defining(java.util.UUID.randomUUID.toString) { uuid =>
+<body data-ws-url="@routes.Application.listen(uuid).webSocketURL(request)" data-uuid="@uuid">
+}
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">Reactive Stocks</a>
+                <form id="addsymbolform" class="navbar-form pull-right">
+                    <input id="addsymboltext" type="text" class="span2" placeholder="SYMBOL">
+                    <button type="submit" class="btn">Add Stock</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="stocks" class="container">
+        
+    </div>
+</body>
+</html>

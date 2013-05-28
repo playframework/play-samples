@@ -1,0 +1,13 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+GET     /                           controllers.Application.index
+GET     /listen/:uuid               controllers.Application.listen(uuid)
+POST    /watch/:uuid/:symbol        controllers.Application.watch(uuid, symbol)
+POST    /unwatch/:uuid/:symbol      controllers.Application.unwatch(uuid, symbol)
+GET     /sentiment/:symbol          controllers.StockSentiment.get(symbol)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /webjars/*file              controllers.WebJarAssets.at(file)
