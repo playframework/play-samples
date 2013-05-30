@@ -15,13 +15,13 @@ object StockSentiment extends Controller {
     (response.json \\ label).head.as[Double]
   }.sum / responses.length.max(1) // avoid division by zero
 
-  def loadSentimentFromTweet(json: JsValue): Seq[Future[Response]] = (json \\ "text") map (_.as[String]) map getTextSentiment
+  def loadSentimentFromNews(json: JsValue): Seq[Future[Response]] = (json \\ "kwic") map (_.as[String]) map getTextSentiment
 
   def get(symbol: String): Action[AnyContent] = Action {
     Async {
       for {
-        tweets <- WS.url(Global.tweetUrl.format(symbol)).get // get tweets that contain the stock symbol
-        futureSentiments = loadSentimentFromTweet(tweets.json) // queue web requests to get the sentiments of each tweet
+        news <- WS.url(Global.farooUrl.format(symbol)).get // get news that contain the stock symbol
+        futureSentiments = loadSentimentFromNews(news.json) // queue web requests to get the sentiments of each news item
         sentiments <- Future.sequence(futureSentiments) // when the sentiment responses arrive, set them
       } yield {
         def averageSentiment(label: String) = getAverageSentiment(sentiments, label)

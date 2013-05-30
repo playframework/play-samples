@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class Global extends GlobalSettings {
 
     public static String sentimentUrl;
-    public static String tweetUrl;
+    public static String farooUrl;
     
     public static ActorRef usersActor;
     public static ActorRef stockHolderActor;
@@ -24,11 +24,11 @@ public class Global extends GlobalSettings {
     @Override
     public void onStart(Application application) {
 
-        tweetUrl = Play.application().configuration().getString("tweet.url");
+        farooUrl = Play.application().configuration().getString("faroo.url");
         sentimentUrl = Play.application().configuration().getString("sentiment.url");
         
-        if ((sentimentUrl == null) || (tweetUrl == null)) {
-            throw new RuntimeException("Both sentiment.url and tweet.url configs must be specified");
+        if ((sentimentUrl == null) || (farooUrl == null)) {
+            throw new RuntimeException("Both sentiment.url and faroo.url configs must be specified");
         }
         
         usersActor = Akka.system().actorOf(new Props(UsersActor.class), "users");
