@@ -13,7 +13,7 @@
         Once the application has been compiled and the server started, your application can be accessed at: <a href="http://localhost:9000" target="_blank">http://localhost:9000</a><br/>
         Check in <a href="#run" class="shortcut">Run</a> to see the server status.<br/>
         <br/>
-        The first thing you will see are three stock charts which are being pushed values in real-time from the server.  These values are simulated so the application always has interesting data flowing in real-time.  Clicking on a stock chart will fetch recent tweets mentioning the stock symbol, use a service to do sentiment analysis on each tweet, and then display a buy, sell, or hold recommendation based on the aggregate sentiments.  New stocks can be added to the list using the form in the header.
+        The first thing you will see are three stock charts which are being pushed values in real-time from the server.  These values are simulated so the application always has interesting data flowing in real-time.  Clicking on a stock chart will fetch recent news mentioning the stock symbol, use a service to do sentiment analysis on each news, and then display a buy, sell, or hold recommendation based on the aggregate sentiments.  New stocks can be added to the list using the form in the header.
     </p>
 </div>
 <div>
@@ -67,17 +67,17 @@
 <pre><code>def get(symbol: String) = Action {
   Async {</code></pre>
         The <code>Async</code> block indicates that the controller will return a <code>Future[Result]</code> which is a handle to something that will produce a <code>Result</code> in the future.  The <code>Future</code> provides a way to do asynchronous handling but doesn't necessarily have to be non-blocking.  Often times web requests need to talk to other systems (databases, web services, etc).  If a thread can't be deallocated while waiting for those other systems to respond, then it is blocking.<br/>
-        In this case a request is made to Twitter and then for each tweet, another request is made to a sentiment service.  All of these requests, including the request from the browser, are all handled as Reactive Requests so that the entire pipeline is Reactive (asynchronous and non-blocking).  This is called Reactive Composition.
+        In this case a request is made to Faroo and then for each news item, another request is made to a sentiment service.  All of these requests, including the request from the browser, are all handled as Reactive Requests so that the entire pipeline is Reactive (asynchronous and non-blocking).  This is called Reactive Composition.
     </p>
 </div>
 <div>
     <h2>Reactive Composition</h2>
 
     <p>
-        Combining multiple Reactive Requests together is Reactive Composition.  The <a href="#code/app/controllers/StockSentiment.scala" class="shortcut">StockSentiment</a> controller does Reactive Composition since it receives a request, makes a request to Twitter, and then for each tweet makes a request to a sentiment service.  All of these requests are Reactive Requests.  None use threads when they are waiting for a response.  Scala's <strong>for comprehensions</strong> make it very easy and elegant to do Reactive Composition.  The basic structure is:
+        Combining multiple Reactive Requests together is Reactive Composition.  The <a href="#code/app/controllers/StockSentiment.scala" class="shortcut">StockSentiment</a> controller does Reactive Composition since it receives a request, makes a request to Faroo for news about a stock, and then for each news item makes a request to a sentiment service.  All of these requests are Reactive Requests.  None use threads when they are waiting for a response.  Scala's <strong>for comprehensions</strong> make it very easy and elegant to do Reactive Composition.  The basic structure is:
 <pre><code>for {
-  tweets <- futureTweets
-  sentiments <- Future.sequence(futuresForTweetSentiment(tweets))
+  news <- futureNews
+  sentiments <- Future.sequence(futuresForNewsSentiment(news))
 } yield Ok(sentiments)</code></pre>
         Because the web client library in Play, <code>WS</code>, is asynchronous and non-blocking, all of the requests needed to get a stock's sentiments are Reactive Requests.  Combined together these Reactive Requests are Reactive Composition.
     </p>
