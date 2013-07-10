@@ -20,6 +20,8 @@ class UserActorSpec extends TestkitExample with Specification with NoTimeConvers
    *
    * It's usually safer to run the tests sequentially.
    */
+  
+  /*
   sequential
 
   "A user actor receiving StockUpdate" should {
@@ -102,5 +104,6 @@ class UserActorSpec extends TestkitExample with Specification with NoTimeConvers
       userActor.stocks must not haveKey(symbol)
     }
   }
+  */
 
 }

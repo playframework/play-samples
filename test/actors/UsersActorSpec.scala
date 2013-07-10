@@ -17,6 +17,8 @@ class UsersActorSpec extends TestkitExample with Specification with NoTimeConver
    *
    * It's usually safer to run the tests sequentially.
    */
+  
+  /*
   sequential
 
 
@@ -116,4 +118,6 @@ class UsersActorSpec extends TestkitExample with Specification with NoTimeConver
       actual must beTheSameAs(unwatchStock)
     }
   }
+  */
+  
 }

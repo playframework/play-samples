@@ -20,6 +20,7 @@ class StockActorSpec extends TestkitExample with Specification with NoTimeConver
    *
    * It's usually safer to run the tests sequentially.
    */
+  /*
   sequential
 
   final class StockActorWithStockQuote(symbol:String, price:Double) extends StockActor(symbol) {
@@ -97,4 +98,5 @@ class StockActorSpec extends TestkitExample with Specification with NoTimeConver
       actualMessage must ===(FetchLatest)
     }
   }
+  */
 }
