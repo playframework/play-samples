@@ -1,12 +1,12 @@
 package controllers;
 
 import actors.SetupStock;
+import actors.StocksActor;
 import actors.UserActor;
 import akka.actor.*;
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import org.codehaus.jackson.JsonNode;
-import play.Logger;
 import play.Play;
 import play.libs.Akka;
 import play.mvc.Controller;
@@ -35,8 +35,6 @@ public class Application extends Controller {
                     }
                 }), uuid);
                 
-                Logger.info(userActor.toString());
-
                 List<String> defaultStocks = Play.application().configuration().getStringList("default.stocks");
                 for (String symbol : defaultStocks) {
                     watch(uuid, symbol);
@@ -50,7 +48,7 @@ public class Application extends Controller {
 
         ActorRef userActor = Akka.system().actorFor("/user/" + uuid);
 
-        Akka.system().actorFor("/user/stocks").tell(new SetupStock(symbol), userActor);
+        StocksActor.stocksActor().tell(new SetupStock(symbol), userActor);
         
         return ok();
     }

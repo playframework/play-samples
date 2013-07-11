@@ -7,6 +7,7 @@ import scala.collection.immutable.Queue
 import scala.collection.JavaConverters._
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
+import play.libs.Akka
 
 /**
  * There is one StockActor per stock symbol.  The StockActor maintains a list of users watching the stock and the stock
@@ -48,6 +49,10 @@ class StocksActor extends Actor {
     case SetupStock(symbol) =>
       context.child(symbol).getOrElse(context.actorOf(Props(new StockActor(symbol)), symbol)) ! WatchStock(sender)
   }
+}
+
+object StocksActor {
+  lazy val stocksActor: ActorRef = Akka.system.actorOf(Props(classOf[StocksActor]))
 }
 
 
