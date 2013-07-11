@@ -17,7 +17,7 @@ class StockActor(symbol: String) extends Actor {
 
   lazy val stockQuote: StockQuote = new FakeStockQuote
   
-  var watchers: List[ActorRef] = List.empty
+  var watchers: Vector[ActorRef] = Vector.empty
 
   // A random data set which uses stockQuote.newPrice to get each data point
   var stockHistory: Queue[java.lang.Double] = {
