@@ -23,11 +23,17 @@ object StockSentiment extends Controller {
   def loadSentimentFromTweets(json: JsValue): Seq[Future[Response]] =
     (json \ "statuses").as[Seq[Tweet]] map (tweet => getTextSentiment(tweet.text))
 
+  def getTweets(symbol:String): Future[Response] = {
+    WS.url(Play.current.configuration.getString("tweet.url").get.format(symbol)).get.withFilter { response =>
+      response.status == OK
+    }
+  }
+  
   def get(symbol: String): Action[AnyContent] = Action {
     Async {
-      for {
-        tweets <- WS.url(Play.current.configuration.getString("tweet.url").get.format(symbol)).get // get tweets that contain the stock symbol
-        futureSentiments = loadSentimentFromTweets(tweets.json) // queue web requests to get the sentiments of each tweets
+      {for {
+        tweets <- getTweets(symbol) // get tweets that contain the stock symbol
+        futureSentiments = loadSentimentFromTweets(tweets.json) // queue web requests each tweets' sentiments
         sentiments <- Future.sequence(futureSentiments) // when the sentiment responses arrive, set them
       } yield {
         def averageSentiment(label: String) = getAverageSentiment(sentiments, label)
@@ -51,6 +57,9 @@ object StockSentiment extends Controller {
             "pos"
 
         Ok(response + ("label" -> JsString(classification)))
+      }} recoverWith {
+        case nsee: NoSuchElementException =>
+          Future(InternalServerError(Json.obj("error" -> JsString("Could not fetch the tweets"))))
       }
     }
   }

@@ -91,7 +91,7 @@ handleFlip = (container) ->
       error: (jqXHR, textStatus, error) ->
         detailsHolder = $(this).find(".details-holder")
         detailsHolder.empty()
-        detailsHolder.append($("<h2>").text("Error: " + textStatus))
+        detailsHolder.append($("<h2>").text("Error: " + JSON.parse(jqXHR.responseText).error))
     # display loading info
     detailsHolder = container.find(".details-holder")
     detailsHolder.append($("<h4>").text("Determing whether you should buy or sell based on the sentiment of recent tweets..."))
