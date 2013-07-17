@@ -5,23 +5,29 @@ import play.api.mvc.{AnyContent, Controller, Action}
 import play.api.libs.ws.{Response, WS}
 import scala.concurrent.Future
 import play.api.libs.json.{JsString, Json, JsValue}
-import play.Play
+import play.api.Play
 
 object StockSentiment extends Controller {
 
-  def getTextSentiment(text: String): Future[Response] = WS.url(Play.application().configuration().getString("sentiment.url")) post Map("text" -> Seq(text))
+  case class Tweet(text: String)
+  
+  implicit val tweetReads = Json.reads[Tweet]
+  
+  def getTextSentiment(text: String): Future[Response] =
+    WS.url(Play.current.configuration.getString("sentiment.url").get) post Map("text" -> Seq(text))
 
   def getAverageSentiment(responses: Seq[Response], label: String): Double = responses.map { response =>
     (response.json \\ label).head.as[Double]
   }.sum / responses.length.max(1) // avoid division by zero
 
-  def loadSentimentFromNews(json: JsValue): Seq[Future[Response]] = (json \\ "kwic") map (_.as[String]) map getTextSentiment
+  def loadSentimentFromTweets(json: JsValue): Seq[Future[Response]] =
+    (json \ "statuses").as[Seq[Tweet]] map (tweet => getTextSentiment(tweet.text))
 
   def get(symbol: String): Action[AnyContent] = Action {
     Async {
       for {
-        news <- WS.url(Play.application().configuration().getString("faroo.url").format(symbol)).get // get news that contain the stock symbol
-        futureSentiments = loadSentimentFromNews(news.json) // queue web requests to get the sentiments of each news item
+        tweets <- WS.url(Play.current.configuration.getString("tweet.url").get.format(symbol)).get // get tweets that contain the stock symbol
+        futureSentiments = loadSentimentFromTweets(tweets.json) // queue web requests to get the sentiments of each tweets
         sentiments <- Future.sequence(futureSentiments) // when the sentiment responses arrive, set them
       } yield {
         def averageSentiment(label: String) = getAverageSentiment(sentiments, label)
