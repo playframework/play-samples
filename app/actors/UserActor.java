@@ -14,11 +14,9 @@ import play.mvc.WebSocket;
 
 public class UserActor extends UntypedActor {
 
-    private final String uuid;
     private final WebSocket.Out<JsonNode> out;
     
-    public UserActor(String uuid, WebSocket.Out<JsonNode> out) {
-        this.uuid = uuid;
+    public UserActor(WebSocket.Out<JsonNode> out) {
         this.out = out;
     }
     
@@ -34,7 +32,7 @@ public class UserActor extends UntypedActor {
             out.write(stockUpdateMessage);
         }
         else if (message instanceof StockHistory) {
-            // push the stock to the client
+            // push the history to the client
             StockHistory stockHistory = (StockHistory)message;
 
             ObjectNode stockUpdateMessage = Json.newObject();

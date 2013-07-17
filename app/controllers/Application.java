@@ -31,7 +31,7 @@ public class Application extends Controller {
                 // create a new UserActor and give it the default stocks to watch
                 ActorRef userActor = Akka.system().actorOf(new Props(new UntypedActorFactory() {
                     public UntypedActor create() {
-                        return new UserActor(uuid, out);
+                        return new UserActor(out);
                     }
                 }), uuid);
                 
