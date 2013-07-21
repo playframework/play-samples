@@ -3,25 +3,37 @@ package controllers
 import scala.concurrent.ExecutionContext.Implicits.global
 import play.api.mvc.{AnyContent, Controller, Action}
 import play.api.libs.ws.{Response, WS}
-import utils.Global
 import scala.concurrent.Future
 import play.api.libs.json.{JsString, Json, JsValue}
+import play.api.Play
 
 object StockSentiment extends Controller {
 
-  def getTextSentiment(text: String): Future[Response] = WS.url(Global.sentimentUrl) post Map("text" -> Seq(text))
+  case class Tweet(text: String)
+  
+  implicit val tweetReads = Json.reads[Tweet]
+  
+  def getTextSentiment(text: String): Future[Response] =
+    WS.url(Play.current.configuration.getString("sentiment.url").get) post Map("text" -> Seq(text))
 
   def getAverageSentiment(responses: Seq[Response], label: String): Double = responses.map { response =>
     (response.json \\ label).head.as[Double]
   }.sum / responses.length.max(1) // avoid division by zero
 
-  def loadSentimentFromNews(json: JsValue): Seq[Future[Response]] = (json \\ "kwic") map (_.as[String]) map getTextSentiment
+  def loadSentimentFromTweets(json: JsValue): Seq[Future[Response]] =
+    (json \ "statuses").as[Seq[Tweet]] map (tweet => getTextSentiment(tweet.text))
 
+  def getTweets(symbol:String): Future[Response] = {
+    WS.url(Play.current.configuration.getString("tweet.url").get.format(symbol)).get.withFilter { response =>
+      response.status == OK
+    }
+  }
+  
   def get(symbol: String): Action[AnyContent] = Action {
     Async {
-      for {
-        news <- WS.url(Global.farooUrl.format(symbol)).get // get news that contain the stock symbol
-        futureSentiments = loadSentimentFromNews(news.json) // queue web requests to get the sentiments of each news item
+      {for {
+        tweets <- getTweets(symbol) // get tweets that contain the stock symbol
+        futureSentiments = loadSentimentFromTweets(tweets.json) // queue web requests each tweets' sentiments
         sentiments <- Future.sequence(futureSentiments) // when the sentiment responses arrive, set them
       } yield {
         def averageSentiment(label: String) = getAverageSentiment(sentiments, label)
@@ -45,6 +57,9 @@ object StockSentiment extends Controller {
             "pos"
 
         Ok(response + ("label" -> JsString(classification)))
+      }} recoverWith {
+        case nsee: NoSuchElementException =>
+          Future(InternalServerError(Json.obj("error" -> JsString("Could not fetch the tweets"))))
       }
     }
   }

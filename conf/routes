@@ -5,7 +5,6 @@
 GET     /                           controllers.Application.index
 GET     /listen/:uuid               controllers.Application.listen(uuid)
 POST    /watch/:uuid/:symbol        controllers.Application.watch(uuid, symbol)
-POST    /unwatch/:uuid/:symbol      controllers.Application.unwatch(uuid, symbol)
 GET     /sentiment/:symbol          controllers.StockSentiment.get(symbol)
 
 # Map static resources from the /public folder to the /assets URL path

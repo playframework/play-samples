@@ -2,6 +2,9 @@ package utils;
 
 import java.util.Random;
 
+/**
+ * Creates a randomly generated price based on the previous price
+ */
 public class FakeStockQuote implements StockQuote {
 
     public Double newPrice(Double lastPrice) {

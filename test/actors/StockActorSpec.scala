@@ -10,6 +10,7 @@ import scala.concurrent.duration._
 import scala.collection.immutable.Queue
 
 import utils.{StockQuote, Global}
+import play.api.Logger
 
 class StockActorSpec extends TestkitExample with Specification with NoTimeConversions {
 
@@ -22,7 +23,8 @@ class StockActorSpec extends TestkitExample with Specification with NoTimeConver
    */
   sequential
 
-  final class StockActorWithStockQuote(symbol:String, price:Double) extends StockActor(symbol) {
+  final class StockActorWithStockQuote(symbol:String, price:Double, watcher: ActorRef) extends StockActor(symbol) {
+    watchers = Vector(watcher)
     override lazy val stockQuote = new StockQuote {
       def newPrice(lastPrice: java.lang.Double): java.lang.Double = price
     }
@@ -30,15 +32,13 @@ class StockActorSpec extends TestkitExample with Specification with NoTimeConver
 
   "A StockActor" should {
     val symbol = "ABC"
-
-    "send a StockUpdate message to the usersActor when receiving FetchLatest" in {
-      // Create a stock actor with a stubbed out stockquote price.
-      val price = 1234.0
-      val stockActor = system.actorOf(Props(new StockActorWithStockQuote(symbol, price)))
-
-      // Create a probe to serve as the "usersActor"
+    
+    "notify watchers when a new stock is received" in {
+      // Create a stock actor with a stubbed out stockquote price and watcher
       val probe = new TestProbe(system)
-      Global.usersActor = probe.ref
+      val price = 1234.0
+      val watcher = system.actorOf(Props(new ProbeWrapper(probe)))
+      val stockActor = system.actorOf(Props(new StockActorWithStockQuote(symbol, price, watcher)))
 
       // Fire off the message...
       stockActor ! FetchLatest
@@ -48,7 +48,6 @@ class StockActorSpec extends TestkitExample with Specification with NoTimeConver
       val expectedMessage = StockUpdate(symbol, price)
       actualMessage must === (expectedMessage)
     }
-
     "send the stockHistory to the sender when receiving FetchHistory" in {
       // Create a standard StockActor.
       val stockActor = system.actorOf(Props(new StockActor(symbol)))
@@ -59,42 +58,38 @@ class StockActorSpec extends TestkitExample with Specification with NoTimeConver
       // This case uses 'sender' so we can use the ImplicitSender reference
       // to call receiveOne directly instead of using a test probe.
       val actualStockHistory = receiveOne(500 millis)
-      actualStockHistory must beAnInstanceOf[Queue[java.lang.Double]]
+      actualStockHistory must beAnInstanceOf[StockHistory]
+    }
+    "add a watcher and send a FetchHistory message when receiving WatchStock" in {
+      val probe = new TestProbe(system)
+      
+      // Create a standard StockActor.
+      val stockActor = system.actorOf(Props(new StockActor(symbol)))
+
+      val userActor = system.actorOf(Props(new ProbeWrapper(probe)))
+      
+      // Fire off the message...
+      stockActor ! WatchStock(userActor)
+      
+      // the userActor will be added as a watcher and get a message with the stock history
+      val userActorMessage = probe.receiveOne(500 millis)
+      userActorMessage must beAnInstanceOf[StockHistory]
     }
   }
 
-  "A StockHolderActor" should {
+  "A StocksActor" should {
     val symbol = "ABC"
 
-    "create a new StockActor when receiving SetupStock" in {
-      val stockHolderActor = system.actorOf(Props(new StockHolderActor))
+    "create a new StockActor or return the existing one when receiving SetupStock" in {
+      val stockHolderActor = system.actorOf(Props[StocksActor])
 
       // Fire off the message...
       stockHolderActor ! SetupStock(symbol)
 
-      // Should create a new stockActor as a child and return it to sender.
-      val actualStockActor = receiveOne(500 millis)
-      // We expect an ActorRef back.
-      actualStockActor must beAnInstanceOf[ActorRef]
-      // The name of the new StockActor must be the same as the symbol passed in.
-      actualStockActor.asInstanceOf[ActorRef].path.name must ===(symbol)
+      // Should create a new stockActor as a child and send it the stock history
+      val stockHistory = receiveOne(500 millis)
+      stockHistory must beAnInstanceOf[StockHistory]
     }
 
-    "send FetchLatest to its children when receiving FetchLatest" in {
-
-      // Override the stockholder actor to create a probe wrapper as a child.
-      val probe = new TestProbe(system)
-      final class StockHolderActorWithProbe extends StockHolderActor {
-        context.actorOf(Props(new ProbeWrapper(probe)), symbol)
-      }
-      val stockHolderActor = system.actorOf(Props(new StockHolderActorWithProbe()))
-
-      // Fire off the message...
-      stockHolderActor ! FetchLatest
-
-      // ...and ask the probe if it got the message.
-      val actualMessage = probe.receiveOne(500 millis)
-      actualMessage must ===(FetchLatest)
-    }
   }
 }
