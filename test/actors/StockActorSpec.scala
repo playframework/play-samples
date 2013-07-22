@@ -9,7 +9,7 @@ import org.specs2.time.NoTimeConversions
 import scala.concurrent.duration._
 import scala.collection.immutable.Queue
 
-import utils.{StockQuote, Global}
+import utils.StockQuote
 
 class StockActorSpec extends TestkitExample with Specification with NoTimeConversions {
 
