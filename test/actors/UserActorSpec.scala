@@ -11,6 +11,8 @@ import org.codehaus.jackson.JsonNode
 
 import scala.concurrent.duration._
 
+import scala.collection.JavaConverters._
+
 class UserActorSpec extends TestkitExample with Specification with NoTimeConversions  {
 
   /*
@@ -20,22 +22,20 @@ class UserActorSpec extends TestkitExample with Specification with NoTimeConvers
    *
    * It's usually safer to run the tests sequentially.
    */
+  
   sequential
 
-  "A user actor receiving StockUpdate" should {
+  "UserActor" should {
 
     val uuid = java.util.UUID.randomUUID.toString
     val symbol = "ABC"
     val price = 123
+    val history = List[java.lang.Double](0.1, 1.0).asJava
 
-    "write out a stock that is in the map" in {
+    "send a stock when receiving a StockUpdate message" in {
       val out = new StubOut()
-      val userActorRef = TestActorRef[UserActor](Props(new UserActor(uuid, out)))
+      val userActorRef = TestActorRef[UserActor](Props(new UserActor(out)))
       val userActor = userActorRef.underlyingActor
-
-      // Tell the user actor that it has this stock in its internal map...
-      val stockActorRef = TestActorRef[StockActor](Props(new StockActor(symbol)))
-      userActor.stocks = Map(symbol -> stockActorRef)
 
       // send off the stock update...
       userActor.receive(StockUpdate(symbol, price))
@@ -47,59 +47,18 @@ class UserActorSpec extends TestkitExample with Specification with NoTimeConvers
       node must /("price" -> price)
     }
 
-    "not write out a stock that is NOT in the map" in {
+    "send the stock history when receiving a StockHistory message" in {
       val out = new StubOut()
-      val userActorRef = TestActorRef[UserActor](Props(new UserActor(uuid, out)))
+      val userActorRef = TestActorRef[UserActor](Props(new UserActor(out)))
       val userActor = userActorRef.underlyingActor
 
       // send off the stock update...
-      userActor.receive(StockUpdate(symbol, price))
+      userActor.receive(StockHistory(symbol, history))
 
-      // ...and expect null.
-      out.actual must beNull
-    }
-  }
-
-  "A UserActor receiving WatchStock" should {
-    val uuid = java.util.UUID.randomUUID.toString
-    val symbol = "ABC"
-
-    "write out to a web socket" in {
-      import utils.Global._
-
-      // Do a straight integration test here...
-      val out = new StubOut()
-      val userActorRef = system.actorOf(Props(new UserActor(uuid, out)))
-      stockHolderActor = system.actorOf(Props(new StockHolderActor()))
-
-      within (5 seconds) {
-        userActorRef ! WatchStock(uuid, symbol)
-        expectNoMsg() // block for 5 seconds
-      }
-      // Check that the node exists.
-      val node = out.actual.toString
-      node must /("type" -> "stockhistory")
-      node must /("symbol" -> symbol)
-    }
-  }
-
-  "A UserActor receiving UnwatchStock" should {
-
-    val uuid = java.util.UUID.randomUUID.toString
-    val symbol = "ABC"
-
-    "remove the stock" in {
-      val out = new StubOut()
-
-      val userActorRef = TestActorRef[UserActor](Props(new UserActor(uuid, out)))
-      val userActor = userActorRef.underlyingActor
-      val stockActorRef = TestActorRef[StockActor](Props(new StockActor(symbol)))
-
-      userActor.stocks = Map(symbol -> stockActorRef)
-
-      userActor.receive(UnwatchStock(uuid, symbol))
-
-      userActor.stocks must not haveKey(symbol)
+      // ...and expect it to be a JSON node.
+      out.actual.get("type").asText must beEqualTo("stockhistory")
+      out.actual.get("symbol").asText must beEqualTo(symbol)
+      out.actual.get("history").get(0).asDouble must beEqualTo(history.get(0))
     }
   }
 

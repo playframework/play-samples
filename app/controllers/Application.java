@@ -1,24 +1,23 @@
 package controllers;
 
-
-import actors.UnwatchStock;
-import actors.WatchStock;
+import actors.SetupStock;
+import actors.StocksActor;
+import actors.UserActor;
+import akka.actor.*;
 import akka.actor.ActorRef;
-import akka.dispatch.Mapper;
+import akka.actor.UntypedActor;
 import org.codehaus.jackson.JsonNode;
 import play.Play;
-import static akka.pattern.Patterns.ask;
-
 import play.libs.Akka;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
 
-import actors.Listen;
-import utils.Global;
-
 import java.util.List;
 
+/**
+ * The main web controller that handles returning the index page, setting up a WebSocket, and watching a stock.
+ */
 public class Application extends Controller {
 
     public static Result index() {
@@ -27,31 +26,30 @@ public class Application extends Controller {
 
     public static WebSocket<JsonNode> listen(final String uuid) {
         return new WebSocket<JsonNode>() {
-            public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out) {
-                ask(Global.usersActor, new Listen(uuid, out), 10000).map(
-                        new Mapper<Object, Result>() {
-                            public Result apply(Object userActor) {
-                                // watch the default stocks
-                                List<String> defaultStocks = Play.application().configuration().getStringList("default.stocks");
-                                for (String symbol : defaultStocks) {
-                                    ((ActorRef)userActor).tell(new WatchStock(uuid, symbol), (ActorRef)userActor);
-                                }
-
-                                return ok();
-                            }
-                        }, Akka.system().dispatcher()
-                );
+            public void onReady(final WebSocket.In<JsonNode> in, final WebSocket.Out<JsonNode> out) {
+                
+                // create a new UserActor and give it the default stocks to watch
+                ActorRef userActor = Akka.system().actorOf(new Props(new UntypedActorFactory() {
+                    public UntypedActor create() {
+                        return new UserActor(out);
+                    }
+                }), uuid);
+                
+                List<String> defaultStocks = Play.application().configuration().getStringList("default.stocks");
+                for (String symbol : defaultStocks) {
+                    watch(uuid, symbol);
+                }
+                
             }
         };
     }
 
     public static Result watch(String uuid, String symbol) {
-        Global.usersActor.tell(new WatchStock(uuid, symbol), Global.usersActor);
-        return ok();
-    }
 
-    public static Result unwatch(String uuid, String symbol) {
-        Global.usersActor.tell(new UnwatchStock(uuid, symbol), Global.usersActor);
+        ActorRef userActor = Akka.system().actorFor("/user/" + uuid);
+
+        StocksActor.stocksActor().tell(new SetupStock(symbol), userActor);
+        
         return ok();
     }
 
