@@ -16,8 +16,6 @@ object ApplicationBuild extends Build {
     "com.typesafe.akka" %% "akka-testkit" % "2.1.4" % "test"
   )
 
-  val main = play.Project(appName, appVersion, appDependencies).settings(
-    scalaVersion := "2.10.2"
-  )
+  val main = play.Project(appName, appVersion, appDependencies).settings()
 
 }
