@@ -29,11 +29,7 @@ public class Application extends Controller {
             public void onReady(final WebSocket.In<JsonNode> in, final WebSocket.Out<JsonNode> out) {
                 
                 // create a new UserActor and give it the default stocks to watch
-                ActorRef userActor = Akka.system().actorOf(new Props(new UntypedActorFactory() {
-                    public UntypedActor create() {
-                        return new UserActor(out);
-                    }
-                }), uuid);
+                ActorRef userActor = Akka.system().actorOf(Props.create(UserActor.class, out), uuid);
                 
                 List<String> defaultStocks = Play.application().configuration().getStringList("default.stocks");
                 for (String symbol : defaultStocks) {
@@ -45,11 +41,7 @@ public class Application extends Controller {
     }
 
     public static Result watch(String uuid, String symbol) {
-
-        ActorRef userActor = Akka.system().actorFor("/user/" + uuid);
-
-        StocksActor.stocksActor().tell(new SetupStock(symbol), userActor);
-        
+        StocksActor.stocksActor().tell(new SetupStock(uuid, symbol), Akka.system().deadLetters());
         return ok();
     }
 

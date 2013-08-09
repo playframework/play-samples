@@ -10,6 +10,8 @@ import scala.concurrent.duration._
 import scala.collection.immutable.Queue
 
 import utils.StockQuote
+import java.util.UUID
+import play.api.Logger
 
 class StockActorSpec extends TestkitExample with Specification with NoTimeConversions {
 
@@ -22,7 +24,7 @@ class StockActorSpec extends TestkitExample with Specification with NoTimeConver
    */
   sequential
 
-  final class StockActorWithStockQuote(symbol:String, price:Double, watcher: ActorRef) extends StockActor(symbol) {
+  final class StockActorWithStockQuote(symbol:String, price:Double, watcher: String) extends StockActor(symbol) {
     watchers = Vector(watcher)
     override lazy val stockQuote = new StockQuote {
       def newPrice(lastPrice: java.lang.Double): java.lang.Double = price
@@ -36,8 +38,10 @@ class StockActorSpec extends TestkitExample with Specification with NoTimeConver
       // Create a stock actor with a stubbed out stockquote price and watcher
       val probe = new TestProbe(system)
       val price = 1234.0
-      val watcher = system.actorOf(Props(new ProbeWrapper(probe)))
-      val stockActor = system.actorOf(Props(new StockActorWithStockQuote(symbol, price, watcher)))
+      val uuid = UUID.randomUUID().toString
+      val stockActor = system.actorOf(Props(new StockActorWithStockQuote(symbol, price, uuid)))
+      
+      system.actorOf(Props(new ProbeWrapper(probe)), uuid)
 
       // Fire off the message...
       stockActor ! FetchLatest
@@ -47,31 +51,22 @@ class StockActorSpec extends TestkitExample with Specification with NoTimeConver
       val expectedMessage = StockUpdate(symbol, price)
       actualMessage must === (expectedMessage)
     }
-    "send the stockHistory to the sender when receiving FetchHistory" in {
-      // Create a standard StockActor.
-      val stockActor = system.actorOf(Props(new StockActor(symbol)))
-
-      // Fire off the message...
-      stockActor ! FetchHistory
-
-      // This case uses 'sender' so we can use the ImplicitSender reference
-      // to call receiveOne directly instead of using a test probe.
-      val actualStockHistory = receiveOne(500 millis)
-      actualStockHistory must beAnInstanceOf[StockHistory]
-    }
-    "add a watcher and send a FetchHistory message when receiving WatchStock" in {
+    "add a watcher and send a StockHistory message to the user when receiving WatchStock message" in {
       val probe = new TestProbe(system)
       
       // Create a standard StockActor.
       val stockActor = system.actorOf(Props(new StockActor(symbol)))
 
-      val userActor = system.actorOf(Props(new ProbeWrapper(probe)))
+      val uuid = UUID.randomUUID().toString
+      
+      // create an actor with the uuid of the user
+      system.actorOf(Props(new ProbeWrapper(probe)), uuid)
       
       // Fire off the message...
-      stockActor ! WatchStock(userActor)
+      stockActor ! WatchStock(uuid)
       
       // the userActor will be added as a watcher and get a message with the stock history
-      val userActorMessage = probe.receiveOne(500 millis)
+      val userActorMessage = probe.receiveOne(500.millis)
       userActorMessage must beAnInstanceOf[StockHistory]
     }
   }
@@ -79,14 +74,19 @@ class StockActorSpec extends TestkitExample with Specification with NoTimeConver
   "A StocksActor" should {
     val symbol = "ABC"
 
-    "create a new StockActor or return the existing one when receiving SetupStock" in {
+    "a SetupStock message should send a StockHistory message to the user" in {
+      val probe = new TestProbe(system)
+      val uuid = UUID.randomUUID().toString
       val stockHolderActor = system.actorOf(Props[StocksActor])
 
+      // create an actor with the uuid of the user
+      system.actorOf(Props(new ProbeWrapper(probe)), uuid)
+      
       // Fire off the message...
-      stockHolderActor ! SetupStock(symbol)
-
+      stockHolderActor ! SetupStock(uuid, symbol)
+      
       // Should create a new stockActor as a child and send it the stock history
-      val stockHistory = receiveOne(500 millis)
+      val stockHistory = probe.receiveOne(500 millis)
       stockHistory must beAnInstanceOf[StockHistory]
     }
 
