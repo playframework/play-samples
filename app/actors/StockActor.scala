@@ -18,7 +18,7 @@ class StockActor(symbol: String) extends Actor {
 
   lazy val stockQuote: StockQuote = new FakeStockQuote
   
-  var watchers: Vector[ActorRef] = Vector.empty
+  var watchers: Vector[String] = Vector.empty
 
   // A random data set which uses stockQuote.newPrice to get each data point
   var stockHistory: Queue[java.lang.Double] = {
@@ -26,8 +26,8 @@ class StockActor(symbol: String) extends Actor {
     initialPrices.take(50).to[Queue]
   }
   
-  // Fetch the latest stock value every 50ms
-  context.system.scheduler.schedule(Duration.Zero, 50 millis, self, FetchLatest)
+  // Fetch the latest stock value every 75ms
+  context.system.scheduler.schedule(Duration.Zero, 75.millis, self, FetchLatest)
 
   def receive = {
     case FetchLatest =>
@@ -35,19 +35,19 @@ class StockActor(symbol: String) extends Actor {
       val newPrice = stockQuote.newPrice(stockHistory.last.doubleValue())
       stockHistory = stockHistory.drop(1) :+ newPrice
       // notify watchers
-      watchers.foreach(_ ! StockUpdate(symbol, newPrice))
-    case FetchHistory =>
-      sender ! StockHistory(symbol, stockHistory.asJava)
-    case WatchStock(userActor) =>
-      watchers = watchers :+ userActor
-      self.tell(FetchHistory, userActor)
+      watchers.foreach(uuid => context.actorSelection(s"/user/$uuid") ! StockUpdate(symbol, newPrice))
+    case WatchStock(uuid) =>
+      // send the stock history to the user
+      context.actorSelection(s"/user/$uuid") ! StockHistory(symbol, stockHistory.asJava)
+      // add the watcher to the list
+      watchers = watchers :+ uuid
   }
 }
 
 class StocksActor extends Actor {
   def receive = {
-    case SetupStock(symbol) =>
-      context.child(symbol).getOrElse(context.actorOf(Props(new StockActor(symbol)), symbol)) ! WatchStock(sender)
+    case SetupStock(uuid, symbol) =>
+      context.child(symbol).getOrElse(context.actorOf(Props(new StockActor(symbol)), symbol)) ! WatchStock(uuid)
   }
 }
 
@@ -58,12 +58,10 @@ object StocksActor {
 
 case object FetchLatest
 
-case class SetupStock(symbol: String)
+case class SetupStock(uuid: String, symbol: String)
 
 case class StockUpdate(symbol: String, price: Number)
 
-case object FetchHistory
-
 case class StockHistory(symbol: String, history: java.util.List[java.lang.Double])
 
-case class WatchStock(userActor: ActorRef)
+case class WatchStock(uuid: String)
