@@ -1,14 +1,13 @@
 package controllers;
 
-import actors.SetupStock;
-import actors.StocksActor;
-import actors.UserActor;
+import actors.*;
 import akka.actor.*;
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
 import org.codehaus.jackson.JsonNode;
 import play.Play;
 import play.libs.Akka;
+import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
@@ -27,14 +26,23 @@ public class Application extends Controller {
     public static WebSocket<JsonNode> listen(final String uuid) {
         return new WebSocket<JsonNode>() {
             public void onReady(final WebSocket.In<JsonNode> in, final WebSocket.Out<JsonNode> out) {
-                
-                // create a new UserActor and give it the default stocks to watch
-                ActorRef userActor = Akka.system().actorOf(Props.create(UserActor.class, out), uuid);
-                
+
                 List<String> defaultStocks = Play.application().configuration().getStringList("default.stocks");
+
+                // create a new UserActor and give it the default stocks to watch
+                final ActorRef userActor = Akka.system().actorOf(Props.create(UserActor.class, out, uuid, defaultStocks), uuid);
+                
                 for (String symbol : defaultStocks) {
                     watch(uuid, symbol);
                 }
+
+                in.onClose(new F.Callback0() {
+                    @Override
+                    public void invoke() throws Throwable {
+                        userActor.tell(new CleanupWatchers(), Akka.system().deadLetters());
+                        Akka.system().stop(userActor);
+                    }
+                });
                 
             }
         };

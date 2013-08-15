@@ -18,7 +18,7 @@ class StockActor(symbol: String) extends Actor {
 
   lazy val stockQuote: StockQuote = new FakeStockQuote
   
-  var watchers: Vector[String] = Vector.empty
+  var watchers: Map[String, String] = Map.empty
 
   // A random data set which uses stockQuote.newPrice to get each data point
   var stockHistory: Queue[java.lang.Double] = {
@@ -35,12 +35,16 @@ class StockActor(symbol: String) extends Actor {
       val newPrice = stockQuote.newPrice(stockHistory.last.doubleValue())
       stockHistory = stockHistory.drop(1) :+ newPrice
       // notify watchers
-      watchers.foreach(uuid => context.actorSelection(s"/user/$uuid") ! StockUpdate(symbol, newPrice))
+      watchers.foreach(uuid => context.actorSelection(s"/user/${uuid._2}") ! StockUpdate(symbol, newPrice))
     case WatchStock(uuid) =>
       // send the stock history to the user
       context.actorSelection(s"/user/$uuid") ! StockHistory(symbol, stockHistory.asJava)
       // add the watcher to the list
-      watchers = watchers :+ uuid
+      watchers += (uuid -> uuid)
+    case StopWatchingStock(uuid) =>
+      watchers -= uuid
+      if (watchers.size == 0)
+        context.stop(self)
   }
 }
 
@@ -48,6 +52,11 @@ class StocksActor extends Actor {
   def receive = {
     case SetupStock(uuid, symbol) =>
       context.child(symbol).getOrElse(context.actorOf(Props(new StockActor(symbol)), symbol)) ! WatchStock(uuid)
+      //use a map instead of get so that the remove only gets called if the StockActor exists
+      context.child(uuid).map(userActorRef => userActorRef ! UserWatchStock(symbol))
+    case RemoveWatcher(uuid, symbol) =>
+      //use a map instead of get so that the remove only gets called if the StockActor exists
+      context.child(symbol).map(stockActorRef => stockActorRef ! StopWatchingStock(uuid))
   }
 }
 
@@ -60,8 +69,16 @@ case object FetchLatest
 
 case class SetupStock(uuid: String, symbol: String)
 
+case class RemoveWatcher(uuid: String, symbol: String)
+
+case class CleanupWatchers()
+
 case class StockUpdate(symbol: String, price: Number)
 
 case class StockHistory(symbol: String, history: java.util.List[java.lang.Double])
 
 case class WatchStock(uuid: String)
+
+case class UserWatchStock(symbol: String)
+
+case class StopWatchingStock(uuid: String)
