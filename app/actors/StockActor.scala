@@ -43,11 +43,8 @@ class StockActor(symbol: String) extends Actor {
       userActorRef ! StockHistory(symbol, stockHistory.asJava)
       // add the watcher to the list
       watchers += (uuid -> userActorRef)
-      println("adding watchers: " + watchers)
     case StopWatchingStock(uuid) =>
-      println("removing watchers start")
       watchers -= uuid
-      println("removing watchers: " + watchers)
       if (watchers.size == 0)
         context.stop(self)
   }
