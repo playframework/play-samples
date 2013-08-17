@@ -8,6 +8,7 @@ import play.libs.Akka;
 import play.libs.Json;
 import play.mvc.WebSocket;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,12 +20,11 @@ public class UserActor extends UntypedActor {
 
     private final WebSocket.Out<JsonNode> out;
     private final String uuid;
-    private List<String> stockWatchList;
+    private List<String> stockWatchList = new ArrayList<String>();
     
-    public UserActor(WebSocket.Out<JsonNode> out, String uuid, List<String> stockWatchList) {
+    public UserActor(WebSocket.Out<JsonNode> out, String uuid) {
         this.out = out;
         this.uuid = uuid;
-        this.stockWatchList = stockWatchList;
     }
     
     public void onReceive(Object message) {
@@ -54,16 +54,16 @@ public class UserActor extends UntypedActor {
             
             out.write(stockUpdateMessage);
         }
-        else if (message  instanceof  CleanupWatchers) {
+        else if (message  instanceof  ShutdownUserActor) {
             for (String symbol : stockWatchList) {
                 StocksActor.stocksActor().tell(new RemoveWatcher(uuid, symbol), self());
             }
+            context().stop(self());
         }
-        else if (message instanceof WatchStock) {
+        else if (message instanceof UserWatchStock) {
             UserWatchStock userWatchStock = (UserWatchStock) message;
             stockWatchList.add(userWatchStock.symbol());
 
         }
-
     }
 }

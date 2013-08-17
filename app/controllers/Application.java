@@ -30,8 +30,8 @@ public class Application extends Controller {
                 List<String> defaultStocks = Play.application().configuration().getStringList("default.stocks");
 
                 // create a new UserActor and give it the default stocks to watch
-                final ActorRef userActor = Akka.system().actorOf(Props.create(UserActor.class, out, uuid, defaultStocks), uuid);
-                
+                final ActorRef userActor = Akka.system().actorOf(Props.create(UserActor.class, out, uuid), uuid);
+
                 for (String symbol : defaultStocks) {
                     watch(uuid, symbol);
                 }
@@ -39,8 +39,7 @@ public class Application extends Controller {
                 in.onClose(new F.Callback0() {
                     @Override
                     public void invoke() throws Throwable {
-                        userActor.tell(new CleanupWatchers(), Akka.system().deadLetters());
-                        Akka.system().stop(userActor);
+                        userActor.tell(new ShutdownUserActor(), ActorRef.noSender());
                     }
                 });
                 
@@ -49,7 +48,12 @@ public class Application extends Controller {
     }
 
     public static Result watch(String uuid, String symbol) {
-        StocksActor.stocksActor().tell(new SetupStock(uuid, symbol), Akka.system().deadLetters());
+
+        //actorFor is deprecated, but actorSelection returns an ActorSelection and we want the actual ActorRef.
+        //I am not sure how to get the actual ActorRef in this case?
+        ActorRef userActorRef = Akka.system().actorFor("/user/" + uuid);
+
+        StocksActor.stocksActor().tell(new SetupStock(uuid, userActorRef, symbol), ActorRef.noSender());
         return ok();
     }
 

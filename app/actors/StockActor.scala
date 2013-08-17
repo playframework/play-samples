@@ -18,7 +18,7 @@ class StockActor(symbol: String) extends Actor {
 
   lazy val stockQuote: StockQuote = new FakeStockQuote
   
-  var watchers: Map[String, String] = Map.empty
+  var watchers: Map[String, ActorRef] = Map.empty
 
   // A random data set which uses stockQuote.newPrice to get each data point
   var stockHistory: Queue[java.lang.Double] = {
@@ -35,14 +35,19 @@ class StockActor(symbol: String) extends Actor {
       val newPrice = stockQuote.newPrice(stockHistory.last.doubleValue())
       stockHistory = stockHistory.drop(1) :+ newPrice
       // notify watchers
-      watchers.foreach(uuid => context.actorSelection(s"/user/${uuid._2}") ! StockUpdate(symbol, newPrice))
-    case WatchStock(uuid) =>
+      watchers.foreach{
+        case (uuid, userActorRef) => userActorRef ! StockUpdate(symbol, newPrice)
+      }
+    case WatchStock(uuid, userActorRef) =>
       // send the stock history to the user
-      context.actorSelection(s"/user/$uuid") ! StockHistory(symbol, stockHistory.asJava)
+      userActorRef ! StockHistory(symbol, stockHistory.asJava)
       // add the watcher to the list
-      watchers += (uuid -> uuid)
+      watchers += (uuid -> userActorRef)
+      println("adding watchers: " + watchers)
     case StopWatchingStock(uuid) =>
+      println("removing watchers start")
       watchers -= uuid
+      println("removing watchers: " + watchers)
       if (watchers.size == 0)
         context.stop(self)
   }
@@ -50,13 +55,13 @@ class StockActor(symbol: String) extends Actor {
 
 class StocksActor extends Actor {
   def receive = {
-    case SetupStock(uuid, symbol) =>
-      context.child(symbol).getOrElse(context.actorOf(Props(new StockActor(symbol)), symbol)) ! WatchStock(uuid)
-      //use a map instead of get so that the remove only gets called if the StockActor exists
-      context.child(uuid).map(userActorRef => userActorRef ! UserWatchStock(symbol))
+    case SetupStock(uuid, userActorRef, symbol) =>
+      context.child(symbol).getOrElse(context.actorOf(Props(new StockActor(symbol)), symbol)) ! WatchStock(uuid, userActorRef)
+      userActorRef ! UserWatchStock(symbol)
     case RemoveWatcher(uuid, symbol) =>
-      //use a map instead of get so that the remove only gets called if the StockActor exists
-      context.child(symbol).map(stockActorRef => stockActorRef ! StopWatchingStock(uuid))
+      context.child(symbol).foreach(stockActorRef => {
+        stockActorRef ! StopWatchingStock(uuid)
+      })
   }
 }
 
@@ -67,17 +72,17 @@ object StocksActor {
 
 case object FetchLatest
 
-case class SetupStock(uuid: String, symbol: String)
+case class SetupStock(uuid: String, userActorRef: ActorRef, symbol: String)
 
 case class RemoveWatcher(uuid: String, symbol: String)
 
-case class CleanupWatchers()
+case class ShutdownUserActor()
 
 case class StockUpdate(symbol: String, price: Number)
 
 case class StockHistory(symbol: String, history: java.util.List[java.lang.Double])
 
-case class WatchStock(uuid: String)
+case class WatchStock(uuid: String, userActorRef: ActorRef)
 
 case class UserWatchStock(symbol: String)
 
