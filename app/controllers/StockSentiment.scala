@@ -28,6 +28,31 @@ object StockSentiment extends Controller {
       response.status == OK
     }
   }
+
+  
+  def sentimentJson(sentiments: Seq[Response]) = {
+    val neg = getAverageSentiment(sentiments, "neg")
+    val neutral = getAverageSentiment(sentiments, "neutral")
+    val pos = getAverageSentiment(sentiments, "pos")
+  
+    val response = Json.obj(
+      "probability" -> Json.obj(
+        "neg" -> neg,
+        "neutral" -> neutral,
+        "pos" -> pos
+      )
+    )
+    
+    val classification =
+      if (neutral > 0.5)
+        "neutral"
+      else if (neg > pos)
+        "neg"
+      else
+        "pos"
+  
+    response + ("label" -> JsString(classification))
+  }
   
   def get(symbol: String): Action[AnyContent] = Action {
     Async {
@@ -35,34 +60,12 @@ object StockSentiment extends Controller {
         tweets <- getTweets(symbol) // get tweets that contain the stock symbol
         futureSentiments = loadSentimentFromTweets(tweets.json) // queue web requests each tweets' sentiments
         sentiments <- Future.sequence(futureSentiments) // when the sentiment responses arrive, set them
-      } yield {
-        def averageSentiment(label: String) = getAverageSentiment(sentiments, label)
-        val neg = averageSentiment("neg")
-        val neutral = averageSentiment("neutral")
-        val pos = averageSentiment("pos")
+      } yield Ok(sentimentJson(sentiments))
 
-        val response = Json.obj(
-          "probability" -> Json.obj(
-            "neg" -> neg,
-            "neutral" -> neutral,
-            "pos" -> pos
-          )
-        )
-        val classification =
-          if (neutral > 0.5)
-            "neutral"
-          else if (neg > pos)
-            "neg"
-          else
-            "pos"
-
-        Ok(response + ("label" -> JsString(classification)))
-      }
       futureStockSentiments.recoverWith {
         case nsee: NoSuchElementException =>
           Future(InternalServerError(Json.obj("error" -> JsString("Could not fetch the tweets"))))
       }
-      futureStockSentiments
     }
   }
 }
