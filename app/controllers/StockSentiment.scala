@@ -1,7 +1,7 @@
 package controllers
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.mvc.{AnyContent, Controller, Action}
+import play.api.mvc.{AnyContent, Controller, Action, Result}
 import play.api.libs.ws.{Response, WS}
 import scala.concurrent.Future
 import play.api.libs.json.{JsString, Json, JsValue}
@@ -31,7 +31,7 @@ object StockSentiment extends Controller {
   
   def get(symbol: String): Action[AnyContent] = Action {
     Async {
-      {for {
+      val futureStockSentiments: Future[Result] = for {
         tweets <- getTweets(symbol) // get tweets that contain the stock symbol
         futureSentiments = loadSentimentFromTweets(tweets.json) // queue web requests each tweets' sentiments
         sentiments <- Future.sequence(futureSentiments) // when the sentiment responses arrive, set them
@@ -57,10 +57,12 @@ object StockSentiment extends Controller {
             "pos"
 
         Ok(response + ("label" -> JsString(classification)))
-      }} recoverWith {
+      }
+      futureStockSentiments.recoverWith {
         case nsee: NoSuchElementException =>
           Future(InternalServerError(Json.obj("error" -> JsString("Could not fetch the tweets"))))
       }
+      futureStockSentiments
     }
   }
 }
