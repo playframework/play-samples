@@ -12,9 +12,7 @@
     <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.flot.js"))'></script>
     <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
 </head>
-@defining(java.util.UUID.randomUUID.toString) { uuid =>
-<body data-ws-url="@routes.Application.listen(uuid).webSocketURL(request)" data-uuid="@uuid">
-}
+<body data-ws-url="@routes.Application.ws.webSocketURL(request)">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">

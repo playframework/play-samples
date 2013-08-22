@@ -12,8 +12,9 @@ import org.codehaus.jackson.JsonNode
 import scala.concurrent.duration._
 
 import scala.collection.JavaConverters._
+import play.api.test.WithApplication
 
-class UserActorSpec extends TestkitExample with Specification with NoTimeConversions  {
+class UserActorSpec extends TestkitExample with Specification with NoTimeConversions {
 
   /*
    * Running tests in parallel (which would ordinarily be the default) will work only if no
@@ -22,18 +23,18 @@ class UserActorSpec extends TestkitExample with Specification with NoTimeConvers
    *
    * It's usually safer to run the tests sequentially.
    */
-  
+
   sequential
 
   "UserActor" should {
 
-    val uuid = java.util.UUID.randomUUID.toString
     val symbol = "ABC"
     val price = 123
     val history = List[java.lang.Double](0.1, 1.0).asJava
 
-    "send a stock when receiving a StockUpdate message" in {
+    "send a stock when receiving a StockUpdate message" in new WithApplication {
       val out = new StubOut()
+
       val userActorRef = TestActorRef[UserActor](Props(new UserActor(out)))
       val userActor = userActorRef.underlyingActor
 
@@ -47,8 +48,9 @@ class UserActorSpec extends TestkitExample with Specification with NoTimeConvers
       node must /("price" -> price)
     }
 
-    "send the stock history when receiving a StockHistory message" in {
+    "send the stock history when receiving a StockHistory message" in new WithApplication {
       val out = new StubOut()
+
       val userActorRef = TestActorRef[UserActor](Props(new UserActor(out)))
       val userActor = userActorRef.underlyingActor
 

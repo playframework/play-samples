@@ -4,8 +4,11 @@ import akka.actor.UntypedActor;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
+import play.Play;
 import play.libs.Json;
 import play.mvc.WebSocket;
+
+import java.util.List;
 
 /**
  * The broker between the WebSocket and the StockActor(s).  The UserActor holds the connection and sends serialized
@@ -18,10 +21,16 @@ public class UserActor extends UntypedActor {
     
     public UserActor(WebSocket.Out<JsonNode> out) {
         this.out = out;
+        
+        // watch the default stocks
+        List<String> defaultStocks = Play.application().configuration().getStringList("default.stocks");
+
+        for (String stockSymbol : defaultStocks) {
+            StocksActor.stocksActor().tell(new WatchStock(stockSymbol), getSelf());
+        }
     }
     
     public void onReceive(Object message) {
-
         if (message instanceof StockUpdate) {
             // push the stock to the client
             StockUpdate stockUpdate = (StockUpdate)message;
@@ -46,6 +55,5 @@ public class UserActor extends UntypedActor {
             
             out.write(stockUpdateMessage);
         }
-
     }
 }
