@@ -12,7 +12,9 @@ $ ->
 
   $("#addsymbolform").submit (event) ->
     event.preventDefault()
-    $.post("/watch/" + $("body").attr("data-uuid") + "/" + $("#addsymboltext").val())
+    # send the message to watch the stock
+    ws.send(JSON.stringify({symbol: $("#addsymboltext").val()}))
+    # reset the form
     $("#addsymboltext").val("")
 
 getPricesFromArray = (data) ->
