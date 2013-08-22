@@ -18,7 +18,7 @@ class StockActor(symbol: String) extends Actor {
 
   lazy val stockQuote: StockQuote = new FakeStockQuote
   
-  private[this] var watchers: HashSet[ActorRef] = HashSet.empty[ActorRef]
+  protected[this] var watchers: HashSet[ActorRef] = HashSet.empty[ActorRef]
 
   // A random data set which uses stockQuote.newPrice to get each data point
   var stockHistory: Queue[java.lang.Double] = {
@@ -72,8 +72,6 @@ object StocksActor {
 
 
 case object FetchLatest
-
-case class SetupStock(userActorRef: ActorRef, symbol: String)
 
 case class StockUpdate(symbol: String, price: Number)
 
