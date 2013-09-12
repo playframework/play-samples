@@ -3,7 +3,7 @@ package controllers;
 import actors.*;
 import akka.actor.*;
 import akka.actor.ActorRef;
-import org.codehaus.jackson.JsonNode;
+import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Akka;
 import play.libs.F;
 import play.mvc.Controller;
@@ -32,7 +32,7 @@ public class Application extends Controller {
                     @Override
                     public void invoke(JsonNode jsonNode) throws Throwable {
                         // parse the JSON into WatchStock
-                        WatchStock watchStock = new WatchStock(jsonNode.get("symbol").getTextValue());
+                        WatchStock watchStock = new WatchStock(jsonNode.get("symbol").textValue());
                         // send the watchStock message to the StocksActor
                         StocksActor.stocksActor().tell(watchStock, userActor);
                     }
