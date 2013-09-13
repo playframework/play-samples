@@ -1,7 +1,7 @@
 package actors
 
 import play.mvc.WebSocket
-import org.codehaus.jackson.JsonNode
+import com.fasterxml.jackson.databind.JsonNode
 
 /**
  * A stub class that looks like WebSocket.Out to the rest of the system, and

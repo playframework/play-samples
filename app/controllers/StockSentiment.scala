@@ -1,11 +1,13 @@
 package controllers
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.mvc.{AnyContent, Controller, Action, Result}
-import play.api.libs.ws.{Response, WS}
+import play.api.mvc._
+import play.api.libs.ws.WS
 import scala.concurrent.Future
-import play.api.libs.json.{JsString, Json, JsValue}
+import play.api.libs.json.{Json, JsValue}
 import play.api.Play
+import play.api.libs.ws.Response
+import play.api.libs.json.JsString
 
 object StockSentiment extends Controller {
 
@@ -54,18 +56,16 @@ object StockSentiment extends Controller {
     response + ("label" -> JsString(classification))
   }
   
-  def get(symbol: String): Action[AnyContent] = Action {
-    Async {
-      val futureStockSentiments: Future[Result] = for {
-        tweets <- getTweets(symbol) // get tweets that contain the stock symbol
-        futureSentiments = loadSentimentFromTweets(tweets.json) // queue web requests each tweets' sentiments
-        sentiments <- Future.sequence(futureSentiments) // when the sentiment responses arrive, set them
-      } yield Ok(sentimentJson(sentiments))
+  def get(symbol: String): Action[AnyContent] = Action.async {
+    val futureStockSentiments: Future[SimpleResult] = for {
+      tweets <- getTweets(symbol) // get tweets that contain the stock symbol
+      futureSentiments = loadSentimentFromTweets(tweets.json) // queue web requests each tweets' sentiments
+      sentiments <- Future.sequence(futureSentiments) // when the sentiment responses arrive, set them
+    } yield Ok(sentimentJson(sentiments))
 
-      futureStockSentiments.recoverWith {
-        case nsee: NoSuchElementException =>
-          Future(InternalServerError(Json.obj("error" -> JsString("Could not fetch the tweets"))))
-      }
+    futureStockSentiments.recoverWith {
+      case nsee: NoSuchElementException =>
+        Future(InternalServerError(Json.obj("error" -> JsString("Could not fetch the tweets"))))
     }
   }
 }

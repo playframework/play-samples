@@ -7,12 +7,11 @@ import org.specs2.mutable._
 import org.specs2.time.NoTimeConversions
 
 import scala.concurrent.duration._
-import scala.collection.immutable.{HashSet, Queue}
+import scala.collection.immutable.HashSet
 
 import utils.StockQuote
-import play.api.Logger
 
-class StockActorSpec extends TestkitExample with Specification with NoTimeConversions {
+class StockActorSpec extends TestkitExample with SpecificationLike with NoTimeConversions {
 
   /*
    * Running tests in parallel (which would ordinarily be the default) will work only if no
