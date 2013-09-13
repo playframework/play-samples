@@ -1,6 +1,6 @@
 package actors
 
-import akka.actor.{Actor, ActorRef}
+import akka.actor.Actor
 import akka.testkit.TestProbe
 
 /**

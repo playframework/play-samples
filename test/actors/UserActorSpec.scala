@@ -5,16 +5,14 @@ import akka.testkit._
 
 import org.specs2.mutable._
 import org.specs2.time.NoTimeConversions
-import org.specs2.matcher._
-
-import org.codehaus.jackson.JsonNode
 
 import scala.concurrent.duration._
 
 import scala.collection.JavaConverters._
 import play.api.test.WithApplication
+import org.specs2.matcher.JsonMatchers
 
-class UserActorSpec extends TestkitExample with Specification with NoTimeConversions {
+class UserActorSpec extends TestkitExample with SpecificationLike with JsonMatchers with NoTimeConversions {
 
   /*
    * Running tests in parallel (which would ordinarily be the default) will work only if no
