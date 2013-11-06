@@ -62,9 +62,8 @@
         In the Reactive Stocks application the service which determines the stock sentiments is a Reactive Request.  The route is defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file:
 <pre><code>GET /sentiment/:symbol controllers.StockSentiment.get(symbol)</code></pre>
         A <code>GET</code> request to <code>/sentiment/GOOG</code> will call <code>get("GOOG")</code> on the <a href="#code/app/controllers/StockSentiment.scala" class="shortcut">StockSentiment.scala</a> controller.  That method begins with:
-<pre><code>def get(symbol: String) = Action {
-  Async {</code></pre>
-        The <code>Async</code> block indicates that the controller will return a <code>Future[Result]</code> which is a handle to something that will produce a <code>Result</code> in the future.  The <code>Future</code> provides a way to do asynchronous handling but doesn't necessarily have to be non-blocking.  Often times web requests need to talk to other systems (databases, web services, etc).  If a thread can't be deallocated while waiting for those other systems to respond, then it is blocking.<br/>
+<pre><code>def get(symbol: String): Action[AnyContent] = Action.async {</code></pre>
+        The <code>async</code> block indicates that the controller will return a <code>Future[Result]</code> which is a handle to something that will produce a <code>Result</code> in the future.  The <code>Future</code> provides a way to do asynchronous handling but doesn't necessarily have to be non-blocking.  Often times web requests need to talk to other systems (databases, web services, etc).  If a thread can't be deallocated while waiting for those other systems to respond, then it is blocking.<br/>
         In this case a request is made to Twitter and then for each tweet, another request is made to a sentiment service.  All of these requests, including the request from the browser, are all handled as Reactive Requests so that the entire pipeline is Reactive (asynchronous and non-blocking).  This is called Reactive Composition.
     </p>
 </div>
