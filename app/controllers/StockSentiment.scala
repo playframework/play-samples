@@ -63,9 +63,9 @@ object StockSentiment extends Controller {
       sentiments <- Future.sequence(futureSentiments) // when the sentiment responses arrive, set them
     } yield Ok(sentimentJson(sentiments))
 
-    futureStockSentiments.recoverWith {
+    futureStockSentiments.recover {
       case nsee: NoSuchElementException =>
-        Future(InternalServerError(Json.obj("error" -> JsString("Could not fetch the tweets"))))
+        InternalServerError(Json.obj("error" -> JsString("Could not fetch the tweets")))
     }
   }
 }
