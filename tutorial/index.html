@@ -20,7 +20,7 @@
     <h2>Reactive Apps</h2>
 
     <p>
-        As <a href="http://www.reactivemanifesto.org" target="_blank">The Reactive Manifesto</a> outlines, Reactive apps are Resilient, Interactive, Scalable, and Event-Driven.  The Reactive Stocks application has all of these characteristics because it is built using the Typesafe Platform, including Play Framework for the web interface and Akka for managing concurrency, scalability and fault-tolerance.  Both Java and Scala are for the back-end code since Play and Akka support both of those languages.  Any piece written in Java could have been written in Scala, or vice-versa.  The front-end uses HTML, LESS (compiled to CSS), and CoffeeScript (compiled to JavaScript).  WebSockets are used to push data in real-time from the server to the client.<br/>
+        As <a href="http://www.reactivemanifesto.org" target="_blank">The Reactive Manifesto</a> outlines, Reactive apps are Resilient, Interactive, Scalable, and Event-Driven.  The Reactive Stocks application has all of these characteristics because it is built using the Typesafe Platform, including Play Framework for the web interface and Akka for managing concurrency, scalability and fault-tolerance.  Play and Akka support both Scala and Java.  This template showcases Java 8.  Any piece written in Java could also have been written in Scala.  The front-end uses HTML, LESS (compiled to CSS), and CoffeeScript (compiled to JavaScript).  WebSockets are used to push data in real-time from the server to the client.<br/>
         <br/>
         The Reactive Stocks application showcases four types of Reactive: Reactive Push, Reactive Requests, Reactive Composition, and Reactive UIs.  Two types of Reactive which are not directly used in this application are Reactive Pull and 2-way Reactive.  In a real stock feed application, the stock stream would be attached to an actual stock feed service using Reactive Pull.  Those values would then be pushed to the client using Reactive Push.  The combination of Reactive Push &amp; Reactive Pull is 2-way Reactive.  Play's internal network handling is 2-way Reactive.
     </p>
@@ -31,11 +31,11 @@
     <p>
         This application uses a WebSocket to push data to the browser in real-time.  To create a WebSocket connection in Play, first a route must be defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file.  Here is the route which will be used to setup the WebSocket connection:<br/>
 <pre><code>GET /ws controllers.Application.ws</code></pre>
-        The <code>ws</code> method in the <a href="#code/app/controllers/Application.java" class="shortcut">Application.java</a> controller handles the request and does the protocol upgrade to the WebSocket connection.  This method create a new <code>UserActor</code> defined in <a href="#code/app/actors/UserActor.java" class="shortcut">UsersActor.java</a> (<a href="#code/test/actors/UserActorSpec.scala" class="shortcut">tests</a>).  The <code>UserActor</code> stores the handle to the WebSocket connection.<br/>
+        The <code>ws</code> method in the <a href="#code/app/controllers/Application.java" class="shortcut">Application.java</a> controller handles the request and does the protocol upgrade to the WebSocket connection.  This method create a new <code>UserActor</code> defined in <a href="#code/app/actors/UserActor.java" class="shortcut">UserActor.java</a> (<a href="#code/test/actors/UserActorTest.java" class="shortcut">tests</a>).  The <code>UserActor</code> stores the handle to the WebSocket connection.<br/>
         <br/>
         Once the <code>UserActor</code> is created, the default stocks (defined in <a href="#code/conf/application.conf" class="shortcut">application.conf</a>) are added to the user's list of watched stocks.<br/>
         <br/>
-        Each stock symbol has its own <code>StockActor</code> defined in <a href="#code/app/actors/StockActor.scala" class="shortcut">StockActor.scala</a> (<a href="#code/test/actors/StockActorSpec.scala" class="shortcut">tests</a>).  This actor holds the last 50 prices for the stock.  Using a <code>FetchHistory</code> message the whole history can be retrieved.  A <code>FetchLatest</code> message will generate a new price using the <code>newPrice</code> method in the <a href="#code/app/utils/FakeStockQuote.java" class="shortcut">FakeStockQuote.java</a> file.  Every <code>StockActor</code> sends itself a <code>FetchLatest</code> message every 75 milliseconds.  Once a new price is generated it is added to the history and then a message is sent to each <code>UserActor</code> that is watching the stock.  The <code>UserActor</code> then serializes the data as JSON and pushes it to the client using the WebSocket.<br/>
+        Each stock symbol has its own <code>StockActor</code> defined in <a href="#code/app/actors/StockActor.java" class="shortcut">StockActor.java</a> (<a href="#code/test/actors/StockActorTest.java" class="shortcut">tests</a>).  This actor holds the last 50 prices for the stock.  The initial history is sent to watchers.  A <code>Stock.Latest</code> message will generate a new price using the <code>newPrice</code> method in the <a href="#code/app/utils/FakeStockQuote.java" class="shortcut">FakeStockQuote.java</a> file.  Every <code>StockActor</code> sends itself a <code>Stock.Latest</code> message every 75 milliseconds.  Once a new price is generated it is added to the history and then a message is sent to each <code>UserActor</code> that is watching the stock.  The <code>UserActor</code> then serializes the data as JSON and pushes it to the client using the WebSocket.<br/>
         <br/>
         Underneath the covers, resources (threads) are only allocated to the Actors and WebSockets when they are needed.  This is why Reactive Push is scalable with Play and Akka.
     </p>
@@ -50,7 +50,7 @@
 <pre><code>$ ->
   ws = new WebSocket $("body").data("ws-url")
   ws.onmessage = (event) ->
-    message = JSON.parse event.data</code></pre>
+  message = JSON.parse event.data</code></pre>
         The message is parsed and depending on whether the message contains the stock history or a stock update, a stock chart is either created or updated.  The charts are created using the <strong>Flot</strong> JavaScript charting library.  Using CoffeeScript, jQuery, and Flot makes it easy to build Reactive UI in the browser that can receive WebSocket push events and update the UI in real-time.
     </p>
 </div>
@@ -61,9 +61,9 @@
         When a web server gets a request, it allocates a thread to handle the request and produce a response.  In a typical model the thread is allocated for the entire duration of the request and response, even if the web request is waiting for some other resource.  A Reactive Request is a typical web request and response, but handled in an asynchronous and non-blocking way on the server.  This means that when the thread for a web request is not actively being used, it can be released and reused for something else.<br/>
         In the Reactive Stocks application the service which determines the stock sentiments is a Reactive Request.  The route is defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file:
 <pre><code>GET /sentiment/:symbol controllers.StockSentiment.get(symbol)</code></pre>
-        A <code>GET</code> request to <code>/sentiment/GOOG</code> will call <code>get("GOOG")</code> on the <a href="#code/app/controllers/StockSentiment.scala" class="shortcut">StockSentiment.scala</a> controller.  That method begins with:
-<pre><code>def get(symbol: String): Action[AnyContent] = Action.async {</code></pre>
-        The <code>async</code> block indicates that the controller will return a <code>Future[Result]</code> which is a handle to something that will produce a <code>Result</code> in the future.  The <code>Future</code> provides a way to do asynchronous handling but doesn't necessarily have to be non-blocking.  Often times web requests need to talk to other systems (databases, web services, etc).  If a thread can't be deallocated while waiting for those other systems to respond, then it is blocking.<br/>
+        A <code>GET</code> request to <code>/sentiment/GOOG</code> will call <code>get("GOOG")</code> on the <a href="#code/app/controllers/StockSentiment.java" class="shortcut">StockSentiment.java</a> controller.  That method begins with:
+<pre><code>public static Promise&lt;Result&gt; get(String symbol) {</code></pre>
+        This controller will return a <code>Promise<Result></code> which is a handle to something that will produce a <code>Result</code> in the future.  The <code>Promise</code> provides a way to do asynchronous handling but doesn't necessarily have to be non-blocking.  Often times web requests need to talk to other systems (databases, web services, etc).  If a thread can't be deallocated while waiting for those other systems to respond, then it is blocking.<br/>
         In this case a request is made to Twitter and then for each tweet, another request is made to a sentiment service.  All of these requests, including the request from the browser, are all handled as Reactive Requests so that the entire pipeline is Reactive (asynchronous and non-blocking).  This is called Reactive Composition.
     </p>
 </div>
@@ -71,11 +71,10 @@
     <h2>Reactive Composition</h2>
 
     <p>
-        Combining multiple Reactive Requests together is Reactive Composition.  The <a href="#code/app/controllers/StockSentiment.scala" class="shortcut">StockSentiment</a> controller does Reactive Composition since it receives a request, makes a request to Twitter for tweets about a stock, and then for each tweet it makes a request to a sentiment service.  All of these requests are Reactive Requests.  None use threads when they are waiting for a response.  Scala's <strong>for comprehensions</strong> make it very easy and elegant to do Reactive Composition.  The basic structure is:
-<pre><code>for {
-  tweets <- tweetsFuture
-  sentiments <- Future.sequence(futuresForTweetSentiment(tweets))
-} yield Ok(sentiments)</code></pre>
+        Combining multiple Reactive Requests together is Reactive Composition.  The <a href="#code/app/controllers/StockSentiment.java" class="shortcut">StockSentiment</a> controller does Reactive Composition since it receives a request, makes a request to Twitter for tweets about a stock, and then for each tweet it makes a request to a sentiment service.  All of these requests are Reactive Requests.  None use threads when they are waiting for a response.  Play Promises, together with Java 8 lambdas and method references, make it very easy and elegant to do Reactive Composition.  The basic structure is:
+<pre><code>fetchTweets(symbol)
+.flatMap(StockSentiment::fetchSentiments)
+.map(StockSentiment::averageSentiment)</code></pre>
         Because the web client library in Play, <code>WS</code>, is asynchronous and non-blocking, all of the requests needed to get a stock's sentiments are Reactive Requests.  Combined together these Reactive Requests are Reactive Composition.
     </p>
 </div>
@@ -87,16 +86,11 @@
     </p>
 </div>
 <div>
-    <h2>Typesafe Console</h2>
+    <h2>Inspect the App</h2>
 
     <p>
-        The Typesafe Console visualizes the internals of Play Framework and Akka applications in real-time.  To enable the Console you will need a free Typesafe.com account since the Console is licensed under the <a href="http://content.typesafe.com/assets/legal/TypesafeSubscriptionAgreement.pdf" target="_blank">Typesafe Subscription Agreement</a> which allows it to be used at development time for free.  Production use requires a <a href="http://typesafe.com/how/subscription" target="_blank">Typesafe Subscription</a>.
+        Use <a href="#inspect" class="shortcut">Inspect</a> to see the requests that have been handled by the running Play application and to see the Akka Actors (if any) in the Actor System.  Drilling down into an individual request will provide details about the request.  Drilling down into an individual Actor will display a number of statistics and information about the Actor.  Deviations will show you any issues with your Actors.
     </p>
-
-    <p>
-        To enable the Console, in <a href="#run" class="shortcut">Run</a> click <strong>Login to Typesafe.com</strong> and login.  If you don't have an account, then <a href="https://typesafe.com/account/register" target="_blank">sign up</a> and then login inside Activator (click the person icon in the top-right to open the login form).  Once logged in, click the <strong>Restart with Console</strong> button to start the selected application with Console support.  There will then be a link to the Console UI.  Open that link to enter the Typesafe Console.  <a href="http://typesafe.com/platform/runtime/console" target="_blank">Learn more about the Typesafe Console</a>.
-    </p>
-
 </div>
 <div>
     <h2>Further Learning</h2>
