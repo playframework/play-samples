@@ -2,12 +2,10 @@ package actors;
 
 import akka.actor.ActorRef;
 import akka.actor.Props;
+import java.util.Collections;
 import java.util.Optional;
 import play.libs.Akka;
 import utils.LambdaActor;
-
-import static utils.Functions.consumer;
-import static utils.Functions.supplier;
 
 public class StocksActor extends LambdaActor {
 
@@ -23,19 +21,18 @@ public class StocksActor extends LambdaActor {
         receive(Stock.Watch.class, watch -> {
             String symbol = watch.symbol;
             // get or create the StockActor for the symbol and forward this message
-            context().child(symbol).getOrElse(supplier(
+            Optional.ofNullable(getContext().getChild(symbol)).orElseGet(
                 () -> context().actorOf(Props.create(StockActor.class, symbol), symbol)
-            )).forward(watch, context());
+            ).forward(watch, context());
         });
 
         receive(Stock.Unwatch.class, unwatch -> {
-            Optional<String> optionalSymbol = unwatch.symbol;
-            if (optionalSymbol.isPresent()) {
-                // if there is a StockActor for the symbol forward this message
-                context().child(optionalSymbol.get()).foreach(consumer(child -> child.forward(unwatch, context())));
-            } else { // no symbol is specified, forward to everyone
-                context().children().foreach(consumer(child -> child.forward(unwatch, context())));
-            }
+            // forward this message to the associated StockActor, or otherwise to everyone
+            unwatch.symbol
+                   .map(getContext()::getChild)
+                   .<Iterable<ActorRef>>map(Collections::singletonList)
+                   .orElse(getContext().getChildren())
+                   .forEach(child -> child.forward(unwatch, context()));
         });
     }
 }
