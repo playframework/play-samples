@@ -28,16 +28,16 @@ class UserActorSpec extends TestkitExample with SpecificationLike with JsonMatch
 
     val symbol = "ABC"
     val price = 123
-    val history = List[java.lang.Double](0.1, 1.0).asJava
+    val history = new java.util.LinkedList(List[java.lang.Double](0.1, 1.0).asJava)
 
-    "send a stock when receiving a StockUpdate message" in new WithApplication {
+    "send a stock when receiving a Stock.Update message" in new WithApplication {
       val out = new StubOut()
 
       val userActorRef = TestActorRef[UserActor](Props(new UserActor(out)))
       val userActor = userActorRef.underlyingActor
 
       // send off the stock update...
-      userActor.receive(StockUpdate(symbol, price))
+      userActor.receive(new Stock.Update(symbol, price))
 
       // ...and expect it to be a JSON node.
       val node = out.actual.toString
@@ -46,14 +46,14 @@ class UserActorSpec extends TestkitExample with SpecificationLike with JsonMatch
       node must /("price" -> price)
     }
 
-    "send the stock history when receiving a StockHistory message" in new WithApplication {
+    "send the stock history when receiving a Stock.History message" in new WithApplication {
       val out = new StubOut()
 
       val userActorRef = TestActorRef[UserActor](Props(new UserActor(out)))
       val userActor = userActorRef.underlyingActor
 
       // send off the stock update...
-      userActor.receive(StockHistory(symbol, history))
+      userActor.receive(new Stock.History(symbol, history))
 
       // ...and expect it to be a JSON node.
       out.actual.get("type").asText must beEqualTo("stockhistory")

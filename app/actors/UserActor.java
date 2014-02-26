@@ -18,41 +18,41 @@ import java.util.List;
 public class UserActor extends UntypedActor {
 
     private final WebSocket.Out<JsonNode> out;
-    
+
     public UserActor(WebSocket.Out<JsonNode> out) {
         this.out = out;
-        
+
         // watch the default stocks
         List<String> defaultStocks = Play.application().configuration().getStringList("default.stocks");
 
         for (String stockSymbol : defaultStocks) {
-            StocksActor.stocksActor().tell(new WatchStock(stockSymbol), getSelf());
+            StocksActor.stocksActor().tell(new Stock.Watch(stockSymbol), getSelf());
         }
     }
-    
+
     public void onReceive(Object message) {
-        if (message instanceof StockUpdate) {
+        if (message instanceof Stock.Update) {
             // push the stock to the client
-            StockUpdate stockUpdate = (StockUpdate)message;
+            Stock.Update stockUpdate = (Stock.Update) message;
             ObjectNode stockUpdateMessage = Json.newObject();
             stockUpdateMessage.put("type", "stockupdate");
-            stockUpdateMessage.put("symbol", stockUpdate.symbol());
-            stockUpdateMessage.put("price", stockUpdate.price().doubleValue());
+            stockUpdateMessage.put("symbol", stockUpdate.symbol);
+            stockUpdateMessage.put("price", stockUpdate.price);
             out.write(stockUpdateMessage);
         }
-        else if (message instanceof StockHistory) {
+        else if (message instanceof Stock.History) {
             // push the history to the client
-            StockHistory stockHistory = (StockHistory)message;
+            Stock.History stockHistory = (Stock.History) message;
 
             ObjectNode stockUpdateMessage = Json.newObject();
             stockUpdateMessage.put("type", "stockhistory");
-            stockUpdateMessage.put("symbol", stockHistory.symbol());
+            stockUpdateMessage.put("symbol", stockHistory.symbol);
 
             ArrayNode historyJson = stockUpdateMessage.putArray("history");
-            for (Object price : stockHistory.history()) {
-                historyJson.add(((Number)price).doubleValue());
+            for (Double price : stockHistory.history) {
+                historyJson.add(price);
             }
-            
+
             out.write(stockUpdateMessage);
         }
     }

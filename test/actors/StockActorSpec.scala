@@ -22,11 +22,12 @@ class StockActorSpec extends TestkitExample with SpecificationLike with NoTimeCo
    */
   sequential
 
-  final class StockActorWithStockQuote(symbol: String, price: Double, watcher: ActorRef) extends StockActor(symbol) {
-    watchers = HashSet[ActorRef](watcher)
-    override lazy val stockQuote = new StockQuote {
-      def newPrice(lastPrice: java.lang.Double): java.lang.Double = price
-    }
+  final class FixedStockQuote(price: java.lang.Double) extends StockQuote {
+    def newPrice(lastPrice: java.lang.Double): java.lang.Double = price
+  }
+
+  final class StockActorWithStockQuote(symbol: String, price: Double, watcher: ActorRef) extends StockActor(symbol, new FixedStockQuote(price)) {
+    watchers.add(watcher)
   }
 
   "A StockActor" should {
@@ -41,14 +42,16 @@ class StockActorSpec extends TestkitExample with SpecificationLike with NoTimeCo
       system.actorOf(Props(new ProbeWrapper(probe)))
 
       // Fire off the message...
-      stockActor ! FetchLatest
+      stockActor ! Stock.latest
 
-      // ... and ask the probe if it got the StockUpdate message.
-      val actualMessage = probe.receiveOne(500 millis)
-      val expectedMessage = StockUpdate(symbol, price)
-      actualMessage must ===(expectedMessage)
+      // ... and ask the probe if it got the Stock.Update message.
+      val actualMessage = probe.expectMsgType[Stock.Update](500 millis)
+      val expectedMessage = new Stock.Update(symbol, price)
+      actualMessage.symbol must ===(expectedMessage.symbol)
+      actualMessage.price must ===(expectedMessage.price)
     }
-    "add a watcher and send a StockHistory message to the user when receiving WatchStock message" in {
+
+    "add a watcher and send a Stock.History message to the user when receiving WatchStock message" in {
       val probe = new TestProbe(system)
 
       // Create a standard StockActor.
@@ -59,18 +62,18 @@ class StockActorSpec extends TestkitExample with SpecificationLike with NoTimeCo
 
       // Fire off the message, setting the sender as the UserActor
       // Simulates sending the message as if it was sent from the userActor
-      stockActor.tell(WatchStock(symbol), userActor)
+      stockActor.tell(new Stock.Watch(symbol), userActor)
 
       // the userActor will be added as a watcher and get a message with the stock history
       val userActorMessage = probe.receiveOne(500.millis)
-      userActorMessage must beAnInstanceOf[StockHistory]
+      userActorMessage must beAnInstanceOf[Stock.History]
     }
   }
 
   "A StocksActor" should {
     val symbol = "ABC"
 
-    "a WatchStock message should send a StockHistory message to the user" in {
+    "a Stock.Watch message should send a Stock.History message to the user" in {
       val probe = new TestProbe(system)
       val stockHolderActor = system.actorOf(Props[StocksActor])
 
@@ -79,11 +82,11 @@ class StockActorSpec extends TestkitExample with SpecificationLike with NoTimeCo
 
       // Fire off the message, setting the sender as the UserActor
       // Simulates sending the message as if it was sent from the userActor
-      stockHolderActor.tell(WatchStock(symbol), userActor)
+      stockHolderActor.tell(new Stock.Watch(symbol), userActor)
 
       // Should create a new stockActor as a child and send it the stock history
       val stockHistory = probe.receiveOne(500 millis)
-      stockHistory must beAnInstanceOf[StockHistory]
+      stockHistory must beAnInstanceOf[Stock.History]
     }
 
   }

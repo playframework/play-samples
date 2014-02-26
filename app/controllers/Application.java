@@ -4,13 +4,12 @@ import actors.*;
 import akka.actor.*;
 import akka.actor.ActorRef;
 import com.fasterxml.jackson.databind.JsonNode;
+import java.util.Optional;
 import play.libs.Akka;
 import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
-import scala.Option;
-
 
 /**
  * The main web controller that handles returning the index page, setting up a WebSocket, and watching a stock.
@@ -29,16 +28,15 @@ public class Application extends Controller {
 
                 // send all WebSocket message to the UserActor
                 in.onMessage(jsonNode -> {
-                    // parse the JSON into WatchStock
-                    WatchStock watchStock = new WatchStock(jsonNode.get("symbol").textValue());
+                    // parse the JSON into Stock.Watch
+                    Stock.Watch watchStock = new Stock.Watch(jsonNode.get("symbol").textValue());
                     // send the watchStock message to the StocksActor
                     StocksActor.stocksActor().tell(watchStock, userActor);
                 });
 
                 // on close, tell the userActor to shutdown
                 in.onClose(() -> {
-                    final Option<String> none = Option.empty();
-                    StocksActor.stocksActor().tell(new UnwatchStock(none), userActor);
+                    StocksActor.stocksActor().tell(new Stock.Unwatch(Optional.empty()), userActor);
                     Akka.system().stop(userActor);
                 });
             }
