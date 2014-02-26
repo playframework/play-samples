@@ -23,7 +23,7 @@ public class FakeStockQuote implements StockQuote {
      */
     public static Deque<Double> history(int length) {
         FakeStockQuote stockQuote = new FakeStockQuote();
-        LinkedList<Double> prices = new LinkedList<Double>();
+        Deque<Double> prices = new LinkedList<Double>();
         prices.add((new Random()).nextDouble() * 800);
         for (int i = 1; i < length; i++) {
             prices.add(stockQuote.newPrice(prices.peekLast()));
