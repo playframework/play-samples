@@ -3,15 +3,17 @@ name := "reactive-stocks"
 version := "1.0-SNAPSHOT"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-actor" % "2.2.1",
-  "com.typesafe.akka" %% "akka-slf4j" % "2.2.1",
-  "org.webjars" %% "webjars-play" % "2.2.1",
+  javaWs,
+  //"com.typesafe.akka" %% "akka-actor" % "2.3.0-RC1",
+  //"com.typesafe.akka" %% "akka-slf4j" % "2.3.0-RC1",
+  "org.webjars" %% "webjars-play" % "2.3-SNAPSHOT",
   "org.webjars" % "bootstrap" % "2.3.1",
   "org.webjars" % "flot" % "0.8.0",
-  "com.typesafe.akka" %% "akka-testkit" % "2.2.1" % "test"
+  "org.specs2" %% "specs2-matcher-extra" % "2.3.7" % "test",
+  "com.typesafe.akka" %% "akka-testkit" % "2.3.0-RC1" % "test"
 )
 
-play.Project.playScalaSettings
+play.Project.playJavaSettings
 
 javacOptions ++= Seq("-source", "1.8")
 
