@@ -1,4 +1,4 @@
-name := "reactive-stocks"
+name := "reactive-stocks-java8"
 
 version := "1.0-SNAPSHOT"
 
