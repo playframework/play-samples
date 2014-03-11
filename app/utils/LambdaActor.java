@@ -10,7 +10,7 @@ import scala.runtime.BoxedUnit;
 
 /**
  * An actor that allows receive builder matches to be specified in the constructor,
- * avoiding boilerplate and Scala types. Also provides the Java actor context.
+ * avoiding boilerplate and Scala types.
  */
 public class LambdaActor extends AbstractActor {
 
