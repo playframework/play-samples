@@ -23,8 +23,4 @@ public class LambdaActor extends AbstractActor {
     public PartialFunction<Object, BoxedUnit> receive() {
         return receiveBuilder.build();
     }
-
-    public UntypedActorContext getContext() {
-        return (UntypedActorContext) context();
-    }
 }
