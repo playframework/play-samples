@@ -50,7 +50,7 @@
 <pre><code>$ ->
   ws = new WebSocket $("body").data("ws-url")
   ws.onmessage = (event) ->
-  message = JSON.parse event.data</code></pre>
+    message = JSON.parse event.data</code></pre>
         The message is parsed and depending on whether the message contains the stock history or a stock update, a stock chart is either created or updated.  The charts are created using the <strong>Flot</strong> JavaScript charting library.  Using CoffeeScript, jQuery, and Flot makes it easy to build Reactive UI in the browser that can receive WebSocket push events and update the UI in real-time.
     </p>
 </div>
@@ -85,13 +85,13 @@
         The client-side of Reactive Requests and Reactive Composition is no different than the non-Reactive model.  The browser makes an Ajax request to the server and then calls a JavaScript function when it receives a response.  In the Reactive Stocks application, when a stock chart is flipped over it makes the request for the stock's sentiments.  That is done using jQuery's <code>ajax</code> method in the <a href="#code/app/assets/javascripts/index.coffee" class="shortcut">index.coffee</a> file.  When the request returns data the <code>success</code> handler updates the UI.
     </p>
 </div>
-<div>
+<!-- <div>
     <h2>Inspect the App</h2>
 
     <p>
         Use <a href="#inspect" class="shortcut">Inspect</a> to see the requests that have been handled by the running Play application and to see the Akka Actors (if any) in the Actor System.  Drilling down into an individual request will provide details about the request.  Drilling down into an individual Actor will display a number of statistics and information about the Actor.  Deviations will show you any issues with your Actors.
     </p>
-</div>
+</div> -->
 <div>
     <h2>Further Learning</h2>
 
