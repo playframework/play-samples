@@ -23,30 +23,28 @@ public class Application extends Controller {
     }
 
     public static WebSocket<JsonNode> ws() {
-        return new WebSocket<JsonNode>() {
-            public void onReady(final WebSocket.In<JsonNode> in, final WebSocket.Out<JsonNode> out) {
-                // create a new UserActor and give it the default stocks to watch
-                final ActorRef userActor = Akka.system().actorOf(Props.create(UserActor.class, out));
-                List<String> defaultStocks = Play.application().configuration().getStringList("default.stocks");
-                for (String stockSymbol : defaultStocks) {
-                    StocksActor.stocksActor().tell(new Stock.Watch(stockSymbol), userActor);
-                }
-
-                // send all WebSocket message to the UserActor
-                in.onMessage(jsonNode -> {
-                    // parse the JSON into Stock.Watch
-                    Stock.Watch watchStock = new Stock.Watch(jsonNode.get("symbol").textValue());
-                    // send the watchStock message to the StocksActor
-                    StocksActor.stocksActor().tell(watchStock, userActor);
-                });
-
-                // on close, tell the userActor to shutdown
-                in.onClose(() -> {
-                    StocksActor.stocksActor().tell(new Stock.Unwatch(Optional.empty()), userActor);
-                    Akka.system().stop(userActor);
-                });
+        return WebSocket.whenReady((in, out) -> {
+            // create a new UserActor and give it the default stocks to watch
+            final ActorRef userActor = Akka.system().actorOf(Props.create(UserActor.class, out));
+            List<String> defaultStocks = Play.application().configuration().getStringList("default.stocks");
+            for (String stockSymbol : defaultStocks) {
+                StocksActor.stocksActor().tell(new Stock.Watch(stockSymbol), userActor);
             }
-        };
+
+            // send all WebSocket message to the UserActor
+            in.onMessage(jsonNode -> {
+                // parse the JSON into Stock.Watch
+                Stock.Watch watchStock = new Stock.Watch(jsonNode.get("symbol").textValue());
+                // send the watchStock message to the StocksActor
+                StocksActor.stocksActor().tell(watchStock, userActor);
+            });
+
+            // on close, tell the userActor to shutdown
+            in.onClose(() -> {
+                StocksActor.stocksActor().tell(new Stock.Unwatch(Optional.empty()), userActor);
+                Akka.system().stop(userActor);
+            });
+        });
     }
 
 }
