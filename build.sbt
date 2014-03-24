@@ -9,7 +9,7 @@ libraryDependencies ++= Seq(
   "org.webjars" %% "webjars-play" % playVersion.value,
   "org.webjars" % "bootstrap" % "2.3.1",
   "org.webjars" % "flot" % "0.8.0",
-  "com.typesafe.akka" %% "akka-testkit" % "2.3.0" % "test"
+  "com.typesafe.akka" %% "akka-testkit" % "2.3.1" % "test"
 )
 
 play.Project.playJavaSettings
