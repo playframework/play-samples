@@ -5,12 +5,12 @@
 <html>
 <head>
     <title>Reactive Stock News Dashboard</title>
-    <link rel='stylesheet' href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+    <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap.min.css")'>
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.min.css")">
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
-    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.flot.js"))'></script>
-    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.min.js")'></script>
+    <script type='text/javascript' src='@routes.Assets.at("lib/jquery/jquery.min.js")'></script>
+    <script type='text/javascript' src='@routes.Assets.at("lib/flot/jquery.flot.js")'></script>
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
 </head>
 <body data-ws-url="@routes.Application.ws.webSocketURL(request)">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -26,7 +26,7 @@
     </div>
 
     <div id="stocks" class="container">
-        
+
     </div>
 </body>
 </html>

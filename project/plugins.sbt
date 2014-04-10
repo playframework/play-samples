@@ -1,7 +1,7 @@
-resolvers ++= Seq(
-  Resolver.typesafeRepo("releases"),
-  Resolver.typesafeRepo("snapshots"),
-  Resolver.typesafeIvyRepo("snapshots")
-)
+resolvers += Resolver.typesafeRepo("releases")
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3-2014-03-25-58325fd-SNAPSHOT")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3-M1")
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.0.0-M2a")
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-coffeescript" % "1.0.0-M2a")

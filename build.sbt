@@ -1,20 +1,22 @@
+import play._
+import play.Keys._
+
+lazy val root = (project in file(".")).addPlugins(PlayScala)
+
 name := "reactive-stocks-java8"
 
 version := "1.0-SNAPSHOT"
 
-resolvers += Resolver.typesafeRepo("snapshots")
-
 libraryDependencies ++= Seq(
   javaWs,
-  "org.webjars" %% "webjars-play" % playVersion.value,
   "org.webjars" % "bootstrap" % "2.3.1",
   "org.webjars" % "flot" % "0.8.0",
   "com.typesafe.akka" %% "akka-testkit" % "2.3.1" % "test"
 )
 
-play.Project.playJavaSettings
-
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
+
+LessKeys.compress := true
 
 initialize := {
   val _ = initialize.value
