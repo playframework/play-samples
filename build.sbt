@@ -1,7 +1,4 @@
-import play._
-import play.Keys._
-
-lazy val root = (project in file(".")).addPlugins(PlayScala)
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 name := "reactive-stocks-java8"
 
