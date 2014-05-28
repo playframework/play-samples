@@ -7,6 +7,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 scalaVersion := "2.11.1"
 
 libraryDependencies ++= Seq(
+  ws, // Play's web services module
   "com.typesafe.akka" %% "akka-actor" % "2.3.3",
   "com.typesafe.akka" %% "akka-slf4j" % "2.3.3",
   "org.webjars" %% "webjars-play" % "2.3.0-RC1-1",
