@@ -8,7 +8,7 @@ libraryDependencies ++= Seq(
   javaWs,
   "org.webjars" % "bootstrap" % "2.3.1",
   "org.webjars" % "flot" % "0.8.0",
-  "com.typesafe.akka" %% "akka-testkit" % "2.3.1" % "test"
+  "com.typesafe.akka" %% "akka-testkit" % "2.3.3" % "test"
 )
 
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint")
