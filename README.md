@@ -8,7 +8,7 @@ You must have JDK 1.8 installed on your machine to run this, to take advantage o
 
 ## Generate Certificates
 
-To use HTTPS, you must have X.509 certificates.  Generating certificates can be painful, so all the scripts needed to generate the certificates needed are included in the `certs` directory.  For more detail, you can see the [Certificate Generation](http://www.playframework.com/documentation/2.3.x/CertificateGeneration) section in Play WS SSL.
+To use HTTPS, you must have X.509 certificates.  Generating certificates can be painful, so all the scripts needed to generate the certificates needed are included in the `scripts` directory.  For more detail, you can see the [Certificate Generation](http://www.playframework.com/documentation/2.3.x/CertificateGeneration) section in Play WS SSL.
 
 To generate certificates, run:
 
@@ -17,7 +17,7 @@ cd scripts/
 ./gencerts.sh
 ```
 
-and move all of the generated files into the `certs` directory:
+and move all of the generated files into the (newly created) `certs` directory:
 
 ```
 cd scripts
@@ -160,7 +160,13 @@ exceptions.KeyError - 'exponent'
 
 ## Turning on Client Authentication
 
-Now that you've verified that the server is running and can speak HTTPS, go into `./play` and change the `play.ssl.needClientAuth` setting from `false` to `true`.  Then restart the server.  You should see
+Now that you've verified that the server is running and can speak HTTPS, go into `./play` script and uncomment the `play.ssl.needClientAuth` setting:
+
+```
+JVM_OPTIONS="$JVM_OPTIONS -Dplay.ssl.needClientAuth=true"
+```
+
+Then restart the server.  You should see
 
 ```
    ECDHE-ECDSA-RC4-SHA             ClientCertificateRequested - Server requested a client certificate issued by one of the following CAs: '/C=US/ST=California/L=San Francisco/O=Example Company/OU=Example Org/CN=clientca'.
@@ -235,4 +241,7 @@ Now, to verify that it's only working because of the client's key, comment out t
 failure = java.net.ConnectException: Received fatal alert: bad_certificate to https://example.com:9443/
 ```
 
-That's it.
+## Conclusion
+
+That's it -- you have made Play work (with TLS 1.2 and ECDSA certificates).  Please look through the ./play script and the certificate generation scripts for more details, but that should be enough to get you started.
+
