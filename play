@@ -19,7 +19,7 @@ JVM_OPTIONS="$JVM_OPTIONS -Dhttps.port=9443"
 JVM_OPTIONS="$JVM_OPTIONS -Dplay.http.sslengineprovider=https.CustomSSLEngineProvider"
 
 # Enable this if you want to turn on client authentication
-JVM_OPTIONS="$JVM_OPTIONS -Dplay.ssl.needClientAuth=true"
+#JVM_OPTIONS="$JVM_OPTIONS -Dplay.ssl.needClientAuth=true"
 
 # Enable the handshake parameter to be extended for better protection.
 # http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#customizing_dh_keys

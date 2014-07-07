@@ -47,7 +47,7 @@ Now that you've generated the certificates and added `example.com` to `/etc/host
 
 This application is not run with `activator` -- you should run it with `./play` instead, as there are a number of system properties required to use it effectively.
 
-[Configuring HTTPS](http://www.playframework.com/documentation/2.3.x/ConfiguringHttps)
+The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](http://www.playframework.com/documentation/2.3.x/ConfiguringHttps).
 
 ```
 ./play run
