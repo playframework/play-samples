@@ -1,0 +1,51 @@
+<html>
+<head>
+    <title>Play TLS Example</title>
+</head>
+<body>
+<div>
+    <h2>Play TLS Example</h2>
+
+    <div>
+        <h4>Setup</h4>
+
+        <p>
+            Please see the <a href="#code/README.md" class="shortcut">README</a> for instructions on how to configure and run Play to run over HTTPS.<p>
+
+        <p>
+            In particular, note that you must have the following:
+        </p>
+
+        <ul>
+            <li>Be running JDK 1.8</li>
+            <li>Have generated certificates according to the README</li>
+            <li>Added <code>example.com</code> to <code>/etc/hosts</code></li>
+            <li>Be running the included <code><a href="#code/play" class="shortcut">./play</a></code> script</li>
+        </ul>
+    </div>
+
+    <div>
+        <h4>Server HTTPS</h4>
+
+        <p>
+            Play is capable of running HTTPS on the server.  Play's SSLEngine can be <a href="http://www.playframework.com/documentation/latest/ConfiguringHttps">configured</a> for client authentication.
+        </p>
+        <p>In this example, <a href="#code/app/https/CustomSSLEngineProvider.scala" class="shortcut">CustomSSLEngineProvider</a> does the work of setting up the SSLEngine's parameters.
+        </p>
+
+    </div>
+
+    <div>
+        <h4>Client HTTPS</h4>
+
+        <p>
+            Play can also talk to an HTTPS server using <a href="http://www.playframework.com/documentation/latest/ScalaWS">Play WS</a>, even using client authentication.  With some additional code, it can use Play WS to communicate outside of Play's application context.
+        </p>
+        <p>
+        In this example, the <a href="#code/app/Main.scala" class="shortcut">Main</a> class can be run independently, and will connect to the Play HTTPS server.  Play WS will use <a href="http://www.playframework.com/documentation/latest/WsSSL">Play WS SSL</a> configured with the <a href="#code/conf/ws.conf" class="shortcut">ws.conf</a> to set up the appropriate passwords and key stores.
+        </p>
+    </div>
+
+</div>
+</body>
+</html>
