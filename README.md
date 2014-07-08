@@ -220,7 +220,7 @@ ws.ssl {
 }
 ```
 
-`TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` is a strong cipher suite recommended by the NSA Suite B RFC.  (However, note that Bruce Schneier believes that the [ECC constants have been manipulated](https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html#c1675929) by the NSA.)  Note that you need the JCE Unlimited Policy files in order to use this cipher suite.
+`TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` is a strong cipher suite in the [Suite B Profile for Transport Layer Security](http://tools.ietf.org/html/rfc5430).  (Bruce Schneier believes that the [ECC constants have been manipulated](https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html#c1675929) by the NSA, but other options are limited at this point.)  Note that you need the JCE Unlimited Policy files in order to use this cipher suite -- see the Requirements section above if you haven't already installed it.
 
 Normally you would use [Play WS](http://www.playframework.com/documentation/2.3.x/ScalaWS) in the context of a Play application, but it can also be run directly from `Main`.
 
