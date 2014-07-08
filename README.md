@@ -6,6 +6,16 @@ This application shows how to use Play with SSL/TLS, using the Java Secure Socke
 
 You must have JDK 1.8 installed on your machine to run this, to take advantage of the new [security enhancements in JSSE](http://blog.ivanristic.com/2014/03/ssl-tls-improvements-in-java-8.html).
 
+* Go to the [Java downloads](http://www.oracle.com/technetwork/java/javase/downloads/index.html) page.
+* Search for "Java Platform (JDK) 8u5" and download the files.
+* Follow the [installation instructions](http://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html) for your platform.
+
+To use the `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` cipher suite, you must have the Unlimited Strength policy files installed:
+
+* Go to the [Java downloads](http://www.oracle.com/technetwork/java/javase/downloads/index.html) page.
+* Search for "Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files for JDK/JRE 8"
+* Install the policy files in `${java.home}/lib/security/`.
+
 ## Generate Certificates
 
 To use HTTPS, you must have X.509 certificates.  Generating certificates can be painful, so all the scripts needed to generate the certificates needed are included in the `scripts` directory.  For more detail, you can see the [Certificate Generation](http://www.playframework.com/documentation/2.3.x/CertificateGeneration) section in Play WS SSL.
@@ -208,8 +218,9 @@ ws.ssl {
     ]
   }
 }
-
 ```
+
+`TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` is a strong cipher suite recommended by the NSA Suite B RFC.  (However, note that Bruce Schneier believes that the [ECC constants have been manipulated](https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html#c1675929) by the NSA.)  Note that you need the JCE Unlimited Policy files in order to use this cipher suite.
 
 Normally you would use [Play WS](http://www.playframework.com/documentation/2.3.x/ScalaWS) in the context of a Play application, but it can also be run directly from `Main`.
 
