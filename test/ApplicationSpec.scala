@@ -62,7 +62,7 @@ class ApplicationSpec extends Specification {
         
         status(badDateFormat) must equalTo(BAD_REQUEST)
         contentAsString(badDateFormat) must contain("""<option value="1" selected="selected">Apple Inc.</option>""")
-        contentAsString(badDateFormat) must contain("""<input type="text" id="introduced" name="introduced" value="badbadbad" />""")
+        contentAsString(badDateFormat) must contain("""<input type="date" id="introduced" name="introduced" value="badbadbad" />""")
         contentAsString(badDateFormat) must contain("""<input type="text" id="name" name="name" value="FooBar" />""")
         
         
