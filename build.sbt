@@ -4,6 +4,8 @@ name := "reactive-stocks-java8"
 
 version := "1.0-SNAPSHOT"
 
+scalaVersion := "2.11.2"
+
 libraryDependencies ++= Seq(
   javaWs,
   "org.webjars" % "bootstrap" % "2.3.1",
