@@ -1,0 +1,9 @@
+Play 2.4 Macwire DI
+=================================
+
+This is an experiment for setting up a Play 2.4 project with Macwire.
+
+Works for
+* scala 2.11.2
+* macwire 0.7
+* play 2.4-SNAPSHOT

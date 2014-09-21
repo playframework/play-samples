@@ -1,0 +1,29 @@
+package controllers
+
+import models.Greeting
+import play.api.Play.current
+import play.api.i18n.Lang
+import play.api.libs.json.Json
+import play.api.mvc.{Action, Controller}
+import services.GreetingService
+
+class GreeterController(greetingService: GreetingService) extends Controller {
+
+  val greetingsList = Seq(
+    Greeting(1, greetingService.greetingMessage("en"), "sameer"),
+    Greeting(2, greetingService.greetingMessage("it"), "sam")
+  )
+
+  def greetings = Action {
+    Ok(Json.toJson(greetingsList))
+  }
+
+  def greetInMyLanguage = Action {
+    Ok(greetingService.greetingMessage(Lang.availables.head.language))
+  }
+
+  def index = Action {
+    Ok(views.html.index("hello"))
+  }
+
+}
