@@ -5,6 +5,7 @@ import play.api.Play.current
 import play.api.i18n.Lang
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
+import play.twirl.api.Html
 import services.GreetingService
 
 class GreeterController(greetingService: GreetingService) extends Controller {
@@ -23,7 +24,7 @@ class GreeterController(greetingService: GreetingService) extends Controller {
   }
 
   def index = Action {
-    Ok(views.html.index("hello"))
+    Ok(Html("<h1>Welcome</h1><p>Your new application is ready.</p>"))
   }
 
 }
