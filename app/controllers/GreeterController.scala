@@ -1,14 +1,13 @@
 package controllers
 
 import models.Greeting
-import play.api.Play.current
-import play.api.i18n.Lang
+import play.api.i18n.Langs
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import play.twirl.api.Html
 import services.GreetingService
 
-class GreeterController(greetingService: GreetingService) extends Controller {
+class GreeterController(greetingService: GreetingService, langs: Langs) extends Controller {
 
   val greetingsList = Seq(
     Greeting(1, greetingService.greetingMessage("en"), "sameer"),
@@ -20,7 +19,7 @@ class GreeterController(greetingService: GreetingService) extends Controller {
   }
 
   def greetInMyLanguage = Action {
-    Ok(greetingService.greetingMessage(Lang.availables.head.language))
+    Ok(greetingService.greetingMessage(langs.preferred(langs.availables).language))
   }
 
   def index = Action {
