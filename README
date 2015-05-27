@@ -6,5 +6,5 @@ This is an example project for setting up a Play 2.4 project with Macwire.
 Works for
 * scala 2.11.6
 * macwire 1.0.1
-* play 2.4.0-RC5
+* play 2.4.0
 * sbt 0.13.8
