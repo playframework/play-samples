@@ -12,6 +12,7 @@ import router.Routes
  */
 class GreetingApplicationLoader extends ApplicationLoader {
   def load(context: Context): Application = {
+    Logger.configure(context.environment)
     (new BuiltInComponentsFromContext(context) with GreetingComponents).application
   }
 }
