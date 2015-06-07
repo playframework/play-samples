@@ -6,11 +6,17 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.6"
 
+// scalaz-bintray resolver needed for specs2 library
+resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
+
 libraryDependencies ++= Seq(
   ws, // Play's web services module
-  "com.typesafe.akka" %% "akka-actor" % "2.3.11",
-  "com.typesafe.akka" %% "akka-slf4j" % "2.3.11",
-  "org.webjars" % "bootstrap" % "3.0.0",
-  "org.webjars" % "flot" % "0.8.0",
-  "com.typesafe.akka" %% "akka-testkit" % "2.3.11" % "test"
+  specs2 % Test,
+  "org.specs2" %% "specs2-matcher-extra" % "3.6" % Test,
+  "org.easytesting" % "fest-assert" % "1.4" % Test,
+  "com.typesafe.akka" %% "akka-testkit" % "2.3.11" % Test,
+  "org.webjars" % "bootstrap" % "2.3.2",
+  "org.webjars" % "flot" % "0.8.0"
 )
+
+routesGenerator := InjectedRoutesGenerator
