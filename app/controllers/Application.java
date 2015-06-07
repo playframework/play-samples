@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Optional;
 import play.libs.Akka;
-import play.libs.F;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.WebSocket;
@@ -18,11 +17,11 @@ import play.Play;
  */
 public class Application extends Controller {
 
-    public static Result index() {
+    public Result index() {
         return ok(views.html.index.render());
     }
 
-    public static WebSocket<JsonNode> ws() {
+    public WebSocket<JsonNode> ws() {
         return WebSocket.whenReady((in, out) -> {
             // create a new UserActor and give it the default stocks to watch
             final ActorRef userActor = Akka.system().actorOf(Props.create(UserActor.class, out));
