@@ -8,7 +8,6 @@ import play.libs.ws.WS;
 import play.libs.ws.WSResponse;
 import play.mvc.*;
 import play.Play;
-
 import static java.util.stream.Collectors.averagingDouble;
 import static java.util.stream.Collectors.toList;
 import static play.libs.F.Promise;
@@ -16,7 +15,7 @@ import static utils.Streams.stream;
 
 public class StockSentiment extends Controller {
 
-    public static Promise<Result> get(String symbol) {
+    public Promise<Result> get(String symbol) {
         return fetchTweets(symbol)
                .flatMap(StockSentiment::fetchSentiments)
                .map(StockSentiment::averageSentiment)
@@ -24,7 +23,7 @@ public class StockSentiment extends Controller {
                .recover(StockSentiment::errorResponse);
     }
 
-    public static Promise<List<String>> fetchTweets(String symbol) {
+    private static Promise<List<String>> fetchTweets(String symbol) {
         return WS.url(Play.application().configuration().getString("tweet.url"))
                  .setQueryParameter("q", "$" + symbol).get()
                  .filter(response -> response.getStatus() == Http.Status.OK)
@@ -33,17 +32,17 @@ public class StockSentiment extends Controller {
                                   .collect(toList()));
     }
 
-    public static Promise<List<JsonNode>> fetchSentiments(List<String> tweets) {
+    private static Promise<List<JsonNode>> fetchSentiments(List<String> tweets) {
         String url = Play.application().configuration().getString("sentiment.url");
         Stream<Promise<WSResponse>> sentiments = tweets.stream().map(text -> WS.url(url).post("text=" + text));
         return Promise.sequence(sentiments::iterator).map(StockSentiment::responsesAsJson);
     }
 
-    public static List<JsonNode> responsesAsJson(List<WSResponse> responses) {
+    private static List<JsonNode> responsesAsJson(List<WSResponse> responses) {
         return responses.stream().map(WSResponse::asJson).collect(toList());
     }
 
-    public static JsonNode averageSentiment(List<JsonNode> sentiments) {
+    private static JsonNode averageSentiment(List<JsonNode> sentiments) {
         double neg = collectAverage(sentiments, "neg");
         double neutral = collectAverage(sentiments, "neutral");
         double pos = collectAverage(sentiments, "pos");
@@ -58,11 +57,11 @@ public class StockSentiment extends Controller {
                          .put("pos", pos));
     }
 
-    public static double collectAverage(List<JsonNode> jsons, String label) {
+    private static double collectAverage(List<JsonNode> jsons, String label) {
         return jsons.stream().collect(averagingDouble(json -> json.findValue(label).asDouble()));
     }
 
-    public static Result errorResponse(Throwable ignored) {
+    private static Result errorResponse(Throwable ignored) {
         return internalServerError(Json.newObject().put("error", "Could not fetch the tweets"));
     }
 }
