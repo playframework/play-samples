@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ACTIVATOR=./activator
+ACTIVATOR=activator
 
 # Export the keystore password for use in ws.conf
 export KEY_PASSWORD=`cat certs/password`

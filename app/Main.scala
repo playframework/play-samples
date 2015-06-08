@@ -1,3 +1,4 @@
+import play.api.{Mode, Environment}
 import play.api.libs.ws._
 import play.api.libs.ws.ning._
 import play.api.libs.ws.ssl.debug.DebugConfiguration
@@ -13,15 +14,14 @@ import scala.util.{Failure, Success}
  */
 object Main {
 
-  def newClient(rawConfig: play.api.Configuration): NingWSClient = {
-    val classLoader = Thread.currentThread().getContextClassLoader
-    val parser = new DefaultWSConfigParser(rawConfig, classLoader)
+  def newClient(configuration: play.api.Configuration, environment: Environment): NingWSClient = {
+    val parser = new WSConfigParser(configuration, environment)
     val clientConfig = parser.parse()
-    clientConfig.ssl.map {
-      _.debug.map(new DebugConfiguration().configure)
-    }
-    val builder = new NingAsyncHttpClientConfigBuilder(clientConfig)
-    val client = new NingWSClient(builder.build())
+    val ningParser = new NingWSClientConfigParser(clientConfig, configuration, environment)
+    val ningClientConfig = ningParser.parse()
+    val builder = new NingAsyncHttpClientConfigBuilder(ningClientConfig)
+    val asyncHttpClientConfig = builder.build()
+    val client = new NingWSClient(asyncHttpClientConfig)
     client
   }
 
@@ -37,7 +37,8 @@ object Main {
     import scala.concurrent.ExecutionContext.Implicits.global
 
     val config = play.api.Configuration(ConfigFactory.load("ws.conf"))
-    val client = newClient(config)
+    val environment = play.api.Environment.simple(new java.io.File("./conf"), Mode.Dev)
+    val client = newClient(config, environment)
 
     val futureResponse = client.url("https://example.com:9443").get()
     futureResponse.onComplete {

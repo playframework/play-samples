@@ -44,7 +44,7 @@ You may have noticed that the name on the generated certificates is `example.com
 Rather than setting up a DNS entry or a remote server, we'll modify `/etc/hosts` to point to the local directory.
 
 ```
-$ sudo /etc/hosts
+$ sudo vi /etc/hosts
 ```
 
 ```
