@@ -9,7 +9,7 @@ import play.api.libs.json.{Json, JsValue}
 import play.api.Play
 import play.api.libs.json.JsString
 
-object StockSentiment extends Controller {
+class StockSentiment extends Controller {
 
   case class Tweet(text: String)
   

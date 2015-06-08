@@ -17,11 +17,11 @@ import scala.Option;
  */
 public class Application extends Controller {
 
-    public static Result index() {
+    public Result index() {
         return ok(views.html.index.render());
     }
 
-    public static WebSocket<JsonNode> ws() {
+    public WebSocket<JsonNode> ws() {
         return new WebSocket<JsonNode>() {
             public void onReady(final WebSocket.In<JsonNode> in, final WebSocket.Out<JsonNode> out) {
                 // create a new UserActor and give it the default stocks to watch

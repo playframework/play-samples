@@ -4,14 +4,13 @@ import akka.actor._
 import akka.testkit._
 
 import org.specs2.mutable._
-import org.specs2.time.NoTimeConversions
 
 import scala.concurrent.duration._
 import scala.collection.immutable.HashSet
 
 import utils.StockQuote
 
-class StockActorSpec extends TestkitExample with SpecificationLike with NoTimeConversions {
+class StockActorSpec extends TestkitExample with SpecificationLike {
 
   /*
    * Running tests in parallel (which would ordinarily be the default) will work only if no
