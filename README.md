@@ -1,4 +1,4 @@
-= Play 2.4 with Slick 3.0
+## Play 2.4 with Slick 3.0
 
 This is an example project that shows Play 2.4 working with Slick 3.0.
 
