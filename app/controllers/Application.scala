@@ -16,7 +16,7 @@ import models._
 /**
  * Manage a database of computers
  */
-object Application extends Controller { 
+class Application extends Controller { 
   
   /**
    * This result directly redirect to the application home.
