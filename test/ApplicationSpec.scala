@@ -16,11 +16,13 @@ class ApplicationSpec extends Specification {
   
   // --
   
+  val applicationController = new controllers.Application()
+  
   "Application" should {
     
     "redirect to the computer list on /" in {
       
-      val result = controllers.Application.index(FakeRequest())
+      val result = applicationController.index(FakeRequest())
       
       status(result) must equalTo(SEE_OTHER)
       redirectLocation(result) must beSome.which(_ == "/computers")
@@ -30,7 +32,7 @@ class ApplicationSpec extends Specification {
     "list computers on the the first page" in {
       running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
         
-        val result = controllers.Application.list(0, 2, "")(FakeRequest())
+        val result = applicationController.list(0, 2, "")(FakeRequest())
 
         status(result) must equalTo(OK)
         contentAsString(result) must contain("574 computers found")
@@ -41,7 +43,7 @@ class ApplicationSpec extends Specification {
     "filter computer by name" in {
       running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
         
-        val result = controllers.Application.list(0, 2, "Apple")(FakeRequest())
+        val result = applicationController.list(0, 2, "Apple")(FakeRequest())
 
         status(result) must equalTo(OK)
         contentAsString(result) must contain("13 computers found")
@@ -52,11 +54,11 @@ class ApplicationSpec extends Specification {
     "create new computer" in {
       running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
         
-        val badResult = controllers.Application.save(FakeRequest())
+        val badResult = applicationController.save(FakeRequest())
         
         status(badResult) must equalTo(BAD_REQUEST)
         
-        val badDateFormat = controllers.Application.save(
+        val badDateFormat = applicationController.save(
           FakeRequest().withFormUrlEncodedBody("name" -> "FooBar", "introduced" -> "badbadbad", "company" -> "1")
         )
         
@@ -66,7 +68,7 @@ class ApplicationSpec extends Specification {
         contentAsString(badDateFormat) must contain("""<input type="text" id="name" name="name" value="FooBar" />""")
         
         
-        val result = controllers.Application.save(
+        val result = applicationController.save(
           FakeRequest().withFormUrlEncodedBody("name" -> "FooBar", "introduced" -> "2011-12-24", "company" -> "1")
         )
         
@@ -74,7 +76,7 @@ class ApplicationSpec extends Specification {
         redirectLocation(result) must beSome.which(_ == "/computers")
         flash(result).get("success") must beSome.which(_ == "Computer FooBar has been created")
         
-        val list = controllers.Application.list(0, 2, "FooBar")(FakeRequest())
+        val list = applicationController.list(0, 2, "FooBar")(FakeRequest())
 
         status(list) must equalTo(OK)
         contentAsString(list) must contain("One computer found")
