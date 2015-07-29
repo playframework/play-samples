@@ -14,7 +14,7 @@ dist
 /RUNNING_PID
 .settings
 .target
-.cache
+.cache*
 bin
 .DS_Store
 activator-sbt-*-shim.sbt
