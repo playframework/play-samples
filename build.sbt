@@ -1,17 +1,12 @@
 name := """play-slick-3.0"""
 
-version := "1.0-SNAPSHOT"
-
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
-scalaVersion := "2.11.6"
+version := "1.1-SNAPSHOT"
 
 libraryDependencies ++= Seq(
-  "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
-  "com.zaxxer" % "HikariCP" % "2.3.8",
-  "com.typesafe.slick" %% "slick" % "3.0.0",
   specs2 % Test
 )
+
+scalaVersion in ThisBuild := "2.11.7"
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
@@ -22,3 +17,22 @@ resolvers += Resolver.sonatypeRepo("snapshots")
 // Play provides two styles of routers, one expects its actions to be injected, the
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
+
+initialize := {
+  val _ = initialize.value
+  if (sys.props("java.specification.version") != "1.8")
+    sys.error("Java 8 is required for this project.")
+}
+
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
+  .aggregate(
+    api, slick
+  ).dependsOn(api, slick)
+
+lazy val api = (project in file("modules/api"))
+  .enablePlugins(Common)
+
+lazy val slick = (project in file("modules/slick"))
+  .enablePlugins(Common)
+  .dependsOn(api)
