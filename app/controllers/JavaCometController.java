@@ -3,8 +3,6 @@
  */
  package controllers;
 
-import akka.NotUsed;
-import akka.stream.javadsl.Source;
 import play.libs.Comet;
 import play.mvc.Controller;
 import play.mvc.Http;
@@ -20,8 +18,11 @@ public class JavaCometController extends Controller implements JavaTicker {
     }
 
     public Result streamClock() {
-        final Source<String, NotUsed> source = getSource();
-        return ok().chunked(source.via(Comet.flow("parent.clockChanged"))).as(Http.MimeTypes.HTML);
+        return ok().chunked(getStringSource().via(Comet.string("parent.clockChanged"))).as(Http.MimeTypes.HTML);
+    }
+
+    public Result jsonClock() {
+        return ok().chunked(getJsonSource().via(Comet.json("parent.clockChanged"))).as(Http.MimeTypes.HTML);
     }
 
 }

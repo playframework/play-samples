@@ -25,10 +25,10 @@ class ScalaCometController @Inject() (materializer: Materializer) extends Contro
 
   def enumeratorClock() = Action {
     implicit val m = materializer
-    Results.Ok.chunked(enumerator &> Comet("parent.clockChanged")).as(ContentTypes.HTML)
+    Results.Ok.chunked(enumerator &> Comet("parent.clockChanged"))
   }
 
   def streamClock() = Action {
-    Ok.chunked(source via Comet.flow("parent.clockChanged", None)).as(ContentTypes.HTML)
+    Ok.chunked(stringSource via Comet.string("parent.clockChanged")).as(ContentTypes.HTML)
   }
 }

@@ -11,8 +11,8 @@
     <script type="text/javascript" charset="utf-8">
 
        if (!!window.EventSource) {
-         var source = new EventSource("@routes.JavaEventSourceController.streamClock()");
-         source.addEventListener('message', function(e) {
+         var stringSource = new EventSource("@routes.JavaEventSourceController.streamClock()");
+         stringSource.addEventListener('message', function(e) {
             $('#clock').html(e.data.replace(/(\d)/g, '<span>$1</span>'))
          });
        } else {

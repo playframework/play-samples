@@ -17,7 +17,7 @@ class ScalaEventSourceController extends Controller with ScalaTicker {
   }
 
   def streamClock() = Action {
-    Ok.chunked(source via EventSource.flow).as(ContentTypes.EVENT_STREAM)
+    Ok.chunked(stringSource via EventSource.flow).as(ContentTypes.EVENT_STREAM)
   }
 
 }
