@@ -1,5 +1,7 @@
 /.idea
 
+modules/play/logs/
+
 # sbt specific
 .cache
 .history
@@ -22,7 +24,6 @@ bin/
 .eclipse
 /lib/
 /logs/
-/modules
 /project/project
 /project/target
 /target

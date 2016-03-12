@@ -1,11 +1,14 @@
-package com.example.user
+package com.example.user.slick
 
 import com.github.tminglei.slickpg._
-import play.api.libs.json.{Json, JsValue}
+import play.api.libs.json.{JsValue, Json}
 
+/**
+ * A postgresql driver with extended Joda and JSON support.
+ */
 trait MyPostgresDriver extends ExPostgresDriver
 with PgArraySupport
-with PgDateSupport
+with PgDateSupportJoda
 with PgPlayJsonSupport {
 
   object MyAPI extends API with DateTimeImplicits with JsonImplicits {

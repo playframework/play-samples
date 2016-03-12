@@ -1,3 +1,0 @@
-
-
-create table "USERS" ("ID" VARCHAR NOT NULL PRIMARY KEY, "EMAIL" VARCHAR(1024));

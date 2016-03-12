@@ -1,7 +1,7 @@
-import sbt.{Resolver, AutoPlugin}
+import sbt.{AutoPlugin, Resolver}
 import sbt.plugins.JvmPlugin
 import sbt.Keys._
-import sbt._
+import sbt.{Resolver, _}
 
 object Common extends AutoPlugin {
   override def trigger = allRequirements
@@ -20,11 +20,16 @@ object Common extends AutoPlugin {
       "-Ywarn-numeric-widen",
       "-Xfatal-warnings"
     ),
+    resolvers ++= Seq(
+      "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases",
+       Resolver.sonatypeRepo("releases"),
+       Resolver.sonatypeRepo("snapshots")),
     libraryDependencies ++= Seq(
       "javax.inject" % "javax.inject" % "1",
+      "joda-time" % "joda-time" % "2.9.2",
+      "org.joda" % "joda-convert" % "1.2",
       "com.google.inject" % "guice" % "4.0"
     ),
     scalacOptions in Test ++= Seq("-Yrangepos")
   )
 }
-
