@@ -209,7 +209,7 @@ class Module(environment: Environment,
 
 There are a couple of providers to do a "lazy get" of the database and execution context from configuration:
 
-```
+```scala
 @Singleton
 class DatabaseProvider @Inject() (config: Config) extends Provider[slick.jdbc.JdbcBackend.Database] {
 
@@ -238,7 +238,6 @@ class SlickUserDAOExecutionContext(ec: ExecutionContext) extends UserDAOExecutio
 The DAO must be closed to release JDBC connections, and this is handled through `UserDAOCloseHook`:
 
 ```scala
-/** Closes database connections safely.  Important on dev restart. */
 class UserDAOCloseHook @Inject()(dao: UserDAO, lifecycle: ApplicationLifecycle) {
   private val logger = org.slf4j.LoggerFactory.getLogger("application")
 
@@ -280,4 +279,4 @@ project play
 run
 ```
 
-And that's it!
+And that's it!  Now when you go to http://localhost:9000, you will see the list of users in the database.
