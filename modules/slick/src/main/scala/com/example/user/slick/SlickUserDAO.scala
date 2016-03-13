@@ -19,7 +19,10 @@ import scala.language.implicitConversions
 @Singleton
 class SlickUserDAO @Inject()(db: Database) extends UserDAO with Tables {
 
-  import MyPostgresDriver.api._
+  // Use the custom postgresql driver.
+  override val profile: JdbcProfile = MyPostgresDriver
+
+  import profile.api._
 
   private val queryById = Compiled(
     (id: Rep[UUID]) => Users.filter(_.id === id))
@@ -52,14 +55,11 @@ class SlickUserDAO @Inject()(db: Database) extends UserDAO with Tables {
     db.close()
   }
 
-  private def userToUsersRow(user:User): UsersRow = {
+  private def userToUsersRow(user: User): UsersRow = {
     UsersRow(user.id, user.email, user.createdAt, user.updatedAt)
   }
 
-  private def usersRowToUser(usersRow:UsersRow): User = {
+  private def usersRowToUser(usersRow: UsersRow): User = {
     User(usersRow.id, usersRow.email, usersRow.createdAt, usersRow.updatedAt)
   }
-
-  // Use the custom postgresql driver.
-  override val profile: JdbcProfile = MyPostgresDriver
 }
