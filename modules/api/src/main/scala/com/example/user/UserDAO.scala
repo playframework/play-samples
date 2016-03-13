@@ -21,11 +21,14 @@ trait UserDAO {
 
   def create(user: User)(implicit ec: UserDAOExecutionContext): Future[Int]
 
-  def close()
+  def close(): Future[Unit]
 }
 
 /**
  * Implementation independent aggregate root.
+ *
+ * Note that this uses Joda Time classes and UUID, which are specifically mapped
+ * through the custom postgres driver.
  */
 case class User(id: UUID, email: String, createdAt: DateTime, updatedAt: Option[DateTime])
 

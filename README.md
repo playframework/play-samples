@@ -31,6 +31,46 @@ createuser --pwprompt myuser
 
 ### Database Migration
 
+The first thing to do is to run the database scripts.  Flyways has a number of advantages over Play Evolutions: it allows for both Java migrations and SQL migrations, and has command line support.  
+
+There are two migration scripts that will be run, `create_users` which adds a "users" table.
+
+```
+create table "users" (
+  "id" UUID PRIMARY KEY NOT NULL,
+  "email" VARCHAR(1024) NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL,
+  updated_at TIMESTAMPTZ NULL
+);
+```
+
+and `add_user` which inserts a single user into the table:
+
+```
+INSERT INTO "users" VALUES (
+  'd074bce8-a8ca-49ec-9225-a50ffe83dc2f',
+  'myuser@example.com',
+  (TIMESTAMPTZ '2013-03-26T17:50:06Z')
+  );
+```
+
+Flyway also allows repeatable migrations that can be Java or Scala based:
+
+```scala
+class R__AddCurrentUpdatedAtTimestamp extends JdbcMigration {
+
+  override def migrate(c: Connection): Unit = {
+    val statement = c.prepareStatement("UPDATE users SET updated_at = ?")
+    try {
+      statement.setTimestamp(1, new Timestamp(System.currentTimeMillis()))
+      statement.execute()
+    } finally {
+      statement.close()
+    }
+  }
+}
+```
+
 Start up `sbt` and go into the flyway module to run database migrations:
 
 ```
@@ -38,35 +78,60 @@ project flyway
 flywayMigrate
 ```
 
-Please see the [flyways documentation](http://flywaydb.org/getstarted/firststeps/sbt.html) for more details.
+See [the flyways documentation](http://flywaydb.org/getstarted/firststeps/sbt.html) for more details.
 
 ## User DAO
 
-The module is defined with a public API in "modules/api":
+The module is defined with a public API in "modules/api" -- everything returns a Future, and there are custom [Joda Time](http://www.joda.org/joda-time/) `DateTime` objects which aren't mapped through Slick by default.
 
 ```scala
-package com.example.user
-
 trait UserDAO {
 
-  def lookup(id: String): Future[Option[User]]
+  def lookup(id: UUID)(implicit ec: UserDAOExecutionContext): Future[Option[User]]
 
-  def all: Future[Seq[User]]
+  def all(implicit ec: UserDAOExecutionContext): Future[Seq[User]]
 
-  def update(user:User)
+  def update(user: User)(implicit ec: UserDAOExecutionContext): Future[Int]
 
-  def delete(id:String)
+  def delete(id: UUID)(implicit ec: UserDAOExecutionContext): Future[Int]
 
-  def create(user:User): Future[Int]
+  def create(user: User)(implicit ec: UserDAOExecutionContext): Future[Int]
 
+  def close(): Future[Unit]
 }
 
-case class User(id:String, email:String)
+case class User(id: UUID, email: String, createdAt: DateTime, updatedAt: Option[DateTime])
 
 trait UserDAOExecutionContext extends ExecutionContext
 ```
 
 ## Slick 
+
+The Postgres Driver for Slick is configured with [slick-pg](https://github.com/tminglei/slick-pg), which allows for custom mapping between PostgreSQL data types and Joda Time data types:
+
+```scala
+trait MyPostgresDriver extends ExPostgresDriver
+with PgArraySupport
+with PgDateSupportJoda
+with PgPlayJsonSupport {
+
+  object MyAPI extends API with DateTimeImplicits with JsonImplicits {
+    implicit val strListTypeMapper = new SimpleArrayJdbcType[String]("text").to(_.toList)
+    implicit val playJsonArrayTypeMapper =
+      new AdvancedArrayJdbcType[JsValue](pgjson,
+        (s) => utils.SimpleArrayUtils.fromString[JsValue](Json.parse(_))(s).orNull,
+        (v) => utils.SimpleArrayUtils.mkString[JsValue](_.toString())(v)
+      ).to(_.toList)
+  }
+
+  // jsonb support is in postgres 9.4.0 onward; for 9.3.x use "json"
+  def pgjson = "jsonb"
+
+  override val api = MyAPI
+}
+
+object MyPostgresDriver extends MyPostgresDriver
+```
 
 Slick configuration is simple, because the Slick [schema code generation](http://slick.typesafe.com/doc/3.1.0/code-generation.html) will look at the tables created from Flyway, and automatically generate a `Tables` trait.  From there, `UsersRow` and `Users` are created automatically.  Some conversion code is necessary to map between `UsersRow` and `User`. 
 
@@ -106,8 +171,8 @@ class SlickUserDAO @Inject()(db: Database) extends UserDAO with Tables {
     )
   }
 
-  def close(): Unit = {
-    db.close()
+  def close(): Future[Unit] = {
+    Future.successful(db.close())
   }
 
   private def userToUsersRow(user:User): UsersRow = {
@@ -119,6 +184,8 @@ class SlickUserDAO @Inject()(db: Database) extends UserDAO with Tables {
   }
 }
 ```
+
+Once `SlickUserDAO` is compiled, everything is available to be bound and run in the Play application.
 
 ## Play
 

@@ -51,8 +51,8 @@ class SlickUserDAO @Inject()(db: Database) extends UserDAO with Tables {
     )
   }
 
-  def close(): Unit = {
-    db.close()
+  def close(): Future[Unit] = {
+    Future.successful(db.close())
   }
 
   private def userToUsersRow(user: User): UsersRow = {
