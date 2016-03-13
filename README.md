@@ -279,4 +279,6 @@ project play
 run
 ```
 
-And that's it!  Now when you go to http://localhost:9000, you will see the list of users in the database.
+And that's it! 
+ 
+Now go to [http://localhost:9000](http://localhost:9000), and you will see the list of users in the database.
