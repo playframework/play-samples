@@ -1,29 +1,44 @@
 package controllers
 
-import java.nio.charset.StandardCharsets
 import javax.inject._
 
 import play.api.mvc._
-import services.creditcard.CreditCardEncryptionService
+import services.user.{UserInfo, UserInfoService}
 
 @Singleton
-class HomeController @Inject()(creditCardEncryptionService: CreditCardEncryptionService) extends Controller {
+class HomeController @Inject()(userInfoService: UserInfoService, cookieBaker: UserInfoCookieBaker) extends Controller {
 
-  // Save the nonce and the ciphertext to a database under normal circumstances.
-  // Nonces are not confidential, so if you need to, you can pass them in a
-  // query parameter for decryption.
-  //
-  // Note that nonces should never be reused (nonce stands for N="once")
-  val cipherPair: (CreditCardEncryptionService.Nonce, Array[Byte]) = {
-    val ccNumber = "4111 1111 1111 1111".getBytes(StandardCharsets.UTF_8)
-    creditCardEncryptionService.encrypt(ccNumber)
+  def index = Action { implicit request =>
+    val optionCookie = request.cookies.get(cookieBaker.COOKIE_NAME)
+    optionCookie match {
+      case Some(_) =>
+        // We can see that the user is a terrible person, and deserves no cake,
+        // but the user cannot see the information in the cookie.
+        try {
+          val userInfo = cookieBaker.decodeFromCookie(optionCookie)
+          if (userInfo.terriblePerson) {
+            Ok(views.html.index(s"I'm sorry.  All the cake is gone."))
+          } else {
+            Ok(views.html.index("Hi!  We have cake!"))
+          }
+        } catch {
+          case ex: RuntimeException if (ex.getMessage == "Decryption failed. Ciphertext failed verification") =>
+            // This happens if you're in dev mode without a persisted secret and you
+            // reload the app server, because a new secret is generated but you still have the
+            // old cookie.
+            val userInfoCookie = generateUserInfoCookie
+            Redirect(routes.HomeController.index()).withCookies(userInfoCookie)
+        }
+      case None =>
+        val userInfoCookie = generateUserInfoCookie
+        Redirect(routes.HomeController.index()).withCookies(userInfoCookie)
+    }
   }
 
-  def index = Action {
-    val decryptedBytes = creditCardEncryptionService.decrypt(cipherPair)
-    val ccNumber = new String(decryptedBytes, StandardCharsets.UTF_8)
-
-    Ok(views.html.index(ccNumber))
+  private def generateUserInfoCookie: Cookie = {
+    // Encode information about the user that we'd rather they not know
+    val userInfo = UserInfo(terriblePerson = true)
+    val userInfoCookie = cookieBaker.encodeAsCookie(userInfo)
+    userInfoCookie
   }
-
 }
