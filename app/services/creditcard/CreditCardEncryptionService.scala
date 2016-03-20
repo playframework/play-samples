@@ -75,16 +75,17 @@ object CreditCardEncryptionService {
   private val random = new Random()
 
   /**
-    * Nonce are used to ensure that encryption is completely random.  They should be generated once per encryption.
+    * Nonces are used to ensure that encryption is completely random.  They should be generated once per encryption.
     *
     * You can store and display nonces -- they are not confidential -- but you must never reuse them, ever.
     *
-    * If you have to repeat an unsuccessful operation, use a different createNonce.  Never retry with the same createNonce.
+    * We make it very easy to use nonces correctly here, because createNonce() is private, and encrypt() creates a
+    * nonce under the hood automatically and returns the nonce with the associated ciphertext.
     */
   class Nonce private[CreditCardEncryptionService](val raw: Array[Byte])
 
   /**
-    * Creates a random createNonce value.
+    * Creates a random nonce value.
     */
   private def createNonce(): Nonce = {
     import org.abstractj.kalium.NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_NONCEBYTES
@@ -92,7 +93,7 @@ object CreditCardEncryptionService {
   }
 
   /**
-    * Reconstitute a createNonce that has been stored with an individual ciphertext.
+    * Reconstitute a nonce that has been stored with a ciphertext.
     */
   def fromBytes(data: Array[Byte]): Nonce = {
     import org.abstractj.kalium.NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_NONCEBYTES
