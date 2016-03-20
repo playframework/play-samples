@@ -1,4 +1,4 @@
-= Play Kalium
+# Play Kalium
 
 This is an example application that shows how to use symmetric encryption with [Kalium](https://github.com/abstractj/kalium/).
 
@@ -8,12 +8,16 @@ The credit card encryption service is where you'll find the symmetric encryption
 
 To use the encryption service, add something like this to a controller:
 
-```
+## Controller Usage Example
+
+```scala
 @Singleton
 class HomeController @Inject()(creditCardEncryptionService: CreditCardEncryptionService) extends Controller {
 
-  // Save the nonce and the ciphertext to a database column.  Nonces are not confidential,
-  // so if you need to you, you can pass them in a query parameter for decryption.
+  // Save the nonce and the ciphertext to a database under normal circumstances. 
+  // Nonces are not confidential, so if you need to, you can pass them in a
+  // query parameter for decryption.
+  //
   // Note that nonces should never be reused (nonce stands for N="once")
   val cipherPair: (Nonce, Array[Byte]) = {
     val ccNumber = "4111 1111 1111 1111".getBytes(StandardCharsets.UTF_8)

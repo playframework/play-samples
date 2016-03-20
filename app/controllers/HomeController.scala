@@ -9,8 +9,10 @@ import services.creditcard.CreditCardEncryptionService
 @Singleton
 class HomeController @Inject()(creditCardEncryptionService: CreditCardEncryptionService) extends Controller {
 
-  // Save the nonce and the ciphertext to a database column.  Nonces are not confidential,
-  // so if you need to you, you can pass them in a query parameter for decryption.
+  // Save the nonce and the ciphertext to a database under normal circumstances.
+  // Nonces are not confidential, so if you need to, you can pass them in a
+  // query parameter for decryption.
+  //
   // Note that nonces should never be reused (nonce stands for N="once")
   val cipherPair: (CreditCardEncryptionService.Nonce, Array[Byte]) = {
     val ccNumber = "4111 1111 1111 1111".getBytes(StandardCharsets.UTF_8)
