@@ -12,7 +12,7 @@ To use the encryption service, add something like this to a controller:
 @Singleton
 class HomeController @Inject()(creditCardEncryptionService: CreditCardEncryptionService) extends Controller {
 
-  // Save the createNonce and the ciphertext to a database column.  Nonces are not confidential,
+  // Save the nonce and the ciphertext to a database column.  Nonces are not confidential,
   // so if you need to you, you can pass them in a query parameter for decryption.
   // Note that nonces should never be reused (nonce stands for N="once")
   val cipherPair: (Nonce, Array[Byte]) = {
