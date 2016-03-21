@@ -15,8 +15,6 @@ import play.api.libs.json.{JsResult, Json}
 @Singleton
 class UserInfoServiceImpl @Inject()(configuration: Configuration) extends UserInfoService {
 
-  import UserInfoServiceImpl._
-
   private val encoder = org.abstractj.kalium.encoders.Encoder.HEX
 
   private val logger = org.slf4j.LoggerFactory.getLogger(this.getClass)
@@ -52,7 +50,7 @@ class UserInfoServiceImpl @Inject()(configuration: Configuration) extends UserIn
   }
 
   override def encrypt(userInfo: UserInfo): Map[String, String] = {
-    val nonce = createNonce()
+    val nonce = Nonce.createNonce()
     val json = Json.toJson(userInfo)
     val stringData = Json.stringify(json)
     val rawData = stringData.getBytes(StandardCharsets.UTF_8)
@@ -65,7 +63,7 @@ class UserInfoServiceImpl @Inject()(configuration: Configuration) extends UserIn
 
   override def decrypt(data: Map[String, String]): UserInfo = {
     val nonceHex = data("nonce")
-    val nonce = nonceFromBytes(encoder.decode(nonceHex))
+    val nonce = Nonce.nonceFromBytes(encoder.decode(nonceHex))
     val cipherTextHex = data("c")
     val cipherText = encoder.decode(cipherTextHex)
     val rawData = box.decrypt(nonce.raw, cipherText)
@@ -77,22 +75,22 @@ class UserInfoServiceImpl @Inject()(configuration: Configuration) extends UserIn
 
 }
 
-object UserInfoServiceImpl {
+/**
+  * Nonces are used to ensure that encryption is completely random.  They should be generated once per encryption.
+  *
+  * You can store and display nonces -- they are not confidential -- but you must never reuse them, ever.
+  */
+private[user] class Nonce(val raw: Array[Byte]) extends AnyVal
+
+private[user] object Nonce {
 
   // No real advantage over java.secure.SecureRandom, or a call to /dev/urandom
   private val random = new Random()
 
   /**
-    * Nonces are used to ensure that encryption is completely random.  They should be generated once per encryption.
-    *
-    * You can store and display nonces -- they are not confidential -- but you must never reuse them, ever.
-    */
-  class Nonce private[UserInfoServiceImpl](val raw: Array[Byte]) extends AnyVal
-
-  /**
     * Creates a random nonce value.
     */
-  private def createNonce(): Nonce = {
+  def createNonce(): Nonce = {
     import org.abstractj.kalium.NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_NONCEBYTES
     new Nonce(random.randomBytes(XSALSA20_POLY1305_SECRETBOX_NONCEBYTES))
   }
@@ -100,7 +98,7 @@ object UserInfoServiceImpl {
   /**
     * Reconstitute a nonce that has been stored with a ciphertext.
     */
-  private def nonceFromBytes(data: Array[Byte]): Nonce = {
+  def nonceFromBytes(data: Array[Byte]): Nonce = {
     import org.abstractj.kalium.NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_NONCEBYTES
     if (data == null || data.length != XSALSA20_POLY1305_SECRETBOX_NONCEBYTES) {
       throw new IllegalArgumentException("This nonce has an invalid size: " + data.length)
