@@ -2,7 +2,7 @@
 
 This is an example project showing a sample Play application that use Log4J 2 instead of using Logback.
 
-Please see [Using a custom logging framework](https://www.playframework.com/documentation/2.5.x/SettingsLogger#Using-a-Custom-Logging-Framework) in the Play documentation for more details:
+Please see [Using a custom logging framework](https://www.playframework.com/documentation/2.5.x/SettingsLogger#Using-a-Custom-Logging-Framework) in the Play documentation for more details.
 
 ## Running
 
