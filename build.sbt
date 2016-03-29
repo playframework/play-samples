@@ -2,6 +2,7 @@ name := """play-2.5-log4j2"""
 
 version := "1.0-SNAPSHOT"
 
+// Run with activator -Dlog4j.configurationFile=conf/log4j2.xml
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .disablePlugins(PlayLogback)

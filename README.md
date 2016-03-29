@@ -1,13 +1,22 @@
 # Play using Log4j 2
 
-This is an example project showing a sample
+This is an example project showing a sample Play application that use Log4J 2 instead of using Logback.
+
+Please see [Using a custom logging framework](https://www.playframework.com/documentation/2.5.x/SettingsLogger#Using-a-Custom-Logging-Framework) in the Play documentation for more details:
 
 ## Running
 
-Note that you must define the `log4j.configurationFile` explicitly when the JVM is loaded.
+You must define the `log4j.configurationFile` explicitly when the JVM is loaded using either `activator` or `sbt`:
 
 ```
 activator -Dlog4j.configurationFile=conf/log4j2.xml
+```
+
+If you do not run with `log4j.configurationFile` loaded, you will see this error:
+
+
+```
+ERROR StatusLogger No log4j2 configuration file found. Using default configuration: logging only errors to the console.
 ```
 
 After you define the log4j system property, running the application should look like this:
