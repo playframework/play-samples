@@ -12,7 +12,7 @@ import play.data.validation.*;
  * Company entity managed by Ebean
  */
 @Entity 
-public class Company extends Model {
+public class Company extends com.avaje.ebean.Model {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public class Company extends Model {
     /**
      * Generic query helper for entity Company with id Long
      */
-    public static Model.Finder<Long,Company> find = new Model.Finder<Long,Company>(Long.class, Company.class);
+    public static Find<Long,Company> find = new Find<Long,Company>(){};
 
     public static Map<String,String> options() {
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();

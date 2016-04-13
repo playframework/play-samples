@@ -3,7 +3,7 @@ package models;
 import java.util.*;
 import javax.persistence.*;
 
-import play.db.ebean.*;
+import com.avaje.ebean.Model;
 import play.data.format.*;
 import play.data.validation.*;
 
@@ -35,10 +35,10 @@ public class Computer extends Model {
     /**
      * Generic query helper for entity Computer with id Long
      */
-    public static Finder<Long,Computer> find = new Finder<Long,Computer>(Long.class, Computer.class); 
+    public static Find<Long,Computer> find = new Find<Long,Computer>(){};
     
     /**
-     * Return a page of computer
+     * Return a paged list of computer
      *
      * @param page Page to display
      * @param pageSize Number of computers per page
@@ -46,15 +46,13 @@ public class Computer extends Model {
      * @param order Sort order (either or asc or desc)
      * @param filter Filter applied on the name column
      */
-    public static Page<Computer> page(int page, int pageSize, String sortBy, String order, String filter) {
-        return 
+    public static PagedList<Computer> page(int page, int pageSize, String sortBy, String order, String filter) {
+        return
             find.where()
                 .ilike("name", "%" + filter + "%")
                 .orderBy(sortBy + " " + order)
                 .fetch("company")
-                .findPagingList(pageSize)
-                .setFetchAhead(false)
-                .getPage(page);
+                .findPagedList(page, pageSize);
     }
     
 }

@@ -1,4 +1,4 @@
-@(currentPage: com.avaje.ebean.Page[Computer], currentSortBy: String, currentOrder: String, currentFilter: String)
+@(currentPage: com.avaje.ebean.PagedList[Computer], currentSortBy: String, currentOrder: String, currentFilter: String)
 
 @****************************************
 * Helper generating navigation links    *
@@ -22,7 +22,7 @@
     }
     
     // Generate the link
-    routes.Application.list(newPage, sortBy, order, currentFilter)
+    routes.HomeController.list(newPage, sortBy, order, currentFilter)
     
 }
 
@@ -52,7 +52,7 @@
             <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
         </form>
         
-        <a class="btn success" id="add" href="@routes.Application.create()">Add a new computer</a>
+        <a class="btn success" id="add" href="@routes.HomeController.create()">Add a new computer</a>
         
     </div>
     
@@ -77,7 +77,7 @@
 
                 @for(computer <- currentPage.getList) {
                     <tr>
-                        <td><a href="@routes.Application.edit(computer.id)">@computer.name</a></td>
+                        <td><a href="@routes.HomeController.edit(computer.id)">@computer.name</a></td>
                         <td>
                             @if(computer.introduced == null) {
                                 <em>-</em>
