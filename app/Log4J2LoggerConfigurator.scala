@@ -10,7 +10,7 @@ class Log4J2LoggerConfigurator extends LoggerConfigurator {
 
   override def init(rootPath: File, mode: Mode.Mode): Unit = {
     val properties = Map("application.home" -> rootPath.getAbsolutePath)
-    val resourceName = if (mode == Mode.Dev) "log4j2-dev.xml" else "log4j2.xml"
+    val resourceName = "log4j2.xml"
     val resourceUrl = Option(this.getClass.getClassLoader.getResource(resourceName))
     configure(properties, resourceUrl)
   }

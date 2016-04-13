@@ -4,7 +4,13 @@ This is an example project showing a sample Play application that use Log4J 2 in
 
 Please see [Using a custom logging framework](https://www.playframework.com/documentation/2.5.x/SettingsLogger#Using-a-Custom-Logging-Framework) in the Play documentation for more details.
 
-## Running
+## Running in Production
+
+This application will package everything correctly when you run `activator dist` and run the packaged script.
+
+There is an oustanding bug where apparently this didn't work: please add comments to https://github.com/playframework/playframework/issues/6017 if this doesn't work for you.
+
+## Running in Development
 
 You must define the `log4j.configurationFile` explicitly when the JVM is loaded using either `activator` or `sbt`:
 
