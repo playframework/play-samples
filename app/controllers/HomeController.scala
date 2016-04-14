@@ -1,27 +1,26 @@
 package controllers
 
-import play.api._
-import play.api.mvc._
-import play.api.data._
-import play.api.data.Forms._
+import javax.inject.Inject
 
-import play.api.Play.current
-import play.api.i18n.Messages.Implicits._
-
-import anorm._
-
-import views._
 import models._
+import play.api.data.Forms._
+import play.api.data._
+import play.api.i18n._
+import play.api.mvc._
+import views._
 
 /**
  * Manage a database of computers
  */
-class Application extends Controller { 
-  
+class HomeController @Inject() (computerService: ComputerService,
+                                companyService: CompanyService,
+                                val messagesApi: MessagesApi)
+  extends Controller with I18nSupport {
+
   /**
    * This result directly redirect to the application home.
    */
-  val Home = Redirect(routes.Application.list(0, 2, ""))
+  val Home = Redirect(routes.HomeController.list(0, 2, ""))
   
   /**
    * Describe the computer form (used in both edit and create screens).
@@ -52,7 +51,7 @@ class Application extends Controller {
    */
   def list(page: Int, orderBy: Int, filter: String) = Action { implicit request =>
     Ok(html.list(
-      Computer.list(page = page, orderBy = orderBy, filter = ("%"+filter+"%")),
+      computerService.list(page = page, orderBy = orderBy, filter = ("%"+filter+"%")),
       orderBy, filter
     ))
   }
@@ -63,8 +62,8 @@ class Application extends Controller {
    * @param id Id of the computer to edit
    */
   def edit(id: Long) = Action {
-    Computer.findById(id).map { computer =>
-      Ok(html.editForm(id, computerForm.fill(computer), Company.options))
+    computerService.findById(id).map { computer =>
+      Ok(html.editForm(id, computerForm.fill(computer), companyService.options))
     }.getOrElse(NotFound)
   }
   
@@ -75,9 +74,9 @@ class Application extends Controller {
    */
   def update(id: Long) = Action { implicit request =>
     computerForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(html.editForm(id, formWithErrors, Company.options)),
+      formWithErrors => BadRequest(html.editForm(id, formWithErrors, companyService.options)),
       computer => {
-        Computer.update(id, computer)
+        computerService.update(id, computer)
         Home.flashing("success" -> "Computer %s has been updated".format(computer.name))
       }
     )
@@ -87,7 +86,7 @@ class Application extends Controller {
    * Display the 'new computer form'.
    */
   def create = Action {
-    Ok(html.createForm(computerForm, Company.options))
+    Ok(html.createForm(computerForm, companyService.options))
   }
   
   /**
@@ -95,9 +94,9 @@ class Application extends Controller {
    */
   def save = Action { implicit request =>
     computerForm.bindFromRequest.fold(
-      formWithErrors => BadRequest(html.createForm(formWithErrors, Company.options)),
+      formWithErrors => BadRequest(html.createForm(formWithErrors, companyService.options)),
       computer => {
-        Computer.insert(computer)
+        computerService.insert(computer)
         Home.flashing("success" -> "Computer %s has been created".format(computer.name))
       }
     )
@@ -107,7 +106,7 @@ class Application extends Controller {
    * Handle computer deletion.
    */
   def delete(id: Long) = Action {
-    Computer.delete(id)
+    computerService.delete(id)
     Home.flashing("success" -> "Computer has been deleted")
   }
 

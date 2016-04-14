@@ -9,12 +9,9 @@ resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 libraryDependencies ++= Seq(
   jdbc,
   evolutions,
-  specs2 % Test,
-  "com.typesafe.play" %% "anorm" % "2.4.0",
-  "org.webjars" % "jquery" % "2.1.4",
-  "org.webjars" % "bootstrap" % "3.3.5"
-)     
+  "com.adrianhurt" %% "play-bootstrap" % "1.0-P25-B3",
+  "com.typesafe.play" %% "anorm" % "2.5.0",
+  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.0" % "test"
+)
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
-routesGenerator := InjectedRoutesGenerator

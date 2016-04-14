@@ -1,6 +1,6 @@
 <configuration>
 
-  <conversionRule conversionWord="coloredLevel" converterClass="play.api.Logger$ColoredLevel" />
+  <conversionRule conversionWord="coloredLevel" converterClass="play.api.libs.logback.ColoredLevel" />
 
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
     <file>logs/application.log</file>
@@ -22,7 +22,9 @@
   <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF" />
   <logger name="com.avaje.ebeaninternal.server.core.XmlConfigLoader" level="OFF" />
   <logger name="com.avaje.ebeaninternal.server.lib.BackgroundThread" level="OFF" />
-  <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF" />
+
+  <logger name="com.gargoylesoftware.htmlunit" level="ERROR" />
+  <logger name="org.apache.http.client.protocol" level="ERROR" />
 
   <root level="INFO">
     <appender-ref ref="STDOUT" />

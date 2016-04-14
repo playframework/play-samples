@@ -1,34 +1,29 @@
 @(computerForm: Form[Computer], companies: Seq[(String, String)])(implicit messages: Messages)
 
-@import helper._
-
-@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.f) } 
+@import b3.vertical.fieldConstructor
 
 @main {
     
     <h1>Add a computer</h1>
     
-    @form(routes.Application.save()) {
+    @b3.form(routes.HomeController.save()) {
         
         <fieldset>
-        
-            @inputText(computerForm("name"), '_label -> "Computer name", '_help -> "")
-            @inputDate(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
-            @inputDate(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
+            @b3.text(computerForm("name"), '_label -> "Computer name", '_help -> "")
+            @b3.date(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
+            @b3.date(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
 
-            @select(
+            @b3.select(
                 computerForm("company"), 
                 companies, 
                 '_label -> "Company", '_default -> "-- Choose a company --",
                 '_showConstraints -> false
             )
-            
-
         </fieldset>
         
         <div class="actions">
             <input type="submit" value="Create this computer" class="btn primary"> or 
-            <a href="@routes.Application.list()" class="btn">Cancel</a> 
+            <a href="@routes.HomeController.list()" class="btn">Cancel</a>
         </div>
         
     }

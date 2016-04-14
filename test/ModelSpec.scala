@@ -1,13 +1,14 @@
-import org.specs2.mutable._
-import org.specs2.runner._
-import org.junit.runner._
-
+import models.ComputerService
 import play.api.test._
 import play.api.test.Helpers._
+import org.scalatestplus.play._
 
-@RunWith(classOf[JUnitRunner])
-class ModelSpec extends Specification {
-  
+import org.scalatest.OptionValues._
+
+class ModelSpec extends PlaySpec with OneAppPerSuite {
+
+  var computerService: ComputerService = app.injector.instanceOf(classOf[ComputerService])
+
   import models._
 
   // -- Date helpers
@@ -19,38 +20,28 @@ class ModelSpec extends Specification {
   "Computer model" should {
     
     "be retrieved by id" in {
-      running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
-        
-        val Some(macintosh) = Computer.findById(21)
+        val macintosh = computerService.findById(21).get
       
-        macintosh.name must equalTo("Macintosh")
-        macintosh.introduced must beSome.which(dateIs(_, "1984-01-24"))  
-        
-      }
+        macintosh.name must equal("Macintosh")
+        macintosh.introduced.value must matchPattern { case date:java.util.Date if dateIs(date, "1984-01-24") => }
     }
     
     "be listed along its companies" in {
-      running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
-        
-        val computers = Computer.list()
 
-        computers.total must equalTo(574)
+        val computers = computerService.list()
+
+        computers.total must equal(574)
         computers.items must have length(10)
-
-      }
     }
     
     "be updated if needed" in {
-      running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+
+        computerService.update(21, Computer(name="The Macintosh", introduced=None, discontinued=None, companyId=Some(1)))
         
-        Computer.update(21, Computer(name="The Macintosh", introduced=None, discontinued=None, companyId=Some(1)))
+        val macintosh = computerService.findById(21).get
         
-        val Some(macintosh) = Computer.findById(21)
-        
-        macintosh.name must equalTo("The Macintosh")
-        macintosh.introduced must beNone
-        
-      }
+        macintosh.name must equal("The Macintosh")
+        macintosh.introduced mustBe None
     }
     
   }
