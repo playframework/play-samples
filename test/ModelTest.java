@@ -1,9 +1,10 @@
-import org.junit.*;
-
 import java.util.*;
 
+import org.junit.*;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+
 import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
 
 import models.*;
 
@@ -19,9 +20,9 @@ public class ModelTest {
     public void findById() {
         running(fakeApplication(), new Runnable() {
            public void run() {
-               Computer macintosh = Computer.find.byId(21l);
-               assertThat(macintosh.name).isEqualTo("Macintosh");
-               assertThat(formatted(macintosh.introduced)).isEqualTo("1984-01-24");
+               Computer macintosh = Computer.find.byId(21L);
+               assertThat(macintosh.name, equalTo("Macintosh"));
+               assertThat(formatted(macintosh.introduced), equalTo("1984-01-24"));
            }
         });
     }
@@ -30,9 +31,9 @@ public class ModelTest {
     public void pagination() {
         running(fakeApplication(inMemoryDatabase()), new Runnable() {
            public void run() {
-               Page<Computer> computers = Computer.page(1, 20, "name", "ASC", "");
-               assertThat(computers.getTotalRowCount()).isEqualTo(574);
-               assertThat(computers.getList().size()).isEqualTo(20);
+               PagedList<Computer> computers = Computer.page(1, 20, "name", "ASC", "");
+               assertThat(computers.getTotalRowCount(), equalTo(574));
+               assertThat(computers.getList().size(), equalTo(20));
            }
         });
     }

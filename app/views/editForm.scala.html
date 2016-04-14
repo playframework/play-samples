@@ -2,21 +2,21 @@
 
 @import helper._
 
-@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrapInput.render) } 
+@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
 
 @main {
     
     <h1>Edit computer</h1>
     
-    @form(routes.Application.update(id)) {
+    @b3.form(routes.HomeController.update(id)) {
         
         <fieldset>
         
-            @inputText(computerForm("name"), '_label -> "Computer name", '_help -> "")
-            @inputDate(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
-            @inputDate(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
+            @b3.text(computerForm("name"), '_label -> "Computer name", '_help -> "")
+            @b3.date(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
+            @b3.date(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
             
-            @select(
+            @b3.select(
                 computerForm("company.id"), 
                 options(Company.options), 
                 '_label -> "Company", '_default -> "-- Choose a company --",
@@ -27,12 +27,12 @@
         
         <div class="actions">
             <input type="submit" value="Save this computer" class="btn primary"> or 
-            <a href="@routes.Application.list()" class="btn">Cancel</a> 
+            <a href="@routes.HomeController.list()" class="btn">Cancel</a>
         </div>
         
     }
     
-    @form(routes.Application.delete(id), 'class -> "topRight") {
+    @b3.form(routes.HomeController.delete(id), 'class -> "topRight") {
         <input type="submit" value="Delete this computer" class="btn danger">
     }
     

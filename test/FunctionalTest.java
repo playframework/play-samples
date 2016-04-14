@@ -1,90 +1,108 @@
-import org.junit.*;
+import com.google.inject.*;
 
 import java.util.*;
 
+import org.junit.runners.MethodSorters;
+import play.*;
+import play.inject.guice.*;
 import play.mvc.*;
 
-import static play.test.Helpers.*;
-import static org.fest.assertions.Assertions.*;
+import play.test.*;
 
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import org.junit.*;
+
+import javax.inject.Inject;
+
+// Use FixMethodOrder to run the tests sequentially
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FunctionalTest {
+
+    @Inject
+    Application application;
+
+    @Before
+    public void setup() {
+        Module testModule = new AbstractModule() {
+            @Override
+            public void configure() {
+                // Install custom test binding here
+            }
+        };
+
+        GuiceApplicationBuilder builder = new GuiceApplicationLoader()
+                .builder(new ApplicationLoader.Context(Environment.simple()))
+                .overrides(testModule);
+        Guice.createInjector(builder.applicationModule()).injectMembers(this);
+
+        Helpers.start(application);
+    }
+
+    @After
+    public void teardown() {
+        Helpers.stop(application);
+    }
 
     @Test
     public void redirectHomePage() {
-        running(fakeApplication(), new Runnable() {
-           public void run() {
-               Result result = callAction(controllers.routes.ref.Application.index());
+        Result result = Helpers.route(application, controllers.routes.HomeController.index());
 
-               assertThat(status(result)).isEqualTo(SEE_OTHER);
-               assertThat(redirectLocation(result)).isEqualTo("/computers");
-           }
-        });
+        assertThat(result.status(), equalTo(Helpers.SEE_OTHER));
+        assertThat(result.redirectLocation().get(), equalTo("/computers"));
     }
     
     @Test
     public void listComputersOnTheFirstPage() {
-        running(fakeApplication(), new Runnable() {
-           public void run() {
-               Result result = callAction(controllers.routes.ref.Application.list(0, "name", "asc", ""));
+        Result result =  Helpers.route(application, controllers.routes.HomeController.list(0, "name", "asc", ""));
 
-               assertThat(status(result)).isEqualTo(OK);
-               assertThat(contentAsString(result)).contains("574 computers found");
-           }
-        });
+        assertThat(result.status(), equalTo(Helpers.OK));
+        assertThat(Helpers.contentAsString(result), containsString("574 computers found"));
     }
     
     @Test
     public void filterComputerByName() {
-        running(fakeApplication(), new Runnable() {
-           public void run() {
-               Result result = callAction(controllers.routes.ref.Application.list(0, "name", "asc", "Apple"));
+        Result result = Helpers.route(application, controllers.routes.HomeController.list(0, "name", "asc", "Apple"));
 
-               assertThat(status(result)).isEqualTo(OK);
-               assertThat(contentAsString(result)).contains("13 computers found");
-           }
-        });
+        assertThat(result.status(), equalTo(Helpers.OK));
+        assertThat(Helpers.contentAsString(result), containsString("13 computers found"));
     }
     
     @Test
     public void createANewComputer() {
-        running(fakeApplication(), new Runnable() {
-            public void run() {
-                Result result = callAction(controllers.routes.ref.Application.save());
+        Result result = Helpers.route(application, controllers.routes.HomeController.save());
 
-                assertThat(status(result)).isEqualTo(BAD_REQUEST);
-                
-                Map<String,String> data = new HashMap<String,String>();
-                data.put("name", "FooBar");
-                data.put("introduced", "badbadbad");
-                data.put("company.id", "1");
-                
-                result = callAction(
-                    controllers.routes.ref.Application.save(), 
-                    fakeRequest().withFormUrlEncodedBody(data)
-                );
-                
-                assertThat(status(result)).isEqualTo(BAD_REQUEST);
-                assertThat(contentAsString(result)).contains("<option value=\"1\" selected=\"selected\">Apple Inc.</option>");
-                assertThat(contentAsString(result)).contains("<input type=\"date\" id=\"introduced\" name=\"introduced\" value=\"badbadbad\" />");
-                assertThat(contentAsString(result)).contains("<input type=\"text\" id=\"name\" name=\"name\" value=\"FooBar\" />");
-                
-                data.put("introduced", "2011-12-24");
-                
-                result = callAction(
-                    controllers.routes.ref.Application.save(), 
-                    fakeRequest().withFormUrlEncodedBody(data)
-                );
-                
-                assertThat(status(result)).isEqualTo(SEE_OTHER);
-                assertThat(redirectLocation(result)).isEqualTo("/computers");
-                assertThat(flash(result).get("success")).isEqualTo("Computer FooBar has been created");
-                
-                result = callAction(controllers.routes.ref.Application.list(0, "name", "asc", "FooBar"));
-                assertThat(status(result)).isEqualTo(OK);
-                assertThat(contentAsString(result)).contains("One computer found");
-                
-            }
-        });
+        assertThat(result.status(), equalTo(Helpers.BAD_REQUEST));
+
+        Map<String,String> data = new HashMap<>();
+        data.put("name", "FooBar");
+        data.put("introduced", "badbadbad");
+        data.put("company.id", "1");
+
+        String saveUrl = controllers.routes.HomeController.save().url();
+        result = Helpers.route(application, Helpers.fakeRequest().bodyForm(data).method("POST").uri(saveUrl));
+
+        assertThat(result.status(), equalTo(Helpers.BAD_REQUEST));
+        assertThat(Helpers.contentAsString(result), containsString("<option value=\"1\" selected >Apple Inc.</option>"));
+        //  <input type="date" id="introduced" name="introduced" value="badbadbad" aria-describedby="introduced_info_0 introduced_error_0" aria-invalid="true" class="form-control">
+        assertThat(Helpers.contentAsString(result), containsString("<input type=\"date\" id=\"introduced\" name=\"introduced\" value=\"badbadbad\" "));
+        // <input type="text" id="name" name="name" value="FooBar" aria-describedby="name_info_0" required="true" class="form-control">
+        assertThat(Helpers.contentAsString(result), containsString("<input type=\"text\" id=\"name\" name=\"name\" value=\"FooBar\" "));
+
+        data.put("introduced", "2011-12-24");
+
+        result = Helpers.route(
+            application,
+            Helpers.fakeRequest().bodyForm(data).method("POST").uri(saveUrl)
+        );
+
+        assertThat(result.status(), equalTo(Helpers.SEE_OTHER));
+        assertThat(result.redirectLocation().get(), equalTo("/computers"));
+        assertThat(result.flash().get("success"), equalTo("Computer FooBar has been created"));
+
+        result = Helpers.route(application, controllers.routes.HomeController.list(0, "name", "asc", "FooBar"));
+        assertThat(result.status(), equalTo(Helpers.OK));
+        assertThat(Helpers.contentAsString(result), containsString("One computer found"));
     }
     
 }
