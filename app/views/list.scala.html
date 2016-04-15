@@ -1,10 +1,14 @@
 @(currentPage: Page[(Computer, Option[Company])], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash, messages: Messages)
 
+@import helper._
+
+@import b3.vertical.fieldConstructor
+
 @****************************************
 * Helper generating navigation links    *
 ****************************************@
 @link(newPage: Int, newOrderBy: Option[Int] = None) = @{
-    routes.Application.list(newPage, newOrderBy.map { orderBy =>
+    routes.HomeController.list(newPage, newOrderBy.map { orderBy =>
         if(orderBy == scala.math.abs(currentOrderBy)) -currentOrderBy else orderBy
     }.getOrElse(currentOrderBy), currentFilter)
     
@@ -31,12 +35,12 @@
 
     <div id="actions">
         
-        @helper.form(action=routes.Application.list()) {
+        @b3.form(action=routes.HomeController.list()) {
             <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by computer name...">
             <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
         }
         
-        <a class="btn success" id="add" href="@routes.Application.create()">Add a new computer</a>
+        <a class="btn success" id="add" href="@routes.HomeController.create()">Add a new computer</a>
         
     </div>
     
@@ -56,7 +60,7 @@
                 @computers.map { 
                     case (computer, company) => {
                         <tr>
-                            <td><a href="@routes.Application.edit(computer.id.get)">@computer.name</a></td>
+                            <td><a href="@routes.HomeController.edit(computer.id.get)">@computer.name</a></td>
                             <td>
                                 @computer.introduced.map(_.format("dd MMM yyyy")).getOrElse { <em>-</em> }
                             </td>
