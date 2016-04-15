@@ -7,7 +7,11 @@ import anorm.SqlParser._
 import anorm._
 import play.api.db.DBApi
 
-case class Computer(id: Option[Long] = None, name: String, introduced: Option[Date], discontinued: Option[Date], companyId: Option[Long])
+case class Computer(id: Option[Long] = None,
+                    name: String,
+                    introduced: Option[Date],
+                    discontinued: Option[Date],
+                    companyId: Option[Long])
 
 /**
  * Helper for pagination.
@@ -34,7 +38,8 @@ class ComputerService @Inject() (dbapi: DBApi, companyService: CompanyService) {
       get[Option[Date]]("computer.introduced") ~
       get[Option[Date]]("computer.discontinued") ~
       get[Option[Long]]("computer.company_id") map {
-      case id~name~introduced~discontinued~companyId => Computer(id, name, introduced, discontinued, companyId)
+      case id~name~introduced~discontinued~companyId =>
+        Computer(id, name, introduced, discontinued, companyId)
     }
   }
 
