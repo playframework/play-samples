@@ -1,9 +1,5 @@
 import models.ComputerService
-import play.api.test._
-import play.api.test.Helpers._
 import org.scalatestplus.play._
-
-import org.scalatest.OptionValues._
 
 class ModelSpec extends PlaySpec with OneAppPerSuite {
 
@@ -13,7 +9,9 @@ class ModelSpec extends PlaySpec with OneAppPerSuite {
 
   // -- Date helpers
   
-  def dateIs(date: java.util.Date, str: String) = new java.text.SimpleDateFormat("yyyy-MM-dd").format(date) == str
+  def dateIs(date: java.util.Date, str: String) = {
+    new java.text.SimpleDateFormat("yyyy-MM-dd").format(date) == str
+  }
   
   // --
   
@@ -23,7 +21,9 @@ class ModelSpec extends PlaySpec with OneAppPerSuite {
         val macintosh = computerService.findById(21).get
       
         macintosh.name must equal("Macintosh")
-        macintosh.introduced.value must matchPattern { case date:java.util.Date if dateIs(date, "1984-01-24") => }
+        macintosh.introduced.value must matchPattern {
+          case date:java.util.Date if dateIs(date, "1984-01-24") =>
+        }
     }
     
     "be listed along its companies" in {
@@ -36,7 +36,10 @@ class ModelSpec extends PlaySpec with OneAppPerSuite {
     
     "be updated if needed" in {
 
-        computerService.update(21, Computer(name="The Macintosh", introduced=None, discontinued=None, companyId=Some(1)))
+        computerService.update(21, Computer(name="The Macintosh",
+          introduced=None,
+          discontinued=None,
+          companyId=Some(1)))
         
         val macintosh = computerService.findById(21).get
         

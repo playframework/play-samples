@@ -4,7 +4,8 @@ import javax.inject.Inject
 
 import anorm.SqlParser._
 import anorm._
-import play.api.db.{DB, DBApi}
+
+import play.api.db.DBApi
 
 case class Company(id: Option[Long] = None, name: String)
 
