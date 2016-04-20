@@ -4,41 +4,32 @@ import play.api.{BuiltInComponents, _}
 
 trait OneAppPerTestWithComponents[T <: BuiltInComponents]
   extends OneAppPerTest
-    with WithContext
-    with WithComponents[T] {
+    with WithApplicationComponents[T] {
   this: Suite =>
 
-  override def newAppForTest(testData: TestData): Application = createComponents(context).application
+  override def newAppForTest(testData: TestData): Application = newApplication
 }
 
 trait OneAppPerSuiteWithComponents[T <: BuiltInComponents]
   extends OneAppPerSuite
-    with WithContext
-    with WithComponents[T] {
+    with WithApplicationComponents[T] {
   this: Suite =>
-
-  lazy val components: T = createComponents(context)
-
-  override implicit lazy val app: Application = components.application
+  override implicit lazy val app: Application = newApplication
 }
 
 trait OneServerPerTestWithComponents[T <: BuiltInComponents]
   extends OneServerPerTest
-    with WithContext
-    with WithComponents[T] {
+    with WithApplicationComponents[T] {
   this: Suite =>
 
-  override def newAppForTest(testData: TestData): Application = createComponents(context).application
+  override def newAppForTest(testData: TestData): Application = newApplication
 }
 
 trait OneServerPerSuiteWithComponents[T <: BuiltInComponents]
   extends OneServerPerSuite
-    with WithContext
-    with WithComponents[T] {
+    with WithApplicationComponents[T] {
   this: Suite =>
 
-  lazy val components: T = createComponents(context)
-
-  override implicit lazy val app: Application = components.application
+  override implicit lazy val app: Application = newApplication
 }
 

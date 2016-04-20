@@ -55,17 +55,40 @@ The ScalaTest suite mixins such as `OneAppPerSuite` use `GuiceApplicationLoader`
 ``` scala
 trait OneServerPerSuiteWithComponents[T <: BuiltInComponents]
   extends OneServerPerSuite
-    with WithContext
-    with WithComponents[T] {
+    with WithApplicationComponents[T] {
   this: Suite =>
 
-  lazy val components: T = createComponents(context)
-
-  override implicit lazy val app: Application = components.application
+  override implicit lazy val app: Application = newApplication
 }
 ```
 
-Then, depending on your components, you can set up a specific instance
+where `WithApplicationComponents` is defined as:
+
+``` scala
+trait WithApplicationComponents[T <: BuiltInComponents] {
+  private var _components: T = _
+
+  // accessed to get the components in tests
+  final def components: T = _components
+
+  // overridden by subclasses
+  def createComponents(context: Context): T
+
+  // creates a new application and sets the components
+  def newApplication: Application = {
+    _components = createComponents(context)
+    _components.application
+  }
+
+  def context: ApplicationLoader.Context = {
+    val classLoader = ApplicationLoader.getClass.getClassLoader
+    val env = new Environment(new java.io.File("."), classLoader, Mode.Test)
+    ApplicationLoader.createContext(env)
+  }
+}
+```
+
+Then, depending on your components, you can set up a subtype of `OneServerPerSuiteWithComponents` using `MyComponents`:
 
 ``` scala
 trait OneServerPerSuiteWithMyComponents
@@ -76,7 +99,7 @@ trait OneServerPerSuiteWithMyComponents
 }
 ```
 
-Once the `OneServerPerSuiteWithMyComponents` is defined, you can access the `components` field to get at the wsClient:
+Once the `OneServerPerSuiteWithMyComponents` is defined, you must call out to the `app` lazy val, after which you can access the `components` field to get at the wsClient:
 
 ``` scala
 class ServerSpec extends PlaySpec
