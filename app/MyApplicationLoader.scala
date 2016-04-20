@@ -19,7 +19,18 @@ class MyComponents(context: ApplicationLoader.Context)
   with I18nComponents
   with AhcWSComponents {
 
-  override lazy val injector =  new SimpleInjector(NewInstanceInjector) + router + cookieSigner + csrfTokenSigner + httpConfiguration + tempFileCreator + global + crypto + wsApi + messagesApi
+  override lazy val injector =  {
+    new SimpleInjector(NewInstanceInjector) +
+      router +
+      cookieSigner +
+      csrfTokenSigner +
+      httpConfiguration +
+      tempFileCreator +
+      global +
+      crypto +
+      wsApi +
+      messagesApi
+  }
 
   lazy val router: Router = new Routes(httpErrorHandler, homeController, assets)
 

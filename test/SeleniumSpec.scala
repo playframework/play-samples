@@ -1,6 +1,10 @@
 import org.scalatestplus.play._
 
-class SeleniumSpec extends PlaySpec with OneServerPerTest with OneBrowserPerTest with HtmlUnitFactory {
+class SeleniumSpec
+  extends PlaySpec
+    with OneServerPerTest
+    with OneBrowserPerTest
+    with HtmlUnitFactory {
 
   "SeleniumSpec" should {
 

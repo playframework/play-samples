@@ -28,7 +28,18 @@ class MyComponents(context: ApplicationLoader.Context)
   with I18nComponents
   with AhcWSComponents {
 
-  override lazy val injector =  new SimpleInjector(NewInstanceInjector) + router + cookieSigner + csrfTokenSigner + httpConfiguration + tempFileCreator + global + crypto + wsApi + messagesApi
+  override lazy val injector =  {
+    new SimpleInjector(NewInstanceInjector) +
+      router +
+      cookieSigner +
+      csrfTokenSigner +
+      httpConfiguration +
+      tempFileCreator +
+      global +
+      crypto +
+      wsApi +
+      messagesApi
+  }
 
   lazy val router: Router = new Routes(httpErrorHandler, homeController, assets)
 
@@ -42,7 +53,10 @@ Now that `MyComponents` has the `AhcWSComponents` trait, it can use `components.
 The ScalaTest suite mixins such as `OneAppPerSuite` use `GuiceApplicationLoader` for all the implicit Application set up, so to use dependency injection, the trait must be extended to use the components using types:
 
 ``` scala
-trait OneServerPerSuiteWithComponents[T <: BuiltInComponents] extends OneServerPerSuite with WithContext with WithComponents[T] {
+trait OneServerPerSuiteWithComponents[T <: BuiltInComponents]
+  extends OneServerPerSuite
+    with WithContext
+    with WithComponents[T] {
   this: Suite =>
 
   lazy val components: T = createComponents(context)
@@ -54,7 +68,8 @@ trait OneServerPerSuiteWithComponents[T <: BuiltInComponents] extends OneServerP
 Then, depending on your components, you can set up a specific instance
 
 ``` scala
-trait OneServerPerSuiteWithMyComponents extends OneServerPerSuiteWithComponents[MyComponents] {
+trait OneServerPerSuiteWithMyComponents
+  extends OneServerPerSuiteWithComponents[MyComponents] {
   this: Suite =>
 
   override def createComponents(context: Context): MyComponents = new MyComponents(context)
