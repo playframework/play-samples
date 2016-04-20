@@ -1,15 +1,26 @@
-import play.api.{ApplicationLoader, Environment, Mode}
+import org.scalatest.Suite
+import play.api.ApplicationLoader.Context
 
-/**
- * Exposes the components in the application loader to the various specs.
- */
-trait CompileTimeComponents {
+trait OneAppPerTestWithMyComponents extends OneAppPerTestWithComponents[MyComponents] {
+  this: Suite =>
 
-  lazy val components = {
-    val classLoader = ApplicationLoader.getClass.getClassLoader
-    val env = new Environment(new java.io.File("."), classLoader, Mode.Test)
-    val context = ApplicationLoader.createContext(env)
-    new MyComponents(context)
-  }
+  override def createComponents(context: Context): MyComponents = new MyComponents(context)
+}
 
+trait OneAppPerSuiteWithMyComponents extends OneAppPerTestWithComponents[MyComponents] {
+  this: Suite =>
+
+  override def createComponents(context: Context): MyComponents = new MyComponents(context)
+}
+
+trait OneServerPerTestWithMyComponents extends OneServerPerSuiteWithComponents[MyComponents] {
+  this: Suite =>
+
+  override def createComponents(context: Context): MyComponents = new MyComponents(context)
+}
+
+trait OneServerPerSuiteWithMyComponents extends OneServerPerSuiteWithComponents[MyComponents] {
+  this: Suite =>
+
+  override def createComponents(context: Context): MyComponents = new MyComponents(context)
 }

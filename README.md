@@ -6,8 +6,7 @@ The application loader here is `MyApplicationLoader` which uses `MyComponents` t
  
 To do this, the injector has to be implemented specifying all of the built in components, plus the WS API, which is made available through `AhcWSComponents`:
 
-
-```
+``` scala
 import play.api._
 import play.api.i18n._
 import play.api.inject._
@@ -38,31 +37,37 @@ class MyComponents(context: ApplicationLoader.Context)
 }
 ```
 
-Now that `MyComponents` has the `AhcWSComponents` trait, it can use `components.wsClient` anywhere.  It's most convenient to define the components in a trait for testing:  
+Now that `MyComponents` has the `AhcWSComponents` trait, it can use `components.wsClient` anywhere.  
 
-```
-trait CompileTimeComponents {
+The ScalaTest suite mixins such as `OneAppPerSuite` use `GuiceApplicationLoader` for all the implicit Application set up, so to use dependency injection, the trait must be extended to use the components using types:
 
-  lazy val components = {
-    val classLoader = ApplicationLoader.getClass.getClassLoader
-    val env = new Environment(new java.io.File("."), classLoader, Mode.Test)
-    val context = ApplicationLoader.createContext(env)
-    new MyComponents(context)
-  }
+``` scala
+trait OneServerPerSuiteWithComponents[T <: BuiltInComponents] extends OneServerPerSuite with WithContext with WithComponents[T] {
+  this: Suite =>
 
+  lazy val components: T = createComponents(context)
+
+  override implicit lazy val app: Application = components.application
 }
 ```
 
-Once the `CompileTimeComponents` is defined, then a specification can use `components.application` to expose the application to ScalaTest and call out to the client:
+Then, depending on your components, you can set up a specific instance
 
+``` scala
+trait OneServerPerSuiteWithMyComponents extends OneServerPerSuiteWithComponents[MyComponents] {
+  this: Suite =>
+
+  override def createComponents(context: Context): MyComponents = new MyComponents(context)
+}
 ```
-class ServerSpec extends PlaySpec
-  with Results
-  with CompileTimeComponents
-  with OneServerPerSuite
-  with ScalaFutures {
 
-  override implicit lazy val app: Application = components.application
+Once the `OneServerPerSuiteWithMyComponents` is defined, you can access the `components` field to get at the wsClient:
+
+``` scala
+class ServerSpec extends PlaySpec
+  with OneServerPerSuiteWithMyComponents
+  with Results
+  with ScalaFutures {
 
   "Server query should" should {
 
@@ -74,8 +79,8 @@ class ServerSpec extends PlaySpec
         response.status mustBe OK
       }
     }
-  }
 
+  }
 }
 ```
 

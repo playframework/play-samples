@@ -1,5 +1,6 @@
 import org.scalatest._
 import org.scalatestplus.play._
+import play.api.ApplicationLoader.Context
 import play.api.test._
 import play.api.test.Helpers._
 import play.api._
@@ -9,19 +10,11 @@ import play.api._
  * You can mock out a whole application including requests, plugins etc.
  * For more information, consult the wiki.
  */
-class ApplicationSpec extends PlaySpec with OneAppPerTest with CompileTimeComponents {
-
-  override def newAppForTest(testData: TestData): Application = {
-    val loader = new MyApplicationLoader()
-    val classLoader = ApplicationLoader.getClass.getClassLoader
-    val env = new Environment(new java.io.File("."), classLoader, Mode.Test)
-    val context = ApplicationLoader.createContext(env)
-    components.application
-  }
+class ApplicationSpec extends PlaySpec with OneAppPerTestWithMyComponents {
 
   "Routes" should {
 
-    "send 404 on a bad request" in  {
+    "send 404 on a bad request" in {
       route(app, FakeRequest(GET, "/boum")).map(status(_)) mustBe Some(NOT_FOUND)
     }
 
@@ -34,10 +27,8 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest with CompileTimeCompon
 
       status(home) mustBe OK
       contentType(home) mustBe Some("text/html")
-      contentAsString(home) must include ("Your new application is ready.")
+      contentAsString(home) must include("Your new application is ready.")
     }
 
   }
-
-
 }
