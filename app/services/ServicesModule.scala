@@ -2,7 +2,7 @@ package services
 
 trait ServicesModule {
 
-  import com.softwaremill.macwire.MacwireMacros._
+  import com.softwaremill.macwire._
 
   lazy val greetingService = wire[GreetingService]
 

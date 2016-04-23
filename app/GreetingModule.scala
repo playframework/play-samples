@@ -4,7 +4,7 @@ import services.ServicesModule
 
 trait GreetingModule extends ServicesModule {
 
-  import com.softwaremill.macwire.MacwireMacros._
+  import com.softwaremill.macwire._
 
   lazy val greeterController = wire[GreeterController]
 

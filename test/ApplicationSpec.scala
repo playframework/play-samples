@@ -1,21 +1,35 @@
-
+import org.scalatestplus.play.PlaySpec
+import play.api.ApplicationLoader.Context
+import play.api.test.Helpers._
 import play.api.test._
 
-class ApplicationSpec extends PlaySpecification {
+/**
+  * Add your spec here.
+  * You can mock out a whole application including requests, plugins etc.
+  * For more information, consult the wiki.
+  */
+class ApplicationSpec extends PlaySpec with OneAppPerTestWithComponents[GreetingComponents] {
 
-  "Application" should {
+  override def createComponents(context: Context) = new GreetingComponents(context)
 
-    "send 404 on a bad request" in new WithGreetingApplication {
-      val result = route(FakeRequest(GET, "/boum")).get
-      status(result) must_== 404
+  "Routes" should {
+
+    "send 404 on a bad request" in {
+      route(app, FakeRequest(GET, "/boum")).map(status(_)) mustBe Some(NOT_FOUND)
     }
 
-    "render the index page" in new WithGreetingApplication {
-      val home = route(FakeRequest(GET, "/")).get
-
-      status(home) must equalTo(OK)
-      contentType(home) must beSome.which(_ == "text/html")
-      contentAsString(home) must contain ("Your new application is ready.")
-    }
   }
+
+  "HomeController" should {
+
+    "render the index page" in {
+      val home = route(app, FakeRequest(GET, "/")).get
+
+      status(home) mustBe OK
+      contentType(home) mustBe Some("text/html")
+      contentAsString(home) must include("Your new application is ready.")
+    }
+
+  }
+
 }
