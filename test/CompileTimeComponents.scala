@@ -9,14 +9,14 @@ trait OneAppPerTestWithMyComponents
 }
 
 trait OneAppPerSuiteWithMyComponents
-  extends OneAppPerTestWithComponents[MyComponents] {
+  extends OneAppPerSuiteWithComponents[MyComponents] {
   this: Suite =>
 
   override def createComponents(context: Context): MyComponents = new MyComponents(context)
 }
 
 trait OneServerPerTestWithMyComponents
-  extends OneServerPerSuiteWithComponents[MyComponents] {
+  extends OneServerPerTestWithComponents[MyComponents] {
   this: Suite =>
 
   override def createComponents(context: Context): MyComponents = new MyComponents(context)
