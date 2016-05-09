@@ -1,62 +1,31 @@
 package controllers
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.Play.current
-import play.api.mvc._
-import play.api.libs.ws._
-import scala.concurrent.Future
-import play.api.libs.json.{Json, JsValue}
-import play.api.Play
-import play.api.libs.json.JsString
+import javax.inject._
 
-class StockSentiment extends Controller {
+import play.api.Configuration
+import play.api.libs.json.{JsObject, JsString, JsValue, Json}
+import play.api.libs.ws._
+import play.api.mvc._
+
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
+
+@Singleton
+class StockSentiment @Inject()(ws: WSClient, configuration: Configuration) extends Controller {
+
+  private val logger = org.slf4j.LoggerFactory.getLogger(this.getClass)
+
+  private val sentimentUrl = configuration.getString("sentiment.url").get
+
+  private val tweetUrl = configuration.getString("tweet.url").get
 
   case class Tweet(text: String)
   
   implicit val tweetReads = Json.reads[Tweet]
-  
-  def getTextSentiment(text: String): Future[WSResponse] =
-    WS.url(Play.current.configuration.getString("sentiment.url").get) post Map("text" -> Seq(text))
 
-  def getAverageSentiment(responses: Seq[WSResponse], label: String): Double = responses.map { response =>
-    (response.json \\ label).head.as[Double]
-  }.sum / responses.length.max(1) // avoid division by zero
-
-  def loadSentimentFromTweets(json: JsValue): Seq[Future[WSResponse]] =
-    (json \ "statuses").as[Seq[Tweet]] map (tweet => getTextSentiment(tweet.text))
-
-  def getTweets(symbol:String): Future[WSResponse] = {
-    WS.url(Play.current.configuration.getString("tweet.url").get.format(symbol)).get.withFilter { response =>
-      response.status == OK
-    }
-  }
-
-  
-  def sentimentJson(sentiments: Seq[WSResponse]) = {
-    val neg = getAverageSentiment(sentiments, "neg")
-    val neutral = getAverageSentiment(sentiments, "neutral")
-    val pos = getAverageSentiment(sentiments, "pos")
-  
-    val response = Json.obj(
-      "probability" -> Json.obj(
-        "neg" -> neg,
-        "neutral" -> neutral,
-        "pos" -> pos
-      )
-    )
-    
-    val classification =
-      if (neutral > 0.5)
-        "neutral"
-      else if (neg > pos)
-        "neg"
-      else
-        "pos"
-  
-    response + ("label" -> JsString(classification))
-  }
-  
   def get(symbol: String): Action[AnyContent] = Action.async {
+    logger.info(s"getting stock sentiment for $symbol")
+
     val futureStockSentiments: Future[Result] = for {
       tweets <- getTweets(symbol) // get tweets that contain the stock symbol
       futureSentiments = loadSentimentFromTweets(tweets.json) // queue web requests each tweets' sentiments
@@ -68,4 +37,58 @@ class StockSentiment extends Controller {
         InternalServerError(Json.obj("error" -> JsString("Could not fetch the tweets")))
     }
   }
+
+  private def getTextSentiment(text: String): Future[WSResponse] = {
+    logger.info(s"getTextSentiment: text = $text")
+
+    ws.url(sentimentUrl) post Map("text" -> Seq(text))
+  }
+
+  private def getAverageSentiment(responses: Seq[WSResponse], label: String): Double = {
+    responses.map { response =>
+      (response.json \\ label).head.as[Double]
+    }.sum / responses.length.max(1)
+  } // avoid division by zero
+
+  private def loadSentimentFromTweets(json: JsValue): Seq[Future[WSResponse]] = {
+    (json \ "statuses").as[Seq[Tweet]] map (tweet => getTextSentiment(tweet.text))
+  }
+
+  private def getTweets(symbol:String): Future[WSResponse] = {
+    logger.info(s"getTweets: symbol = $symbol")
+
+    ws.url(tweetUrl.format(symbol)).get.withFilter { response =>
+      response.status == OK
+    }
+  }
+
+  private def sentimentJson(sentiments: Seq[WSResponse]): JsObject = {
+    logger.info(s"sentimentJson: sentiments = $sentiments")
+
+    val neg = getAverageSentiment(sentiments, "neg")
+    val neutral = getAverageSentiment(sentiments, "neutral")
+    val pos = getAverageSentiment(sentiments, "pos")
+
+    val response = Json.obj(
+      "probability" -> Json.obj(
+        "neg" -> neg,
+        "neutral" -> neutral,
+        "pos" -> pos
+      )
+    )
+
+    val classification =
+      if (neutral > 0.5)
+        "neutral"
+      else if (neg > pos)
+        "neg"
+      else
+        "pos"
+
+    val r = response + ("label" -> JsString(classification))
+    logger.info(s"response = $r")
+
+    r
+  }
+
 }

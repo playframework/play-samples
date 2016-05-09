@@ -1,63 +1,57 @@
 package actors
 
 import akka.actor._
-import akka.testkit._
-
-import org.specs2.mutable._
+import akka.testkit.{TestActorRef, _}
+import com.typesafe.config.ConfigFactory
+import org.scalatest.MustMatchers
+import play.api.libs.json._
 
 import scala.concurrent.duration._
 
-import scala.collection.JavaConverters._
-import play.api.test.WithApplication
-import org.specs2.matcher.JsonMatchers
-
-class UserActorSpec extends TestkitExample with SpecificationLike with JsonMatchers {
-
-  /*
-   * Running tests in parallel (which would ordinarily be the default) will work only if no
-   * shared resources are used (e.g. top-level actors with the same name or the
-   * system.eventStream).
-   *
-   * It's usually safer to run the tests sequentially.
-   */
-
-  sequential
+class UserActorSpec extends TestKitSpec with MustMatchers {
 
   "UserActor" should {
 
     val symbol = "ABC"
     val price = 123
-    val history = List[java.lang.Double](0.1, 1.0).asJava
+    val history = scala.collection.immutable.Seq[Double](0.1, 1.0)
+    val configuration = play.api.Configuration.apply(ConfigFactory.parseString(
+      """
+        |default.stocks = ["GOOG", "AAPL", "ORCL"]
+      """.stripMargin))
 
-    "send a stock when receiving a StockUpdate message" in new WithApplication {
-      val out = new StubOut()
+    "send a stock when receiving a StockUpdate message" in {
+      val out = TestProbe()
+      val stocksActor = TestProbe()
 
-      val userActorRef = TestActorRef[UserActor](Props(new UserActor(out)))
+      val userActorRef = TestActorRef[UserActor](Props(new UserActor(out.ref, stocksActor.ref, configuration)))
       val userActor = userActorRef.underlyingActor
 
       // send off the stock update...
       userActor.receive(StockUpdate(symbol, price))
 
       // ...and expect it to be a JSON node.
-      val node = out.actual.toString
-      node must /("type" -> "stockupdate")
-      node must /("symbol" -> symbol)
-      node must /("price" -> price)
+      val jsObj: JsObject = out.receiveOne(500 millis).asInstanceOf[JsObject]
+      jsObj \ "type" mustBe JsDefined(JsString("stockupdate"))
+      jsObj \ "symbol" mustBe JsDefined(JsString(symbol))
+      jsObj \ "price" mustBe JsDefined(JsNumber(price))
     }
 
-    "send the stock history when receiving a StockHistory message" in new WithApplication {
-      val out = new StubOut()
+    "send the stock history when receiving a StockHistory message" in {
+      val out = TestProbe()
+      val stocksActor = TestProbe()
 
-      val userActorRef = TestActorRef[UserActor](Props(new UserActor(out)))
+      val userActorRef = TestActorRef[UserActor](Props(new UserActor(out.ref, stocksActor.ref, configuration)))
       val userActor = userActorRef.underlyingActor
 
       // send off the stock update...
       userActor.receive(StockHistory(symbol, history))
+      val jsObj: JsObject = out.receiveOne(500 millis).asInstanceOf[JsObject]
 
       // ...and expect it to be a JSON node.
-      out.actual.get("type").asText must beEqualTo("stockhistory")
-      out.actual.get("symbol").asText must beEqualTo(symbol)
-      out.actual.get("history").get(0).asDouble must beEqualTo(history.get(0))
+      jsObj \ "type" mustBe JsDefined(JsString("stockhistory"))
+      jsObj \ "symbol" mustBe JsDefined(JsString("ABC"))
+      jsObj \ "history" mustBe JsDefined(Json.arr(JsNumber(0.1), JsNumber(1.0)))
     }
   }
 

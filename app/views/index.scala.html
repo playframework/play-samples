@@ -1,6 +1,5 @@
+@()(implicit r: Request[_])
 <!DOCTYPE html>
-
-@import play.mvc.Http.Context.Implicit._
 
 <html>
 <head>
@@ -12,7 +11,7 @@
     <script type='text/javascript' src='@routes.Assets.at("lib/flot/jquery.flot.js")'></script>
     <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
 </head>
-<body data-ws-url="@routes.Application.ws.webSocketURL(request)">
+<body data-ws-url="@routes.HomeController.ws.webSocketURL()">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
