@@ -103,7 +103,7 @@ class HomeController @Inject()(@Named("stocksActor") stocksActor: ActorRef,
    *
    * When the flow is terminated, the user actor is no longer needed and is stopped.
    *
-   * @param userActor the user actor receiving websocket events.
+   * @param userActor   the user actor receiving websocket events.
    * @param webSocketIn the "read" side of the websocket, that publishes JsValue to UserActor.
    * @return a Flow of JsValue in both directions.
    */
@@ -121,22 +121,22 @@ class HomeController @Inject()(@Named("stocksActor") stocksActor: ActorRef,
 
     // Unhook the user actor when the websocket flow terminates
     // http://doc.akka.io/docs/akka/current/scala/stream/stages-overview.html#watchTermination
-    flow.watchTermination()((_, termination) =>
-      termination.onFailure {
-        case cause =>
-          logger.info(s"Terminating actor $userActor")
-          stocksActor.tell(UnwatchStock(None), userActor)
-          actorSystem.stop(userActor)
+    val flowWatch: Flow[JsValue, JsValue, NotUsed] = flow.watchTermination() { (_, termination) =>
+      termination.foreach { done =>
+        logger.info(s"Terminating actor $userActor")
+        stocksActor.tell(UnwatchStock(None), userActor)
+        actorSystem.stop(userActor)
       }
-    )
+      NotUsed
+    }
 
-    flow
+    flowWatch
   }
 
   /**
    * Creates a user actor with a given name, using the websocket out actor for output.
    *
-   * @param name the name of the user actor.
+   * @param name         the name of the user actor.
    * @param webSocketOut the "write" side of the websocket, that the user actor sends JsValue to.
    * @return a user actor for this ws connection.
    */
