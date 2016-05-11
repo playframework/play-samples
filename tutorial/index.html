@@ -30,7 +30,7 @@
 
     <p>
         This application uses a WebSocket to push data to the browser in real-time.  To create a WebSocket connection in Play, first a route must be defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file.  Here is the route which will be used to setup the WebSocket connection:<br/>
-<pre><code>GET /ws controllers.Application.ws</code></pre>
+<pre><code>GET /ws controllers.HomeController.ws</code></pre>
         The <code>ws</code> method in the <a href="#code/app/controllers/Application.java" class="shortcut">Application.java</a> controller handles the request and does the protocol upgrade to the WebSocket connection.  This method create a new <code>UserActor</code> defined in <a href="#code/app/actors/UserActor.java" class="shortcut">UserActor.java</a> (<a href="#code/test/actors/UserActorTest.java" class="shortcut">tests</a>).  The <code>UserActor</code> stores the handle to the WebSocket connection.<br/>
         <br/>
         Once the <code>UserActor</code> is created, the default stocks (defined in <a href="#code/conf/application.conf" class="shortcut">application.conf</a>) are added to the user's list of watched stocks.<br/>

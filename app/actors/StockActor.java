@@ -3,6 +3,8 @@ package actors;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Cancellable;
+import akka.event.Logging;
+import akka.event.LoggingAdapter;
 import akka.japi.pf.ReceiveBuilder;
 import java.util.concurrent.TimeUnit;
 import java.util.Deque;
@@ -18,9 +20,11 @@ import utils.StockQuote;
  */
 public class StockActor extends AbstractActor {
 
-    final HashSet<ActorRef> watchers = new HashSet<ActorRef>();
+    private LoggingAdapter log = Logging.getLogger(getContext().system(), this);
 
-    final Deque<Double> stockHistory = FakeStockQuote.history(50);
+    private final HashSet<ActorRef> watchers = new HashSet<ActorRef>();
+
+    private final Deque<Double> stockHistory = FakeStockQuote.history(50);
 
     public StockActor(String symbol) {
         this(symbol, new FakeStockQuote(), true);

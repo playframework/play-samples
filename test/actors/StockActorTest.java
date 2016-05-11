@@ -20,7 +20,7 @@ public class StockActorTest {
 
     @BeforeClass
     public static void setup() {
-        system = ActorSystem.create("UserActorTest");
+        system = ActorSystem.create("test");
     }
 
     @AfterClass
