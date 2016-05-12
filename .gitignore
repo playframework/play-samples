@@ -1,0 +1,40 @@
+### SBT template
+# Simple Build Tool
+# http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
+
+target/
+lib_managed/
+src_managed/
+project/boot/
+.history
+.cache
+### PlayFramework template
+# Ignore Play! working directory #
+bin/
+/db
+.eclipse
+/lib/
+/logs/
+/modules
+/project/target
+/target
+tmp/
+test-result
+server.pid
+*.eml
+/dist/
+### Scala template
+*.class
+*.log
+
+# sbt specific
+.lib/
+dist/*
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+# Created by .ignore support plugin (hsz.mobi)
+
+.idea

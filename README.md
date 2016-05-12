@@ -1,7 +1,7 @@
-# Play 2.5 Akka Streams Clock
+# play-streaming-scala
 
-A [Lightbend Activator] template that demonstrates Play Framework EventSource and Comet.
+This is an example Play template that demonstrates Streaming with Server Sent Events or Comet, using Akka Streams.
 
-Clock events are pushed from the server to the web browser using either Server-Sent Events or Comet, using Akka Streams.
+Please see the documentation at:
 
-[Lightbend Activator]: http://lightbend.com/activator
+* https://www.playframework.com/documentation/2.5.x/ScalaComet
