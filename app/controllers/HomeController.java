@@ -1,0 +1,143 @@
+package controllers;
+
+import actors.Stock;
+import actors.UserParentActor;
+import akka.NotUsed;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.Status;
+import akka.japi.Pair;
+import akka.stream.Materializer;
+import akka.stream.OverflowStrategy;
+import akka.stream.javadsl.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.reactivestreams.Publisher;
+import org.slf4j.Logger;
+import play.Configuration;
+import play.libs.F.Either;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Results;
+import play.mvc.WebSocket;
+import scala.compat.java8.FutureConverters;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+import java.util.Optional;
+import java.util.concurrent.CompletionStage;
+
+import static akka.pattern.Patterns.ask;
+
+/**
+ * The main web controller that handles returning the index page, setting up a WebSocket, and watching a stock.
+ */
+@Singleton
+public class HomeController extends Controller {
+
+    private Logger logger = org.slf4j.LoggerFactory.getLogger("controllers.HomeController");
+
+    private Configuration configuration;
+    private ActorRef stocksActor;
+    private ActorRef userParentActor;
+    private Materializer materializer;
+    private ActorSystem actorSystem;
+
+    @Inject
+    public HomeController(ActorSystem actorSystem,
+                          Materializer materializer,
+                          Configuration configuration,
+                          @Named("stocksActor") ActorRef stocksActor,
+                          @Named("userParentActor") ActorRef userParentActor) {
+        this.configuration = configuration;
+        this.stocksActor = stocksActor;
+        this.userParentActor = userParentActor;
+        this.materializer = materializer;
+        this.actorSystem = actorSystem;
+    }
+
+    public Result index() {
+        return ok(views.html.index.render(request()));
+    }
+
+    public WebSocket ws() {
+        return WebSocket.Json.acceptOrResult(request -> {
+            final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> future = wsFutureFlow("foo");
+            final CompletionStage<Either<Result, Flow<JsonNode, JsonNode, ?>>> stage = future.thenApplyAsync(Either::Right);
+            return stage.exceptionally(this::logException);
+        });
+    }
+
+    public CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> wsFutureFlow(String name) {
+        // create an actor ref source and associated publisher for sink
+        final Pair<ActorRef, Publisher<JsonNode>> pair = createWebSocketConnections();
+        ActorRef webSocketOut = pair.first();
+        Publisher<JsonNode> webSocketIn = pair.second();
+
+        // Create a user actor off the request id and attach it to the source
+        final CompletionStage<ActorRef> userActorFuture = createUserActor(name, webSocketOut);
+
+        // Once we have an actor available, create a flow...
+        final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> stage = userActorFuture
+                .thenApplyAsync(userActor -> createWebSocketFlow(webSocketIn, userActor));
+
+        return stage;
+    }
+
+    public CompletionStage<ActorRef> createUserActor(String name, ActorRef webSocketOut) {
+        // Use guice assisted injection to instantiate and configure the child actor.
+        long timeoutMillis = 100L;
+        return FutureConverters.toJava(
+                ask(userParentActor, new UserParentActor.Create(name, webSocketOut), timeoutMillis)
+        ).thenApply(stageObj -> (ActorRef) stageObj);
+    }
+
+    public Pair<ActorRef, Publisher<JsonNode>> createWebSocketConnections() {
+        // Creates a source to be materialized as an actor reference.
+
+        // Creating a source can be done through various means, but here we want
+        // the source exposed as an actor so we can send it messages from other
+        // actors.
+        final Source<JsonNode, ActorRef> source = Source.actorRef(10, OverflowStrategy.dropTail());
+
+        // Creates a sink to be materialized as a publisher.  Fanout is false as we only want
+        // a single subscriber here.
+        final Sink<JsonNode, Publisher<JsonNode>> sink = Sink.asPublisher(AsPublisher.WITHOUT_FANOUT);
+
+        // Connect the source and sink into a flow, telling it to keep the materialized values,
+        // and then kicks the flow into existence.
+        final Pair<ActorRef, Publisher<JsonNode>> pair = source.toMat(sink, Keep.both()).run(materializer);
+        return pair;
+    }
+
+    public Either<Result, Flow<JsonNode, JsonNode, ?>> logException(Throwable throwable) {
+        // https://docs.oracle.com/javase/tutorial/java/generics/capture.html
+        logger.error("Cannot create websocket", throwable);
+        Result result = Results.internalServerError("error");
+        return Either.Left(result);
+    }
+
+    public Flow<JsonNode, JsonNode, NotUsed> createWebSocketFlow(Publisher<JsonNode> webSocketIn, ActorRef userActor) {
+        // http://doc.akka.io/docs/akka/current/scala/stream/stream-flows-and-basics.html#stream-materialization
+        // http://doc.akka.io/docs/akka/current/scala/stream/stream-integrations.html#integrating-with-actors
+
+        // source is what comes in: browser ws events -> play -> publisher -> userActor
+        // sink is what comes out:  userActor -> websocketOut -> play -> browser ws events
+        final Sink<JsonNode, NotUsed> sink = Sink.actorRef(userActor, new Status.Success("success"));
+        final Source<JsonNode, NotUsed> source = Source.fromPublisher(webSocketIn);
+        final Flow<JsonNode, JsonNode, NotUsed> flow = Flow.fromSinkAndSource(sink, source);
+
+        // Unhook the user actor when the websocket flow terminates
+        // http://doc.akka.io/docs/akka/current/scala/stream/stages-overview.html#watchTermination
+        return flow.watchTermination((ignore, termination) -> {
+            termination.whenComplete((done, throwable) -> {
+                logger.info("Terminating actor {}", userActor);
+                stocksActor.tell(new Stock.Unwatch(Optional.empty()), userActor);
+                actorSystem.stop(userActor);
+            });
+
+            return NotUsed.getInstance();
+        });
+    }
+
+}
