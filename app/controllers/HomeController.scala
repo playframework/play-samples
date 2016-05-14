@@ -41,28 +41,64 @@ class HomeController @Inject()(@Named("stocksActor") stocksActor: ActorRef,
    *
    * @return a fully realized websocket.
    */
-  def ws: WebSocket = WebSocket.acceptOrResult[JsValue, JsValue] { request =>
-    val futureEither = wsFutureFlow(request.id.toString).map { flow =>
-      Right(flow)
-    }.recover {
-      case e: Exception =>
-        logger.error("Cannot create websocket", e)
-        val jsError = Json.obj("error" -> "Cannot create websocket")
-        val result = InternalServerError(jsError)
-        Left(result)
+  def ws: WebSocket = WebSocket.acceptOrResult[JsValue, JsValue] {
+    case rh if sameOriginCheck(rh) =>
+      wsFutureFlow(rh).map { flow =>
+        Right(flow)
+      }.recover {
+        case e: Exception =>
+          logger.error("Cannot create websocket", e)
+          val jsError = Json.obj("error" -> "Cannot create websocket")
+          val result = InternalServerError(jsError)
+          Left(result)
+      }
+
+    case rejected =>
+      logger.error(s"Request ${rejected} failed same origin check")
+      Future.successful {
+        Left(Forbidden("forbidden"))
+      }
+  }
+
+  /**
+   * Checks that the WebSocket comes from the same origin.  This is necessary to protect
+   * against Cross-Site WebSocket Hijacking as WebSocket does not implement Same Origin Policy.
+   *
+   * See https://tools.ietf.org/html/rfc6455#section-1.3 and
+   * http://blog.dewhurstsecurity.com/2013/08/30/security-testing-html5-websockets.html
+   */
+  def sameOriginCheck(rh: RequestHeader): Boolean = {
+    rh.headers.get("Origin") match {
+      case Some(originValue) if originMatches(originValue) =>
+        logger.debug(s"originCheck: originValue = $originValue")
+        true
+
+      case Some(badOrigin) =>
+        logger.error(s"originCheck: rejecting request because Origin header value ${badOrigin} is not in the same origin")
+        false
+
+      case None =>
+        logger.error("originCheck: rejecting request because no Origin header found")
+        false
     }
-    futureEither
+  }
+
+  /**
+   * Returns true if the value of the Origin header contains an acceptable value.
+   */
+  def originMatches(origin: String): Boolean = {
+    origin.contains("localhost:9000") || origin.contains("localhost:19001")
   }
 
   /**
    * Creates a Future containing a Flow of JsValue in and out.
    */
-  def wsFutureFlow(name: String): Future[Flow[JsValue, JsValue, NotUsed]] = {
+  def wsFutureFlow(request: RequestHeader): Future[Flow[JsValue, JsValue, NotUsed]] = {
     // create an actor ref source and associated publisher for sink
     val (webSocketOut: ActorRef, webSocketIn: Publisher[JsValue]) = createWebSocketConnections()
 
     // Create a user actor off the request id and attach it to the source
-    val userActorFuture = createUserActor(name, webSocketOut)
+    val userActorFuture = createUserActor(request.id.toString, webSocketOut)
 
     // Once we have an actor available, create a flow...
     userActorFuture.map { userActor =>
