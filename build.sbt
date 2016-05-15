@@ -1,4 +1,4 @@
-name := "reactive-stocks"
+name := "play-websocket-scala"
 
 version := "1.0-SNAPSHOT"
 
