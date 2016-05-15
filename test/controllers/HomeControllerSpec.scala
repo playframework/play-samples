@@ -44,6 +44,7 @@ class HomeControllerSpec extends TestKitSpec with MustMatchers {
       publisher.sendNext(jsvalue)
       sub.expectNext(jsvalue)
     }
+
   }
 
 
