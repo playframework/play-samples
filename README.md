@@ -1,4 +1,4 @@
-# reactive-stocks
+# play-websocket-java
 
 This is an example Play application that shows how to use Play's Websocket API in Java, by showing a series of stock tickers updated using WebSocket.
 
