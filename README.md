@@ -1,4 +1,4 @@
-# reactive-stocks
+# play-websocket-scala
 
 This is an example Play application that shows how to use Play's Websocket API in Scala, by showing a series of stock tickers updated using WebSocket.
 
