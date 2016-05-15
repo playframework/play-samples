@@ -1,4 +1,4 @@
-name := "reactive-stocks-java8"
+name := "play-websocket-java"
 
 version := "1.0"
 
