@@ -58,7 +58,7 @@ public class HomeController extends Controller {
     public WebSocket ws() {
         return WebSocket.Json.acceptOrResult(request -> {
             if (sameOriginCheck(request)) {
-                final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> future = wsFutureFlow("foo");
+                final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> future = wsFutureFlow(request);
                 final CompletionStage<Either<Result, Flow<JsonNode, JsonNode, ?>>> stage = future.thenApplyAsync(Either::Right);
                 return stage.exceptionally(this::logException);
             } else {
@@ -74,14 +74,15 @@ public class HomeController extends Controller {
         return CompletableFuture.completedFuture(left);
     }
 
-    public CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> wsFutureFlow(String name) {
+    public CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> wsFutureFlow(Http.RequestHeader request) {
         // create an actor ref source and associated publisher for sink
         final Pair<ActorRef, Publisher<JsonNode>> pair = createWebSocketConnections();
         ActorRef webSocketOut = pair.first();
         Publisher<JsonNode> webSocketIn = pair.second();
 
+        String id = String.valueOf(request._underlyingHeader().id());
         // Create a user actor off the request id and attach it to the source
-        final CompletionStage<ActorRef> userActorFuture = createUserActor(name, webSocketOut);
+        final CompletionStage<ActorRef> userActorFuture = createUserActor(id, webSocketOut);
 
         // Once we have an actor available, create a flow...
         final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> stage = userActorFuture
@@ -90,11 +91,11 @@ public class HomeController extends Controller {
         return stage;
     }
 
-    public CompletionStage<ActorRef> createUserActor(String name, ActorRef webSocketOut) {
+    public CompletionStage<ActorRef> createUserActor(String id, ActorRef webSocketOut) {
         // Use guice assisted injection to instantiate and configure the child actor.
         long timeoutMillis = 100L;
         return FutureConverters.toJava(
-                ask(userParentActor, new UserParentActor.Create(name, webSocketOut), timeoutMillis)
+                ask(userParentActor, new UserParentActor.Create(id, webSocketOut), timeoutMillis)
         ).thenApply(stageObj -> (ActorRef) stageObj);
     }
 
