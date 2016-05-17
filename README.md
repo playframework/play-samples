@@ -122,4 +122,10 @@ class ServerSpec extends PlaySpec
 }
 ```
 
-Please refer to https://www.playframework.com/documentation/2.5.x/ScalaCompileTimeDependencyInjection and https://www.playframework.com/documentation/2.5.x/ScalaTestingWithScalaTest#Using-ScalaTest-+-Play for documentation.
+## Further Documentation
+
+* https://www.playframework.com/documentation/2.5.x/ScalaCompileTimeDependencyInjection 
+* https://www.playframework.com/documentation/2.5.x/ScalaTestingWithScalaTest#Using-ScalaTest-+-Play 
+* http://www.scalatest.org/user_guide
+* http://www.scalatest.org/release_notes/3.0.0
+* https://github.com/playframework/scalatestplus-play
