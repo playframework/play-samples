@@ -1,6 +1,6 @@
 <configuration>
 
-  <conversionRule conversionWord="coloredLevel" converterClass="play.api.libs.logback.ColoredLevel" />
+  <conversionRule conversionWord="coloredLevel" converterClass="play.api.libs.logback.ColoredLevel"/>
 
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
     <file>logs/application.log</file>
@@ -15,18 +15,22 @@
     </encoder>
   </appender>
 
-  <logger name="play" level="INFO" />
-  <logger name="application" level="DEBUG" />
+  <logger name="play" level="INFO"/>
 
-  <!-- Off these ones as they are annoying, and anyway we manage configuration ourself -->
-  <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF" />
-  <logger name="com.avaje.ebeaninternal.server.core.XmlConfigLoader" level="OFF" />
-  <logger name="com.avaje.ebeaninternal.server.lib.BackgroundThread" level="OFF" />
-  <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF" />
+  <!-- actors logging -->
+  <logger name="akka.actor" level="DEBUG"/>
+
+  <logger name="actors.UserParentActor" level="INFO"/>
+  <logger name="actors.UserActor" level="INFO"/>
+  <logger name="actors.StocksActor" level="INFO"/>
+  <logger name="actors.StockActor" level="INFO"/>
+
+  <!-- controllers -->
+  <logger name="controllers" level="INFO"/>
 
   <root level="INFO">
-    <appender-ref ref="STDOUT" />
-    <appender-ref ref="FILE" />
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
   </root>
 
 </configuration>

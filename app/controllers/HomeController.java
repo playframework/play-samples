@@ -13,18 +13,16 @@ import akka.stream.javadsl.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
-import play.Configuration;
+import play.libs.F;
 import play.libs.F.Either;
-import play.mvc.Controller;
-import play.mvc.Result;
-import play.mvc.Results;
-import play.mvc.WebSocket;
+import play.mvc.*;
 import scala.compat.java8.FutureConverters;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import static akka.pattern.Patterns.ask;
@@ -37,7 +35,6 @@ public class HomeController extends Controller {
 
     private Logger logger = org.slf4j.LoggerFactory.getLogger("controllers.HomeController");
 
-    private Configuration configuration;
     private ActorRef stocksActor;
     private ActorRef userParentActor;
     private Materializer materializer;
@@ -46,10 +43,8 @@ public class HomeController extends Controller {
     @Inject
     public HomeController(ActorSystem actorSystem,
                           Materializer materializer,
-                          Configuration configuration,
                           @Named("stocksActor") ActorRef stocksActor,
                           @Named("userParentActor") ActorRef userParentActor) {
-        this.configuration = configuration;
         this.stocksActor = stocksActor;
         this.userParentActor = userParentActor;
         this.materializer = materializer;
@@ -62,10 +57,21 @@ public class HomeController extends Controller {
 
     public WebSocket ws() {
         return WebSocket.Json.acceptOrResult(request -> {
-            final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> future = wsFutureFlow("foo");
-            final CompletionStage<Either<Result, Flow<JsonNode, JsonNode, ?>>> stage = future.thenApplyAsync(Either::Right);
-            return stage.exceptionally(this::logException);
+            if (sameOriginCheck(request)) {
+                final CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> future = wsFutureFlow("foo");
+                final CompletionStage<Either<Result, Flow<JsonNode, JsonNode, ?>>> stage = future.thenApplyAsync(Either::Right);
+                return stage.exceptionally(this::logException);
+            } else {
+                return forbiddenResult();
+            }
         });
+    }
+
+    private CompletionStage<Either<Result, Flow<JsonNode, JsonNode, ?>>> forbiddenResult() {
+        final Result forbidden = Results.forbidden("forbidden");
+        final Either<Result, Flow<JsonNode, JsonNode, ?>> left = Either.Left(forbidden);
+
+        return CompletableFuture.completedFuture(left);
     }
 
     public CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> wsFutureFlow(String name) {
@@ -138,6 +144,32 @@ public class HomeController extends Controller {
 
             return NotUsed.getInstance();
         });
+    }
+
+    /**
+     * Checks that the WebSocket comes from the same origin.  This is necessary to protect
+     * against Cross-Site WebSocket Hijacking as WebSocket does not implement Same Origin Policy.
+     * <p>
+     * See https://tools.ietf.org/html/rfc6455#section-1.3 and
+     * http://blog.dewhurstsecurity.com/2013/08/30/security-testing-html5-websockets.html
+     */
+    public boolean sameOriginCheck(Http.RequestHeader rh) {
+        final String origin = rh.getHeader("Origin");
+
+        if (origin == null) {
+            logger.error("originCheck: rejecting request because no Origin header found");
+            return false;
+        } else if (originMatches(origin)) {
+            logger.debug("originCheck: originValue = " + origin);
+            return true;
+        } else {
+            logger.error("originCheck: rejecting request because Origin header value " + origin + " is not in the same origin");
+            return false;
+        }
+    }
+
+    private boolean originMatches(String origin) {
+        return origin.contains("localhost:9000") || origin.contains("localhost:19001");
     }
 
 }

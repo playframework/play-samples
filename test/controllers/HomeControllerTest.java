@@ -19,8 +19,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import play.Configuration;
-import play.Environment;
 import play.libs.Json;
 
 /**
@@ -47,14 +45,12 @@ public class HomeControllerTest {
     @Test
     public void testCreateWebSocketFlow() {
         // Injected dependencies to create the controller...
-        final Configuration configuration = Configuration.load(Environment.simple());
         final TestProbe stocksActorProbe = new TestProbe(system, "stocksActor");
         final TestProbe userParentActorProbe = new TestProbe(system, "userParentActor");
 
         // Create the controller without having to create a play app...
         final HomeController controller = new HomeController(system,
                 materializer,
-                configuration,
                 stocksActorProbe.ref(),
                 userParentActorProbe.ref());
 

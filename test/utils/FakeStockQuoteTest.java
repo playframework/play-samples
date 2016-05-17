@@ -1,9 +1,10 @@
+package utils;
+
 import org.junit.Test;
-import utils.FakeStockQuote;
 
 import java.util.Random;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class FakeStockQuoteTest {
 

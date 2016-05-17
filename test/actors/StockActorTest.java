@@ -12,7 +12,7 @@ import utils.StockQuote;
 
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.running;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 public class StockActorTest {
 
