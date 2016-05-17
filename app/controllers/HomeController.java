@@ -139,7 +139,7 @@ public class HomeController extends Controller {
         return flow.watchTermination((ignore, termination) -> {
             termination.whenComplete((done, throwable) -> {
                 logger.info("Terminating actor {}", userActor);
-                stocksActor.tell(new Stock.Unwatch(Optional.empty()), userActor);
+                stocksActor.tell(new Stock.Unwatch(null), userActor);
                 actorSystem.stop(userActor);
             });
 

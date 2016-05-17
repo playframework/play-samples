@@ -6,6 +6,8 @@ import akka.actor.Cancellable;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.pf.ReceiveBuilder;
+
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 import java.util.Deque;
 import java.util.HashSet;
@@ -19,8 +21,6 @@ import utils.StockQuote;
  * values.  Each StockActor updates a rolling dataset of randomly generated stock values.
  */
 public class StockActor extends AbstractActor {
-
-    private LoggingAdapter log = Logging.getLogger(getContext().system(), this);
 
     private final HashSet<ActorRef> watchers = new HashSet<ActorRef>();
 
@@ -44,7 +44,8 @@ public class StockActor extends AbstractActor {
             })
             .match(Stock.Watch.class, watch -> {
                 // reply with the stock history, and add the sender as a watcher
-                sender().tell(new Stock.History(symbol, stockHistory), self());
+                final Double[] clone = stockHistory.toArray(new Double[]{});
+                sender().tell(new Stock.History(symbol, clone), self());
                 watchers.add(sender());
             })
             .match(Stock.Unwatch.class, unwatch -> {

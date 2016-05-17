@@ -78,7 +78,7 @@ public class UserActorTest {
     public void userActorShouldSendStockHistory() {
         running(fakeApplication(), () -> {
             String symbol = "ABC";
-            Deque<Double> history = new LinkedList<Double>(Arrays.asList(0.1, 1.0));
+            Double[] history = { 0.1, 1.0 };
 
             // send off the stock history ...
             userActor.receive(new Stock.History(symbol, history));
@@ -89,8 +89,8 @@ public class UserActorTest {
             // ... and expect it to be a JSON node
             assertThat(output.get("type").asText()).isEqualTo("stockhistory");
             assertThat(output.get("symbol").asText()).isEqualTo(symbol);
-            assertThat(output.get("history").get(0).asDouble()).isEqualTo(history.getFirst());
-            assertThat(output.get("history").get(1).asDouble()).isEqualTo(history.getLast());
+            assertThat(output.get("history").get(0).asDouble()).isEqualTo(history[0]);
+            assertThat(output.get("history").get(1).asDouble()).isEqualTo(history[1]);
         });
     }
 }

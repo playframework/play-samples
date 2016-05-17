@@ -33,7 +33,7 @@ public class StocksActor extends UntypedActor {
         if (message instanceof Stock.Unwatch) {
             Stock.Unwatch unwatch = (Stock.Unwatch) message;
             // forward this message to the associated StockActor, or otherwise to everyone
-            unwatch.symbol
+            unwatch.symbol()
                     .map(getContext()::getChild)
                     .<Iterable<ActorRef>>map(Collections::singletonList)
                     .orElse(getContext().getChildren())

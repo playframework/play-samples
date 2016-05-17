@@ -29,12 +29,12 @@ public class UserActor extends UntypedActor {
     private ActorRef stocksActor;
 
     @Inject
-    public UserActor (@Assisted ActorRef out,
-                      @Named("stocksActor") ActorRef stocksActor,
-                      Configuration configuration) {
-       this.out = out;
-       this.stocksActor = stocksActor;
-       this.configuration = configuration;
+    public UserActor(@Assisted ActorRef out,
+                     @Named("stocksActor") ActorRef stocksActor,
+                     Configuration configuration) {
+        this.out = out;
+        this.stocksActor = stocksActor;
+        this.configuration = configuration;
     }
 
     @Override

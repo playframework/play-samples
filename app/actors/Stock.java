@@ -1,11 +1,15 @@
 package actors;
 
+import javax.annotation.Nonnull;
+import java.util.Collections;
 import java.util.Deque;
+import java.util.List;
 import java.util.Optional;
 
 public class Stock {
     public static final class Latest {
-        public Latest() {}
+        public Latest() {
+        }
     }
 
     public static final Latest latest = new Latest();
@@ -22,9 +26,9 @@ public class Stock {
 
     public static final class History {
         public final String symbol;
-        public final Deque<Double> history;
+        public final Double[] history;
 
-        public History(String symbol, Deque<Double> history) {
+        public History(String symbol, Double[] history) {
             this.symbol = symbol;
             this.history = history;
         }
@@ -39,9 +43,13 @@ public class Stock {
     }
 
     public static final class Unwatch {
-        public final Optional<String> symbol;
+        private final String symbol;
 
-        public Unwatch(Optional<String> symbol) {
+        public Optional<String> symbol() {
+            return Optional.of(symbol);
+        }
+
+        public Unwatch(String symbol) {
             this.symbol = symbol;
         }
     }
