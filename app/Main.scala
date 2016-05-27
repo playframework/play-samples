@@ -1,10 +1,12 @@
+import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
 import https.ClientMethods
-import play.api.{Mode, Environment}
+import play.api.{Environment, Mode}
 import play.api.libs.ws._
 import play.api.libs.ws.ning._
 import play.api.libs.ws.ssl.debug.DebugConfiguration
-
 import com.typesafe.config.ConfigFactory
+import play.api.test.WsTestClient
 
 import scala.util.{Failure, Success}
 
@@ -28,6 +30,11 @@ object Main extends https.ClientMethods {
 
     val config = play.api.Configuration(ConfigFactory.load("ws.conf"))
     val environment = play.api.Environment.simple(new java.io.File("./conf"), Mode.Dev)
+
+    val name = "testing"
+    val system = ActorSystem(name)
+    implicit val materializer = ActorMaterializer(namePrefix = Some(name))(system)
+
     val client = createClient(config, environment)
 
     val futureResponse = client.url("https://example.com:9443").get()
@@ -40,5 +47,7 @@ object Main extends https.ClientMethods {
         Console.println(s"failure = $f")
         client.close()
     }
+
+    system.terminate()
   }
 }
