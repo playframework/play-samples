@@ -73,7 +73,8 @@ class MyMultipartFormDataBodyParser extends DelegatingMultipartFormDataBodyParse
      */
     private File generateTempFile() {
         try {
-            final FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(EnumSet.of(OWNER_READ, OWNER_WRITE));
+            final EnumSet<PosixFilePermission> attrs = EnumSet.of(OWNER_READ, OWNER_WRITE);
+            final FileAttribute<?> attr = PosixFilePermissions.asFileAttribute(attrs);
             final Path path = Files.createTempFile("multipartBody", "tempFile", attr);
             return path.toFile();
         } catch (IOException e) {
@@ -89,7 +90,7 @@ The core Accumulator is generated from an `akka.streams.FileIO` sink which write
 Because this code delegates to the Scala API implementation, the underlying `DelegatingMultipartFormDataBodyParser<A>` exposes an abstract method:
  
 ``` java
-abstract Function<Multipart.FileInfo, play.libs.streams.Accumulator<ByteString, Http.MultipartFormData.FilePart<A>>> createFilePartHandler();
+abstract Function<Multipart.FileInfo, Accumulator<ByteString, Http.MultipartFormData.FilePart<A>>> createFilePartHandler();
 ```
 
 `DelegatingMultipartFormDataBodyParser` does not know about any particular type, only `FilePart<A>`, and so it falls to the implementation to fill in the details. 
