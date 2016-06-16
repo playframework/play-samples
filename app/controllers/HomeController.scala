@@ -78,6 +78,8 @@ class HomeController @Inject() (implicit val messagesApi: MessagesApi) extends C
     size
   }
 
+  Action(parse.multipartFormData)
+
   /**
    * Uploads a multipart file as a POST request.
    *
