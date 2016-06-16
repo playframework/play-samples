@@ -1,102 +1,33 @@
-# Play File Upload using a custom BodyParser
+package controllers;
 
-This is a sample project that shows how to upload a file through Akka Streams using a custom BodyParser using Akka Streams using the Java API.
 
-## Default MultipartFormData Body Parser
- 
-Play's Java API specifies a BodyParser.MultipartFormData class which uses a TemporaryFile wrapper class that creates a file under a "temporary" name and then deletes it only when the system is under GC pressure.
-     
-``` java
-@BodyParser.Of(BodyParser.MultipartFormData.class)
-public Result upload() throws IOException {
-    final Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
-    final Http.MultipartFormData.FilePart<File> filePart = formData.getFile("name");
-    final File file = filePart.getFile();
-    final long data = operateOnTempFile(file);
-    return ok("file size = " + data + "");
-}
-```
+import akka.stream.Materializer;
+import akka.util.ByteString;
+import play.core.j.JavaParsers;
+import play.core.parsers.Multipart;
+import play.libs.F;
+import play.mvc.BodyParser;
+import play.mvc.Http;
+import play.mvc.Result;
+import scala.Function1;
+import scala.Option;
+import scala.collection.Seq;
+import scala.compat.java8.OptionConverters;
+import scala.runtime.AbstractFunction1;
 
-## Customizing the Body Parser
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-There are cases where it's useful to have more control over where and Play uploads multi part form data.  In this case, we'd like to get access to the accumulated byte stream for each file part and generate a file directly, without going through TemporaryFile.
+import static scala.collection.JavaConverters.mapAsJavaMapConverter;
+import static scala.collection.JavaConverters.seqAsJavaListConverter;
 
-In short, we want to replace:
-
-```
-@BodyParser.Of(BodyParser.MultipartFormData.class)
-```
-
-with 
-
-```
-@BodyParser.Of(MyMultipartFormDataBodyParser.class)
-```
-
-And we want to change as little code as possible.  The underlying mechanics are simple.  `MyMultipartFormDataBodyParser` does all the work of setting up a custom file part handler using a method called `createFilePartHandler`:
-
-``` java
-class MyMultipartFormDataBodyParser extends DelegatingMultipartFormDataBodyParser<File> {
-
-    @Inject
-    public MyMultipartFormDataBodyParser(Materializer materializer, play.api.http.HttpConfiguration config) {
-        super(materializer, config.parser().maxDiskBuffer());
-    }
-
-    /**
-     * Creates a file part handler that uses a custom accumulator.
-     */
-    @Override
-    public Function<Multipart.FileInfo, Accumulator<ByteString, Http.MultipartFormData.FilePart<File>>> createFilePartHandler() {
-        return (Multipart.FileInfo fileInfo) -> {
-            final String filename = fileInfo.fileName();
-            final String partname = fileInfo.partName();
-            final String contentType = fileInfo.contentType().getOrElse(null);
-            final File file = generateTempFile();
-
-            final Sink<ByteString, CompletionStage<IOResult>> sink = FileIO.toFile(file);
-            return Accumulator.fromSink(
-                    sink.mapMaterializedValue(completionStage ->
-                            completionStage.thenApplyAsync(results -> {
-                                //noinspection unchecked
-                                return new Http.MultipartFormData.FilePart(partname,
-                                        filename,
-                                        contentType,
-                                        file);
-                            })
-                    ));
-        };
-    }
-
-    /**
-     * Generates a temp file directly without going through TemporaryFile.
-     */
-    private File generateTempFile() {
-        try {
-            final FileAttribute<Set<PosixFilePermission>> attr = PosixFilePermissions.asFileAttribute(EnumSet.of(OWNER_READ, OWNER_WRITE));
-            final Path path = Files.createTempFile("multipartBody", "tempFile", attr);
-            return path.toFile();
-        } catch (IOException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
-}
-```
-
-The core Accumulator is generated from an `akka.streams.FileIO` sink which writes out bytes to the filesystem, and exposes a CompletionStage when the write operation has been completed.
-
-Because this code delegates to the Scala API implementation, the underlying `DelegatingMultipartFormDataBodyParser<A>` exposes an abstract method:
- 
-``` java
-abstract Function<Multipart.FileInfo, play.libs.streams.Accumulator<ByteString, Http.MultipartFormData.FilePart<A>>> createFilePartHandler();
-```
-
-`DelegatingMultipartFormDataBodyParser` does not know about any particular type, only `FilePart<A>`, and so it falls to the implementation to fill in the details. 
- 
-In addition, `DelegatingMultipartFormDataBodyParser` does all the housekeeping necessary to map between Java and the underlying details.  This code is verbose, but illustrates that pure Java can do all the work natively of working with Scala, rather than having to add a Scala class:  
- 
-``` java
+/**
+ * An abstract body parser that exposes a file part handler as an
+ * abstract method and delegates the implementation to the underlying
+ * Scala multipartParser.
+ */
 abstract class DelegatingMultipartFormDataBodyParser<A> implements BodyParser<Http.MultipartFormData<A>> {
 
     private final Materializer materializer;
@@ -221,5 +152,3 @@ abstract class DelegatingMultipartFormDataBodyParser<A> implements BodyParser<Ht
         );
     }
 }
-```
-

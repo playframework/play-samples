@@ -1,10 +1,7 @@
 package controllers;
 
 import play.data.Form;
-import play.mvc.BodyParser;
-import play.mvc.Controller;
-import play.mvc.Http;
-import play.mvc.Result;
+import play.mvc.*;
 import views.html.index;
 
 import javax.inject.Inject;
@@ -28,17 +25,15 @@ public class HomeController extends Controller {
 
     public Result index() {
         Form<FormData> form = formFactory.form(FormData.class);
-        play.mvc.Http.Context context = play.mvc.Http.Context.current();
+        Http.Context context = Http.Context.current();
         return ok(index.render(form, context.messages()));
     }
 
     @BodyParser.Of(MyMultipartFormDataBodyParser.class)
     public Result upload() throws IOException {
-        final Http.Context context = Http.Context.current();
-        final Http.Request request = context.request();
-
-        final Http.MultipartFormData.FilePart<Object> filePart = request.body().asMultipartFormData().getFile("name");
-        final File file = (File) filePart.getFile();
+        final Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
+        final Http.MultipartFormData.FilePart<File> filePart = formData.getFile("name");
+        final File file = filePart.getFile();
         final long data = operateOnTempFile(file);
         return ok("file size = " + data + "");
     }
