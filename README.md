@@ -27,16 +27,6 @@ cd scripts/
 ./gencerts.sh
 ```
 
-and move all of the generated files into the (newly created) `certs` directory:
-
-```
-cd scripts
-mkdir ../certs
-mv client* ../certs
-mv example* ../certs
-mv password ../certs
-```
-
 ## Point example.com to localhost
 
 You may have noticed that the name on the generated certificates is `example.com` -- HTTPS requires that you have a reasonable hostname for your server.
@@ -48,7 +38,7 @@ $ sudo vi /etc/hosts
 ```
 
 ```
-127.0.0.1       example.com www.example.com
+127.0.0.1       example.com one.example.com two.example.com
 ```
 
 ## Run Play with HTTPS configuration
@@ -57,11 +47,17 @@ Now that you've generated the certificates and added `example.com` to `/etc/host
 
 This application is not run with `activator` -- you should run it with `./play` instead, as there are a number of system properties required to use it effectively.
 
-The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](http://www.playframework.com/documentation/2.3.x/ConfiguringHttps).
+The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](http://www.playframework.com/documentation/2.5.x/ConfiguringHttps).
 
 ```
 ./play run
 ```
+
+## Run Server Name Indication
+
+If you want to return different certificates for the hostname, you can use the SniKeyManager to return an alias corresponding to the hostname.
+
+For example, going to "http://one.example.com:9443" will return a certificate corresponding to "one.example.com", while "http://two.example.com:9443" will return a certificate corresponding to "two.example.com".
 
 ## Checking the list of cipher suites:
 

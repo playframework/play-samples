@@ -17,12 +17,14 @@ import scala.util.{Failure, Success}
  */
 object Main extends https.ClientMethods {
 
+  private val logger = org.slf4j.LoggerFactory.getLogger("application")
+
   def printResponse(response:WSResponse) = {
     response.allHeaders.foreach { header =>
-      Console.println(s"header = $header")
+      logger.info(s"header = $header")
     }
     val body = response.body
-    Console.println(s"body = $body")
+    logger.info(s"body = $body")
   }
 
   def main(args: Array[String]) {
@@ -37,14 +39,14 @@ object Main extends https.ClientMethods {
 
     val client = createClient(config, environment)
 
-    val futureResponse = client.url("https://example.com:9443").get()
+    val futureResponse = client.url("https://one.example.com:9443").get()
     futureResponse.onComplete {
       case Success(response) =>
         printResponse(response)
         client.close() // closing the client must be done manually.
 
       case Failure(f) =>
-        Console.println(s"failure = $f")
+        logger.error(s"failure = $f", f)
         client.close()
     }
 

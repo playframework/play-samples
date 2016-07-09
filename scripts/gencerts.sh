@@ -7,5 +7,10 @@ echo ${PW} > ${DIR}/password
 
 ${DIR}/genca.sh
 ${DIR}/genclient.sh
-${DIR}/genserver.sh
+
+${DIR}/gen-example.com.sh
+${DIR}/gen-one.example.com.sh
+${DIR}/gen-two.example.com.sh
+${DIR}/gen-wildcard.example.com.sh
+
 ${DIR}/gentrustanchor.sh
