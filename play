@@ -3,7 +3,7 @@
 ACTIVATOR=activator
 
 # Export the keystore password for use in ws.conf
-export KEY_PASSWORD=`cat certs/password`
+export KEY_PASSWORD=`cat scripts/password`
 
 # Turn on HTTPS, turn off HTTP.
 # This should be https://example.com:9443

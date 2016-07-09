@@ -2,11 +2,26 @@ name := """activator-play-tls-example"""
 
 version := "1.0.0"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val one = (project in file("modules/one")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.8"
+lazy val two = (project in file("modules/two")).enablePlugins(PlayScala)
+
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
+  .aggregate(one, two)
+  .dependsOn(one, two)
+
+scalaVersion in ThisBuild := "2.11.8"
 
 libraryDependencies ++= Seq(
   ws,
   specs2 % Test
 )
+
+fork in run := true
+
+// Uncomment if you want to run "./play client" explicitly without SNI.
+//javaOptions in run += "-Djsse.enableSNIExtension=false"
+
+javaOptions in run += "-Djavax.net.debug=ssl:handshake"
+
+addCommandAlias("client", "runMain Main")

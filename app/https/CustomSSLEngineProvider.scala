@@ -9,18 +9,20 @@ import play.server.api._
 
 class CustomSSLEngineProvider(appProvider: ApplicationProvider) extends SSLEngineProvider {
 
+  val certificateDirectory: String = "scripts"
+
   def readPassword(): Array[Char] = {
-    val passwordPath = FileSystems.getDefault.getPath("certs", "password")
+    val passwordPath = FileSystems.getDefault.getPath(certificateDirectory, "password")
     Files.readAllLines(passwordPath).get(0).toCharArray
   }
 
   def readKeyInputStream(): java.io.InputStream = {
-    val keyPath = FileSystems.getDefault.getPath("certs", "example.com.jks")
+    val keyPath = FileSystems.getDefault.getPath(certificateDirectory, "example.com.jks")
     Files.newInputStream(keyPath)
   }
 
   def readTrustInputStream(): java.io.InputStream = {
-    val keyPath = FileSystems.getDefault.getPath("certs", "clientca.jks")
+    val keyPath = FileSystems.getDefault.getPath(certificateDirectory, "clientca.jks")
     Files.newInputStream(keyPath)
   }
 
@@ -32,7 +34,14 @@ class CustomSSLEngineProvider(appProvider: ApplicationProvider) extends SSLEngin
       keyStore.load(keyInputStream, password)
       val kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm)
       kmf.init(keyStore, password)
-      kmf.getKeyManagers
+
+      // Now that we have the key manager, we have to extend it with SNIKeyManager so we
+      // get the extendedEngineAlias
+      val keyManagers = kmf.getKeyManagers
+      val onlyKeyManager: X509ExtendedKeyManager = keyManagers(0).asInstanceOf[X509ExtendedKeyManager]
+      val defaultAlias = Some("wildcard.example.com")
+      val sniKeyManager = new SniKeyManager(onlyKeyManager, defaultAlias)
+      Array(sniKeyManager)
     } finally {
       keyInputStream.close()
     }
