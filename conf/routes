@@ -1,5 +1,3 @@
 GET /                       controllers.HomeController.index
 
-GET /for/*host             controllers.HomeController.forHost(host)
-
 GET /assets/*file           controllers.Assets.at(path="/public", file)
