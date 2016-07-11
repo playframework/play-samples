@@ -63,7 +63,7 @@ final class SniKeyManager(val keyManager: X509ExtendedKeyManager, val defaultAli
      case Some(hostname) if hasCertChain(hostname) && hasPrivateKey(hostname) =>
        logger.debug("chooseEngineServerAlias: using selected sniHostname {} as server alias", hostname)
        hostname
-     case None =>
+     case _ =>
        defaultAlias match {
          case Some(alias) =>
            logger.debug("chooseEngineServerAlias: using defaultAlias {} as server alias", defaultAlias)

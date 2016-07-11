@@ -38,12 +38,12 @@ $ sudo vi /etc/hosts
 ```
 
 ```
-127.0.0.1       example.com one.example.com two.example.com
+127.0.0.1       example.com one.example.com two.example.com three.example.com
 ```
 
 ## Run Play with HTTPS configuration
 
-Now that you've generated the certificates and added `example.com` to `/etc/hosts`, you can start Play itself.
+Now that you've generated the certificates and added the `example.com` host entries to `/etc/hosts`, you can start Play itself.
 
 This application is not run with `activator` -- you should run it with `./play` instead, as there are a number of system properties required to use it effectively.
 
@@ -53,11 +53,13 @@ The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More deta
 ./play run
 ```
 
-## Run Server Name Indication
+## Virtual Hosts and Server Name Indication
 
 If you want to return different certificates for the hostname, you can use the SniKeyManager to return an alias corresponding to the hostname.
 
-For example, going to "http://one.example.com:9443" will return a certificate corresponding to "one.example.com", while "http://two.example.com:9443" will return a certificate corresponding to "two.example.com".
+For example, going to "https://one.example.com:9443" will return a certificate corresponding to "one.example.com", while "https://two.example.com:9443" will return a certificate corresponding to "two.example.com".
+
+If there is no match, then a wildcard certificate will be used, and the main website's index method will redirect to `forHost` with the hostname.  So, if you go to "https://three.example.com:9443" and there is no site for that, the wildcard certificate and the home page will redirect you to "https://three.example.com:9443/for/three".
 
 ## Checking the list of cipher suites:
 
