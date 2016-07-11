@@ -1,4 +1,4 @@
-GET /                       controllers.HomeController.index()
+GET /                       controllers.HomeController.index
 
 GET /for/*host             controllers.HomeController.forHost(host)
 
