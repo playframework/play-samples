@@ -1,0 +1,24 @@
+@(p: post.Post)(implicit request: post.PostRequest[_])
+
+<tr>
+
+  <td>
+    <a href="@{p.link}">@{p.link}</a>
+  </td>
+
+  <td>
+    @{p.title}
+  </td>
+
+  <td>
+    @{p.body}
+  </td>
+
+  <td>
+    @for(c <- p.comments) {
+      @{c.body}
+      <br>
+    }
+  </td>
+
+</tr>
