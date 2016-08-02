@@ -3,6 +3,7 @@ import javax.inject.{Inject, Provider, Singleton}
 import play.api._
 import play.api.http.Status._
 import play.api.http.{ContentTypes, DefaultHttpErrorHandler, HttpErrorHandlerExceptions}
+import play.api.libs.json.Json
 import play.api.mvc.Results._
 import play.api.mvc._
 import play.api.routing.Router
@@ -12,7 +13,8 @@ import scala.concurrent._
 import scala.util.control.NonFatal
 
 /**
- * Provides a stripped down error handler that does not use HTML in error pages.
+ * Provides a stripped down error handler that does not use HTML in error pages, and
+ * prints out debugging output.
  *
  * https://www.playframework.com/documentation/2.5.x/ScalaErrorHandling
  */
@@ -21,11 +23,11 @@ class ErrorHandler(environment: Environment,
                    configuration: Configuration,
                    sourceMapper: Option[SourceMapper] = None,
                    optionRouter: => Option[Router] = None)
-  extends DefaultHttpErrorHandler(environment, configuration, sourceMapper, optionRouter) with AcceptExtractors with Rendering {
+  extends DefaultHttpErrorHandler(environment, configuration, sourceMapper, optionRouter) with RequestExtractors with Rendering {
 
   private val logger = org.slf4j.LoggerFactory.getLogger("application.ErrorHandler")
 
-  // This maps through Guice so that the above constructor...
+  // This maps through Guice so that the above constructor can call methods.
   @Inject
   def this(environment: Environment,
            configuration: Configuration,
@@ -55,23 +57,11 @@ class ErrorHandler(environment: Environment,
     }
   }
 
-  override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
-    try {
-      val usefulException = HttpErrorHandlerExceptions.throwableToUsefulException(sourceMapper,
-        environment.mode == Mode.Prod, exception)
+  override protected def onDevServerError(request: RequestHeader, exception: UsefulException): Future[Result] = {
+    Future.successful(InternalServerError(Json.obj("exception" -> exception.toString)))
+  }
 
-      logger.error(
-        s"! @${usefulException.id} - Internal server error, for (${request.method}) [${request.uri}] ->",
-        usefulException
-      )
-
-      Future.successful {
-        InternalServerError
-      }
-    } catch {
-      case NonFatal(e) =>
-        logger.error("Error while handling error", e)
-        Future.successful(InternalServerError)
-    }
+  override protected def onProdServerError(request: RequestHeader, exception: UsefulException): Future[Result] = {
+    Future.successful(InternalServerError)
   }
 }

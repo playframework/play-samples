@@ -10,6 +10,14 @@
     </encoder>
   </appender>
 
+
+  <appender name="METRICS" class="ch.qos.logback.core.FileAppender">
+    <file>${application.home:-.}/logs/metrics.log</file>
+    <encoder>
+      <pattern>%date [%level] from %logger in %thread - %message%n%xException</pattern>
+    </encoder>
+  </appender>
+
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%coloredLevel %logger{15} - %message%n%xException{10}</pattern>
@@ -26,9 +34,6 @@
 
   <logger name="play" level="INFO" />
   <logger name="application" level="DEBUG" />
-
-  <logger name="post" level="TRACE" />
-  <logger name="com.lightbend.blog" level="TRACE" />
 
   <root level="WARN">
     <appender-ref ref="ASYNCFILE" />

@@ -1,18 +1,21 @@
+import javax.inject._
+
 import com.google.inject.AbstractModule
-import filters._
+import net.codingwell.scalaguice.ScalaModule
+import play.api.{Configuration, Environment}
+import v1.post._
+
+import scala.concurrent.Future
 
 /**
- * Provides a base Guice module for setting up some more components from configuration
- * that aren't provided by Play itself.
+ * Sets up custom components for Play.
+ *
+ * https://www.playframework.com/documentation/2.5.x/ScalaDependencyInjection
  */
-class Module extends AbstractModule {
-  override def configure() = {
-    bind(classOf[StrictTransportSecurityConfig]).toProvider(classOf[StrictTransportSecurityConfigProvider])
+class Module(environment: Environment,
+             configuration: Configuration) extends AbstractModule with ScalaModule {
 
-    install(new post.PostModule)
+  override def configure() = {
+    bind[PostRepository].to[PostRepositoryImpl].in[Singleton]
   }
 }
-
-
-
-

@@ -6,8 +6,11 @@ import play.api.routing.Router
 
 /**
  * Handles all requests.
+ *
+ * https://www.playframework.com/documentation/2.5.x/ScalaHttpRequestHandlers#extending-the-default-request-handler
  */
 class RequestHandler @Inject()(router: Router,
+                               postRouter: v1.post.PostRouter,
                                errorHandler: HttpErrorHandler,
                                configuration: HttpConfiguration,
                                filters: HttpFilters)
@@ -16,11 +19,18 @@ class RequestHandler @Inject()(router: Router,
   override def handlerForRequest(request: RequestHeader): (RequestHeader, Handler) = {
     super.handlerForRequest {
       // ensures that REST API does not need a trailing "/"
-      if (request.uri.startsWith("/posts")) {
+      if (isREST(request)) {
         addTrailingSlash(request)
       } else {
         request
       }
+    }
+  }
+
+  private def isREST(request: RequestHeader) = {
+    request.uri match {
+      case uri: String if uri.contains("post") => true
+      case _ => false
     }
   }
 
