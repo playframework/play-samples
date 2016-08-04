@@ -6,12 +6,6 @@
 
 GET        /                                   controllers.HomeController.index()
 
-GET        /java/comet                         controllers.JavaCometController.index()
-GET        /java/comet/liveClock               controllers.JavaCometController.streamClock()
-
-GET        /java/eventSource                   controllers.JavaEventSourceController.index()
-GET        /java/eventSource/liveClock         controllers.JavaEventSourceController.streamClock()
-
 GET        /scala/comet                        controllers.ScalaCometController.index()
 GET        /scala/comet/liveClock              controllers.ScalaCometController.streamClock()
 
