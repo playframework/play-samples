@@ -31,13 +31,13 @@ GET    /               controllers.HomeController.index()
 
 This is useful for situations where a front end service is rendering HTML.  However, Play also contains a more powerful routing DSL that we will use for the REST API.
 
-For every HTTP request starting with `/v1/posts`, Play routes it to a dedicated PostRouter class to handle the Posts resource, through the [`conf/routes`](https://github.com/playframework/play-rest-api/blob/master/conf/routes) file:
+For every HTTP request starting with `/v1/posts`, Play routes it to a dedicated `PostRouter` class to handle the Posts resource, through the [`conf/routes`](https://github.com/playframework/play-rest-api/blob/master/conf/routes) file:
 
 ```
 ->     /v1/posts               v1.post.PostRouter
 ```
 
-The PostRouter examines the URL and extracts data to pass along to the controller [here](https://github.com/playframework/play-rest-api/blob/master/app/v1/post/PostRouter.scala):
+The `PostRouter` examines the URL and extracts data to pass along to the controller [here](https://github.com/playframework/play-rest-api/blob/master/app/v1/post/PostRouter.scala):
 
 ```scala
 package v1.post
@@ -64,7 +64,7 @@ class PostRouter @Inject()(controller: PostController)
 }
 ```
 
-Play’s [routing DSL](https://www.playframework.com/documentation/2.5.x/ScalaSirdRouter) (aka SIRD) shows how data can be extracted from the URL concisely and cleanly.  SIRD is based around HTTP methods and a string interpolated extractor object – this means that when we type the string “/$id” and prefix it with “p”, then the path parameter id can be extracted and used in the block. Naturally, there are also operators to extract queries, regular expressions, and even add custom extractors.  If you have a URL as follows:
+Play’s [routing DSL](https://www.playframework.com/documentation/2.5.x/ScalaSirdRouter) (technically "String Interpolation Routing DSL", aka SIRD) shows how data can be extracted from the URL concisely and cleanly.  SIRD is based around HTTP methods and a string interpolated extractor object – this means that when we type the string “/$id” and prefix it with “p”, then the path parameter id can be extracted and used in the block. Naturally, there are also operators to extract queries, regular expressions, and even add custom extractors.  If you have a URL as follows:
 
 ```
 /posts/?sort=ascending&count=5
