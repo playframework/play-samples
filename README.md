@@ -1,6 +1,6 @@
 # Play REST API
 
-This is the project that goes along with the article.
+This is the example project for [Making a REST API in Play](http://developer.lightbend.com/guides/play-rest-api/index.html).
 
 ## Appendix
 
