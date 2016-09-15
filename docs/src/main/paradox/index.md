@@ -38,7 +38,7 @@ To get more involved and if you have questions, join the [mailing list](https://
 
 ## Microservices vs REST APIs
 
-One thing to note here is that although this guide covers how to make a REST API in Play, it only covers Play itself and deploying Play.  Building a REST API in Play does not automatically make it a "microservice" because it does not cover larger scale concerns about microservices such as ensuring resiliency, persistence, distributing work over multiple machines, or monitoring.
+One thing to note here is that although this guide covers how to make a REST API in Play, it only covers Play itself and deploying Play.  Building a REST API in Play does not automatically make it a "microservice" because it does not cover larger scale concerns about microservices such as ensuring resiliency, consistency, or monitoring.
 
 For full scale microservices, you want [Lagom](http://www.lagomframework.com/), which builds on top of Play -- a microservices framework for dealing with the ["data on the outside"](https://blog.acolyer.org/2016/09/13/data-on-the-outside-versus-data-on-the-inside/) problem, set up with persistence and service APIs that ensure that the service always stays up and responsive even in the face of chaos monkeys and network partitions.
 
