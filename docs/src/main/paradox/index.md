@@ -16,11 +16,11 @@ Note that there’s more involved in a REST API -- monitoring, representation, a
 
 Play makes a good REST API implementation because Play does the right thing out of the box.  Play makes simple things easy, makes hard things possible, and encourages code that scales because it works in sympathy with the JVM and the underlying hardware. But "safe and does the right thing" is the boring answer.
 
-The fun answer is that Play is **fast**.
+The fun answer is that [Play is **fast**](https://www.lightbend.com/blog/why-is-play-framework-so-fast).
 
 In fact, Play is so fast that you have to turn off machines so that the rest of your architecture can keep up.  The Hootsuite team was able to **reduce the number of servers by 80%** by [switching to Play](https://www.lightbend.com/resources/case-studies-and-stories/how-hootsuite-modernized-its-url-shortener).  if you deploy Play with the same infrastructure that you were using for other web frameworks, you are effectively staging a denial of service attack against your own database.
 
-Play is fast because Play is **built on reactive bedrock**.  Play starts from a reactive core, and builds on reactive principles all the way from the ground.  Play uses a small thread pool, and breaks network packets into a stream of small chunks of data keeps those threads fed with HTTP requests, which means it's fast.  and feeds those through Akka Streams, the Reactive Streams implementation designed by the people who invented [Reactive Streams](http://www.reactive-streams.org/) and wrote the [Reactive Manifesto](http://www.reactivemanifesto.org/).
+Play is fast because Play is **built on reactive bedrock**.  Play starts from a reactive core, and builds on reactive principles all the way from the ground.  Play breaks network packets into a stream of small chunks of bytes.  It keeps a small pool of work stealing threads, mapped to the number of cores in the machine, and keeps those threads fed with those chunks.  Play exposes those byte chunks to the application for body parsing, Server Sent Events and WebSockets through Akka Streams -- the Reactive Streams implementation designed by the people who invented [Reactive Streams](http://www.reactive-streams.org/) and wrote the [Reactive Manifesto](http://www.reactivemanifesto.org/).
 
 Linkedin uses Play throughout its infrastructure. It wins on all [four quadrants of scalability](http://www.slideshare.net/brikis98/the-play-framework-at-linkedin/128-Outline1_Getting_started_with_Play2) ([video](https://youtu.be/8z3h4Uv9YbE)).  Play's average "request per second" comes in around [tens of k on a basic quad core w/o any intentional tuning](https://twitter.com/kevinbowling1/status/764188720140398592) -- and it only gets better.
 
