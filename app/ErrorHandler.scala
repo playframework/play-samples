@@ -1,8 +1,8 @@
-import javax.inject.{Inject, Provider, Singleton}
+import javax.inject.{Inject, Provider}
 
 import play.api._
+import play.api.http.DefaultHttpErrorHandler
 import play.api.http.Status._
-import play.api.http.{ContentTypes, DefaultHttpErrorHandler, HttpErrorHandlerExceptions}
 import play.api.libs.json.Json
 import play.api.mvc.Results._
 import play.api.mvc._
@@ -10,7 +10,6 @@ import play.api.routing.Router
 import play.core.SourceMapper
 
 import scala.concurrent._
-import scala.util.control.NonFatal
 
 /**
  * Provides a stripped down error handler that does not use HTML in error pages, and
@@ -18,12 +17,11 @@ import scala.util.control.NonFatal
  *
  * https://www.playframework.com/documentation/2.5.x/ScalaErrorHandling
  */
-@Singleton
 class ErrorHandler(environment: Environment,
                    configuration: Configuration,
                    sourceMapper: Option[SourceMapper] = None,
                    optionRouter: => Option[Router] = None)
-  extends DefaultHttpErrorHandler(environment, configuration, sourceMapper, optionRouter) with RequestExtractors with Rendering {
+  extends DefaultHttpErrorHandler(environment, configuration, sourceMapper, optionRouter) {
 
   private val logger = org.slf4j.LoggerFactory.getLogger("application.ErrorHandler")
 
