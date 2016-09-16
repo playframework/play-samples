@@ -1,14 +1,24 @@
 # Basics
 
-This guide will walk you through how to make a RESTful API with JSON using [Play 2.5](https://playframework.com).
+This guide will walk you through how to make a REST API with JSON using [Play 2.5](https://playframework.com).
 
-To see the associated Github project, please go to [http://github.com/playframework/play-rest-api](http://github.com/playframework/play-rest-api).  We're going to be showing an already working Play project with most of the code available under the "app/v1" directory.  There will be several different versions of the same project as this series expands, so you can compare different versions of the controller against each other.
+To see the associated Github project, please go to [https://github.com/playframework/play-rest-api](https://github.com/playframework/play-rest-api) or clone the project:
+
+```
+git clone https://github.com/playframework/play-rest-api.git
+```
+
+We're going to be showing an already working Play project with most of the code available under the "app/v1" directory.  There will be several different versions of the same project as this series expands, so you can compare different versions of the project against each other.
 
 To run Play on your own local computer, please see the instructions in the [appendix](../appendix.md). 
 
+## Introduction
+
+We'll start off with a REST API that displays information for blog posts.  Users should be able to write a title and a body of a blog post and create new blog posts, edit existing blog posts, and delete new blog posts.
+
 ## Modelling a Post Resource
 
-We'll start off with a REST API that displays information for blog posts.   This is a resource that will contain all the data to start with -- it will have a unique id, a URL hyperlink that indicates the canonical location of the resource, the title of the blog post, and the body of the blog post.
+The way to do this in REST is to model the represented state as a resource.  A blog post resource will have a unique id, a URL hyperlink that indicates the canonical location of the resource, the title of the blog post, and the body of the blog post.
 
 This resource is represented as a single case class in the Play application [here](https://github.com/playframework/play-rest-api/blob/master/app/v1/post/PostResourceHandler.scala#L13):
 
