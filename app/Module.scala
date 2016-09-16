@@ -5,8 +5,6 @@ import net.codingwell.scalaguice.ScalaModule
 import play.api.{Configuration, Environment}
 import v1.post._
 
-import scala.concurrent.Future
-
 /**
  * Sets up custom components for Play.
  *

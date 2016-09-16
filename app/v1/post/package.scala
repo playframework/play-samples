@@ -1,7 +1,6 @@
 package v1
 
 import play.api.i18n.Messages
-import play.api.mvc.Result
 
 /**
  * Package object for post.  This is a good place to put implicit conversions.
