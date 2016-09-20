@@ -25,7 +25,8 @@ class GatlingSpec extends Simulation {
 
 object Index {
 
-  def refreshAfterOneSecond = exec(http("Index").get("/").check(status.is(200))).pause(1)
+  def refreshAfterOneSecond =
+    exec(http("Index").get("/").check(status.is(200))).pause(1)
 
   val refreshManyTimes = repeat(10000) {
     refreshAfterOneSecond

@@ -5,15 +5,18 @@ import play.api.mvc._
 import play.api.routing.Router
 
 /**
- * Handles all requests.
- *
- * https://www.playframework.com/documentation/2.5.x/ScalaHttpRequestHandlers#extending-the-default-request-handler
- */
+  * Handles all requests.
+  *
+  * https://www.playframework.com/documentation/2.5.x/ScalaHttpRequestHandlers#extending-the-default-request-handler
+  */
 class RequestHandler @Inject()(router: Router,
                                errorHandler: HttpErrorHandler,
                                configuration: HttpConfiguration,
                                filters: HttpFilters)
-  extends DefaultHttpRequestHandler(router, errorHandler, configuration, filters) {
+    extends DefaultHttpRequestHandler(router,
+                                      errorHandler,
+                                      configuration,
+                                      filters) {
 
   override def handlerForRequest(request: RequestHeader): (RequestHeader, Handler) = {
     super.handlerForRequest {
@@ -34,7 +37,7 @@ class RequestHandler @Inject()(router: Router,
   }
 
   private def addTrailingSlash(origReq: RequestHeader): RequestHeader = {
-    if (! origReq.path.endsWith("/")) {
+    if (!origReq.path.endsWith("/")) {
       val path = origReq.path + "/"
       if (origReq.rawQueryString.isEmpty) {
         origReq.copy(path = path, uri = path)
