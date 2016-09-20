@@ -11,12 +11,12 @@ import scala.concurrent.{ExecutionContext, Future}
 case class PostFormInput(title: String, body: String)
 
 /**
- * Takes HTTP requests and produces JSON.
- */
-class PostController @Inject()(action: PostAction,
-                               handler: PostResourceHandler)
-                              (implicit ec: ExecutionContext)
-  extends Controller {
+  * Takes HTTP requests and produces JSON.
+  */
+class PostController @Inject()(
+    action: PostAction,
+    handler: PostResourceHandler)(implicit ec: ExecutionContext)
+    extends Controller {
 
   private val form: Form[PostFormInput] = {
     import play.api.data.Forms._
@@ -51,20 +51,18 @@ class PostController @Inject()(action: PostAction,
     }
   }
 
-  private def processJsonPost[A]()(implicit request: PostRequest[A]): Future[Result] = {
+  private def processJsonPost[A]()(
+      implicit request: PostRequest[A]): Future[Result] = {
     def failure(badForm: Form[PostFormInput]) = {
       Future.successful(BadRequest(badForm.errorsAsJson))
     }
 
     def success(input: PostFormInput) = {
       handler.create(input).map { post =>
-        Created(Json.toJson(post))
-          .withHeaders(LOCATION -> post.link)
+        Created(Json.toJson(post)).withHeaders(LOCATION -> post.link)
       }
     }
 
     form.bindFromRequest().fold(failure, success)
   }
 }
-
-

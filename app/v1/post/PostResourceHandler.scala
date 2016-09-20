@@ -6,20 +6,16 @@ import scala.concurrent.{ExecutionContext, Future}
 
 import play.api.libs.json._
 
-
 /**
- * DTO for displaying post information.
- */
-case class PostResource(id: String,
-                        link: String,
-                        title: String,
-                        body: String)
+  * DTO for displaying post information.
+  */
+case class PostResource(id: String, link: String, title: String, body: String)
 
 object PostResource {
 
   /**
-   * Mapping to write a PostResource out as a JSON value.
-   */
+    * Mapping to write a PostResource out as a JSON value.
+    */
   implicit val implicitWrites = new Writes[PostResource] {
     def writes(post: PostResource): JsValue = {
       Json.obj(
@@ -33,12 +29,11 @@ object PostResource {
 }
 
 /**
- * Controls access to the backend data, returning [[PostResource]]
- */
-class PostResourceHandler @Inject()(routerProvider: Provider[PostRouter],
-                                    postRepository: PostRepository)
-                                   (implicit ec: ExecutionContext)
-{
+  * Controls access to the backend data, returning [[PostResource]]
+  */
+class PostResourceHandler @Inject()(
+    routerProvider: Provider[PostRouter],
+    postRepository: PostRepository)(implicit ec: ExecutionContext) {
 
   def create(postInput: PostFormInput): Future[PostResource] = {
     val data = PostData(PostId("999"), postInput.title, postInput.body)

@@ -6,7 +6,7 @@ import scala.concurrent.Future
 
 final case class PostData(id: PostId, title: String, body: String)
 
-class PostId private(val underlying: Int) extends AnyVal {
+class PostId private (val underlying: Int) extends AnyVal {
   override def toString: String = underlying.toString
 }
 
@@ -18,8 +18,8 @@ object PostId {
 }
 
 /**
- * A pure non-blocking interface for the PostRepository.
- */
+  * A pure non-blocking interface for the PostRepository.
+  */
 trait PostRepository {
   def create(data: PostData): Future[PostId]
 
@@ -28,10 +28,9 @@ trait PostRepository {
   def get(id: PostId): Future[Option[PostData]]
 }
 
-
 /**
- * A trivial implementation for the Post Repository.
- */
+  * A trivial implementation for the Post Repository.
+  */
 @Singleton
 class PostRepositoryImpl @Inject() extends PostRepository {
 
@@ -67,4 +66,3 @@ class PostRepositoryImpl @Inject() extends PostRepository {
   }
 
 }
-
