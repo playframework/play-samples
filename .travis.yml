@@ -1,14 +1,15 @@
 language: scala
 scala:
-   - 2.11.8
+- 2.11.8
 jdk:
-  - oraclejdk8
+- oraclejdk8
 cache:
   directories:
-    - $HOME/.ivy2/cache
+  - "$HOME/.ivy2/cache"
 before_cache:
-  # Ensure changes to the cache aren't persisted
-  - rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
-  - rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
-  # Delete all ivydata files since ivy touches them on each build
-  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
+- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
+- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+notifications:
+  slack:
+    secure: tdCqHDvAO6v8TqzBBRic2VL6Qi9qs9IG6TVdn2msg4xfDT0fUtw9TcMEsr8cr9yltjpLCmoJUPACjhEFbEAl4JxcRoiC4nTPUlJ6u9sBFJdJRyVB7fcSMf3U2+KgqQKzx9v3HvZ8jgJV/azCE6yaOJkJ+ISSqHRngm5+GqdAYCnaOYGJ3DIOQVDcnk8i/ZC4zKyFuC23PWPqUkDKcU6Db/qNZh7NGo7ejNL+NiYsuWgR0SEMqHmUWnAxpJ0H12XozeUG8YKMOj5EjhsWon+dLa5OXp2TTZ9GNE5wLtCahf7SzW6PJerHBplt6b9IQS0Ll168asromuNaehPyHN/BnTU8AfFUMjO7AIl+PBIWsGsSroTQ5eP+6wNBU0tPGz0C3HiPC/ui+pYZwHHfH+7ubOVrSC7Rn2EmAj87oEq0nVbNbWy/OUwxNbFGteeypiq5LuQcdgQn8MEh9OknE28tdSeZy6kAJBojUppgnqB1+FBxVSZE87e41c02H621PPgIUZ663EyhwxqdWx1/fZMYYPJXYrN+jkbQ8Kg4g9ZfJn9gTrolocauvnupHR4z+rtsoxdjECwXxTrLWQr/IBSO56uYnyeOYTEUYQ8c5u+zD6jOTFeVokNO4dOod4WGyi3hgeSyVplqNB2PJXB82o7Ey29YVn0GrXykBUQkEzTqDBo=
