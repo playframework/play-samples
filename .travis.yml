@@ -1,14 +1,18 @@
 language: scala
 scala:
-   - 2.11.8
+- 2.11.8
 jdk:
-  - oraclejdk8
+- oraclejdk8
 cache:
   directories:
-    - $HOME/.ivy2/cache
+  - "$HOME/.ivy2/cache"
 before_cache:
-  # Ensure changes to the cache aren't persisted
-  - rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
-  - rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
-  # Delete all ivydata files since ivy touches them on each build
-  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
+- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
+- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+
+# See https://blog.travis-ci.com/2014-03-13-slack-notifications/
+# created with travis encrypt command line tool
+notifications:
+  slack:
+    secure: CFTfFbcwL1l8XKo/nMbVo4OD/ePlKvJsiH69PuHjRrMoP1C59YwzObRoe4Uxq5tjYwZdWtQkzAzSh3nMUEI1Kf+s1VPQTJn3vm47LYXeCNnvJh4UWgpBQzz18sgdSLIwLNFy4jLFjlmoRtNr0q/5GACofUIYSpcoub77DfNEYIBhdsDxNi34DOOj7hc4kdbQNS7dzLzIYesE32Xjdn+L1ThvICCYyWjdJ6ghTgHEXhpuR8FToui3kvtqOchoDoY46Q01KTVMeK6jvkH3OXGn4sZCnNBMDZIcwKsOmPYRdRbiGdtJ/uSqDrXIKb9fTEqdkPAOaLBV3XJ7xmRRvlqDhVCPRrjxVQuCPjEQ8nopyUVb40wMer8vR14yY3/IbpHu8+WhJN4CIv1vrGlSxDRg9COTgWPZgYtl3JxDeNQCBfQLYF+1XQupS54a5nAo/lg1h2DIGouXFCSDEzh1zZuPEmapEPXB95yZvzRWYTwEpG9X1SxJE8alYEHDvuQ2Q+RyFXIMxBIPsjR5OLO4g1r6YAjidtl+tOz9a3LsIfcb9sm2tbpm9sdN8E/Aykcp7tuOW2mlK+Ge/HIY4yfpGuz31I3yhkXGa8uNxVJT61e6rKO173Ty0GCAEqhd/POh59V/K2fujBeoM7GY3HRLwCtHL52TmEiS2s3DOADL0oZR0wg=
