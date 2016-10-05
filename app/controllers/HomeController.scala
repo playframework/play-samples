@@ -78,8 +78,6 @@ class HomeController @Inject() (implicit val messagesApi: MessagesApi) extends C
     size
   }
 
-  Action(parse.multipartFormData)
-
   /**
    * Uploads a multipart file as a POST request.
    *
@@ -93,7 +91,7 @@ class HomeController @Inject() (implicit val messagesApi: MessagesApi) extends C
         data
     }
 
-    Ok(s"file size = ${fileOption}")
+    Ok(s"file size = ${fileOption.getOrElse("no file")}")
   }
 
 }
