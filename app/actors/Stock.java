@@ -46,7 +46,7 @@ public class Stock {
         private final String symbol;
 
         public Optional<String> symbol() {
-            return Optional.of(symbol);
+            return Optional.ofNullable(symbol);
         }
 
         public Unwatch(String symbol) {
