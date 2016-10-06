@@ -8,6 +8,7 @@ resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
+libraryDependencies += guice
 libraryDependencies += jdbc
 libraryDependencies += evolutions
 libraryDependencies += "com.adrianhurt" %% "play-bootstrap" % "1.0-P25-B3"
