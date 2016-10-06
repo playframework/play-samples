@@ -10,6 +10,7 @@ scalaVersion := "2.11.8"
 // scalaz-bintray resolver needed for specs2 library
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
+libraryDependencies += guice
 libraryDependencies += ws
 
 libraryDependencies += "org.webjars" % "flot" % "0.8.3"
