@@ -5,11 +5,21 @@ This is a multi-part guide to walk you through how to make a RESTful API with JS
 We’ll demonstrate with a “best practices” REST API.  You can get source code for this guide two ways:
 
 * Download a pre-packaged bundle with this link [https://example.lightbend.com/v1/download/play-rest-api](https://example.lightbend.com/v1/download/play-rest-api)
+
+    * Linux/Mac:
     ```bash
     unzip play-rest-api.zip
 cd play-rest-api
-./sbt # Or sbt.bat for Windows
+./sbt
     ```
+    * Windows:
+    
+        1. Unzip the download
+        2. From a command line `cd` into the directory where you expanded the downloaded `zip` file and run:
+        ```
+        sbt.bat
+        ```
+
 * [From Github](http://github.com/playframework/play-rest-api):
 
     ```
