@@ -7,7 +7,7 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	public String id;
+	public Long id;
 
     public String name;
 }
