@@ -7,24 +7,23 @@ We’ll demonstrate with a “best practices” REST API.  You can get source co
 * Download a pre-packaged bundle with this link [https://example.lightbend.com/v1/download/play-rest-api](https://example.lightbend.com/v1/download/play-rest-api)
 
     * Linux/Mac:
-    ```bash
-    unzip play-rest-api.zip
+```bash
+unzip play-rest-api.zip
 cd play-rest-api
 ./sbt
-    ```
+```
     * Windows:
-    
+
         1. Unzip the download
         2. From a command line `cd` into the directory where you expanded the downloaded `zip` file and run:
-        ```
-        sbt.bat
-        ```
+```
+sbt.bat
+```
 
 * [From Github](http://github.com/playframework/play-rest-api):
-
-    ```
-    git clone https://github.com/playframework/play-rest-api.git
-    ```
+```
+git clone https://github.com/playframework/play-rest-api.git
+```
 
 This example is in Scala, but Play also has a [Java API](https://www.playframework.com/documentation/2.5.x/JavaHome) which looks and acts just like the [Scala API](https://www.playframework.com/documentation/2.5.x/ScalaHome).  For instructions on running and using the project, please see the [appendix](appendix.md).  This project also comes with an integrated [Gatling](http://gatling.io/) load test -- again, instructions are in the [appendix](appendix.md).
 
