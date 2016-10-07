@@ -2,11 +2,14 @@
 
 This is a multi-part guide to walk you through how to make a RESTful API with JSON using [Play 2.5](https://playframework.com).
 
-We’ll demonstrate with a “best practices” REST API that you can clone from [Github](http://github.com/playframework/play-rest-api):
+We’ll demonstrate with a “best practices” REST API.  You can get source code for this guide two ways:
 
-```
-git clone https://github.com/playframework/play-rest-api.git
-```
+* [Pre-packaged bundle](https://example.lightbend.com/v1/download/play-rest-api)
+* [From Github](http://github.com/playframework/play-rest-api):
+
+    ```
+    git clone https://github.com/playframework/play-rest-api.git
+    ```
 
 This example is in Scala, but Play also has a [Java API](https://www.playframework.com/documentation/2.5.x/JavaHome) which looks and acts just like the [Scala API](https://www.playframework.com/documentation/2.5.x/ScalaHome).  For instructions on running and using the project, please see the [appendix](appendix.md).  This project also comes with an integrated [Gatling](http://gatling.io/) load test -- again, instructions are in the [appendix](appendix.md).
 
