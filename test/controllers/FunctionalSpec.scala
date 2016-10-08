@@ -16,7 +16,7 @@ class FunctionalSpec extends PlaySpec with ScalaFutures {
 
   "HomeController" should {
 
-    "should reject a websocket flow if the origin is set incorrectly" in WsTestClient.withClient { client =>
+    "reject a websocket flow if the origin is set incorrectly" in WsTestClient.withClient { client =>
 
       // Pick a non standard port that will fail the (somewhat contrived) origin check...
       lazy val port: Int = 31337
@@ -36,21 +36,17 @@ class FunctionalSpec extends PlaySpec with ScalaFutures {
           val result = Await.result(f, atMost = 1000 millis)
           listener.getThrowable mustBe a[IllegalStateException]
         } catch {
+          case e: IllegalStateException =>
+            e mustBe an [IllegalStateException]
+
           case e: java.util.concurrent.ExecutionException =>
             val foo = e.getCause
             foo mustBe an [IllegalStateException]
-
-
-          //case e: IllegalStateException =>
-          //  e mustBe an [IllegalStateException]
         }
       }
-      //      whenReady(f, timeout = Timeout(1.second), interval = Interval(1 second)) { e =>
-      //        e mustBe an [IllegalStateException]
-      //      }
     }
 
-    "should accept a websocket flow if the origin is set correctly" in WsTestClient.withClient { client =>
+    "accept a websocket flow if the origin is set correctly" in WsTestClient.withClient { client =>
       lazy val port: Int = Helpers.testServerPort
       val app = new GuiceApplicationBuilder().build()
       Helpers.running(TestServer(port, app)) {
