@@ -17,12 +17,12 @@
     <body>
         <div class="wrap">
             <div class="container-fluid">
-                <div class="text-center">
-                    <h1 class="center-block">Chat Room</h1>
+                <div>
+                    <h1 class="">Chat Room</h1>
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-push-2 col-lg-10">
+                    <div class="col-lg-12">
                         <ul id="messages" class="list-unstyled">
                         </ul>
                     </div>
@@ -64,7 +64,7 @@
 
                 connection.onopen = function () {
                     $send.prop("disabled", false);
-                    $messages.prepend($("<li class='bg-info' style='font-size: 2em'>Connected</li>"));
+                    $messages.prepend($("<li class='bg-info' style='font-size: 1.5em'>Connected</li>"));
                     $send.on('click', send);
                     $message.keypress(function(event){
                         var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -77,7 +77,7 @@
                     console.log('WebSocket Error ', error);
                 };
                 connection.onmessage = function (event) {
-                    $messages.append($("<li style='font-size: 2em'>" + event.data + "</li>"))
+                    $messages.append($("<li style='font-size: 1.5em'>" + event.data + "</li>"))
                 }
         </script>
     </body>

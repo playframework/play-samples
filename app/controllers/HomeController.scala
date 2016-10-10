@@ -2,11 +2,10 @@ package controllers
 
 import javax.inject._
 
-import akka.NotUsed
 import akka.actor.ActorSystem
 import akka.event.Logging
 import akka.stream.Materializer
-import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub}
+import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Source}
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -20,7 +19,7 @@ class HomeController @Inject()(implicit actorSystem: ActorSystem,
                                executionContext: ExecutionContext)
   extends Controller {
 
-  type WSMessage = String
+  private type WSMessage = String
 
   private val logger = org.slf4j.LoggerFactory.getLogger(this.getClass)
 
@@ -28,38 +27,45 @@ class HomeController @Inject()(implicit actorSystem: ActorSystem,
 
   // chat room many clients -> merge hub -> broadcasthub -> many clients
   private val (chatSink, chatSource) = {
-    val source = MergeHub.source[WSMessage].log("source")
+
+    // Don't log MergeHub$ProducerFailed as error if the client disconnects.
+    // recoverWithRetries -1 is essentially "recoverWith"
+    val source = MergeHub.source[WSMessage]
+      .log("source")
+      .recoverWithRetries(-1, { case _: Exception ⇒ Source.empty })
+
     val sink = BroadcastHub.sink[WSMessage]
     source.toMat(sink)(Keep.both).run()
   }
 
-  private val userFlow: Flow[WSMessage, WSMessage, NotUsed] = {
+  private val userFlow: Flow[WSMessage, WSMessage, _] = {
     Flow[WSMessage].via(Flow.fromSinkAndSource(chatSink, chatSource)).log("userFlow")
   }
 
   def index: Action[AnyContent] = Action { implicit request =>
     val url = routes.HomeController.chat().webSocketURL()
-    //val url = "ws://localhost:9000/chat"
     Ok(views.html.index(url))
   }
 
-  def chat: WebSocket = WebSocket.acceptOrResult[WSMessage, WSMessage] {
-    case rh if sameOriginCheck(rh) =>
-      Future.successful(userFlow).map { flow =>
-        Right(flow)
-      }.recover {
-        case e: Exception =>
-          logger.error("Cannot create websocket", e)
-          val error = "Cannot create websocket"
-          val result = InternalServerError(error)
-          Left(result)
-      }
+  def chat: WebSocket = {
+    WebSocket.acceptOrResult[WSMessage, WSMessage] {
+      case rh if sameOriginCheck(rh) =>
+        Future.successful(userFlow).map { flow =>
+          Right(flow)
+        }.recover {
+          case e: Exception =>
+            val msg = "Cannot create websocket"
+            logger.error(msg, e)
+            val result = InternalServerError(msg)
+            Left(result)
+        }
 
-    case rejected =>
-      logger.error(s"Request ${rejected} failed same origin check")
-      Future.successful {
-        Left(Forbidden("forbidden"))
-      }
+      case rejected =>
+        logger.error(s"Request ${rejected} failed same origin check")
+        Future.successful {
+          Left(Forbidden("forbidden"))
+        }
+    }
   }
 
   /**
