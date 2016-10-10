@@ -38,8 +38,8 @@ class HomeController @Inject()(implicit actorSystem: ActorSystem,
   }
 
   def index: Action[AnyContent] = Action { implicit request =>
-    //val url = routes.HomeController.chat().webSocketURL()
-    val url = "ws://localhost:9000/chat"
+    val url = routes.HomeController.chat().webSocketURL()
+    //val url = "ws://localhost:9000/chat"
     Ok(views.html.index(url))
   }
 

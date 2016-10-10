@@ -6,8 +6,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap.min.css")'>
-        <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap-theme.min.css")'>
+        <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap.css")'>
+        <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap-theme.css")'>
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <title>Chat Room</title>
@@ -33,7 +33,10 @@
         <div class="footer navbar-fixed-bottom">
             <div class="row">
                 <div class="col-xs-8 col-sm-9">
-                    <input id="message" placeholder="Type Here" type="text" class="form-control input-lg" />
+                    <input id="message" placeholder="Type Here" type="text"
+                      autofocus
+                      autocomplete="off" spellcheck="false" autocorrect="off"
+                      class="form-control input-lg" />
                 </div>
 
                 <div class="col-xs-4 col-sm-3">
@@ -42,9 +45,8 @@
             </div>
         </div>
 
-        <script type='text/javascript' src='@routes.Assets.at("lib/jquery/jquery.min.js")'></script>
+        <script type='text/javascript' src='@routes.Assets.at("lib/jquery/jquery.js")'></script>
         <script type='text/javascript' src='@routes.Assets.at("lib/flot/jquery.flot.js")'></script>
-        <script type='text/javascript' src='@routes.Assets.at("lib/bootstrap/bootstrap.min.js")'></script>
 
         <script language="javascript">
                 var $messages = $("#messages"),
