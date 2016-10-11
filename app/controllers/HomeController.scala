@@ -1,5 +1,6 @@
 package controllers
 
+import java.net.URL
 import javax.inject._
 
 import akka.actor.ActorSystem
@@ -39,7 +40,7 @@ class HomeController @Inject()(implicit actorSystem: ActorSystem,
   }
 
   private val userFlow: Flow[WSMessage, WSMessage, _] = {
-    Flow[WSMessage].via(Flow.fromSinkAndSource(chatSink, chatSource)).log("userFlow")
+     Flow.fromSinkAndSource(chatSink, chatSource).log("userFlow")
   }
 
   def index: Action[AnyContent] = Action { implicit request =>
@@ -95,7 +96,13 @@ class HomeController @Inject()(implicit actorSystem: ActorSystem,
    * Returns true if the value of the Origin header contains an acceptable value.
    */
   private def originMatches(origin: String): Boolean = {
-    origin.contains("localhost:9000") || origin.contains("localhost:19001")
+    try {
+      val url = new URL(origin)
+      url.getHost == "localhost" &&
+        (url.getPort match { case 9000 | 19001 => true; case _ => false })
+    } catch {
+      case e: Exception => false
+    }
   }
 
 }

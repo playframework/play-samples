@@ -8,7 +8,7 @@ This project makes use of [dynamic streams](http://doc.akka.io/docs/akka/current
 
 The flow is defined once in the controller, and used everywhere from the `chat` action:
 
-```
+```scala
 class HomeController extends Controller {
 
   // chat room many clients -> merge hub -> broadcasthub -> many clients
