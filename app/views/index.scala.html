@@ -1,0 +1,85 @@
+@(url: String)
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap.css")'>
+        <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap-theme.css")'>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <title>Chat Room</title>
+
+    </head>
+
+    <body>
+        <div class="wrap">
+            <div class="container-fluid">
+                <div>
+                    <h1 class="">Chat Room</h1>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul id="messages" class="list-unstyled">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer navbar-fixed-bottom">
+            <div class="row">
+                <div class="col-xs-8 col-sm-9">
+                    <input id="message" placeholder="Type Here" type="text"
+                      autofocus
+                      autocomplete="off" spellcheck="false" autocorrect="off"
+                      class="form-control input-lg" />
+                </div>
+
+                <div class="col-xs-4 col-sm-3">
+                    <button id="send" type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <script type='text/javascript' src='@routes.Assets.at("lib/jquery/jquery.js")'></script>
+        <script type='text/javascript' src='@routes.Assets.at("lib/flot/jquery.flot.js")'></script>
+
+        <script language="javascript">
+                var $messages = $("#messages"),
+                        $send = $("#send"),
+                        $message = $("#message"),
+                        connection = new WebSocket("@url");
+
+                $send.prop("disabled", true);
+
+                var send = function () {
+                    var text = $message.val();
+                    $message.val("");
+                    connection.send(text);
+                };
+
+                connection.onopen = function () {
+                    $send.prop("disabled", false);
+                    $messages.prepend($("<li class='bg-info' style='font-size: 1.5em'>Connected</li>"));
+                    $send.on('click', send);
+                    $message.keypress(function(event){
+                        var keycode = (event.keyCode ? event.keyCode : event.which);
+                        if(keycode == '13'){
+                            send();
+                        }
+                    });
+                };
+                connection.onerror = function (error) {
+                    console.log('WebSocket Error ', error);
+                };
+                connection.onmessage = function (event) {
+                    $messages.append($("<li style='font-size: 1.5em'>" + event.data + "</li>"))
+                }
+        </script>
+    </body>
+
+</html>
