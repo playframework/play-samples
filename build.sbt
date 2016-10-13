@@ -6,7 +6,6 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.8"
 
-
 // scalaz-bintray resolver needed for specs2 library
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
 
@@ -19,4 +18,4 @@ libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
 lazy val akkaVersion = "2.4.11"
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.0" % "test"
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % "test"

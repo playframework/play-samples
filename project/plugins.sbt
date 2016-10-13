@@ -2,7 +2,12 @@
 logLevel := Level.Warn
 
 // The Typesafe repository
-resolvers += Resolver.typesafeRepo("releases")
+resolvers += Resolver.typesafeRepo("snapshots")
+
+resolvers += Resolver.mavenLocal
+
+// https://oss.sonatype.org/content/repositories/snapshots/com/typesafe/play/play_2.11/2.6.0-2016-10-10-cc467d3-SNAPSHOT/
+resolvers += Resolver.sonatypeRepo("snapshots") 
 
 // Use the Play sbt plugin for Play projects
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-SNAPSHOT")
