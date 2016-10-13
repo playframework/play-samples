@@ -1,4 +1,4 @@
-name := """activator-play-tls-example"""
+name := """play-tls-example"""
 
 version := "1.0.0"
 
@@ -10,7 +10,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
   .aggregate(one, two)
   .dependsOn(one, two)
 
-scalaVersion in ThisBuild := "2.11.8"
+scalaVersion := "2.11.8"
 
 libraryDependencies ++= Seq(
   ws,
