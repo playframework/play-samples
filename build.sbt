@@ -4,7 +4,11 @@ version := "1.0-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
+resolvers += Resolver.sonatypeRepo("snapshots") 
+
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
+
+libraryDependencies += guice
 
 libraryDependencies += "org.webjars" % "flot" % "0.8.3"
 libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
