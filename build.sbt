@@ -12,3 +12,4 @@ libraryDependencies += guice
 libraryDependencies += javaJdbc
 libraryDependencies += cache
 libraryDependencies += javaWs
+libraryDependencies += "com.h2database" % "h2" % "1.4.191" % Test
