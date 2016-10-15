@@ -25,7 +25,7 @@ sbt.bat
 git clone https://github.com/playframework/play-rest-api.git
 ```
 
-This example is in Scala, but Play also has a [Java API](https://www.playframework.com/documentation/2.5.x/JavaHome) which looks and acts just like the [Scala API](https://www.playframework.com/documentation/2.5.x/ScalaHome).  For instructions on running and using the project, please see the [appendix](appendix.md).  This project also comes with an integrated [Gatling](http://gatling.io/) load test -- again, instructions are in the [appendix](appendix.md).
+This example is in Scala, but Play also has a [Java API](https://www.playframework.com/documentation/2.5.x/JavaHome) which looks and acts just like the [Scala API](https://www.playframework.com/documentation/2.5.x/ScalaHome).  For instructions on running and using the project, please see the [[appendix]].  This project also comes with an integrated [Gatling](http://gatling.io/) load test -- again, instructions are in the [[appendix]].
 
 Note that there’s more involved in a REST API -- monitoring, representation, and managing access to back end resources -- that we'll cover in subsequent posts.  But first, let's address why Play is so effective as a REST API.
 
