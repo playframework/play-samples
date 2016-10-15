@@ -4,12 +4,11 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-scalaVersion := "2.11.7"
+resolvers += Resolver.sonatypeRepo("snapshots") 
 
-libraryDependencies ++= Seq(
-  guice,
-  javaJdbc,
-  cache,
-  javaWs,
-  "com.h2database" % "h2" % "1.4.191" % Test
-)
+scalaVersion := "2.11.8"
+
+libraryDependencies += guice
+libraryDependencies += javaJdbc
+libraryDependencies += cache
+libraryDependencies += javaWs
