@@ -1,6 +1,6 @@
-resolvers += Resolver.typesafeRepo("snapshots")
+resolvers += Resolver.sonatypeRepo("snapshots")
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-SNAPSHOT") 
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-SNAPSHOT")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.1.0")
 
