@@ -1,6 +1,10 @@
-resolvers += Resolver.sonatypeRepo("snapshots")
+// The Typesafe snapshots repository
+// need to pull from
+// https://oss.sonatype.org/content/repositories/snapshots/com/typesafe/play/play_2.11/maven-metadata.xml
+// https://www.playframework.com/documentation/2.5.x/Repositories is incorrect!
+resolvers += "Typesafe Ivy Snapshots Repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-SNAPSHOT")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-2016-10-16-e6c86bc-SNAPSHOT")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.1.0")
 
