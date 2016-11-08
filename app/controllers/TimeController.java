@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.CompletionStage;
 
@@ -29,12 +30,32 @@ public class TimeController extends Controller {
     }
 
     public Result index() {
-        final String timezone = session("timezone");
-        final ZoneId zoneId = zoneId(timezone);
-        final Instant instant = clock.instant();
-        final ZonedDateTime zdt = instant.atZone(zoneId);
-        final String formatted = formattedDate(zdt);
-        return ok("Hello!  The time is " + formatted + " in time zone " + zoneId);
+        final Form<TimeZoneData> form = formFactory.get().form(TimeZoneData.class);
+
+        String timezone = session("timezone");
+        Form<TimeZoneData> filledForm;
+        if (timezone == null) {
+            timezone = TimeZone.getDefault().getID();
+            filledForm = form.fill(new TimeZoneData(timezone));
+        } else {
+            filledForm = form;
+        }
+        List<String> timezones = Arrays.asList(TimeZone.getAvailableIDs());
+        return ok(views.html.index.render(filledForm, renderTime(), timezones));
+    }
+
+    public Result indexPost() {
+        final Form<TimeZoneData> form = formFactory.get().form(TimeZoneData.class);
+
+        final Form<TimeZoneData> boundForm = form.bindFromRequest();
+        String[] timezones = TimeZone.getAvailableIDs();
+        if (boundForm.hasErrors()) {
+            return badRequest(views.html.index.render(boundForm, renderTime(), Arrays.asList(timezones)));
+        } else {
+            TimeZoneData tzData = boundForm.get();
+            session("timezone", tzData.getTimeZone());
+            return redirect(routes.TimeController.index());
+        }
     }
 
     public CompletionStage<Result> ws() {
@@ -51,33 +72,13 @@ public class TimeController extends Controller {
         });
     }
 
-    public Result timeZoneGet() {
-        final Form<TimeZoneData> form = formFactory.get().form(TimeZoneData.class);
-
-        String timezone = session("timezone");
-        Form<TimeZoneData> filledForm;
-        if (timezone == null) {
-            timezone = TimeZone.getDefault().getID();
-            filledForm = form.fill(new TimeZoneData(timezone));
-        } else {
-            filledForm = form;
-        }
-        String[] timezones = TimeZone.getAvailableIDs();
-        return ok(views.html.form.render(filledForm, Arrays.asList(timezones)));
-    }
-
-    public Result timeZonePost() {
-        final Form<TimeZoneData> form = formFactory.get().form(TimeZoneData.class);
-
-        final Form<TimeZoneData> boundForm = form.bindFromRequest();
-        String[] timezones = TimeZone.getAvailableIDs();
-        if (boundForm.hasErrors()) {
-            return badRequest(views.html.form.render(boundForm, Arrays.asList(timezones)));
-        } else {
-            TimeZoneData tzData = boundForm.get();
-            session("timezone", tzData.getTimeZone());
-            return redirect(routes.TimeController.index());
-        }
+    String renderTime() {
+        final String timezone = session("timezone");
+        final ZoneId zoneId = zoneId(timezone);
+        final Instant instant = clock.instant();
+        final ZonedDateTime zdt = instant.atZone(zoneId);
+        final String formatted = formattedDate(zdt);
+        return formatted;
     }
 
     ZoneId zoneId(String timezone) {
