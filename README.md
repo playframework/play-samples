@@ -12,10 +12,10 @@ There is an oustanding bug where apparently this didn't work: please add comment
 
 ## Running in Development
 
-You must define the `log4j.configurationFile` explicitly when the JVM is loaded using either `activator` or `sbt`:
+You must define the `log4j.configurationFile` explicitly when the JVM is loaded or `sbt`:
 
 ```
-activator -Dlog4j.configurationFile=conf/log4j2.xml
+sbt -Dlog4j.configurationFile=conf/log4j2.xml
 ```
 
 If you do not run with `log4j.configurationFile` loaded, you will see this error:
