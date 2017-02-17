@@ -1,7 +1,7 @@
 package controllers
 
-import org.asynchttpclient.AsyncHttpClient
-import org.asynchttpclient.ws.WebSocket
+import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient
+import play.shaded.ahc.org.asynchttpclient.ws.WebSocket
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play._
