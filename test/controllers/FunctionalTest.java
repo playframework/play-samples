@@ -1,10 +1,10 @@
 package controllers;
 
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.AsyncHttpClientConfig;
-import org.asynchttpclient.DefaultAsyncHttpClient;
-import org.asynchttpclient.DefaultAsyncHttpClientConfig;
-import org.asynchttpclient.ws.WebSocket;
+import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient;
+import play.shaded.ahc.org.asynchttpclient.AsyncHttpClientConfig;
+import play.shaded.ahc.org.asynchttpclient.DefaultAsyncHttpClient;
+import play.shaded.ahc.org.asynchttpclient.DefaultAsyncHttpClientConfig;
+import play.shaded.ahc.org.asynchttpclient.ws.WebSocket;
 import org.junit.Test;
 import play.test.TestServer;
 

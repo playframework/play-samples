@@ -4,7 +4,7 @@
 // https://www.playframework.com/documentation/2.5.x/Repositories is incorrect!
 resolvers += "Typesafe Ivy Snapshots Repository" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-2016-10-16-e6c86bc-SNAPSHOT")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-M1")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-less" % "1.1.0")
 
