@@ -3,9 +3,11 @@
  */
 package controllers
 
-import play.api.mvc.{Action, Controller}
+import javax.inject.Inject
 
-class HomeController extends Controller {
+import play.api.mvc.{AbstractController, ControllerComponents}
+
+class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   def index() = Action {
     Ok(views.html.index())

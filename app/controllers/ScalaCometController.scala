@@ -8,19 +8,14 @@ import javax.inject.{Inject, Singleton}
 import akka.stream.Materializer
 import play.api.http.ContentTypes
 import play.api.libs.Comet
-import play.api.mvc.{Controller, _}
+import play.api.mvc._
 
 @Singleton
-class ScalaCometController @Inject() (materializer: Materializer) extends Controller with ScalaTicker {
+class ScalaCometController @Inject() (cc: ControllerComponents, materializer: Materializer) extends AbstractController(cc)
+  with ScalaTicker {
 
   def index() = Action {
     Ok(views.html.scalacomet())
-  }
-
-  // Show deprecated methods here
-  def enumeratorClock() = Action {
-    implicit val m = materializer
-    Results.Ok.chunked(enumerator &> Comet("parent.clockChanged"))
   }
 
   def streamClock() = Action {

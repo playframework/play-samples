@@ -3,14 +3,14 @@
  */
 package controllers
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 
 import play.api.http.ContentTypes
 import play.api.libs.EventSource
 import play.api.mvc._
 
 @Singleton
-class ScalaEventSourceController extends Controller with ScalaTicker {
+class ScalaEventSourceController @Inject()(cc: ControllerComponents) extends AbstractController(cc) with ScalaTicker {
 
   def index() = Action {
     Ok(views.html.scalaeventsource())
