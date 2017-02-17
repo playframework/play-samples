@@ -1,9 +1,8 @@
 import play.api._
-import play.api.i18n._
 import play.api.inject._
-import play.api.libs.ws.ahc.AhcWSComponents
+import play.api.libs.ws.ahc._
+import play.api.mvc._
 import play.api.routing.Router
-import router.Routes
 import play.core.DefaultWebCommands
 
 class MyApplicationLoader extends ApplicationLoader {
@@ -22,11 +21,12 @@ class MyApplicationBuilder {
 
   def build(): Application = {
     val env = Environment.simple()
-    val context = new ApplicationLoader.Context(
+    val context = ApplicationLoader.Context(
       environment = env,
       sourceMapper = None,
       webCommands = new DefaultWebCommands(),
-      initialConfiguration = Configuration.load(env)
+      initialConfiguration = Configuration.load(env),
+      lifecycle = new DefaultApplicationLifecycle()
     )
     val loader = new MyApplicationLoader()
     loader.load(context)
@@ -35,8 +35,13 @@ class MyApplicationBuilder {
 
 class MyComponents(context: ApplicationLoader.Context) 
   extends BuiltInComponentsFromContext(context)
-  with I18nComponents
-  with AhcWSComponents {
+  with AhcWSComponents
+  with _root_.controllers.AssetsComponents
+  with ControllerComponents {
+
+  lazy val parsers: PlayBodyParsers = PlayBodyParsers(httpConfiguration.parser, httpErrorHandler, materializer, tempFileCreator)
+
+  lazy val actionBuilder: ActionBuilder[Request, AnyContent] = DefaultActionBuilder(parsers.anyContent)
 
   override lazy val injector =  {
     new SimpleInjector(NewInstanceInjector) +
@@ -45,14 +50,12 @@ class MyComponents(context: ApplicationLoader.Context)
       csrfTokenSigner +
       httpConfiguration +
       tempFileCreator +
-      global +
-      crypto +
-      wsApi +
+      wsClient +
       messagesApi
   }
 
-  lazy val router: Router = new Routes(httpErrorHandler, homeController, assets)
+  lazy val homeController = new _root_.controllers.HomeController(this)
 
-  lazy val homeController = new controllers.HomeController()
-  lazy val assets = new controllers.Assets(httpErrorHandler)
+  lazy val router: Router = new _root_.router.Routes(httpErrorHandler, homeController, assets)
+
 }
