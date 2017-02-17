@@ -4,4 +4,4 @@ This is an example Play template that demonstrates Streaming with Server Sent Ev
 
 Please see the documentation at:
 
-* https://www.playframework.com/documentation/2.5.x/JavaComet
+* https://www.playframework.com/documentation/latest/JavaComet
