@@ -10,7 +10,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
   .aggregate(one, two)
   .dependsOn(one, two)
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.1"
 
 libraryDependencies ++= Seq(
   ws,
