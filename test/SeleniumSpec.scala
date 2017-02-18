@@ -1,13 +1,11 @@
 import org.scalatestplus.play._
-import play.api.ApplicationLoader.Context
 
 class SeleniumSpec
   extends PlaySpec
-  with OneServerPerTestWithComponents[GreetingComponents]
+  with BaseOneServerPerTest
   with OneBrowserPerTest
+  with GreeterApplicationFactory
   with HtmlUnitFactory {
-
-  override def createComponents(context: Context) = new GreetingComponents(context)
 
   "SeleniumSpec" should {
 
