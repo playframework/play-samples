@@ -2,6 +2,7 @@ import javax.inject.Inject
 
 import play.api.http._
 import play.api.mvc._
+import play.api.mvc.request.{RequestFactory, RequestTarget}
 import play.api.routing.Router
 
 /**
@@ -40,9 +41,15 @@ class RequestHandler @Inject()(router: Router,
     if (!origReq.path.endsWith("/")) {
       val path = origReq.path + "/"
       if (origReq.rawQueryString.isEmpty) {
-        origReq.copy(path = path, uri = path)
+        origReq.withTarget(
+          RequestTarget(path = path, uriString = path, queryString = Map())
+        )
       } else {
-        origReq.copy(path = path, uri = path + s"?${origReq.rawQueryString}")
+        origReq.withTarget(
+          RequestTarget(path = path,
+                        uriString = origReq.uri,
+                        queryString = origReq.queryString)
+        )
       }
     } else {
       origReq
