@@ -4,9 +4,11 @@ lazy val GatlingTest = config("gatling") extend Test
 
 scalaVersion := "2.11.8"
 
-libraryDependencies += "com.netaporter" %% "scala-uri" % "0.4.14"
+libraryDependencies += guice
+libraryDependencies += "org.joda" % "joda-convert" % "1.8"
+libraryDependencies += "com.netaporter" %% "scala-uri" % "0.4.16"
 libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0-M2" % Test
 libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "2.2.2" % Test
 libraryDependencies += "io.gatling" % "gatling-test-framework" % "2.2.2" % Test
     
