@@ -2,8 +2,6 @@
 
 @import helper._
 
-@import b3.vertical.fieldConstructor
-
 @****************************************
 * Helper generating navigation links    *
 ****************************************@
@@ -35,7 +33,7 @@
 
     <div id="actions">
         
-        @b3.form(action=routes.HomeController.list()) {
+        @form(action=routes.HomeController.list()) {
             <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by computer name...">
             <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
         }
@@ -114,4 +112,3 @@
         
 }
 
-            

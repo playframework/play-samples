@@ -11,7 +11,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 libraryDependencies += guice
 libraryDependencies += jdbc
 libraryDependencies += evolutions
-libraryDependencies += "com.adrianhurt" %% "play-bootstrap" % "1.0-P25-B3"
-libraryDependencies += "com.typesafe.play" %% "anorm" % "2.5.0"
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % "test"
+
+libraryDependencies += "com.h2database" % "h2" % "1.4.191"
+libraryDependencies += "com.typesafe.play" %% "anorm" % "2.5.3"
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0-M2" % "test"
 

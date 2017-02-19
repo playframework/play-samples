@@ -1,20 +1,20 @@
 @(id: Long, computerForm: Form[Computer], companies : Seq[(String, String)])(implicit messages: Messages)
 
-@import b3.vertical.fieldConstructor
+@import views.html.helper._
 
 @main {
     
     <h1>Edit computer</h1>
     
-    @b3.form(routes.HomeController.update(id)) {
+    @form(routes.HomeController.update(id)) {
         
         <fieldset>
         
-            @b3.text(computerForm("name"), '_label -> "Computer name", '_help -> "")
-            @b3.date(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
-            @b3.date(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
+            @inputText(computerForm("name"), '_label -> "Computer name", '_help -> "")
+            @date(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
+            @date(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
             
-            @b3.select(
+            @select(
                 computerForm("company"), 
                 companies, 
                 '_label -> "Company", '_default -> "-- Choose a company --",
@@ -30,7 +30,7 @@
         
     }
     
-    @b3.form(routes.HomeController.delete(id), 'class -> "topRight") {
+    @form(routes.HomeController.delete(id), 'class -> "topRight") {
         <input type="submit" value="Delete this computer" class="btn danger">
     }
     

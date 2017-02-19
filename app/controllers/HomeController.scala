@@ -14,8 +14,10 @@ import views._
  */
 class HomeController @Inject() (computerService: ComputerService,
                                 companyService: CompanyService,
-                                val messagesApi: MessagesApi)
-  extends Controller with I18nSupport {
+                                cc: ControllerComponents)
+  extends AbstractController(cc) with I18nSupport {
+
+  implicit def request2flash(implicit request: RequestHeader): Flash = request.flash
 
   /**
    * This result directly redirect to the application home.
@@ -61,7 +63,7 @@ class HomeController @Inject() (computerService: ComputerService,
    *
    * @param id Id of the computer to edit
    */
-  def edit(id: Long) = Action {
+  def edit(id: Long) = Action { implicit request =>
     computerService.findById(id).map { computer =>
       Ok(html.editForm(id, computerForm.fill(computer), companyService.options))
     }.getOrElse(NotFound)
@@ -85,7 +87,7 @@ class HomeController @Inject() (computerService: ComputerService,
   /**
    * Display the 'new computer form'.
    */
-  def create = Action {
+  def create = Action { implicit request =>
     Ok(html.createForm(computerForm, companyService.options))
   }
   
