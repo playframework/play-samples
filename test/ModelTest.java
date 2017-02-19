@@ -32,7 +32,7 @@ public class ModelTest {
         running(fakeApplication(inMemoryDatabase()), new Runnable() {
            public void run() {
                PagedList<Computer> computers = Computer.page(1, 20, "name", "ASC", "");
-               assertThat(computers.getTotalRowCount(), equalTo(574));
+               assertThat(computers.getTotalPageCount(), equalTo(29));
                assertThat(computers.getList().size(), equalTo(20));
            }
         });

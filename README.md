@@ -21,11 +21,3 @@ EBean is a Java ORM library that uses SQL:
 and
 
 [https://ebean-orm.github.io/](https://ebean-orm.github.io/)
-
-## Play Bootstrap
-
-The Play HTML templates use the Play Bootstrap library:
-
-[https://github.com/adrianhurt/play-bootstrap](https://github.com/adrianhurt/play-bootstrap)
-
-library to integrate Play with Bootstrap, the popular CSS Framework.

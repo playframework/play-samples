@@ -2,20 +2,18 @@
 
 @import helper._
 
-@import b3.vertical.fieldConstructor
-
 @main {
     
     <h1>Add a computer</h1>
     
-    @b3.form(routes.HomeController.save()) {
+    @form(routes.HomeController.save()) {
         
         <fieldset>
-            @b3.text(computerForm("name"), '_label -> "Computer name", '_help -> "")
-            @b3.date(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
-            @b3.date(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
+            @inputText(computerForm("name"), '_label -> "Computer name", '_help -> "")
+            @inputText(computerForm("introduced"), '_label -> "Introduced date", 'type -> "date", '_help -> "")
+            @inputText(computerForm("discontinued"), '_label -> "Discontinued date", 'type -> "date", '_help -> "")
 
-            @b3.select(
+            @select(
                 computerForm("company.id"), 
                 options(Company.options), 
                 '_label -> "Company", '_default -> "-- Choose a company --",

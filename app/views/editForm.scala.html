@@ -2,21 +2,19 @@
 
 @import helper._
 
-@import b3.vertical.fieldConstructor  // Declares a vertical field constructor as default
-
 @main {
     
     <h1>Edit computer</h1>
     
-    @b3.form(routes.HomeController.update(id)) {
+    @form(routes.HomeController.update(id)) {
         
         <fieldset>
         
-            @b3.text(computerForm("name"), '_label -> "Computer name", '_help -> "")
-            @b3.date(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
-            @b3.date(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
+            @inputText(computerForm("name"), '_label -> "Computer name", '_help -> "")
+            @inputText(computerForm("introduced"), '_label -> "Introduced date", 'type -> "date", '_help -> "")
+            @inputText(computerForm("discontinued"), '_label -> "Discontinued date", 'type -> "date", '_help -> "")
             
-            @b3.select(
+            @select(
                 computerForm("company.id"), 
                 options(Company.options), 
                 '_label -> "Company", '_default -> "-- Choose a company --",
@@ -32,7 +30,7 @@
         
     }
     
-    @b3.form(routes.HomeController.delete(id), 'class -> "topRight") {
+    @form(routes.HomeController.delete(id), 'class -> "topRight") {
         <input type="submit" value="Delete this computer" class="btn danger">
     }
     
