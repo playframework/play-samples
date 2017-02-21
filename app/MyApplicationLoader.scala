@@ -39,9 +39,9 @@ class MyComponents(context: ApplicationLoader.Context)
   with _root_.controllers.AssetsComponents
   with ControllerComponents {
 
-  lazy val parsers: PlayBodyParsers = PlayBodyParsers(httpConfiguration.parser, httpErrorHandler, materializer, tempFileCreator)
+  lazy val parsers: PlayBodyParsers = playBodyParsers
 
-  lazy val actionBuilder: ActionBuilder[Request, AnyContent] = DefaultActionBuilder(parsers.anyContent)
+  lazy val actionBuilder: ActionBuilder[Request, AnyContent] = defaultActionBuilder
 
   override lazy val injector =  {
     new SimpleInjector(NewInstanceInjector) +
