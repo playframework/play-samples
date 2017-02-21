@@ -3,7 +3,6 @@ import play.api.inject._
 import play.api.libs.ws.ahc._
 import play.api.mvc._
 import play.api.routing.Router
-import play.core.DefaultWebCommands
 
 class MyApplicationLoader extends ApplicationLoader {
   def load(context: ApplicationLoader.Context) = {
@@ -11,25 +10,6 @@ class MyApplicationLoader extends ApplicationLoader {
       _.configure(context.environment)
     }
     new MyComponents(context).application
-  }
-}
-
-/**
- * An application builder for running an application in tests
- */
-class MyApplicationBuilder {
-
-  def build(): Application = {
-    val env = Environment.simple()
-    val context = ApplicationLoader.Context(
-      environment = env,
-      sourceMapper = None,
-      webCommands = new DefaultWebCommands(),
-      initialConfiguration = Configuration.load(env),
-      lifecycle = new DefaultApplicationLifecycle()
-    )
-    val loader = new MyApplicationLoader()
-    loader.load(context)
   }
 }
 
