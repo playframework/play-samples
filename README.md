@@ -1,6 +1,6 @@
 # Play Framework with Compile Time DI Tests
 
-This is an example of Play 2.5.x using the Scala API with manually wired compile time dependency injection.
+This is an example of Play using the Scala API with manually wired compile time dependency injection.
 
 The application loader here is `MyApplicationLoader` which uses `MyComponents` to wire together an injector.  In testing, there are some places where a `WSClient` has to be used, and so some additional components have to be added in.
  
