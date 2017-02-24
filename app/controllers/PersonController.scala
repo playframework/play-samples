@@ -14,8 +14,11 @@ import scala.concurrent.{ ExecutionContext, Future }
 
 import javax.inject._
 
-class PersonController @Inject() (repo: PersonRepository, val messagesApi: MessagesApi)
-                                 (implicit ec: ExecutionContext) extends Controller with I18nSupport{
+class PersonController @Inject() (
+    repo: PersonRepository, 
+    cc: ControllerComponents
+  )(implicit ec: ExecutionContext)
+  extends AbstractController(cc) with I18nSupport{
 
   /**
    * The mapping for the person form.
@@ -30,7 +33,7 @@ class PersonController @Inject() (repo: PersonRepository, val messagesApi: Messa
   /**
    * The index action.
    */
-  def index = Action {
+  def index = Action { implicit request =>
     Ok(views.html.index(personForm))
   }
 
@@ -61,7 +64,7 @@ class PersonController @Inject() (repo: PersonRepository, val messagesApi: Messa
   /**
    * A REST endpoint that gets all the people as JSON.
    */
-  def getPersons = Action.async {
+  def getPersons = Action.async { implicit request =>
   	repo.list().map { people =>
       Ok(Json.toJson(people))
     }
