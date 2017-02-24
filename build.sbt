@@ -1,10 +1,10 @@
-name := """play-java-intro"""
+name := """play-jpa-example"""
 
 version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.1"
 
 resolvers += Resolver.sonatypeRepo("snapshots") 
 
@@ -23,4 +23,4 @@ libraryDependencies += javaWs % "test"
 // http://stackoverflow.com/questions/36222306/caused-by-java-lang-classnotfoundexception-org-dom4j-io-staxeventreader
 libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.3.Final" exclude("dom4j", "dom4j") exclude("javax.transaction", "jta") exclude("org.slf4j", "slf4j-api")
 
-libraryDependencies += "com.h2database" % "h2" % "1.4.191" % Test
+libraryDependencies += "com.h2database" % "h2" % "1.4.191"
