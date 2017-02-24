@@ -6,9 +6,15 @@ import play.api.mvc._
 import services.user.{UserInfo, UserInfoService}
 
 @Singleton
-class HomeController @Inject()(userInfoService: UserInfoService, cookieBaker: UserInfoCookieBaker) extends Controller {
-
-  def index = Action { implicit request =>
+class HomeController @Inject()(userInfoService: UserInfoService,
+                               cookieBaker: UserInfoCookieBaker,
+                               cc: ControllerComponents) extends AbstractController(cc) {
+  /*
+   * Usually you'd do this in a custom Action and pass the action in through
+   * dependency injection, but for the sake of clarity, do everything in the
+   * controller here.
+   */
+  def index = Action { implicit request: RequestHeader =>
     val optionCookie = request.cookies.get(cookieBaker.COOKIE_NAME)
     optionCookie match {
       case Some(_) =>

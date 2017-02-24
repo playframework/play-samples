@@ -7,9 +7,9 @@ import services.user.{UserInfo, UserInfoService}
 
 @Singleton
 class UserInfoCookieBaker @Inject()(service: UserInfoService) extends CookieBaker[UserInfo] {
-  override def COOKIE_NAME: String = "userInfo"
+  override val COOKIE_NAME: String = "userInfo"
 
-  override def isSigned = false
+  override val isSigned = false
 
   override def cookieSigner = { throw new IllegalStateException() }
 
@@ -18,4 +18,6 @@ class UserInfoCookieBaker @Inject()(service: UserInfoService) extends CookieBake
   override protected def serialize(userInfo: UserInfo): Map[String, String] = service.encrypt(userInfo)
 
   override protected def deserialize(data: Map[String, String]): UserInfo = service.decrypt(data)
+
+  override val path: String = "/"
 }
