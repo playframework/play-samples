@@ -12,8 +12,6 @@ import scala.concurrent.{ExecutionContext, Future}
 class Module(environment: Environment,
              configuration: Configuration) extends AbstractModule {
   override def configure(): Unit = {
-
-    bind(classOf[Config]).toInstance(configuration.underlying)
     bind(classOf[UserDAOExecutionContext]).toProvider(classOf[SlickUserDAOExecutionContextProvider])
 
     bind(classOf[slick.jdbc.JdbcBackend.Database]).toProvider(classOf[DatabaseProvider])

@@ -1,8 +1,9 @@
-name := """play-slick-3.0"""
+
+name := """play-isolated-slick"""
 
 version := "1.1-SNAPSHOT"
 
-scalaVersion in ThisBuild := "2.11.7"
+scalaVersion in ThisBuild := "2.11.8"
 
 initialize := {
   val _ = initialize.value
@@ -14,15 +15,19 @@ lazy val flyway = (project in file("modules/flyway"))
   .enablePlugins(FlywayPlugin)
 
 lazy val api = (project in file("modules/api"))
-  .enablePlugins(Common)
+  .settings(Common.projectSettings)
 
 lazy val slick = (project in file("modules/slick"))
-  .enablePlugins(Common)
+  .settings(Common.projectSettings)
   .aggregate(api)
   .dependsOn(api)
 
-lazy val play = (project in file("modules/play"))
+lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
-  .aggregate(api, slick)
-  .dependsOn(api, slick)
+  .settings(
+    libraryDependencies += guice,
+    // Adding this means no explicit import in *.scala.html files
+    TwirlKeys.templateImports += "com.example.user.User"
+  ).aggregate(api, slick)
+  .dependsOn(api, slick, flyway)
 

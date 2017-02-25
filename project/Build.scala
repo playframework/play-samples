@@ -1,14 +1,10 @@
-import sbt.{AutoPlugin, Resolver}
-import sbt.plugins.JvmPlugin
 import sbt.Keys._
 import sbt.{Resolver, _}
 
-object Common extends AutoPlugin {
-  override def trigger = allRequirements
-  override def requires = JvmPlugin
+object Common {
 
-  override def projectSettings = Seq(
-    scalaVersion := "2.11.7",
+  def projectSettings = Seq(
+    scalaVersion := "2.11.8",
     javacOptions ++= Seq("-source", "1.8", "-target", "1.8"),
     scalacOptions ++= Seq(
       "-encoding", "UTF-8", // yes, this is 2 args
