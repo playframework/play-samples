@@ -1,6 +1,6 @@
-# Play 2.5 with Slick 3.1
+# Play with Slick 3.1
 
-This project shows Play 2.5 working with Slick.  
+This project shows Play working with Slick.  
 
 This project is configured to keep all the modules self-contained.  
 
@@ -187,6 +187,12 @@ class SlickUserDAO @Inject()(db: Database) extends UserDAO with Tables {
 
 Once `SlickUserDAO` is compiled, everything is available to be bound and run in the Play application.
 
+To run table generation changes manually:
+
+```scala
+genChanges
+```
+
 ## Play
 
 The root `Module.scala` file contains all the classes need to bind Slick and expose it as a `UserDAO`:
@@ -275,8 +281,7 @@ class HomeController @Inject() (userDAO: UserDAO, userDAOExecutionContext: UserD
 To run the project, start up Play:
 
 ```
-project play
-run
+sbt run
 ```
 
 And that's it! 
