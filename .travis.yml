@@ -3,6 +3,8 @@ scala:
 - 2.11.8
 jdk:
 - oraclejdk8
+script:
+  sbt ++$TRAVIS_SCALA_VERSION flyway:flywayMigrate compile test
 cache:
   directories:
   - "$HOME/.ivy2/cache"
