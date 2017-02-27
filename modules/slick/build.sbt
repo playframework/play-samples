@@ -5,23 +5,19 @@ libraryDependencies ++= Seq(
   "com.zaxxer" % "HikariCP" % "2.4.1",
   "com.typesafe.slick" %% "slick" % "3.1.1",
   "com.typesafe.slick" %% "slick-hikaricp" % "3.1.1",
-  "org.postgresql" % "postgresql" % "9.4-1201-jdbc41",
-  "com.github.tminglei" %% "slick-pg" % "0.12.0",
-  "com.github.tminglei" %% "slick-pg_play-json" % "0.12.0",
-  "com.github.tminglei" %% "slick-pg_joda-time" % "0.12.0",
-  "com.github.tototoshi" %% "slick-joda-mapper" % "2.1.0"
+  "com.github.tototoshi" %% "slick-joda-mapper" % "2.2.0"
 )
 
-lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:postgresql:myapp")
-lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "myuser")
-lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "mypass")
+lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
+lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")
+lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "")
 
 slickCodegenSettings
 slickCodegenDatabaseUrl := databaseUrl
 slickCodegenDatabaseUser := databaseUser
 slickCodegenDatabasePassword := databasePassword
-slickCodegenDriver := slick.driver.PostgresDriver
-slickCodegenJdbcDriver := "org.postgresql.Driver"
+slickCodegenDriver := slick.driver.H2Driver
+slickCodegenJdbcDriver := "org.h2.Driver"
 slickCodegenOutputPackage := "com.example.user.slick"
 slickCodegenExcludedTables := Seq("schema_version")
 

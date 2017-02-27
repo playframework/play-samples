@@ -1,15 +1,8 @@
-
 name := """play-isolated-slick"""
 
 version := "1.1-SNAPSHOT"
 
 scalaVersion in ThisBuild := "2.11.8"
-
-initialize := {
-  val _ = initialize.value
-  if (sys.props("java.specification.version") != "1.8")
-    sys.error("Java 8 is required for this project.")
-}
 
 lazy val flyway = (project in file("modules/flyway"))
   .enablePlugins(FlywayPlugin)
@@ -24,10 +17,14 @@ lazy val slick = (project in file("modules/slick"))
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
-  .settings(
-    libraryDependencies += guice,
-    // Adding this means no explicit import in *.scala.html files
-    TwirlKeys.templateImports += "com.example.user.User"
-  ).aggregate(api, slick)
-  .dependsOn(api, slick, flyway)
+  .aggregate(slick)
+  .dependsOn(slick, flyway)
+
+TwirlKeys.templateImports += "com.example.user.User"
+
+fork in Test := true
+
+libraryDependencies += guice
+libraryDependencies += "com.h2database" % "h2" % "1.4.192"
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0-M2" % Test
 

@@ -1,58 +1,46 @@
 import javax.inject.{Inject, Provider, Singleton}
 
+import akka.actor.ActorSystem
 import com.example.user.slick.SlickUserDAO
 import com.example.user.{UserDAO, UserDAOExecutionContext}
 import com.google.inject.AbstractModule
 import com.typesafe.config.Config
 import play.api.inject.ApplicationLifecycle
+import play.api.libs.concurrent.CustomExecutionContext
 import play.api.{Configuration, Environment}
+import slick.jdbc.JdbcBackend.Database
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
+/**
+ * This module handles the bindings for the API to the Slick implementation.
+ *
+ * https://www.playframework.com/documentation/latest/ScalaDependencyInjection#Programmatic-bindings
+ */
 class Module(environment: Environment,
              configuration: Configuration) extends AbstractModule {
   override def configure(): Unit = {
-    bind(classOf[UserDAOExecutionContext]).toProvider(classOf[SlickUserDAOExecutionContextProvider])
-
-    bind(classOf[slick.jdbc.JdbcBackend.Database]).toProvider(classOf[DatabaseProvider])
+    bind(classOf[Database]).toProvider(classOf[DatabaseProvider])
     bind(classOf[UserDAO]).to(classOf[SlickUserDAO])
-
+    bind(classOf[UserDAOExecutionContext]).to(classOf[SlickUserDAOExecutionContext])
     bind(classOf[UserDAOCloseHook]).asEagerSingleton()
   }
 }
 
 @Singleton
-class DatabaseProvider @Inject() (config: Config) extends Provider[slick.jdbc.JdbcBackend.Database] {
-
-  private val db = slick.jdbc.JdbcBackend.Database.forConfig("myapp.database", config)
-
-  override def get(): slick.jdbc.JdbcBackend.Database = db
+class DatabaseProvider @Inject() (config: Config) extends Provider[Database] {
+  lazy val get = Database.forConfig("myapp.database", config)
 }
 
-@Singleton
-class SlickUserDAOExecutionContextProvider @Inject() (actorSystem: akka.actor.ActorSystem) extends Provider[UserDAOExecutionContext] {
-  private val instance = {
-    val ec = actorSystem.dispatchers.lookup("myapp.database-dispatcher")
-    new SlickUserDAOExecutionContext(ec)
-  }
-
-  override def get() = instance
-}
-
-class SlickUserDAOExecutionContext(ec: ExecutionContext) extends UserDAOExecutionContext {
-  override def execute(runnable: Runnable): Unit = ec.execute(runnable)
-
-  override def reportFailure(cause: Throwable): Unit = ec.reportFailure(cause)
-}
+// Use a custom execution context
+// https://www.playframework.com/documentation/latest/ScalaAsync#Creating-non-blocking-actions
+class SlickUserDAOExecutionContext @Inject()(actorSystem: ActorSystem)
+  extends CustomExecutionContext(actorSystem, "myapp.database-dispatcher")
+    with UserDAOExecutionContext
 
 /** Closes database connections safely.  Important on dev restart. */
 class UserDAOCloseHook @Inject()(dao: UserDAO, lifecycle: ApplicationLifecycle) {
-  private val logger = org.slf4j.LoggerFactory.getLogger("application")
-
   lifecycle.addStopHook { () =>
-    Future.successful {
-      logger.info("Now closing database connections!")
-      dao.close()
-    }
+    Future.successful(dao.close())
   }
 }
