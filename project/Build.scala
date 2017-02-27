@@ -23,7 +23,7 @@ object Common {
     libraryDependencies ++= Seq(
       "javax.inject" % "javax.inject" % "1",
       "joda-time" % "joda-time" % "2.9.2",
-      "org.joda" % "joda-convert" % "1.2",
+      "org.joda" % "joda-convert" % "1.6",
       "com.google.inject" % "guice" % "4.0"
     ),
     scalacOptions in Test ++= Seq("-Yrangepos")
