@@ -5,19 +5,18 @@ This project shows Play working with Slick.
 This project is configured to keep all the modules self-contained. 
 
 * Slick is isolated from Play, not using play-slick.  
-* Database migration is done using [Flyway](), not Play Evolutions.
+* Database migration is done using [Flyway](https://flywaydb.org/), not Play Evolutions.
 * Slick's classes are auto-generated following database migration.
 
-## Migration
+## Database Migration
 
 ```
-sbt
-clean
-project flyway
-flywayMigrate
+sbt flyway/flywayMigrate
 ```
 
 ## Running
+
+You will need to run the flywayMigrate task first, and then you will be able to generate tables using sbt-codegen.
 
 To run the project, start up Play:
 
