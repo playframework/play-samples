@@ -4,7 +4,7 @@ scala:
 jdk:
 - oraclejdk8
 script:
-  sbt ++$TRAVIS_SCALA_VERSION flyway:flywayMigrate compile test
+  sbt ++$TRAVIS_SCALA_VERSION clean flyway/flywayMigrate slickCodegen compile test
 cache:
   directories:
   - "$HOME/.ivy2/cache"
