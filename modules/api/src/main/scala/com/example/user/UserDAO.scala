@@ -26,8 +26,3 @@ trait UserDAO {
  * Implementation independent aggregate root.
  */
 case class User(id: String, email: String, createdAt: DateTime, updatedAt: Option[DateTime])
-
-/**
- * Type safe execution context for operations on UserDAO.
- */
-trait UserDAOExecutionContext extends ExecutionContext
