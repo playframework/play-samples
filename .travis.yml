@@ -1,0 +1,15 @@
+language: scala
+scala:
+- 2.12.1
+jdk:
+- oraclejdk8
+cache:
+  directories:
+  - "$HOME/.ivy2/cache"
+before_cache:
+- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
+- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
+- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+notifications:
+  slack:
+    secure: K6HWTI6zJpQfxS7sH5ZQ1jEK5TkkUl5GtcGinNecHMBqvfS4IXAnU23lz/kLqCqMVPIFaRx1g6UwgJgMvR4XWeIhpzLOzAnOOcmv+kQzv7A8vEJBM20z1HNzDcxzvuNNO2BHn8EjXh5VD65vXMcA+lKzUxASey/Rs+CBReQWE7M=

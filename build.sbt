@@ -12,10 +12,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.12.1"
 
-libraryDependencies ++= Seq(
-  ws,
-  specs2 % Test
-)
+libraryDependencies += ws
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0-M2" % Test
 
 fork in run := true
 

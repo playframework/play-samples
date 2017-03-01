@@ -9,7 +9,7 @@ import play.api.mvc._
  * application's home page.
  */
 @Singleton
-class HomeController @Inject() extends Controller {
+class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
   /**
    * Create an Action to render an HTML page with a welcome message.

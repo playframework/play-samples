@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ACTIVATOR=activator
+SBT=sbt
 
 # Export the keystore password for use in ws.conf
 export KEY_PASSWORD=`cat scripts/password`
@@ -59,4 +59,4 @@ JVM_OPTIONS="$JVM_OPTIONS -Dsun.security.ssl.allowLegacyHelloMessages=false"
 #JVM_OPTIONS="$JVM_OPTIONS -Djava.security.debug=certpath:x509:ocsp"
 
 # Run Play
-$ACTIVATOR $JVM_OPTIONS $*;
+$SBT $JVM_OPTIONS -Dkey.password=$KEY_PASSWORD $*;
