@@ -1,3 +1,4 @@
+import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play._
 import play.api.test.Helpers._
 import play.api.test._
@@ -7,7 +8,8 @@ import play.api.test._
  */
 class ApplicationSpec extends PlaySpec
   with BaseOneAppPerTest
-  with MyApplicationFactory {
+  with MyApplicationFactory
+  with ScalaFutures {
 
   "Routes" should {
     "send 404 on a bad request" in {

@@ -10,10 +10,7 @@ import play.api.test.Injecting
 class ServerSpec extends PlaySpec
   with BaseOneServerPerSuite
   with MyApplicationFactory
-  with Injecting
   with ScalaFutures {
-
-  implicit val wsClient: WSClient = inject[WSClient]
 
   "Server query should" should {
     "work" in {
