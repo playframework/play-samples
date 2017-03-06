@@ -52,7 +52,7 @@ public class Computer extends Model {
                 .ilike("name", "%" + filter + "%")
                 .orderBy(sortBy + " " + order)
                 .fetch("company")
-                .setFirstRow(page)
+                .setFirstRow(page * pageSize)
                 .setMaxRows(pageSize)
                 .findPagedList();
     }

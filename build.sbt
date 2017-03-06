@@ -8,4 +8,4 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
   
 libraryDependencies += guice
 libraryDependencies += jdbc
-libraryDependencies += "com.h2database" % "h2" % "1.4.191" % Test
+libraryDependencies += "com.h2database" % "h2" % "1.4.191"
