@@ -3,11 +3,15 @@ package controllers;
 import akka.actor.ActorSystem;
 import javax.inject.*;
 
+import akka.actor.Scheduler;
+import play.*;
 import play.mvc.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.TimeUnit;
+
+import scala.concurrent.ExecutionContext;
 import scala.concurrent.duration.Duration;
 import scala.concurrent.ExecutionContextExecutor;
 
@@ -24,9 +28,11 @@ public class AsyncController extends Controller {
 
     /**
      * @param actorSystem We need the {@link ActorSystem}'s
-     * {@link akka.actor.Scheduler} to run code after a delay.
+     * {@link Scheduler} to run code after a delay.
      * @param exec We need a Java {@link Executor} to apply the result
      * of the {@link CompletableFuture} and a Scala
+     * {@link ExecutionContext} so we can use the Akka {@link Scheduler}.
+     * An {@link ExecutionContextExecutor} implements both interfaces.
      */
     @Inject
     public AsyncController(ActorSystem actorSystem, ExecutionContextExecutor exec) {
