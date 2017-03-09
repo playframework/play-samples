@@ -1,4 +1,6 @@
-# Play Chatroom
+[<img src="https://img.shields.io/travis/playframework/play-java-chatroom-example.svg"/>](https://travis-ci.org/playframework/play-java-chatroom-example)
+
+# play-java-chatroom-example
 
 This is a simple chatroom using Play and Websockets with the Java API.
 
