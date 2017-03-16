@@ -2,7 +2,7 @@ name := """play-isolated-slick"""
 
 version := "1.1-SNAPSHOT"
 
-scalaVersion in ThisBuild := "2.11.8"
+scalaVersion := "2.12.1"
 
 lazy val flyway = (project in file("modules/flyway"))
   .enablePlugins(FlywayPlugin)
