@@ -1,4 +1,4 @@
-name := "play-streaming-java"
+name := "play-java-streaming-example"
 
 version := "1.0-SNAPSHOT"
 
