@@ -10,11 +10,12 @@ import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
-import scala.concurrent.duration.FiniteDuration;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import static com.codahale.metrics.MetricRegistry.name;
