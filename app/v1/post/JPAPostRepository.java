@@ -2,7 +2,6 @@ package v1.post;
 
 import net.jodah.failsafe.CircuitBreaker;
 import net.jodah.failsafe.Failsafe;
-import play.Logger;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
@@ -22,8 +21,6 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
  */
 @Singleton
 public class JPAPostRepository implements PostRepository {
-
-    private static final Logger.ALogger logger = Logger.of(JPAPostRepository.class);
 
     private final JPAApi jpaApi;
     private final PostExecutionContext ec;
