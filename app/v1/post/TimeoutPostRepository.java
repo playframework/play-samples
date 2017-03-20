@@ -1,10 +1,6 @@
 package v1.post;
 
-import play.db.jpa.JPAApi;
-
 import javax.inject.Inject;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Stream;
@@ -12,7 +8,7 @@ import java.util.stream.Stream;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 /**
- *
+ * A repository which only times out.
  */
 public class TimeoutPostRepository implements PostRepository {
     private final PostExecutionContext ec;
