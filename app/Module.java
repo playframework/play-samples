@@ -55,7 +55,7 @@ class MetricRegistryProvider implements Provider<MetricRegistry> {
 
     public MetricRegistryProvider() {
         //consoleReporter();
-        slf4jReporter();
+        // slf4jReporter();
     }
 
     @Override
