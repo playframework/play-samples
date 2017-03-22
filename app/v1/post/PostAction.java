@@ -21,6 +21,7 @@ import java.util.function.Function;
 import static com.codahale.metrics.MetricRegistry.name;
 import static play.mvc.Http.Status.GATEWAY_TIMEOUT;
 import static play.mvc.Http.Status.NOT_ACCEPTABLE;
+import static play.mvc.Http.Status.SERVICE_UNAVAILABLE;
 
 public class PostAction extends play.mvc.Action.Simple {
     private final Logger.ALogger logger = play.Logger.of("application.PostAction");
@@ -38,8 +39,8 @@ public class PostAction extends play.mvc.Action.Simple {
     }
 
     public CompletionStage<Result> call(Http.Context ctx) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("call: ctx = " + ctx);
+        if (logger.isTraceEnabled()) {
+            logger.trace("call: ctx = " + ctx);
         }
         requestsMeter.mark();
         if (ctx.request().accepts("application/json")) {
@@ -56,7 +57,11 @@ public class PostAction extends play.mvc.Action.Simple {
         return delegate.call(ctx).handleAsync((result, e) -> {
             if (e != null) {
                 logger.error(e.getMessage(), e);
-                return internalServerError();
+                if (e instanceof UnavailableRepositoryException) {
+                    return Results.status(SERVICE_UNAVAILABLE, views.html.timeout.render());
+                } else {
+                    return internalServerError();
+                }
             } else {
                 return result;
             }

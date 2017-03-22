@@ -1,7 +1,9 @@
 package v1.post;
 
 import net.jodah.failsafe.CircuitBreaker;
+import net.jodah.failsafe.CircuitBreakerOpenException;
 import net.jodah.failsafe.Failsafe;
+import net.jodah.failsafe.function.Predicate;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
@@ -48,7 +50,11 @@ public class JPAPostRepository implements PostRepository {
     }
 
     private <T> T wrap(Function<EntityManager, T> function) {
-        return Failsafe.with(circuitBreaker).get(() -> jpaApi.withTransaction(function));
+        try {
+            return Failsafe.with(circuitBreaker).get(() -> jpaApi.withTransaction(function));
+        } catch (CircuitBreakerOpenException e) {
+            throw new UnavailableRepositoryException(e.getMessage(), e);
+        }
     }
 
     private Optional<PostData> lookup(EntityManager em, Integer id) {
@@ -62,5 +68,11 @@ public class JPAPostRepository implements PostRepository {
 
     private PostData insert(EntityManager em, PostData postData) {
         return em.merge(postData);
+    }
+}
+
+class UnavailableRepositoryException extends RuntimeException {
+    public UnavailableRepositoryException(String message, Throwable cause) {
+        super(message, cause);
     }
 }
