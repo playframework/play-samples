@@ -4,6 +4,8 @@ import akka.actor.ActorSystem;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
+import net.jodah.failsafe.CircuitBreakerOpenException;
+import net.jodah.failsafe.FailsafeException;
 import play.Logger;
 import play.libs.concurrent.Futures;
 import play.libs.concurrent.HttpExecutionContext;
@@ -14,6 +16,7 @@ import play.mvc.Results;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -56,10 +59,17 @@ public class PostAction extends play.mvc.Action.Simple {
     private CompletionStage<Result> doCall(Http.Context ctx) {
         return delegate.call(ctx).handleAsync((result, e) -> {
             if (e != null) {
-                logger.error(e.getMessage(), e);
-                if (e instanceof UnavailableRepositoryException) {
-                    return Results.status(SERVICE_UNAVAILABLE, views.html.timeout.render());
+                if (e instanceof CompletionException) {
+                    Throwable completionException = e.getCause();
+                    if (completionException instanceof FailsafeException) {
+                        logger.error("Circuit breaker is open!", completionException);
+                        return Results.status(SERVICE_UNAVAILABLE, "Service has timed out");
+                    } else {
+                        logger.error("Direct exception " + e.getMessage(), e);
+                        return internalServerError();
+                    }
                 } else {
+                    logger.error("Unknown exception " + e.getMessage(), e);
                     return internalServerError();
                 }
             } else {
