@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import v1.post.PostRepository;
 import v1.post.JPAPostRepository;
-import v1.post.TimeoutPostRepository;
 
 import javax.inject.Provider;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +26,6 @@ public class Module extends AbstractModule {
     public void configure() {
         bind(MetricRegistry.class).toProvider(MetricRegistryProvider.class).asEagerSingleton();
         bind(PostRepository.class).to(JPAPostRepository.class).asEagerSingleton();
-        //bind(PostRepository.class).to(TimeoutPostRepository.class).asEagerSingleton();
     }
 }
 

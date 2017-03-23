@@ -4,7 +4,7 @@ import akka.actor.ActorSystem;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
-import net.jodah.failsafe.CircuitBreakerOpenException;
+
 import net.jodah.failsafe.FailsafeException;
 import play.Logger;
 import play.libs.concurrent.Futures;
