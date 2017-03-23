@@ -1,7 +1,10 @@
 package v1.post;
 
-import net.jodah.failsafe.CircuitBreaker;
-import net.jodah.failsafe.Failsafe;
+import net.jodah.failsafe.*;
+import net.jodah.failsafe.function.CheckedFunction;
+import net.jodah.failsafe.function.CheckedRunnable;
+import net.jodah.failsafe.function.ContextualCallable;
+import net.jodah.failsafe.function.Predicate;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
@@ -10,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -25,7 +29,7 @@ public class JPAPostRepository implements PostRepository {
 
     private final JPAApi jpaApi;
     private final PostExecutionContext ec;
-    private final CircuitBreaker circuitBreaker = new CircuitBreaker();
+    private final CircuitBreaker circuitBreaker = new CircuitBreaker().withFailureThreshold(1).withSuccessThreshold(3);
 
     @Inject
     public JPAPostRepository(JPAApi api, PostExecutionContext ec) {

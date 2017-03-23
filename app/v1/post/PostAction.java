@@ -4,6 +4,7 @@ import akka.actor.ActorSystem;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
+
 import net.jodah.failsafe.FailsafeException;
 import play.Logger;
 import play.libs.concurrent.Futures;
@@ -41,8 +42,8 @@ public class PostAction extends play.mvc.Action.Simple {
     }
 
     public CompletionStage<Result> call(Http.Context ctx) {
-        if (logger.isDebugEnabled()) {
-            logger.debug("call: ctx = " + ctx);
+        if (logger.isTraceEnabled()) {
+            logger.trace("call: ctx = " + ctx);
         }
         requestsMeter.mark();
         if (ctx.request().accepts("application/json")) {
