@@ -1,5 +1,6 @@
 package v1.post;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.palominolabs.http.url.UrlBuilder;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Http;
@@ -38,8 +39,15 @@ public class PostResourceHandler {
     }
 
     public CompletionStage<Optional<PostResource>> lookup(String id) {
-        return repository.get(Integer.parseInt(id)).thenApplyAsync(optionalData -> {
+        return repository.get(Long.parseLong(id)).thenApplyAsync(optionalData -> {
             return optionalData.map(data -> new PostResource(data, link(data)));
+        }, ec.current());
+    }
+
+    public CompletionStage<Optional<PostResource>> update(String id, PostResource resource) {
+        final PostData data = new PostData(resource.getTitle(), resource.getBody());
+        return repository.update(Long.parseLong(id), data).thenApplyAsync(optionalData -> {
+            return optionalData.map(op -> new PostResource(op, link(op)));
         }, ec.current());
     }
 
@@ -58,5 +66,4 @@ public class PostResourceHandler {
             throw new IllegalStateException(e);
         }
     }
-
 }

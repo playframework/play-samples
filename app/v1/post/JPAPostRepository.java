@@ -48,15 +48,20 @@ public class JPAPostRepository implements PostRepository {
     }
 
     @Override
-    public CompletionStage<Optional<PostData>> get(Integer id) {
+    public CompletionStage<Optional<PostData>> get(Long id) {
         return supplyAsync(() -> wrap(em -> Failsafe.with(circuitBreaker).get(() -> lookup(em, id))), ec);
+    }
+
+    @Override
+    public CompletionStage<Optional<PostData>> update(Long id, PostData postData) {
+        return supplyAsync(() -> wrap(em -> Failsafe.with(circuitBreaker).get(() -> modify(em, id, postData))), ec);
     }
 
     private <T> T wrap(Function<EntityManager, T> function) {
         return jpaApi.withTransaction(function);
     }
 
-    private Optional<PostData> lookup(EntityManager em, Integer id) throws SQLException {
+    private Optional<PostData> lookup(EntityManager em, Long id) throws SQLException {
         throw new SQLException("Call this to cause the circuit breaker to trip");
         //return Optional.ofNullable(em.find(PostData.class, id));
     }
@@ -64,6 +69,16 @@ public class JPAPostRepository implements PostRepository {
     private Stream<PostData> select(EntityManager em) {
         TypedQuery<PostData> query = em.createQuery("SELECT p FROM PostData p", PostData.class);
         return query.getResultList().stream();
+    }
+
+    private Optional<PostData> modify(EntityManager em, Long id, PostData postData) throws InterruptedException {
+        final PostData data = em.find(PostData.class, id);
+        if (data != null) {
+            data.title = postData.title;
+            data.body = postData.body;
+        }
+        Thread.sleep(10000L);
+        return Optional.ofNullable(data);
     }
 
     private PostData insert(EntityManager em, PostData postData) {

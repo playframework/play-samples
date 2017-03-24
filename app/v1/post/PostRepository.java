@@ -10,6 +10,8 @@ public interface PostRepository {
 
     CompletionStage<PostData> create(PostData postData);
 
-    CompletionStage<Optional<PostData>> get(Integer id);
+    CompletionStage<Optional<PostData>> get(Long id);
+
+    CompletionStage<Optional<PostData>> update(Long id, PostData postData);
 }
 
