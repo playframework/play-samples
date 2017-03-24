@@ -39,11 +39,23 @@ public class PostController extends Controller {
         }, ec.current());
     }
 
+    public CompletionStage<Result> update(String id) {
+        JsonNode json = request().body().asJson();
+        PostResource resource = Json.fromJson(json, PostResource.class);
+        return handler.update(id, resource).thenApplyAsync(optionalResource -> {
+            return optionalResource.map(r ->
+                    ok(Json.toJson(r))
+            ).orElseGet(() ->
+                    notFound()
+            );
+        }, ec.current());
+    }
+
     public CompletionStage<Result> create() {
         JsonNode json = request().body().asJson();
         final PostResource resource = Json.fromJson(json, PostResource.class);
         return handler.create(resource).thenApplyAsync(savedResource -> {
-            return ok(Json.toJson(savedResource));
+            return created(Json.toJson(savedResource));
         }, ec.current());
     }
 }
