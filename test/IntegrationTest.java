@@ -32,6 +32,18 @@ public class IntegrationTest {
             browser.$("#discontinued").fill().with("10-10-2001");
             browser.$("input.primary").click();
 
+            assertThat(browser.$("dl.error").size(), equalTo(1));
+            assertThat(browser.$("dl.error label").first().text() ,equalTo("Discontinued date"));
+
+            browser.$("#discontinued").fill().with("xxx");
+            browser.$("input.primary").click();
+
+            assertThat(browser.$("dl.error").size(), equalTo(1));
+            assertThat(browser.$("dl.error label").first().text(), equalTo("Discontinued date"));
+
+            browser.$("#discontinued").fill().with("");
+            browser.$("input.primary").click();
+
             assertThat(browser.$("section h1").first().text(), equalTo("574 computers found"));
             assertThat(browser.$(".alert-message").first().text(), equalTo("Done! Computer Apple II has been updated"));
 

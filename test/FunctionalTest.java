@@ -84,8 +84,8 @@ public class FunctionalTest {
 
         assertThat(result.status(), equalTo(Helpers.BAD_REQUEST));
         assertThat(Helpers.contentAsString(result), containsString("<option value=\"1\" selected=\"selected\">Apple Inc.</option>"));
-        //  <input type="date" id="introduced" name="introduced" value="badbadbad" aria-describedby="introduced_info_0 introduced_error_0" aria-invalid="true" class="form-control">
-        assertThat(Helpers.contentAsString(result), containsString("<input type=\"date\" id=\"introduced\" name=\"introduced\" value=\"badbadbad\" "));
+        //  <input type="text" id="introduced" name="introduced" value="badbadbad" aria-describedby="introduced_info_0 introduced_error_0" aria-invalid="true" class="form-control">
+        assertThat(Helpers.contentAsString(result), containsString("<input type=\"text\" id=\"introduced\" name=\"introduced\" value=\"badbadbad\" "));
         // <input type="text" id="name" name="name" value="FooBar" aria-describedby="name_info_0" required="true" class="form-control">
         assertThat(Helpers.contentAsString(result), containsString("<input type=\"text\" id=\"name\" name=\"name\" value=\"FooBar\" "));
 
