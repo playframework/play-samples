@@ -17,18 +17,14 @@ class GreetingApplicationLoader extends ApplicationLoader {
 
 class GreetingComponents(context: Context) extends BuiltInComponentsFromContext(context)
   with GreetingModule
-  with ControllerComponents
   with AssetsComponents
-  with I18nComponents {
+  with I18nComponents 
+  with play.filters.HttpFiltersComponents {
 
   // set up logger
   LoggerConfigurator(context.environment.classLoader).foreach {
     _.configure(context.environment)
   }
-
-  lazy val parsers: PlayBodyParsers = playBodyParsers
-  lazy val actionBuilder: ActionBuilder[Request, AnyContent] = defaultActionBuilder
-  lazy val controllerComponents: ControllerComponents = this
 
   lazy val router: Router = {
     // add the prefix string in local scope for the Routes constructor
