@@ -8,7 +8,7 @@ scalaVersion := "2.12.1"
 
 libraryDependencies += guice
 libraryDependencies += ws % Test // only used in tests right now
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0-M2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-M2" % Test
 libraryDependencies += "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
 libraryDependencies += "com.softwaremill.macwire" %% "util" % "2.3.0"
 libraryDependencies += "com.softwaremill.macwire" %% "proxy" % "2.3.0"
