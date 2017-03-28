@@ -28,5 +28,5 @@ libraryDependencies += "com.h2database" % "h2" % "1.4.192"
 // Automatic database migration available in testing
 fork in Test := true
 libraryDependencies += "org.flywaydb" % "flyway-core" % "4.0" % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0-M2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-M2" % Test
 
