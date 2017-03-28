@@ -5,6 +5,7 @@ import akka.stream.Materializer;
 import akka.stream.javadsl.FileIO;
 import akka.stream.javadsl.Sink;
 import akka.util.ByteString;
+import play.api.http.HttpErrorHandler;
 import play.core.parsers.Multipart;
 import play.libs.streams.Accumulator;
 import play.mvc.Http;
@@ -33,8 +34,8 @@ import static java.nio.file.attribute.PosixFilePermission.OWNER_WRITE;
 class MyMultipartFormDataBodyParser extends DelegatingMultipartFormDataBodyParser<File> {
 
     @Inject
-    public MyMultipartFormDataBodyParser(Materializer materializer, play.api.http.HttpConfiguration config) {
-        super(materializer, config.parser().maxDiskBuffer());
+    public MyMultipartFormDataBodyParser(Materializer materializer, play.api.http.HttpConfiguration config, HttpErrorHandler errorHandler) {
+        super(materializer, config.parser().maxDiskBuffer(), errorHandler);
     }
 
     /**

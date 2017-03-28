@@ -3,6 +3,7 @@ package controllers;
 
 import akka.stream.Materializer;
 import akka.util.ByteString;
+import play.api.http.HttpErrorHandler;
 import play.core.j.JavaParsers;
 import play.core.parsers.Multipart;
 import play.libs.F;
@@ -31,12 +32,14 @@ import static scala.collection.JavaConverters.seqAsJavaListConverter;
 abstract class DelegatingMultipartFormDataBodyParser<A> implements BodyParser<Http.MultipartFormData<A>> {
 
     private final Materializer materializer;
+    private final HttpErrorHandler errorHandler;
     private final long maxLength;
     private final play.api.mvc.BodyParser<play.api.mvc.MultipartFormData<A>> delegate;
 
-    public DelegatingMultipartFormDataBodyParser(Materializer materializer, long maxLength) {
+    public DelegatingMultipartFormDataBodyParser(Materializer materializer, long maxLength, HttpErrorHandler errorHandler) {
         this.maxLength = maxLength;
         this.materializer = materializer;
+        this.errorHandler = errorHandler;
         delegate = multipartParser();
     }
 
@@ -50,8 +53,7 @@ abstract class DelegatingMultipartFormDataBodyParser<A> implements BodyParser<Ht
      */
     private play.api.mvc.BodyParser<play.api.mvc.MultipartFormData<A>> multipartParser() {
         ScalaFilePartHandler filePartHandler = new ScalaFilePartHandler();
-        //noinspection unchecked
-        return Multipart.multipartParser((int) maxLength, filePartHandler, materializer);
+        return Multipart.multipartParser((int) maxLength, filePartHandler, errorHandler, materializer);
     }
 
     private class ScalaFilePartHandler extends AbstractFunction1<Multipart.FileInfo, play.api.libs.streams.Accumulator<ByteString, play.api.mvc.MultipartFormData.FilePart<A>>> {
