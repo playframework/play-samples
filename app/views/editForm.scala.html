@@ -1,4 +1,4 @@
-@(id: Long, computerForm: Form[Computer])
+@(id: Long, computerForm: Form[Computer], companies: Map[String, String])
 
 @import helper._
 
@@ -9,14 +9,14 @@
     @form(routes.HomeController.update(id)) {
         
         <fieldset>
-        
+            @CSRF.formField
             @inputText(computerForm("name"), '_label -> "Computer name", '_help -> "")
             @inputText(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
             @inputText(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
             
             @select(
                 computerForm("company.id"), 
-                options(Company.options), 
+                options(companies),
                 '_label -> "Company", '_default -> "-- Choose a company --",
                 '_showConstraints -> false
             )
@@ -31,6 +31,7 @@
     }
     
     @form(routes.HomeController.delete(id), 'class -> "topRight") {
+        @CSRF.formField
         <input type="submit" value="Delete this computer" class="btn danger">
     }
     

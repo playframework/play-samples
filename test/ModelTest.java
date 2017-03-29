@@ -1,42 +1,56 @@
-import java.util.*;
+import io.ebean.PagedList;
+import models.Computer;
+import org.junit.Test;
+import play.Application;
+import play.inject.guice.GuiceApplicationBuilder;
+import play.test.WithApplication;
+import repository.ComputerRepository;
 
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import java.util.Date;
+import java.util.Optional;
+import java.util.concurrent.CompletionStage;
 
-import static play.test.Helpers.*;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
-import models.*;
+public class ModelTest extends WithApplication {
 
-import com.avaje.ebean.*;
+    @Override
+    protected Application provideApplication() {
+        return new GuiceApplicationBuilder().build();
+    }
 
-public class ModelTest {
-    
     private String formatted(Date date) {
         return new java.text.SimpleDateFormat("yyyy-MM-dd").format(date);
     }
 
     @Test
     public void findById() {
-        running(fakeApplication(), new Runnable() {
-           public void run() {
-               Computer macintosh = Computer.find.byId(21L);
-               assertThat(macintosh.name, equalTo("Macintosh"));
-               assertThat(formatted(macintosh.introduced), equalTo("1984-01-24"));
-           }
-        });
+        final ComputerRepository computerRepository = app.injector().instanceOf(ComputerRepository.class);
+        final CompletionStage<Optional<Computer>> stage = computerRepository.lookup(21L);
+
+        await().atMost(1, SECONDS).until(() ->
+            assertThat(stage.toCompletableFuture()).isCompletedWithValueMatching(computerOptional -> {
+                final Computer macintosh = computerOptional.get();
+                return (macintosh.name.equals("Macintosh") && formatted(macintosh.introduced).equals("1984-01-24"));
+            })
+        );
     }
     
     @Test
     public void pagination() {
-        running(fakeApplication(inMemoryDatabase()), new Runnable() {
-           public void run() {
-               PagedList<Computer> computers = Computer.page(1, 20, "name", "ASC", "");
-               assertThat(computers.getTotalCount(), equalTo(574));
-               assertThat(computers.getTotalPageCount(), equalTo(29));
-               assertThat(computers.getList().size(), equalTo(20));
-           }
-        });
+        final ComputerRepository computerRepository = app.injector().instanceOf(ComputerRepository.class);
+        CompletionStage<PagedList<Computer>> stage = computerRepository.page(1, 20, "name", "ASC", "");
+
+        // Test the completed result
+        await().atMost(1, SECONDS).until(() ->
+            assertThat(stage.toCompletableFuture()).isCompletedWithValueMatching(computers ->
+                computers.getTotalCount() == 574 &&
+                computers.getTotalPageCount() == 29 &&
+                computers.getList().size() == 20
+            )
+        );
     }
     
 }
