@@ -1,4 +1,4 @@
-name := """play-scala-compile-di-with-tests"""
+name := """play-scala-compile-di-example"""
 
 version := "1.0-SNAPSHOT"
 
