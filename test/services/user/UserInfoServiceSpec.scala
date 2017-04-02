@@ -1,8 +1,9 @@
 package services.user
 
 import org.scalatestplus.play._
+import org.scalatestplus.play.guice.GuiceOneAppPerTest
 
-class UserInfoServiceSpec extends PlaySpec with OneAppPerTest {
+class UserInfoServiceSpec extends PlaySpec with GuiceOneAppPerTest {
 
   "user info service" should {
 

@@ -2,16 +2,18 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.mvc.CookieBaker
+import play.api.http.{JWTConfiguration, SecretConfiguration}
+import play.api.mvc._
 import services.user.{UserInfo, UserInfoService}
 
 @Singleton
-class UserInfoCookieBaker @Inject()(service: UserInfoService) extends CookieBaker[UserInfo] {
+class UserInfoCookieBaker @Inject()(service: UserInfoService,
+                                    val secretConfiguration: SecretConfiguration)
+  extends CookieBaker[UserInfo] with JWTCookieDataCodec {
+
   override val COOKIE_NAME: String = "userInfo"
 
-  override val isSigned = false
-
-  override def cookieSigner = { throw new IllegalStateException() }
+  override val isSigned = true
 
   override def emptyCookie: UserInfo = new UserInfo()
 
@@ -20,4 +22,6 @@ class UserInfoCookieBaker @Inject()(service: UserInfoService) extends CookieBake
   override protected def deserialize(data: Map[String, String]): UserInfo = service.decrypt(data)
 
   override val path: String = "/"
+
+  override val jwtConfiguration: JWTConfiguration = JWTConfiguration()
 }

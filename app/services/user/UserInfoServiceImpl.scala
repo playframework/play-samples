@@ -40,7 +40,7 @@ class UserInfoServiceImpl @Inject()(configuration: Configuration) extends UserIn
      *
      * Storing key information confidentially and doing key rotation properly is a specialized area. Check out Daniel Somerfield's talk: <a href="https://youtu.be/OUSvv2maMYI">Turtles All the Way Down: Storing Secrets in the Cloud and the Data Center</a> for the details.
      */
-    val secretHex: String = configuration.getString("user.crypto.secret").getOrElse {
+    val secretHex: String = configuration.getOptional[String]("user.crypto.secret").getOrElse {
       val randomSecret = encoder.encode(newSecretKey)
       logger.info(s"No secret found, creating temporary secret ${randomSecret}")
       randomSecret
