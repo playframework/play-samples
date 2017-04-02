@@ -1,4 +1,4 @@
-name := """play-jpa-example"""
+name := """play-java-jpa-example"""
 
 version := "1.0-SNAPSHOT"
 
@@ -21,6 +21,9 @@ libraryDependencies += javaWs % "test"
 // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
 // must exclude dom4j in hibernate core because it causes staxeventreader exceptions
 // http://stackoverflow.com/questions/36222306/caused-by-java-lang-classnotfoundexception-org-dom4j-io-staxeventreader
-libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.3.Final" exclude("dom4j", "dom4j") exclude("javax.transaction", "jta") exclude("org.slf4j", "slf4j-api")
+libraryDependencies += ("org.hibernate" % "hibernate-core" % "5.2.3.Final")
+                          .exclude("dom4j", "dom4j")
+                          .exclude("javax.transaction", "jta")
+                          .exclude("org.slf4j", "slf4j-api")
 
 libraryDependencies += "com.h2database" % "h2" % "1.4.192"
