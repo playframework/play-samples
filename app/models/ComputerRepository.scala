@@ -7,6 +7,8 @@ import anorm.SqlParser._
 import anorm._
 import play.api.db.DBApi
 
+import scala.concurrent.Future
+
 case class Computer(id: Option[Long] = None,
                     name: String,
                     introduced: Option[Date],
@@ -23,7 +25,7 @@ case class Page[A](items: Seq[A], page: Int, offset: Long, total: Long) {
 
 
 @javax.inject.Singleton
-class ComputerService @Inject() (dbapi: DBApi, companyService: CompanyService) {
+class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepository)(implicit ec: DatabaseExecutionContext) {
 
   private val db = dbapi.database("default")
 
@@ -32,7 +34,7 @@ class ComputerService @Inject() (dbapi: DBApi, companyService: CompanyService) {
   /**
    * Parse a Computer from a ResultSet
    */
-  val simple = {
+  private val simple = {
     get[Option[Long]]("computer.id") ~
       get[String]("computer.name") ~
       get[Option[Date]]("computer.introduced") ~
@@ -46,7 +48,7 @@ class ComputerService @Inject() (dbapi: DBApi, companyService: CompanyService) {
   /**
    * Parse a (Computer,Company) from a ResultSet
    */
-  val withCompany = simple ~ (companyService.simple ?) map {
+  private val withCompany = simple ~ (companyRepository.simple ?) map {
     case computer~company => (computer,company)
   }
 
@@ -55,11 +57,11 @@ class ComputerService @Inject() (dbapi: DBApi, companyService: CompanyService) {
   /**
    * Retrieve a computer from the id.
    */
-  def findById(id: Long): Option[Computer] = {
+  def findById(id: Long): Future[Option[Computer]] = Future {
     db.withConnection { implicit connection =>
       SQL("select * from computer where id = {id}").on('id -> id).as(simple.singleOpt)
     }
-  }
+  }(ec)
 
   /**
    * Return a page of (Computer,Company).
@@ -69,7 +71,7 @@ class ComputerService @Inject() (dbapi: DBApi, companyService: CompanyService) {
    * @param orderBy Computer property used for sorting
    * @param filter Filter applied on the name column
    */
-  def list(page: Int = 0, pageSize: Int = 10, orderBy: Int = 1, filter: String = "%"): Page[(Computer, Option[Company])] = {
+  def list(page: Int = 0, pageSize: Int = 10, orderBy: Int = 1, filter: String = "%"): Future[Page[(Computer, Option[Company])]] = Future {
 
     val offest = pageSize * page
 
@@ -104,7 +106,7 @@ class ComputerService @Inject() (dbapi: DBApi, companyService: CompanyService) {
 
     }
 
-  }
+  }(ec)
 
   /**
    * Update a computer.
@@ -112,7 +114,7 @@ class ComputerService @Inject() (dbapi: DBApi, companyService: CompanyService) {
    * @param id The computer id
    * @param computer The computer values.
    */
-  def update(id: Long, computer: Computer) = {
+  def update(id: Long, computer: Computer) = Future {
     db.withConnection { implicit connection =>
       SQL(
         """
@@ -128,14 +130,14 @@ class ComputerService @Inject() (dbapi: DBApi, companyService: CompanyService) {
         'company_id -> computer.companyId
       ).executeUpdate()
     }
-  }
+  }(ec)
 
   /**
    * Insert a new computer.
    *
    * @param computer The computer values.
    */
-  def insert(computer: Computer) = {
+  def insert(computer: Computer) = Future {
     db.withConnection { implicit connection =>
       SQL(
         """
@@ -151,17 +153,17 @@ class ComputerService @Inject() (dbapi: DBApi, companyService: CompanyService) {
         'company_id -> computer.companyId
       ).executeUpdate()
     }
-  }
+  }(ec)
 
   /**
    * Delete a computer.
    *
    * @param id Id of the computer to delete.
    */
-  def delete(id: Long) = {
+  def delete(id: Long) = Future {
     db.withConnection { implicit connection =>
       SQL("delete from computer where id = {id}").on('id -> id).executeUpdate()
     }
-  }
+  }(ec)
 
 }

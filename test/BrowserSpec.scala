@@ -5,7 +5,7 @@ import org.scalatestplus.play.PlaySpec
 
 import org.scalatestplus.play._
 
-class IntegrationSpec extends PlaySpec {
+class BrowserSpec extends PlaySpec {
   
   "Application" should {
     

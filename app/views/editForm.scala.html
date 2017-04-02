@@ -1,4 +1,4 @@
-@(id: Long, computerForm: Form[Computer], companies : Seq[(String, String)])(implicit messages: Messages)
+@(id: Long, computerForm: Form[Computer], companies : Seq[(String, String)])(implicit messages: Messages, requestHeader: RequestHeader)
 
 @import views.html.helper._
 
@@ -9,7 +9,6 @@
     @form(routes.HomeController.update(id)) {
         
         <fieldset>
-        
             @inputText(computerForm("name"), '_label -> "Computer name", '_help -> "")
             @date(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
             @date(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
