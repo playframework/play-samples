@@ -1,5 +1,5 @@
 // The Play plugin
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-M1")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-M3")
 
 // web plugins
 
