@@ -1,5 +1,9 @@
 language: scala
+dist: trusty
+sudo: true
+group: beta
 scala:
+- 2.11.8
 - 2.12.1
 jdk:
 - oraclejdk8
@@ -7,8 +11,6 @@ cache:
   directories:
   - "$HOME/.ivy2/cache"
 before_cache:
-- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
-- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
 - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
 notifications:
   slack:

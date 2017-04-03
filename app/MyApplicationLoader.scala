@@ -16,23 +16,13 @@ class MyApplicationLoader extends ApplicationLoader {
 class MyComponents(context: ApplicationLoader.Context) 
   extends BuiltInComponentsFromContext(context)
   with AhcWSComponents
+  with play.filters.HttpFiltersComponents
   with _root_.controllers.AssetsComponents
   with ControllerComponents {
 
   lazy val parsers: PlayBodyParsers = playBodyParsers
 
   lazy val actionBuilder: ActionBuilder[Request, AnyContent] = defaultActionBuilder
-
-  override lazy val injector =  {
-    new SimpleInjector(NewInstanceInjector) +
-      router +
-      cookieSigner +
-      csrfTokenSigner +
-      httpConfiguration +
-      tempFileCreator +
-      wsClient +
-      messagesApi
-  }
 
   lazy val homeController = new _root_.controllers.HomeController(this)
 
