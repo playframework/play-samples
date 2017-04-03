@@ -18,8 +18,6 @@ class ServerSpec extends PlaySpec
         response.status mustBe play.api.http.Status.OK
       }
     }
-
   }
-
 }
 
