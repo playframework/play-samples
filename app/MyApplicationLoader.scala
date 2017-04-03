@@ -19,15 +19,12 @@ class MyApplicationLoader extends ApplicationLoader {
 class MyComponents(context: ApplicationLoader.Context) 
   extends BuiltInComponentsFromContext(context)
   with AhcWSComponents
+  with play.filters.HttpFiltersComponents
   with _root_.controllers.AssetsComponents {
 
   lazy val parsers: PlayBodyParsers = playBodyParsers
 
   lazy val actionBuilder: ActionBuilder[Request, AnyContent] = defaultActionBuilder
-
-  lazy val controllerComponents: ControllerComponents = DefaultControllerComponents(
-    defaultActionBuilder, playBodyParsers, messagesApi, langs, fileMimeTypes, executionContext
-  )
 
   lazy val homeController = new _root_.controllers.HomeController(controllerComponents)
 
