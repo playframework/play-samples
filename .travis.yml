@@ -1,0 +1,20 @@
+language: scala
+dist: trusty
+sudo: true
+group: beta
+scala:
+- 2.11.8
+jdk:
+- oraclejdk8
+cache:
+  directories:
+  - "$HOME/.ivy2/cache"
+  - "$HOME/.sbt/boot/"
+before_cache:
+- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
+- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
+- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+- find $HOME/.sbt -name "*.lock" -delete
+notifications:
+  slack:
+    secure: PskU6+VapjwI01Ty8Ya+5imNpD34hzzG4sYx1tIMvkg6F2x7JfYKDihotYVCdJbNYiPTbmOr529Iv7q+31WvMzmzD9knH9hEhCz6Ojali5FziTdUYfAOuQcgeI+tKtmHk/T6ks6I2ksFzJrRmanlhjMo+ENblIyB92kgvZWzlkX/pERjmMmvL9HH9eU3KxA2BxIRvVE6YyrhqnZJYAk0CqwIDwtKFePIMQaBJQkDBWVlryyVBDggItp1fqGEt4Zxt92eE0rkWTko3ejx0kjsiOLOqluhi8TekrZpvQJFZbIfP/2RRlv6JkItzt6BZz2iyCaQKWv6BUnUDwdjTvXfy/zriH0SSvKbxQqla0KCd8W33XAYzj8L6YvGeImsiOaviOemjdgHJLxg8MaTvB/Jyzno1S/A8qeE+wXy8++dqviAxKwGAzVpQ9KDSaKu/HVhXlPJCOO/i9Ut7O+SHlA3vSGgRTnI7GgIZgCn6FAKaeQO5ExxUzgxTsB+N+WonHlDGPxU2Jr8VAbj2jcMAOJhWYUPLxFT4JRGZeycK6SF+WOukQGFDRFL7trgDzhSDzZaj/FIuUHiv5Ih+ZkxoDTWZb3gXopNgAc/5Hhtx8YyKLZJ5G1V8+FV0/OLdFlgqRyIdrmoSDxu/EG3F/0NBpY856YhKc6zFMe/feL4RQnFFWU=
