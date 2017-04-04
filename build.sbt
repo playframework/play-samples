@@ -6,24 +6,15 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
 scalaVersion := "2.12.1"
 
-resolvers += Resolver.sonatypeRepo("snapshots") 
-
 libraryDependencies += guice
 libraryDependencies += javaJpa
-
-// https://mvnrepository.com/artifact/dom4j/dom4j
-libraryDependencies += "dom4j" % "dom4j" % "1.6"
-
-libraryDependencies += "org.mockito" % "mockito-core" % "2.1.0"
+libraryDependencies += "com.h2database" % "h2" % "1.4.192"
+libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.5.Final"
 
 libraryDependencies += javaWs % "test"
 
-// https://mvnrepository.com/artifact/org.hibernate/hibernate-core
-// must exclude dom4j in hibernate core because it causes staxeventreader exceptions
-// http://stackoverflow.com/questions/36222306/caused-by-java-lang-classnotfoundexception-org-dom4j-io-staxeventreader
-libraryDependencies += ("org.hibernate" % "hibernate-core" % "5.2.3.Final")
-                          .exclude("dom4j", "dom4j")
-                          .exclude("javax.transaction", "jta")
-                          .exclude("org.slf4j", "slf4j-api")
+libraryDependencies += "org.awaitility" % "awaitility" % "2.0.0" % "test"
+libraryDependencies += "org.assertj" % "assertj-core" % "3.6.2" % "test"
+libraryDependencies += "org.mockito" % "mockito-core" % "2.1.0" % "test"
+testOptions in Test += Tests.Argument(TestFrameworks.JUnit, "-a", "-v")
 
-libraryDependencies += "com.h2database" % "h2" % "1.4.192"
