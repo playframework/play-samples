@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
  */
 public class HomeController extends Controller {
 
-    private final Flow userFlow;
+    private final Flow<String, String, NotUsed> userFlow;
 
     @Inject
     public HomeController(ActorSystem actorSystem,
