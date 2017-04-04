@@ -29,6 +29,12 @@ class BrowserSpec extends PlaySpec {
         
         browser.$("section h1").first.text() must equal("Edit computer")
 
+        browser.$("#discontinued").fill().`with`("xxx")
+        browser.$("input.primary").click()
+
+        browser.$("dl.error").size must equal(1)
+        browser.$("dl.error label").first.text() must equal("Discontinued date")
+
         browser.$("#discontinued").fill().`with`("")
         browser.$("input.primary").click()
 
