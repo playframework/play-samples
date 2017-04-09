@@ -1,7 +1,7 @@
 resolvers += Resolver.sonatypeRepo("snapshots") 
 
 // The Play plugin
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-M3")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.0-M4")
 
 // Web plugins
 addSbtPlugin("com.typesafe.sbt" % "sbt-coffeescript" % "1.0.0")
