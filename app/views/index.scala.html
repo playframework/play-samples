@@ -1,7 +1,6 @@
-@import services.user.UserInfo
 @(form: Form[UserInfo])(implicit request: UserRequest[_])
 
-@main("Play-Kalium") {
+@main("play-scala-secure-session-example") {
 
     <p>
       Username is @{request.userInfo.map(_.username).getOrElse("undefined")}

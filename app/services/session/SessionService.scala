@@ -6,7 +6,7 @@ import play.api.cache.SyncCacheApi
 
 /**
  * A session service that ties session id to secret key.  This would probably be a
- * distributed key value store like Redis or Cassandra in a production system.
+ * key value store like Redis or Cassandra in a production system.
  *
  * @param cache
  */

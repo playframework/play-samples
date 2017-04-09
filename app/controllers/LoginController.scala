@@ -2,37 +2,28 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
-import play.api.mvc.{AbstractController, AnyContent, ControllerComponents, Request}
-import services.session.SessionService
-import services.user.{UserInfo, UserInfoService}
-
+import play.api.data.Form
+import play.api.mvc._
 
 @Singleton
-class LoginController @Inject()(sessionService: SessionService,
-                                userInfoService: UserInfoService,
-                                factory: UserInfoCookieBakerFactory,
+class LoginController @Inject()(action: UserInfoAction,
+                                sessionGenerator: SessionGenerator,
                                 cc: ControllerComponents) extends AbstractController(cc) {
 
-  def login = Action { implicit request: Request[AnyContent] =>
-    def successFunc = { userInfo: UserInfo =>
-      val secretKey = userInfoService.newSecretKey
-      val sessionId = sessionService.create(secretKey)
-
-      // Session id and user info are distinct cookies.  The user info lives as long as you
-      // have a secret key for it.  The session dies when the browser closes or you logout.
-      val cookieBaker = factory.createCookieBaker(secretKey)
-      val userInfoCookie = cookieBaker.encodeAsCookie(Some(userInfo))
-      val session = request.session + ("sessionId" -> sessionId)
-
-      play.api.Logger.info("Created a new username " + userInfo)
-
-      Redirect(routes.HomeController.index()).withSession(session).withCookies(userInfoCookie)
+  def login = action { implicit request: UserRequest[AnyContent] =>
+    val successFunc = { userInfo: UserInfo =>
+      val (sessionId, encryptedCookie) = sessionGenerator.createSession(userInfo)
+      val session = request.session + (SESSION_ID -> sessionId)
+      Redirect(routes.HomeController.index())
+        .withSession(session)
+        .withCookies(encryptedCookie)
     }
 
-    UserInfoForm.form.bindFromRequest().fold({ form =>
-      play.api.Logger.error("could not log in!")
-      Redirect(routes.HomeController.index()).flashing("error" -> "Could not login!")
-    }, successFunc)
+    val errorFunc = { badForm: Form[UserInfo] =>
+      BadRequest(views.html.index(badForm)).flashing(FLASH_ERROR -> "Could not login!")
+    }
+
+    form.bindFromRequest().fold(errorFunc, successFunc)
   }
 
 }
