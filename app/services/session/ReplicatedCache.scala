@@ -14,15 +14,18 @@ import akka.cluster.ddata.LWWMapKey
  * This is from one of the examples covered in the akka distributed data section.
  *
  * http://doc.akka.io/docs/akka/current/scala/distributed-data.html
+ *
+ *
  */
 class ReplicatedCache extends Actor {
+  // https://github.com/akka/akka-samples/blob/master/akka-sample-distributed-data-scala/src/main/scala/sample/distributeddata/ReplicatedCache.scala
   import akka.cluster.ddata.Replicator._
   import ReplicatedCache._
 
   private[this] val replicator = DistributedData(context.system).replicator
   private[this] implicit val cluster = Cluster(context.system)
 
-  def dataKey(entryKey: String): LWWMapKey[Any] =
+  def dataKey(entryKey: String): LWWMapKey[String, Any] =
     LWWMapKey("cache-" + math.abs(entryKey.hashCode) % 100)
 
   def receive = {
@@ -34,7 +37,7 @@ class ReplicatedCache extends Actor {
       replicator ! Get(dataKey(key), ReadLocal, Some(Request(key, sender())))
     case g @ GetSuccess(LWWMapKey(_), Some(Request(key, replyTo))) =>
       g.dataValue match {
-        case data: LWWMap[_] => data.get(key) match {
+        case data: LWWMap[_, _] => data.asInstanceOf[LWWMap[String, Any]].get(key) match {
           case Some(value) => replyTo ! Cached(key, Some(value))
           case None        => replyTo ! Cached(key, None)
         }
