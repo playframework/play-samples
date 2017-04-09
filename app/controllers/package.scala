@@ -23,6 +23,8 @@ package object controllers {
 
   val FLASH_ERROR = "error"
 
+  val USER_INFO_COOKIE_NAME = "userInfo"
+
   case class UserInfo(username: String)
 
   object UserInfo {
@@ -37,7 +39,7 @@ package object controllers {
   )
 
   def discardingSession(result: Result): Result = {
-    result.withNewSession.discardingCookies(DiscardingCookie("userInfo"))
+    result.withNewSession.discardingCookies(DiscardingCookie(USER_INFO_COOKIE_NAME))
   }
 
   /**
@@ -48,8 +50,8 @@ package object controllers {
   class UserInfoAction @Inject()(sessionService: SessionService,
                                  factory: UserInfoCookieBakerFactory,
                                  playBodyParsers: PlayBodyParsers,
-                                 messagesApi: MessagesApi,
-                                 ec: ExecutionContext)
+                                 messagesApi: MessagesApi
+                                 )(implicit val executionContext: ExecutionContext)
     extends ActionBuilder[UserRequest, AnyContent] {
 
     private val clock = Clock.systemUTC()
@@ -57,29 +59,24 @@ package object controllers {
     override def parser: BodyParser[AnyContent] = playBodyParsers.anyContent
 
     override def invokeBlock[A](request: Request[A], block: (UserRequest[A]) => Future[Result]): Future[Result] = {
-      block(userRequestFromRequest(request))
+      userRequestFromRequest(request).flatMap(block)
     }
 
-    private def userRequestFromRequest[A](request: Request[A]) = {
-      new UserRequest[A](request, userInfoFromRequest(request), messagesApi)
-    }
-
-    private def userInfoFromRequest(request: RequestHeader): Option[UserInfo] = {
-      val maybeCookieBaker = for {
-        sessionId <- request.session.get(SESSION_ID)
-        secretKey <- sessionService.lookup(sessionId)
-      } yield factory.createCookieBaker(secretKey)
-
-      maybeCookieBaker.flatMap { cookieBaker =>
-        cookieBaker.decodeFromCookie(request.cookies.get(cookieBaker.COOKIE_NAME))
+    private def userRequestFromRequest[A](request: Request[A]): Future[UserRequest[A]] = {
+      userInfoFromRequest(request).map { maybeUserInfo =>
+        new UserRequest[A](request, maybeUserInfo, messagesApi)
       }
     }
 
-    override protected def executionContext: ExecutionContext = ec
+    private def userInfoFromRequest(request: RequestHeader): Future[Option[UserInfo]] = {
+      val futureMaybeSessionId = request.session.get(SESSION_ID).map(sessionService.lookup).getOrElse(Future.successful(None))
+      val futureMaybeCookieBaker = futureMaybeSessionId.map(_.map(factory.createCookieBaker))
+      futureMaybeCookieBaker.map(_.flatMap(_.decodeFromCookie(request.cookies.get(USER_INFO_COOKIE_NAME))))
+    }
   }
 
   // Minimum work needed to avoid using I18nController
-  trait FormRequestHeader extends MessagesProvider { self: RequestHeader =>
+  trait MessagesRequestHeader extends MessagesProvider { self: RequestHeader =>
     def messagesApi: MessagesApi
     lazy val messages: Messages = messagesApi.preferred(self)
   }
@@ -87,7 +84,7 @@ package object controllers {
   class UserRequest[A](request: Request[A],
                        val userInfo: Option[UserInfo],
                        val messagesApi: MessagesApi)
-    extends WrappedRequest[A](request) with FormRequestHeader
+    extends WrappedRequest[A](request) with MessagesRequestHeader
 
   /**
    * Creates a cookie baker with the given secret key.
@@ -100,25 +97,26 @@ package object controllers {
       new EncryptedCookieBaker[UserInfo](secretKey, encryptionService, secretConfiguration) {
         // This can also be set to the session expiration, but lets keep it around for example
         override val expirationDate: FiniteDuration = 365.days
-        override val COOKIE_NAME: String = "userInfo"
+        override val COOKIE_NAME: String = USER_INFO_COOKIE_NAME
       }
     }
   }
 
   @Singleton
-  class SessionGenerator @Inject()(sessionService: SessionService,
-                                   userInfoService: EncryptionService,
-                                   factory: UserInfoCookieBakerFactory) {
+  class SessionGenerator @Inject()(
+    sessionService: SessionService,
+    userInfoService: EncryptionService,
+    factory: UserInfoCookieBakerFactory
+  )(implicit ec: ExecutionContext) {
 
-    def createSession(userInfo: UserInfo): (String, Cookie) = {
+    def createSession(userInfo: UserInfo): Future[(String, Cookie)] = {
       // create a user info cookie with this specific secret key
       val secretKey = userInfoService.newSecretKey
       val cookieBaker = factory.createCookieBaker(secretKey)
       val userInfoCookie = cookieBaker.encodeAsCookie(Some(userInfo))
 
       // Tie the secret key to a session id, and store the encrypted data in client side cookie
-      val sessionId = sessionService.create(secretKey)
-      (sessionId, userInfoCookie)
+      sessionService.create(secretKey).map(sessionId => (sessionId, userInfoCookie))
     }
 
   }

@@ -1,34 +1,43 @@
 package services.session
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{Inject, Named, Singleton}
 
-import play.api.cache.SyncCacheApi
+import akka.actor.ActorRef
+import akka.pattern.ask
+import services.session.ReplicatedCache._
+
+import scala.concurrent.duration._
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
- * A session service that ties session id to secret key.  This would probably be a
- * key value store like Redis or Cassandra in a production system.
- *
- * @param cache
+ * A session service that ties session id to secret key using akka CRDTs
  */
 @Singleton
-class SessionService @Inject()(cache: SyncCacheApi) {
+class SessionService @Inject()(@Named("replicatedCache") cacheActor: ActorRef)(implicit ec: ExecutionContext) {
 
-  def create(secretKey: Array[Byte]): String = {
+  implicit def akkaTimeout = akka.util.Timeout(300 seconds)
+
+  def create(secretKey: Array[Byte]): Future[String] = {
     val sessionId = newSessionId()
-    cache.set(sessionId, secretKey)
-    sessionId
+    cacheActor ! PutInCache(sessionId, secretKey)
+    Future.successful(sessionId)
   }
 
-  def lookup(sessionId: String): Option[Array[Byte]] = {
-    cache.get[Array[Byte]](sessionId)
+  def lookup(sessionId: String): Future[Option[Array[Byte]]] = {
+    (cacheActor ? GetFromCache(sessionId)).map {
+      case Cached(key: Any, value: Option[_]) =>
+        value.asInstanceOf[Option[Array[Byte]]]
+    }
   }
 
-  def put(sessionId: String, sessionKey: Array[Byte]): Unit = {
-    cache.set(sessionId, sessionKey)
+  def put(sessionId: String, secretKey: Array[Byte]): Future[Unit] = {
+    cacheActor ! PutInCache(sessionId, secretKey)
+    Future.successful(())
   }
 
-  def delete(sessionId: String): Unit = {
-    cache.remove(sessionId)
+  def delete(sessionId: String): Future[Unit] = {
+    cacheActor ? Evict(sessionId)
+    Future.successful(())
   }
 
   private val sr = new java.security.SecureRandom()
