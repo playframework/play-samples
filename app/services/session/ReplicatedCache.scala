@@ -13,9 +13,10 @@ import akka.cluster.ddata.LWWMapKey
  *
  * This is from one of the examples covered in the akka distributed data section.
  *
+ * Note that this does not do time to live, so if a user does not explicitly log out
+ * and just closes the browser window, then the session entry will stay in cache forever.
+ *
  * http://doc.akka.io/docs/akka/current/scala/distributed-data.html
- *
- *
  */
 class ReplicatedCache extends Actor {
   // https://github.com/akka/akka-samples/blob/master/akka-sample-distributed-data-scala/src/main/scala/sample/distributeddata/ReplicatedCache.scala
