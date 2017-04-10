@@ -2,6 +2,12 @@
 
 @main("play-scala-secure-session-example") {
 
+    @request.flash.data.map{ case (k, v) =>
+    <p>
+        @k: @v
+    </p>
+    }
+
     <p>
       Username is @{request.userInfo.map(_.username).getOrElse("undefined")}
     </p>

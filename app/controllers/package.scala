@@ -1,4 +1,3 @@
-import java.time.Clock
 import javax.inject.{Inject, Singleton}
 
 import play.api.http.SecretConfiguration
@@ -52,26 +51,37 @@ package object controllers {
                                  playBodyParsers: PlayBodyParsers,
                                  messagesApi: MessagesApi
                                  )(implicit val executionContext: ExecutionContext)
-    extends ActionBuilder[UserRequest, AnyContent] {
-
-    private val clock = Clock.systemUTC()
+    extends ActionBuilder[UserRequest, AnyContent] with Results {
 
     override def parser: BodyParser[AnyContent] = playBodyParsers.anyContent
 
     override def invokeBlock[A](request: Request[A], block: (UserRequest[A]) => Future[Result]): Future[Result] = {
-      userRequestFromRequest(request).flatMap(block)
-    }
+      // deal with the options first, then move to the futures
+      val maybeFutureResult: Option[Future[Result]] = for {
+        sessionId <- request.session.get(SESSION_ID)
+        userInfoCookie <- request.cookies.get(USER_INFO_COOKIE_NAME)
+      } yield {
+        // Future can be flatmapped here and squished with a partial function
+        sessionService.lookup(sessionId).flatMap {
+          case Some(secretKey) =>
+            val cookieBaker = factory.createCookieBaker(secretKey)
+            val maybeUserInfo = cookieBaker.decodeFromCookie(Some(userInfoCookie))
 
-    private def userRequestFromRequest[A](request: Request[A]): Future[UserRequest[A]] = {
-      userInfoFromRequest(request).map { maybeUserInfo =>
-        new UserRequest[A](request, maybeUserInfo, messagesApi)
+            block(new UserRequest[A](request, maybeUserInfo, messagesApi))
+          case None =>
+            // We've got a user with a client session id, but no server-side state.
+            // Let's redirect them back to the home page without any session cookie stuff.
+            Future.successful {
+              discardingSession {
+                Redirect(routes.HomeController.index())
+              }.flashing(FLASH_ERROR -> "Your session has expired!")
+            }
+        }
       }
-    }
 
-    private def userInfoFromRequest(request: RequestHeader): Future[Option[UserInfo]] = {
-      val futureMaybeSessionId = request.session.get(SESSION_ID).map(sessionService.lookup).getOrElse(Future.successful(None))
-      val futureMaybeCookieBaker = futureMaybeSessionId.map(_.map(factory.createCookieBaker))
-      futureMaybeCookieBaker.map(_.flatMap(_.decodeFromCookie(request.cookies.get(USER_INFO_COOKIE_NAME))))
+      maybeFutureResult.getOrElse {
+        block(new UserRequest[A](request, None, messagesApi))
+      }
     }
   }
 
