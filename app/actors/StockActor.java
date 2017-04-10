@@ -3,11 +3,7 @@ package actors;
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Cancellable;
-import akka.event.Logging;
-import akka.event.LoggingAdapter;
-import akka.japi.pf.ReceiveBuilder;
 
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 import java.util.Deque;
 import java.util.HashSet;
@@ -22,7 +18,11 @@ import utils.StockQuote;
  */
 public class StockActor extends AbstractActor {
 
-    private final HashSet<ActorRef> watchers = new HashSet<ActorRef>();
+    private final String symbol;
+    private final StockQuote stockQuote;
+    private final Optional<Cancellable> stockTick;
+
+    private final HashSet<ActorRef> watchers = new HashSet<>();
 
     private final Deque<Double> stockHistory = FakeStockQuote.history(50);
 
@@ -31,9 +31,20 @@ public class StockActor extends AbstractActor {
     }
 
     public StockActor(String symbol, StockQuote stockQuote, boolean tick) {
-        Optional<Cancellable> stockTick = tick ? Optional.of(scheduleTick()) : Optional.empty();
+        this.stockTick = tick ? Optional.of(scheduleTick()) : Optional.empty();
+        this.symbol = symbol;
+        this.stockQuote = stockQuote;
+    }
 
-        receive(ReceiveBuilder
+    private Cancellable scheduleTick() {
+        return context().system().scheduler().schedule(
+            Duration.Zero(), Duration.create(75, TimeUnit.MILLISECONDS),
+            self(), Stock.latest, context().dispatcher(), null);
+    }
+
+    @Override
+    public Receive createReceive() {
+        return receiveBuilder()
             .match(Stock.Latest.class, latest -> {
                 // add a new stock price to the history and drop the oldest
                 Double newPrice = stockQuote.newPrice(stockHistory.peekLast());
@@ -54,12 +65,6 @@ public class StockActor extends AbstractActor {
                     stockTick.ifPresent(Cancellable::cancel);
                     context().stop(self());
                 }
-            }).build());
-    }
-
-    private Cancellable scheduleTick() {
-        return context().system().scheduler().schedule(
-            Duration.Zero(), Duration.create(75, TimeUnit.MILLISECONDS),
-            self(), Stock.latest, context().dispatcher(), null);
+            }).build();
     }
 }

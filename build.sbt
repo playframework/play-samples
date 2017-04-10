@@ -17,7 +17,7 @@ libraryDependencies += "org.webjars" % "flot" % "0.8.3"
 libraryDependencies += "org.assertj" % "assertj-core" % "3.4.1" % Test
 libraryDependencies += "com.jayway.awaitility" % "awaitility" % "1.7.0" % Test
 
-val akkaVersion = "2.4.17"
+val akkaVersion = "2.5.0-RC2"
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
 
