@@ -1,5 +1,7 @@
 package controller
 
+import java.util.Properties
+
 import com.google.inject.Inject
 import org.flywaydb.core.Flyway
 import org.flywaydb.core.internal.util.jdbc.DriverDataSource
@@ -33,7 +35,7 @@ class FlywayMigrator @Inject()(env: Environment, configuration: Configuration) {
     val user = configuration.get[String]("myapp.database.user")
     val password = configuration.get[String]("myapp.database.password")
     val flyway = new Flyway
-    flyway.setDataSource(new DriverDataSource(env.classLoader, driver, url, user, password))
+    flyway.setDataSource(new DriverDataSource(env.classLoader, driver, url, user, password, new Properties()))
     flyway.setLocations("filesystem:modules/flyway/src/main/resources/db/migration")
     flyway.migrate()
   }
