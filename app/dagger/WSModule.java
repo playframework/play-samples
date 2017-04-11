@@ -1,15 +1,22 @@
 package dagger;
 
 import akka.stream.Materializer;
-import play.api.libs.ws.WSClientConfig;
-import play.api.libs.ws.WSConfigParser;
+import play.api.Configuration;
+import play.api.Environment;
 import play.api.libs.ws.ahc.AhcWSClientConfig;
-import play.api.libs.ws.ahc.AhcWSClientConfigParser;
-import play.libs.ws.WSAPI;
+import play.api.libs.ws.ahc.cache.EffectiveURIKey;
+import play.api.libs.ws.ahc.cache.ResponseEntry;
 import play.libs.ws.WSClient;
+import play.libs.ws.ahc.AhcWSClient;
+import play.libs.ws.ahc.AhcWSClientConfigFactory;
+import play.libs.ws.ahc.StandaloneAhcWSClient;
 
-import play.api.*;
-
+import javax.cache.Cache;
+import javax.cache.CacheManager;
+import javax.cache.Caching;
+import javax.cache.configuration.FactoryBuilder;
+import javax.cache.configuration.MutableConfiguration;
+import javax.cache.expiry.EternalExpiryPolicy;
 import javax.inject.Singleton;
 
 @Module
@@ -17,28 +24,17 @@ public class WSModule {
 
     @Singleton
     @Provides
-    WSClientConfig wsClientConfig(Configuration configuration,
-                                  Environment environment) {
-        return new WSConfigParser(configuration, environment).parse();
-    }
+    public WSClient providesWsClient(Configuration configuration, Environment environment, Materializer materializer) {
+        final AhcWSClientConfig config = AhcWSClientConfigFactory.forConfig(configuration.underlying(), environment.classLoader());
+        CacheManager cacheManager = Caching.getCachingProvider().getCacheManager();
 
-    @Singleton
-    @Provides
-    AhcWSClientConfig ahcWsClientConfig(WSClientConfig wsClientConfig,
-                                        Configuration configuration,
-                                        Environment environment) {
-        return new AhcWSClientConfigParser(wsClientConfig, configuration, environment).parse();
-    }
+        Cache<EffectiveURIKey, ResponseEntry> cache = cacheManager.createCache("play-ws-cache",
+                new MutableConfiguration()
+                        .setTypes(EffectiveURIKey.class, ResponseEntry.class)
+                        .setStoreByValue(false)
+                        .setExpiryPolicyFactory(new FactoryBuilder.SingletonFactory<>(new EternalExpiryPolicy())));
 
-    @Singleton
-    @Provides
-    WSAPI wsApi(AhcWSClientConfig ahcWSClientConfig, play.inject.ApplicationLifecycle applicationLifecycle, Materializer materializer) {
-        return new play.libs.ws.ahc.AhcWSAPI(ahcWSClientConfig, applicationLifecycle, materializer);
-    }
-
-    @Singleton
-    @Provides
-    public WSClient providesWsClient(WSAPI wsapi) {
-        return wsapi.client();
+        final StandaloneAhcWSClient client = StandaloneAhcWSClient.create(config, cache, materializer);
+        return new AhcWSClient(client);
     }
 }

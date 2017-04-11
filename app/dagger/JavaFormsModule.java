@@ -1,10 +1,12 @@
 package dagger;
 
+import play.api.inject.ApplicationLifecycle;
 import play.data.FormFactory;
 import play.data.format.Formatters;
 import play.data.validation.DefaultConstraintValidatorFactory;
 import play.data.validation.ValidatorProvider;
 import play.i18n.MessagesApi;
+import play.inject.DelegateApplicationLifecycle;
 import play.inject.Injector;
 
 import javax.inject.Singleton;
@@ -27,8 +29,8 @@ public class JavaFormsModule {
 
     @Singleton
     @Provides
-    public ValidatorProvider providesValidator(ConstraintValidatorFactory factory) {
-        return new ValidatorProvider(factory);
+    public ValidatorProvider providesValidator(ConstraintValidatorFactory factory, ApplicationLifecycle lifecycle) {
+        return new ValidatorProvider(factory, new DelegateApplicationLifecycle(lifecycle));
     }
 
     @Singleton

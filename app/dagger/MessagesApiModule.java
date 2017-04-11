@@ -1,8 +1,9 @@
 package dagger;
 
 import play.api.Environment;
-import play.api.i18n.DefaultLangs;
-import play.api.i18n.DefaultMessagesApi;
+import play.api.http.HttpConfiguration;
+import play.api.i18n.DefaultLangsProvider;
+import play.api.i18n.DefaultMessagesApiProvider;
 
 import javax.inject.Singleton;
 
@@ -23,13 +24,13 @@ public class MessagesApiModule {
 
     @Singleton
     @Provides
-    public play.api.i18n.MessagesApi providesMessagesApi(Environment env, play.api.Configuration config, play.api.i18n.Langs langs) {
-        return new DefaultMessagesApi(env, config, langs);
+    public play.api.i18n.MessagesApi providesMessagesApi(Environment env, play.api.Configuration config, play.api.i18n.Langs langs, HttpConfiguration httpConfiguration) {
+        return new DefaultMessagesApiProvider(env, config, langs, httpConfiguration).get();
     }
 
     @Singleton
     @Provides
     public play.api.i18n.Langs providesScalaLangs(play.api.Configuration config) {
-        return new DefaultLangs(config);
+        return new DefaultLangsProvider(config).get();
     }
 }

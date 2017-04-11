@@ -54,13 +54,17 @@ public class MyComponentsFromContext extends play.api.BuiltInComponentsFromConte
 
     @Override
     public HttpRequestHandler httpRequestHandler() {
-        return new JavaCompatibleHttpRequestHandler(
+        final DefaultActionCreator defaultActionCreator = new DefaultActionCreator();
+        final DefaultJavaHandlerComponents components = new DefaultJavaHandlerComponents(injector(),
+                defaultActionCreator, httpConfiguration(), executionContext(), javaContextComponents());
+        final JavaCompatibleHttpRequestHandler handler = new JavaCompatibleHttpRequestHandler(
                 router(),
                 httpErrorHandler(),
                 httpConfiguration(),
                 new DefaultHttpFilters(httpFilters()),
-                new DefaultJavaHandlerComponents(injector(), new DefaultActionCreator())
+                components
         );
+        return handler;
     }
 
     @Override
@@ -72,7 +76,7 @@ public class MyComponentsFromContext extends play.api.BuiltInComponentsFromConte
     public play.api.inject.Injector injector() {
         // We need to add any Java actions and body parsers needed to the runtime injector
         return new SimpleInjector(super.injector(), Scala.asScala(new HashMap<Class<?>, Object>() {{
-            put(play.mvc.BodyParser.Default.class, new play.mvc.BodyParser.Default(javaErrorHandler(), httpConfiguration()));
+            put(play.mvc.BodyParser.Default.class, new play.mvc.BodyParser.Default(javaErrorHandler(), httpConfiguration(), playBodyParsers()));
             put(play.api.i18n.MessagesApi.class, messagesApi);
             put(play.api.i18n.Langs.class, langs);
         }}));

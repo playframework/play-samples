@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 @Singleton
 @Component(modules = {
         ActorSystemModule.class,
+        AssetsModule.class,
         ApplicationLoaderContextModule.class,
         ClockModule.class,
         FiltersModule.class,
