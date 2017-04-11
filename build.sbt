@@ -1,4 +1,4 @@
-name := """play-java-rest-api"""
+name := """play-java-rest-api-example"""
 
 version := "1.0-SNAPSHOT"
 
