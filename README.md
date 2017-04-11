@@ -1,6 +1,6 @@
-# play-java-dagger2
+[<img src="https://img.shields.io/travis/playframework/play-java-dagger2-example.svg"/>](https://travis-ci.org/playframework/play-java-dagger2-example)
 
-Play Application using Dagger 2 for Compile Time DI
+# play-java-dagger2-example
 
 This project shows how to use Play Java with [Dagger 2](https://google.github.io/dagger/).
 
