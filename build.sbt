@@ -12,10 +12,11 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava, GatlingPlugin).co
 
 scalaVersion := "2.11.8"
 
-libraryDependencies += filters
+libraryDependencies += guice
 libraryDependencies += javaJpa
+libraryDependencies += "com.h2database" % "h2" % "1.4.192"
 
-libraryDependencies += "org.hibernate" % "hibernate-entitymanager" % "5.1.0.Final"
+libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.9.Final"
 libraryDependencies += "io.dropwizard.metrics" % "metrics-core" % "3.2.1"
 libraryDependencies += "com.palominolabs.http" % "url-builder" % "1.1.0"
 libraryDependencies += "net.jodah" % "failsafe" % "1.0.3"
