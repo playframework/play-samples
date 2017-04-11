@@ -1,15 +1,18 @@
-import org.slf4j.ILoggerFactory;
 import play.Application;
 import play.ApplicationLoader;
 import play.DefaultApplication;
 import play.Environment;
 import play.api.LoggerConfigurator$;
+import play.api.mvc.EssentialFilter;
 import play.inject.DelegateInjector;
 import play.routing.RoutingDsl;
+import scala.collection.Seq;
 import scala.compat.java8.OptionConverters;
 
+import java.util.Collections;
 import java.util.Optional;
 
+import static play.libs.Scala.asScala;
 import static play.mvc.Results.ok;
 
 public class MyApplicationLoader implements ApplicationLoader {
@@ -27,49 +30,24 @@ public class MyApplicationLoader implements ApplicationLoader {
 }
 
 class MyComponents extends play.api.BuiltInComponentsFromContext {
-
     public MyComponents(play.api.ApplicationLoader.Context context) {
         super(context);
     }
 
     @Override
     public play.api.routing.Router router() {
-        return new RoutingDsl()
-                .GET("/").routeTo(() ->
+        RoutingDsl routingDsl = new RoutingDsl(defaultBodyParser(), javaContextComponents());
+        return routingDsl.GET("/").routeTo(() ->
                         ok("Hello")
                 ).build().asScala();
     }
 
-    // Annotation based Java Actions don't work straight out of the box.
-    // To use a generated routes file with Java, you need to wrap the controller
-    // in a handler invoker...
-    /*
-    class Routes(
-      override val errorHandler: play.api.http.HttpErrorHandler,
-      HomeController_0: controllers.HomeController,
-      val prefix: String
-    ) extends GeneratedRouter {
 
-      private[this] lazy val controllers_HomeController_index0_invoker = createInvoker(
-        HomeController_0.index,
-        HandlerDef(this.getClass.getClassLoader,
-          "router",
-          "controllers.HomeController",
-          "index",
-          Nil,
-          "GET",
-          """ An example controller showing a sample home page""",
-          this.prefix + """"""
-        )
-      )
 
-    def routes: PartialFunction[RequestHeader, Handler] = {
-      case controllers_HomeController_index0_route(params) =>
-        call {
-          controllers_HomeController_index0_invoker.call(HomeController_0.index)
-        }
-      }
-     */
+    @Override
+    public Seq<EssentialFilter> httpFilters() {
+        return asScala(Collections.emptyList());
+    }
 }
 
 class LoggerConfigurator {
