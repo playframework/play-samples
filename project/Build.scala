@@ -22,9 +22,9 @@ object Common {
        Resolver.sonatypeRepo("snapshots")),
     libraryDependencies ++= Seq(
       "javax.inject" % "javax.inject" % "1",
-      "joda-time" % "joda-time" % "2.9.2",
-      "org.joda" % "joda-convert" % "1.6",
-      "com.google.inject" % "guice" % "4.0"
+      "joda-time" % "joda-time" % "2.9.9",
+      "org.joda" % "joda-convert" % "1.8.1",
+      "com.google.inject" % "guice" % "4.1.0"
     ),
     scalacOptions in Test ++= Seq("-Yrangepos")
   )

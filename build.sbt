@@ -23,10 +23,11 @@ lazy val root = (project in file("."))
 TwirlKeys.templateImports += "com.example.user.User"
 
 libraryDependencies += guice
-libraryDependencies += "com.h2database" % "h2" % "1.4.192"
+libraryDependencies += "com.h2database" % "h2" % "1.4.194"
 
 // Automatic database migration available in testing
 fork in Test := true
-libraryDependencies += "org.flywaydb" % "flyway-core" % "4.0" % Test
+libraryDependencies += "org.flywaydb" % "flyway-core" % "4.1.2" % Test
+libraryDependencies += "com.typesafe.play" %% "play-ahc-ws" % "2.6.0-M4" % Test
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-M2" % Test
 

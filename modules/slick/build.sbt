@@ -37,4 +37,4 @@ slickCodegenCodeGenerator := { (model:  m.Model) =>
   }
 }
 
-sourceGenerators in Compile <+= slickCodegen
+sourceGenerators in Compile += slickCodegen.taskValue
