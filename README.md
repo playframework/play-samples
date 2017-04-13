@@ -58,7 +58,7 @@ A abstract [cookie baker](https://www.playframework.com/documentation/latest/api
 
 A factory `UserInfoCookieBakerFactory` creates a `UserInfoCookieBaker` that uses the session specific secret key to map a `UserInfo` case class to and from a cookie.
 
-Then finally, a `UserInfoAction`, an action builder, handles the work of reading in a `UserInfo` from a cookie and attaches it to a `UserRequest`, a [wrapped request](https://www.playframework.com/documentation/latest/ScalaActionsComposition) so that the controllers can work with `UserInfo` without involving themselves the underlying logic.
+Then finally, a `UserInfoAction`, an action builder, handles the work of reading in a `UserInfo` from a cookie and attaches it to a `UserRequest`, a [wrapped request](https://www.playframework.com/documentation/latest/ScalaActionsComposition) so that the controllers can work with `UserInfo` without involving themselves with the underlying logic.
 
 ## Replicated Caching
 
