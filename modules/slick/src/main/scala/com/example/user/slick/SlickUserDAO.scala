@@ -3,7 +3,7 @@ package com.example.user.slick
 import javax.inject.{Inject, Singleton}
 
 import org.joda.time.DateTime
-import slick.driver.JdbcProfile
+import slick.jdbc.JdbcProfile
 import slick.jdbc.JdbcBackend.Database
 import com.example.user._
 
@@ -22,7 +22,7 @@ import scala.language.implicitConversions
 @Singleton
 class SlickUserDAO @Inject()(db: Database)(implicit ec: ExecutionContext) extends UserDAO with Tables {
 
-  override val profile: JdbcProfile = _root_.slick.driver.H2Driver
+  override val profile: JdbcProfile = _root_.slick.jdbc.H2Profile
 
   import profile.api._
 
