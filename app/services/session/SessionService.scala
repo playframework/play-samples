@@ -1,19 +1,19 @@
 package services.session
 
-import javax.inject.{Inject, Named, Singleton}
+import javax.inject.{ Inject, Named, Singleton }
 
 import akka.actor.ActorRef
 import akka.pattern.ask
 import services.session.SessionCache._
 
 import scala.concurrent.duration._
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 /**
  * A session service that ties session id to secret key using akka CRDTs
  */
 @Singleton
-class SessionService @Inject()(@Named("replicatedCache") cacheActor: ActorRef)(implicit ec: ExecutionContext) {
+class SessionService @Inject() (@Named("replicatedCache") cacheActor: ActorRef)(implicit ec: ExecutionContext) {
 
   implicit def akkaTimeout = akka.util.Timeout(300.milliseconds)
 

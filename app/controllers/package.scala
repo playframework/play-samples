@@ -1,14 +1,14 @@
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 
 import play.api.http.SecretConfiguration
-import play.api.i18n.{Messages, MessagesApi, MessagesProvider}
-import play.api.libs.json.{Format, Json}
+import play.api.i18n.{ Messages, MessagesApi, MessagesProvider }
+import play.api.libs.json.{ Format, Json }
 import play.api.mvc._
-import services.encryption.{EncryptedCookieBaker, EncryptionService}
+import services.encryption.{ EncryptedCookieBaker, EncryptionService }
 import services.session.SessionService
 
 import scala.concurrent.duration._
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 /**
  * Methods and objects common to all controllers
@@ -46,12 +46,13 @@ package object controllers {
    * with only the secret key stored on the server.
    */
   @Singleton
-  class UserInfoAction @Inject()(sessionService: SessionService,
-                                 factory: UserInfoCookieBakerFactory,
-                                 playBodyParsers: PlayBodyParsers,
-                                 messagesApi: MessagesApi
-                                 )(implicit val executionContext: ExecutionContext)
-    extends ActionBuilder[UserRequest, AnyContent] with Results {
+  class UserInfoAction @Inject() (
+    sessionService: SessionService,
+    factory: UserInfoCookieBakerFactory,
+    playBodyParsers: PlayBodyParsers,
+    messagesApi: MessagesApi
+  )(implicit val executionContext: ExecutionContext)
+      extends ActionBuilder[UserRequest, AnyContent] with Results {
 
     override def parser: BodyParser[AnyContent] = playBodyParsers.anyContent
 
@@ -91,17 +92,21 @@ package object controllers {
     lazy val messages: Messages = messagesApi.preferred(self)
   }
 
-  class UserRequest[A](request: Request[A],
-                       val userInfo: Option[UserInfo],
-                       val messagesApi: MessagesApi)
-    extends WrappedRequest[A](request) with MessagesRequestHeader
+  class UserRequest[A](
+    request: Request[A],
+    val userInfo: Option[UserInfo],
+    val messagesApi: MessagesApi
+  )
+      extends WrappedRequest[A](request) with MessagesRequestHeader
 
   /**
    * Creates a cookie baker with the given secret key.
    */
   @Singleton
-  class UserInfoCookieBakerFactory @Inject()(encryptionService: EncryptionService,
-                                             secretConfiguration: SecretConfiguration) {
+  class UserInfoCookieBakerFactory @Inject() (
+    encryptionService: EncryptionService,
+      secretConfiguration: SecretConfiguration
+  ) {
 
     def createCookieBaker(secretKey: Array[Byte]): EncryptedCookieBaker[UserInfo] = {
       new EncryptedCookieBaker[UserInfo](secretKey, encryptionService, secretConfiguration) {
@@ -113,10 +118,10 @@ package object controllers {
   }
 
   @Singleton
-  class SessionGenerator @Inject()(
-    sessionService: SessionService,
-    userInfoService: EncryptionService,
-    factory: UserInfoCookieBakerFactory
+  class SessionGenerator @Inject() (
+      sessionService: SessionService,
+      userInfoService: EncryptionService,
+      factory: UserInfoCookieBakerFactory
   )(implicit ec: ExecutionContext) {
 
     def createSession(userInfo: UserInfo): Future[(String, Cookie)] = {

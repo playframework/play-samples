@@ -24,7 +24,8 @@
     <appender-ref ref="STDOUT" />
   </appender>
 
-  <logger name="akka" level="WARN"/>
+  <logger name="play" level="INFO"/>
+  <logger name="akka" level="DEBUG"/>
 
   <root level="INFO">
     <appender-ref ref="ASYNCFILE" />

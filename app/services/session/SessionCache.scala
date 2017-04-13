@@ -2,7 +2,7 @@ package services.session
 
 import javax.inject.Inject
 
-import akka.actor.{Actor, ActorLogging, ActorRef, Cancellable, Props}
+import akka.actor.{ Actor, ActorLogging, ActorRef, Cancellable, Props }
 import akka.event.LoggingReceive
 
 import scala.concurrent.duration._
@@ -23,7 +23,7 @@ class SessionCache extends Actor with ActorLogging {
   import SessionCache._
   import SessionExpiration._
   import akka.cluster.Cluster
-  import akka.cluster.ddata.{DistributedData, LWWMap, LWWMapKey}
+  import akka.cluster.ddata.{ DistributedData, LWWMap, LWWMapKey }
   import akka.cluster.ddata.Replicator._
 
   private val expirationTime: FiniteDuration = {
@@ -47,10 +47,10 @@ class SessionCache extends Actor with ActorLogging {
     case GetFromCache(key) =>
       replicator ! Get(dataKey(key), ReadLocal, Some(Request(key, sender())))
 
-    case g@GetSuccess(LWWMapKey(_), Some(Request(key, replyTo))) =>
+    case g @ GetSuccess(LWWMapKey(_), Some(Request(key, replyTo))) =>
       refreshSessionExpiration(key)
       g.dataValue match {
-        case data: LWWMap[_, _] => data.asInstanceOf[LWWMap[String, Any]].get(key) match {
+        case data: LWWMap[_, _] => data.asInstanceOf[LWWMap[String, Array[Byte]]].get(key) match {
           case Some(value) => replyTo ! Cached(key, Some(value))
           case None => replyTo ! Cached(key, None)
         }
@@ -62,7 +62,7 @@ class SessionCache extends Actor with ActorLogging {
     case _: UpdateResponse[_] => // ok
   }
 
-  private def dataKey(key: String): LWWMapKey[String, Any] = LWWMapKey(key)
+  private def dataKey(key: String): LWWMapKey[String, Array[Byte]] = LWWMapKey(key)
 
   private def refreshSessionExpiration(key: String) = {
     context.child(key) match {
@@ -85,11 +85,11 @@ class SessionCache extends Actor with ActorLogging {
 object SessionCache {
   def props: Props = Props[SessionCache]
 
-  final case class PutInCache(key: String, value: Any)
+  final case class PutInCache(key: String, value: Array[Byte])
 
   final case class GetFromCache(key: String)
 
-  final case class Cached(key: String, value: Option[Any])
+  final case class Cached(key: String, value: Option[Array[Byte]])
 
   final case class Evict(key: String)
 

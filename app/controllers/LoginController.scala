@@ -1,25 +1,28 @@
 package controllers
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 
 import play.api.data.Form
 import play.api.mvc._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 @Singleton
-class LoginController @Inject()(action: UserInfoAction,
-                                sessionGenerator: SessionGenerator,
-                                cc: ControllerComponents)(implicit ec: ExecutionContext)
-  extends AbstractController(cc) {
+class LoginController @Inject() (
+  userAction: UserInfoAction,
+  sessionGenerator: SessionGenerator,
+  cc: ControllerComponents
+)(implicit ec: ExecutionContext)
+    extends AbstractController(cc) {
 
-  def login = action.async { implicit request: UserRequest[AnyContent] =>
+  def login = userAction.async { implicit request: UserRequest[AnyContent] =>
     val successFunc = { userInfo: UserInfo =>
-      sessionGenerator.createSession(userInfo).map { case (sessionId, encryptedCookie) =>
-        val session = request.session + (SESSION_ID -> sessionId)
-        Redirect(routes.HomeController.index())
-          .withSession(session)
-          .withCookies(encryptedCookie)
+      sessionGenerator.createSession(userInfo).map {
+        case (sessionId, encryptedCookie) =>
+          val session = request.session + (SESSION_ID -> sessionId)
+          Redirect(routes.HomeController.index())
+            .withSession(session)
+            .withCookies(encryptedCookie)
       }
     }
 

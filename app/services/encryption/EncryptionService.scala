@@ -2,17 +2,16 @@ package services.encryption
 
 import java.nio.charset.StandardCharsets
 import java.security.SecureRandom
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 
-import play.api.{Configuration, Logger}
-import play.api.libs.json.{JsResult, Json, Reads, Writes}
-
+import play.api.{ Configuration, Logger }
+import play.api.libs.json.{ JsResult, Json, Reads, Writes }
 
 /**
  * Implementation of encryption service, using Play JSON implicits conversion
  */
 @Singleton
-class EncryptionService @Inject()(configuration: Configuration) {
+class EncryptionService @Inject() (configuration: Configuration) {
 
   private val random = new SecureRandom()
 
@@ -31,7 +30,7 @@ class EncryptionService @Inject()(configuration: Configuration) {
     val nonce = Nonce.createNonce()
     val json = Json.toJson(userInfo)
     val stringData = Json.stringify(json)
-    logger.info(s"encrypt: stringData = $stringData")
+    logger.info(s"encrypt: userInfo = $userInfo, stringData = $stringData")
 
     val rawData = stringData.getBytes(StandardCharsets.UTF_8)
     val cipherText = box(secretKey).encrypt(nonce.raw, rawData)
@@ -49,9 +48,10 @@ class EncryptionService @Inject()(configuration: Configuration) {
     val rawData = box(secretKey).decrypt(nonce.raw, cipherText)
     val stringData = new String(rawData, StandardCharsets.UTF_8)
     val json = Json.parse(stringData)
-    val result: JsResult[A] = Json.fromJson[A](json)
+    val result = Json.fromJson[A](json).asOpt
     logger.info(s"decrypt: json = $json, result = $result")
-    result.asOpt
+    result
+
   }
 
   private def encoder = org.abstractj.kalium.encoders.Encoder.HEX
