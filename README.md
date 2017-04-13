@@ -64,7 +64,7 @@ Then finally, a `UserInfoAction`, an action builder, handles the work of reading
 
 In a production environment, there will be more than one Play instance.  This means that the session id to secret key to secret key mapping must be available to all the play instances, and when the session is deleted, the secret key must be removed from all the instances immediately.
 
-Play uses the `services.session.SessionService` to provide a `Future` based API that internally uses [Akka Distributed Data](http://doc.akka.io/docs/akka/current/scala/distributed-data.html) to share the map throughout all the Play instances through [Akka Clustering](http://doc.akka.io/docs/akka/current/scala/cluster-usage.html).  Per the Akka docs, this is a good solution for up to 100,000 concurrent sessions.
+Play uses `services.session.SessionService` to provide a `Future` based API that internally uses [Akka Distributed Data](http://doc.akka.io/docs/akka/current/scala/distributed-data.html) to share the map throughout all the Play instances through [Akka Clustering](http://doc.akka.io/docs/akka/current/scala/cluster-usage.html).  Per the Akka docs, this is a good solution for up to 100,000 concurrent sessions.
 
 The basic structure of the cache is taken from [Akka's ReplicatedCache example](https://github.com/akka/akka-samples/blob/master/akka-sample-distributed-data-scala/src/main/scala/sample/distributeddata/ReplicatedCache.scala), but here an expiration time is added to ensure that an idle session will be reaped after reaching TTL, even if there is no explicit logout.  This does result in an individual actor per session, but the ActorCell only becomes active when there is a change in session state, so this is very low overhead.
 
