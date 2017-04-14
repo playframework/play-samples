@@ -7,11 +7,10 @@ import play.api.libs.json.{JsObject, JsString, JsValue, Json}
 import play.api.libs.ws._
 import play.api.mvc._
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class StockSentiment @Inject()(ws: WSClient, configuration: Configuration) extends Controller {
+class StockSentiment @Inject()(ws: WSClient, configuration: Configuration, cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
   private val logger = org.slf4j.LoggerFactory.getLogger(this.getClass)
 

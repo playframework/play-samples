@@ -22,16 +22,17 @@ import scala.concurrent.{ExecutionContext, Future}
  */
 @Singleton
 class HomeController @Inject()(@Named("stocksActor") stocksActor: ActorRef,
-                               @Named("userParentActor") userParentActor: ActorRef)
+                               @Named("userParentActor") userParentActor: ActorRef,
+                               cc: ControllerComponents)
                               (implicit actorSystem: ActorSystem,
                                mat: Materializer,
-                               ec: ExecutionContext) extends Controller {
+                               ec: ExecutionContext) extends AbstractController(cc) {
 
   // Use a direct reference to SLF4J
   private val logger = org.slf4j.LoggerFactory.getLogger("controllers.HomeController")
 
   // Home page that renders template
-  def index = Action { implicit request =>
+  def index = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index())
   }
 

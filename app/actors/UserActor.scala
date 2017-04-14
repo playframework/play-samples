@@ -21,8 +21,8 @@ class UserActor @Inject()(@Assisted out: ActorRef,
   }
 
   def configureDefaultStocks(): Unit = {
-    import collection.JavaConversions._
-    val defaultStocks = configuration.getStringList("default.stocks").get
+    import scala.collection.JavaConverters._
+    val defaultStocks = configuration.getStringList("default.stocks").get.asScala
     log.info(s"Creating user actor with default stocks $defaultStocks")
 
     for (stockSymbol <- defaultStocks) {
