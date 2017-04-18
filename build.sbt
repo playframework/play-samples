@@ -14,7 +14,7 @@ scalaVersion := "2.12.2"
 
 libraryDependencies += guice
 libraryDependencies += javaJpa
-libraryDependencies += "com.h2database" % "h2" % "1.4.192"
+libraryDependencies += "com.h2database" % "h2" % "1.4.194"
 
 libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.9.Final"
 libraryDependencies += "io.dropwizard.metrics" % "metrics-core" % "3.2.1"
