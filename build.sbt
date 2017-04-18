@@ -10,7 +10,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava, GatlingPlugin).co
     scalaSource in GatlingTest := baseDirectory.value / "/gatling/simulation"
   )
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.2"
 
 libraryDependencies += guice
 libraryDependencies += javaJpa
