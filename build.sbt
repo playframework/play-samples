@@ -2,7 +2,7 @@ name := """play-chatroom-scala"""
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.2"
 
 resolvers += Resolver.sonatypeRepo("snapshots") 
 
