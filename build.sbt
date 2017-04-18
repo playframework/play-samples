@@ -2,7 +2,7 @@ name := """play-isolated-slick"""
 
 version := "1.1-SNAPSHOT"
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.2"
 
 lazy val flyway = (project in file("modules/flyway"))
   .enablePlugins(FlywayPlugin)
@@ -23,7 +23,7 @@ lazy val root = (project in file("."))
 TwirlKeys.templateImports += "com.example.user.User"
 
 libraryDependencies += guice
-libraryDependencies += "com.h2database" % "h2" % "1.4.194"
+libraryDependencies += "com.h2database" % "h2" % "1.4.192"
 
 // Automatic database migration available in testing
 fork in Test := true
