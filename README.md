@@ -1,3 +1,5 @@
+[<img src="https://img.shields.io/travis/playframework/play-java-compile-di-example.svg"/>](https://travis-ci.org/playframework/play-java-compile-di-example)
+
 # play-java-compile-di-example
 
 This is a Play project using the Java API and compile time dependency injection.
