@@ -1,12 +1,11 @@
 package controllers;
 
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.DefaultAsyncHttpClient;
-import org.asynchttpclient.ws.WebSocket;
+import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient;
+import play.shaded.ahc.org.asynchttpclient.DefaultAsyncHttpClient;
+import play.shaded.ahc.org.asynchttpclient.ws.WebSocket;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import play.libs.ws.WS;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.test.WithServer;
@@ -41,7 +40,7 @@ public class HomeControllerTest extends WithServer {
     @Test
     public void testInServer() throws Exception {
         String url = "http://localhost:" + this.testServer.port() + "/";
-        try (WSClient ws = WS.newClient(this.testServer.port())) {
+        try (WSClient ws = play.test.WSTestClient.newClient(this.testServer.port())) {
             CompletionStage<WSResponse> stage = ws.url(url).get();
             WSResponse response = stage.toCompletableFuture().get();
             assertEquals(OK, response.getStatus());
