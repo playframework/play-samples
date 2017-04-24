@@ -1,15 +1,16 @@
 name := """play-java-chatroom-example"""
 
-version := "1.0-SNAPSHOT"
+version := "2.6.x"
 
-scalaVersion := "2.11.11"
+scalaVersion := "2.12.2"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
 libraryDependencies += "org.webjars" % "flot" % "0.8.3"
 libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
 
-libraryDependencies += javaWs
+libraryDependencies += guice
+libraryDependencies += ws
 libraryDependencies += "org.asynchttpclient" % "async-http-client" % "2.0.31"
 
 libraryDependencies += "org.assertj" % "assertj-core" % "3.6.2" % Test
