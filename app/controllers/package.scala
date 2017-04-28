@@ -1,7 +1,7 @@
 import javax.inject.{ Inject, Singleton }
 
 import play.api.http.SecretConfiguration
-import play.api.i18n.{ Messages, MessagesApi, MessagesProvider }
+import play.api.i18n.MessagesApi
 import play.api.libs.json.{ Format, Json }
 import play.api.mvc._
 import services.encryption.{ EncryptedCookieBaker, EncryptionService }
@@ -86,18 +86,15 @@ package object controllers {
     }
   }
 
-  // Minimum work needed to avoid using I18nController
-  trait MessagesRequestHeader extends MessagesProvider { self: RequestHeader =>
-    def messagesApi: MessagesApi
-    lazy val messages: Messages = messagesApi.preferred(self)
+  trait UserRequestHeader extends PreferredMessagesProvider with MessagesRequestHeader {
+    def userInfo: Option[UserInfo]
   }
 
   class UserRequest[A](
     request: Request[A],
     val userInfo: Option[UserInfo],
     val messagesApi: MessagesApi
-  )
-      extends WrappedRequest[A](request) with MessagesRequestHeader
+  ) extends WrappedRequest[A](request) with UserRequestHeader
 
   /**
    * Creates a cookie baker with the given secret key.
