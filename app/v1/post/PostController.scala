@@ -2,6 +2,7 @@ package v1.post
 
 import javax.inject.Inject
 
+import play.api.Logger
 import play.api.data.Form
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -13,10 +14,10 @@ case class PostFormInput(title: String, body: String)
 /**
   * Takes HTTP requests and produces JSON.
   */
-class PostController @Inject()(
-    action: PostAction,
-    handler: PostResourceHandler)(implicit ec: ExecutionContext)
-    extends Controller {
+class PostController @Inject()(cc: PostControllerComponents)(implicit ec: ExecutionContext)
+    extends PostBaseController(cc) with RequestMarkerContext {
+
+  private val logger = Logger(getClass)
 
   private val form: Form[PostFormInput] = {
     import play.api.data.Forms._
@@ -29,36 +30,32 @@ class PostController @Inject()(
     )
   }
 
-  def index: Action[AnyContent] = {
-    action.async { implicit request =>
-      handler.find.map { posts =>
-        Ok(Json.toJson(posts))
-      }
+  def index: Action[AnyContent] = PostAction.async { implicit request =>
+    logger.trace("index: ")
+    postResourceHandler.find.map { posts =>
+      Ok(Json.toJson(posts))
     }
   }
 
-  def process: Action[AnyContent] = {
-    action.async { implicit request =>
-      processJsonPost()
+  def process: Action[AnyContent] = PostAction.async { implicit request =>
+    logger.trace("process: ")
+    processJsonPost()
+  }
+
+  def show(id: String): Action[AnyContent] = PostAction.async { implicit request =>
+    logger.trace(s"show: id = $id")
+    postResourceHandler.lookup(id).map { post =>
+      Ok(Json.toJson(post))
     }
   }
 
-  def show(id: String): Action[AnyContent] = {
-    action.async { implicit request =>
-      handler.lookup(id).map { post =>
-        Ok(Json.toJson(post))
-      }
-    }
-  }
-
-  private def processJsonPost[A]()(
-      implicit request: PostRequest[A]): Future[Result] = {
+  private def processJsonPost[A]()(implicit request: PostRequest[A]): Future[Result] = {
     def failure(badForm: Form[PostFormInput]) = {
       Future.successful(BadRequest(badForm.errorsAsJson))
     }
 
     def success(input: PostFormInput) = {
-      handler.create(input).map { post =>
+      postResourceHandler.create(input).map { post =>
         Created(Json.toJson(post)).withHeaders(LOCATION -> post.link)
       }
     }

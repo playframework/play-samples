@@ -10,6 +10,20 @@
     </encoder>
   </appender>
 
+  <appender name="JSON" class="ch.qos.logback.core.FileAppender">
+    <file>${application.home:-.}/logs/application.json</file>
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers>
+        <version/>
+        <logLevel/>
+        <loggerName/>
+        <message/>
+        <logstashMarkers/>
+        <arguments/>
+        <stackTrace/>
+      </providers>
+    </encoder>
+  </appender>
 
   <appender name="METRICS" class="ch.qos.logback.core.FileAppender">
     <file>${application.home:-.}/logs/metrics.log</file>
@@ -28,15 +42,21 @@
     <appender-ref ref="FILE" />
   </appender>
 
+  <appender name="ASYNCJSON" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="JSON" />
+  </appender>
+
   <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
     <appender-ref ref="STDOUT" />
   </appender>
 
   <logger name="play" level="INFO" />
   <logger name="application" level="DEBUG" />
+  <logger name="v1.post" level="TRACE" />
 
   <root level="WARN">
     <appender-ref ref="ASYNCFILE" />
+    <appender-ref ref="ASYNCJSON" />
     <appender-ref ref="ASYNCSTDOUT" />
   </root>
 
