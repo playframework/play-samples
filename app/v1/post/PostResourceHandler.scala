@@ -2,8 +2,9 @@ package v1.post
 
 import javax.inject.{Inject, Provider}
 
-import scala.concurrent.{ExecutionContext, Future}
+import play.api.MarkerContext
 
+import scala.concurrent.{ExecutionContext, Future}
 import play.api.libs.json._
 
 /**
@@ -35,7 +36,7 @@ class PostResourceHandler @Inject()(
     routerProvider: Provider[PostRouter],
     postRepository: PostRepository)(implicit ec: ExecutionContext) {
 
-  def create(postInput: PostFormInput): Future[PostResource] = {
+  def create(postInput: PostFormInput)(implicit mc: MarkerContext): Future[PostResource] = {
     val data = PostData(PostId("999"), postInput.title, postInput.body)
     // We don't actually create the post, so return what we have
     postRepository.create(data).map { id =>
@@ -43,7 +44,7 @@ class PostResourceHandler @Inject()(
     }
   }
 
-  def lookup(id: String): Future[Option[PostResource]] = {
+  def lookup(id: String)(implicit mc: MarkerContext): Future[Option[PostResource]] = {
     val postFuture = postRepository.get(PostId(id))
     postFuture.map { maybePostData =>
       maybePostData.map { postData =>
@@ -52,7 +53,7 @@ class PostResourceHandler @Inject()(
     }
   }
 
-  def find: Future[Iterable[PostResource]] = {
+  def find(implicit mc: MarkerContext): Future[Iterable[PostResource]] = {
     postRepository.list().map { postDataList =>
       postDataList.map(postData => createPostResource(postData))
     }

@@ -14,9 +14,10 @@
     <file>${application.home:-.}/logs/application.json</file>
     <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
       <providers>
-        <version/>
+        <timestamp/>
         <logLevel/>
         <loggerName/>
+        <threadName/>
         <message/>
         <logstashMarkers/>
         <arguments/>

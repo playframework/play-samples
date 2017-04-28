@@ -97,7 +97,7 @@ case class PostControllerComponents @Inject()(postActionBuilder: PostActionBuild
 /**
  * Exposes actions and handler to the PostController by wiring the injected state into the base class.
  */
-class PostBaseController @Inject()(pcc: PostControllerComponents) extends BaseController {
+class PostBaseController @Inject()(pcc: PostControllerComponents) extends BaseController with RequestMarkerContext {
   override protected def controllerComponents: ControllerComponents = pcc
 
   def PostAction: PostActionBuilder = pcc.postActionBuilder

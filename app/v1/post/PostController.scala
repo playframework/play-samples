@@ -15,7 +15,7 @@ case class PostFormInput(title: String, body: String)
   * Takes HTTP requests and produces JSON.
   */
 class PostController @Inject()(cc: PostControllerComponents)(implicit ec: ExecutionContext)
-    extends PostBaseController(cc) with RequestMarkerContext {
+    extends PostBaseController(cc) {
 
   private val logger = Logger(getClass)
 
