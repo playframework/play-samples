@@ -8,9 +8,8 @@ scalaVersion := "2.12.2"
 
 libraryDependencies += ws
 
-libraryDependencies += "com.google.dagger" % "dagger" % "2.7"
-libraryDependencies += "com.google.dagger" % "dagger-compiler" % "2.7"
-libraryDependencies += "com.github.ben-manes.caffeine" % "jcache" % "2.3.5"
+libraryDependencies += "com.google.dagger" % "dagger" % "2.10"
+libraryDependencies += "com.google.dagger" % "dagger-compiler" % "2.10"
 
 javacOptions in Compile := { (managedSourceDirectories in Compile).value.head.mkdirs(); javacOptions.value }
 

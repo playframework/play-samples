@@ -8,16 +8,8 @@ import javax.inject.Singleton;
  */
 @Singleton
 @Component(modules = {
-        ActorSystemModule.class,
-        AssetsModule.class,
-        ApplicationLoaderContextModule.class,
-        ClockModule.class,
-        FiltersModule.class,
-        JavaFormsModule.class,
-        MessagesApiModule.class,
-        MyComponentsFromContextModule.class,
-        RouterModule.class,
-        WSModule.class
+    ApplicationLoaderContextModule.class,
+    MyComponentsFromContextModule.class,
 })
 public interface ApplicationComponent {
     play.Application application();
