@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 @Component(modules = {
     ApplicationLoaderContextModule.class,
     MyComponentsFromContextModule.class,
+    ClockModule.class
 })
 public interface ApplicationComponent {
     play.Application application();

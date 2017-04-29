@@ -3,6 +3,9 @@ package dagger;
 import play.Application;
 import play.ApplicationLoader;
 
+/**
+ * This class loads an application through Dagger compile time dependency injection.
+ */
 public class MyApplicationLoader implements ApplicationLoader {
 
     @Override
