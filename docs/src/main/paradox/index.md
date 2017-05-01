@@ -4,12 +4,12 @@ This is a multi-part guide to walk you through how to make a RESTful API with JS
 
 We’ll demonstrate with a “best practices” REST API.  You can get source code for this guide two ways:
 
-* Download a pre-packaged bundle with this link [https://example.lightbend.com/v1/download/play-rest-api](https://example.lightbend.com/v1/download/play-rest-api)
+* Download a pre-packaged bundle with this link [https://example.lightbend.com/v1/download/play-scala-rest-api-example](https://example.lightbend.com/v1/download/play-scala-rest-api-example)
 
     * Linux/Mac:
 ```bash
-unzip play-rest-api.zip
-cd play-rest-api
+unzip play-scala-rest-api-example.zip
+cd play-scala-rest-api-example
 ./sbt
 ```
     * Windows:
@@ -20,12 +20,13 @@ cd play-rest-api
 sbt.bat
 ```
 
-* [From Github](http://github.com/playframework/play-rest-api):
+* [From Github](https://github.com/playframework/play-scala-rest-api-example/tree/2.5.x):
 ```
-git clone https://github.com/playframework/play-rest-api.git
+git clone https://github.com/playframework/play-scala-rest-api-example.git
+git checkout 2.5.x
 ```
 
-This example is in Scala, but Play also has a [Java API](https://www.playframework.com/documentation/2.5.x/JavaHome) which looks and acts just like the [Scala API](https://www.playframework.com/documentation/2.5.x/ScalaHome).  For instructions on running and using the project, please see the [[appendix]].  This project also comes with an integrated [Gatling](http://gatling.io/) load test -- again, instructions are in the [[appendix]].
+This example is in Scala, but Play also has a [Java API](https://www.playframework.com/documentation/2.5.x/JavaHome) which looks and acts just like the [Scala API](https://www.playframework.com/documentation/2.5.x/ScalaHome), and has a corresponding [play-java-rest-api-example](https://github.com/playframework/play-java-rest-api-example) project.  For instructions on running and using the project, please see the [[appendix]].  This project also comes with an integrated [Gatling](http://gatling.io/) load test -- again, instructions are in the appendix.
 
 Note that there’s more involved in a REST API -- monitoring, representation, and managing access to back end resources -- that we'll cover in subsequent posts.  But first, let's address why Play is so effective as a REST API.
 
