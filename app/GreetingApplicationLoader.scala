@@ -23,7 +23,7 @@ class GreetingComponents(context: Context) extends BuiltInComponentsFromContext(
 
   // set up logger
   LoggerConfigurator(context.environment.classLoader).foreach {
-    _.configure(context.environment)
+    _.configure(context.environment, context.initialConfiguration, Map.empty)
   }
 
   lazy val router: Router = {
