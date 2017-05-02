@@ -1,7 +1,6 @@
 package it;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.google.inject.AbstractModule;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;

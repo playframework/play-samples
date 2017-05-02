@@ -1,6 +1,5 @@
 package v1.post;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.palominolabs.http.url.UrlBuilder;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Http;

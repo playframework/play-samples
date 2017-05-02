@@ -42,6 +42,7 @@ public class PostAction extends play.mvc.Action.Simple {
         if (logger.isTraceEnabled()) {
             logger.trace("call: ctx = " + ctx);
         }
+
         requestsMeter.mark();
         if (ctx.request().accepts("application/json")) {
             final Timer.Context time = responsesTimer.time();
@@ -76,6 +77,4 @@ public class PostAction extends play.mvc.Action.Simple {
             }
         }, ec.current());
     }
-
-
 }
