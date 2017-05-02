@@ -1,6 +1,6 @@
 name := """play-java-rest-api-example"""
 
-version := "1.0-SNAPSHOT"
+version := "2.6.x"
 
 lazy val GatlingTest = config("gatling") extend Test
 
@@ -10,7 +10,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava, GatlingPlugin).co
     scalaSource in GatlingTest := baseDirectory.value / "/gatling/simulation"
   )
 
-scalaVersion := "2.12.2"
+scalaVersion in ThisBuild := "2.11.11"
 
 libraryDependencies += guice
 libraryDependencies += javaJpa
