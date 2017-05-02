@@ -1,69 +1,38 @@
 import play.Application;
 import play.ApplicationLoader;
-import play.DefaultApplication;
-import play.Environment;
-import play.api.LoggerConfigurator$;
-import play.api.mvc.EssentialFilter;
-import play.inject.DelegateInjector;
+import play.BuiltInComponentsFromContext;
+import play.LoggerConfigurator;
+import play.components.BodyParserComponents;
+import play.filters.components.HttpFiltersComponents;
 import play.routing.RoutingDsl;
-import scala.collection.Seq;
-import scala.compat.java8.OptionConverters;
 
 import java.util.Collections;
-import java.util.Optional;
 
-import static play.libs.Scala.asScala;
 import static play.mvc.Results.ok;
 
 public class MyApplicationLoader implements ApplicationLoader {
     @Override
     public Application load(Context context) {
-        final ClassLoader classLoader = context.environment().classLoader();
-        final Optional<LoggerConfigurator> opt = LoggerConfigurator.fromClassLoader(classLoader);
-        opt.ifPresent(lc -> lc.configure(context.environment()));
+        LoggerConfigurator.apply(context.environment().classLoader()).ifPresent(lc -> {
+            lc.configure(context.environment(), context.initialConfig(), Collections.emptyMap());
+        });
 
-        final play.api.Application scalaApp = new MyComponents(context.underlying()).application();
-        final DelegateInjector injector = new DelegateInjector(scalaApp.injector());
-        return new DefaultApplication(scalaApp, injector);
+        return new MyComponents(context).application();
     }
-
 }
 
-class MyComponents extends play.api.BuiltInComponentsFromContext {
-    public MyComponents(play.api.ApplicationLoader.Context context) {
-        super(context);
+class MyComponents extends BuiltInComponentsFromContext implements HttpFiltersComponents, BodyParserComponents {
+
+    public MyComponents(ApplicationLoader.Context context) {
+         super(context);
     }
 
     @Override
-    public play.api.routing.Router router() {
-        RoutingDsl routingDsl = new RoutingDsl(defaultBodyParser(), javaContextComponents());
+    public play.routing.Router router() {
+        RoutingDsl routingDsl = new RoutingDsl(scalaParsers(), javaContextComponents());
         return routingDsl.GET("/").routeTo(() ->
                         ok("Hello")
-                ).build().asScala();
-    }
-
-
-
-    @Override
-    public Seq<EssentialFilter> httpFilters() {
-        return asScala(Collections.emptyList());
-    }
-}
-
-class LoggerConfigurator {
-
-    private final play.api.LoggerConfigurator delegate;
-
-    public LoggerConfigurator(play.api.LoggerConfigurator delegate) {
-        this.delegate = delegate;
-    }
-
-    public static Optional<LoggerConfigurator> fromClassLoader(ClassLoader classLoader) {
-        return OptionConverters.toJava(LoggerConfigurator$.MODULE$.apply(classLoader)).map(LoggerConfigurator::new);
-    }
-
-    public void configure(Environment env) {
-        delegate.configure(env.underlying());
+                ).build();
     }
 
 }
