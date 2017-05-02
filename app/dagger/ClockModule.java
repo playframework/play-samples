@@ -1,14 +1,16 @@
 package dagger;
 
-import javax.inject.Singleton;
 import java.time.Clock;
 
+/**
+ * A module that provides a clock implementation.
+ */
 @Module
 public class ClockModule {
 
-    @Singleton
     @Provides
-    public Clock providesClock() {
+    public Clock clock() {
         return java.time.Clock.systemUTC();
     }
+
 }

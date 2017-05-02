@@ -1,109 +1,60 @@
 package dagger;
 
-import akka.actor.ActorSystem;
-import akka.stream.Materializer;
-import play.api.OptionalSourceMapper;
-import play.api.http.DefaultHttpFilters;
-import play.api.http.HttpRequestHandler;
-import play.api.http.JavaCompatibleHttpRequestHandler;
-import play.api.i18n.Langs;
-import play.api.i18n.MessagesApi;
-import play.api.inject.SimpleInjector;
-import play.api.mvc.EssentialFilter;
+import controllers.TimeController;
+import play.ApplicationLoader;
+import play.BuiltInComponentsFromContext;
 import play.api.routing.Router;
+import play.components.BodyParserComponents;
+import play.controllers.AssetsComponents;
 import play.core.j.DefaultJavaHandlerComponents;
-import play.http.DefaultActionCreator;
-import play.libs.Scala;
-import scala.collection.Seq;
+import play.core.j.JavaHandlerComponents;
+import play.data.FormFactoryComponents;
+import play.filters.components.HttpFiltersComponents;
+import play.inject.Injector;
+import play.libs.ws.ahc.AhcWSComponents;
+import router.Routes;
 
 import javax.inject.Inject;
-import javax.inject.Provider;
+import java.time.Clock;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
 
-public class MyComponentsFromContext extends play.api.BuiltInComponentsFromContext {
+/**
+ * A components class that contains a clock instance injected from Dagger.
+ */
+public class MyComponentsFromContext extends BuiltInComponentsFromContext
+        implements HttpFiltersComponents, AssetsComponents, AhcWSComponents, FormFactoryComponents, BodyParserComponents {
 
-    private final List<EssentialFilter> httpFilters;
-
-    private final ActorSystem actorSystem;
-
-    private final Materializer materializer;
-
-    private final Provider<Router> routerProvider;
-
-    private final MessagesApi messagesApi;
-
-    private final Langs langs;
+    private final Clock clock;
 
     @Inject
-    public MyComponentsFromContext(play.ApplicationLoader.Context context,
-                                   Provider<Router> routerProvider,
-                                   ActorSystem actorSystem,
-                                   Materializer materializer,
-                                   List<EssentialFilter> httpFilters,
-                                   MessagesApi messagesApi,
-                                   Langs langs) {
-        super(context.underlying());
-        this.routerProvider = routerProvider;
-        this.actorSystem = actorSystem;
-        this.materializer = materializer;
-        this.httpFilters = httpFilters;
-        this.messagesApi = messagesApi;
-        this.langs = langs;
+    public MyComponentsFromContext(ApplicationLoader.Context context, Clock clock) {
+        super(context);
+        this.clock = clock;
     }
 
     @Override
-    public HttpRequestHandler httpRequestHandler() {
-        final DefaultActionCreator defaultActionCreator = new DefaultActionCreator();
-        final DefaultJavaHandlerComponents components = new DefaultJavaHandlerComponents(injector(),
-                defaultActionCreator, httpConfiguration(), executionContext(), javaContextComponents());
-        final JavaCompatibleHttpRequestHandler handler = new JavaCompatibleHttpRequestHandler(
-                router(),
-                httpErrorHandler(),
-                httpConfiguration(),
-                new DefaultHttpFilters(httpFilters()),
-                components
-        );
-        return handler;
+    public Injector injector() {
+        // This probably should be solved by BuiltInComponentsFromContext itself
+        Injector injector = super.injector();
+
+        Map<Class, Supplier<Object>> extraMappings = new HashMap<>();
+        SimpleInjector simpleInjector = new SimpleInjector(injector, extraMappings);
+
+        extraMappings.put(JavaHandlerComponents.class, () -> new DefaultJavaHandlerComponents(simpleInjector.asScala(), actionCreator(), httpConfiguration(), executionContext(), javaContextComponents()));
+        extraMappings.put(play.mvc.BodyParser.Default.class, this::defaultParser);
+
+        return simpleInjector;
+    }
+
+    private TimeController timeController(){
+        return new controllers.TimeController(clock, wsClient(), formFactory());
     }
 
     @Override
-    public play.api.routing.Router router() {
-        return routerProvider.get();
+    public play.routing.Router router() {
+        Router routes = new Routes(scalaHttpErrorHandler(), timeController(), assets());
+        return routes.asJava();
     }
-
-    @Override
-    public play.api.inject.Injector injector() {
-        // We need to add any Java actions and body parsers needed to the runtime injector
-        return new SimpleInjector(super.injector(), Scala.asScala(new HashMap<Class<?>, Object>() {{
-            put(play.mvc.BodyParser.Default.class, new play.mvc.BodyParser.Default(javaErrorHandler(), httpConfiguration(), playBodyParsers()));
-            put(play.api.i18n.MessagesApi.class, messagesApi);
-            put(play.api.i18n.Langs.class, langs);
-        }}));
-    }
-
-    play.http.HttpErrorHandler javaErrorHandler() {
-        return new play.http.DefaultHttpErrorHandler(
-                new play.Configuration(configuration().underlying()),
-                new play.Environment(environment()),
-                new OptionalSourceMapper(sourceMapper()),
-                this::router
-        );
-    }
-
-    @Override
-    public Materializer materializer() {
-        return materializer;
-    }
-
-    @Override
-    public ActorSystem actorSystem() {
-        return actorSystem;
-    }
-
-    @Override
-    public Seq<EssentialFilter> httpFilters() {
-        return Scala.asScala(httpFilters);
-    }
-
 }
