@@ -36,6 +36,7 @@ public class MyComponentsFromContext extends BuiltInComponentsFromContext
 
     @Override
     public Injector injector() {
+        // This probably should be solved by BuiltInComponentsFromContext itself
         Injector injector = super.injector();
 
         Map<Class, Supplier<Object>> extraMappings = new HashMap<>();

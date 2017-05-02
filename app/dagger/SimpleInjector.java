@@ -5,7 +5,6 @@ import play.inject.Injector;
 import scala.reflect.ClassTag;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
