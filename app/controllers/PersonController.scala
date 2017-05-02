@@ -1,24 +1,21 @@
 package controllers
 
-import play.api._
-import play.api.mvc._
-import play.api.i18n._
+import javax.inject._
+
+import dal._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.validation.Constraints._
+import play.api.i18n._
 import play.api.libs.json.Json
-import models._
-import dal._
+import play.api.mvc._
 
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
-import javax.inject._
-
-class PersonController @Inject() (
-    repo: PersonRepository, 
-    cc: ControllerComponents
-  )(implicit ec: ExecutionContext)
-  extends AbstractController(cc) with I18nSupport{
+class PersonController @Inject()(repo: PersonRepository,
+                                  cc: ControllerComponents
+                                )(implicit ec: ExecutionContext)
+  extends AbstractController(cc) with I18nSupport {
 
   /**
    * The mapping for the person form.
@@ -65,7 +62,7 @@ class PersonController @Inject() (
    * A REST endpoint that gets all the people as JSON.
    */
   def getPersons = Action.async { implicit request =>
-  	repo.list().map { people =>
+    repo.list().map { people =>
       Ok(Json.toJson(people))
     }
   }
