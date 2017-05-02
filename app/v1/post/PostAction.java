@@ -1,6 +1,5 @@
 package v1.post;
 
-import akka.actor.ActorSystem;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
@@ -14,12 +13,13 @@ import play.mvc.Results;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.TimeUnit;
 
 import static com.codahale.metrics.MetricRegistry.name;
-import static play.mvc.Http.Status.GATEWAY_TIMEOUT;
-import static play.mvc.Http.Status.NOT_ACCEPTABLE;
-import static play.mvc.Http.Status.SERVICE_UNAVAILABLE;
+import static java.util.concurrent.CompletableFuture.completedFuture;
+import static play.mvc.Http.Status.*;
 
 public class PostAction extends play.mvc.Action.Simple {
     private final Logger.ALogger logger = play.Logger.of("application.PostAction");
@@ -31,7 +31,7 @@ public class PostAction extends play.mvc.Action.Simple {
 
     @Singleton
     @Inject
-    public PostAction(MetricRegistry metrics, HttpExecutionContext ec, ActorSystem actorSystem, Futures futures) {
+    public PostAction(MetricRegistry metrics, HttpExecutionContext ec, Futures futures) {
         this.ec = ec;
         this.futures = futures;
         this.requestsMeter = metrics.meter("requestsMeter");
@@ -46,17 +46,11 @@ public class PostAction extends play.mvc.Action.Simple {
         requestsMeter.mark();
         if (ctx.request().accepts("application/json")) {
             final Timer.Context time = responsesTimer.time();
-            return futures.timeout(doCall(ctx), 1L, TimeUnit.SECONDS).handle((r, e) -> {
-                time.close();
-                if (e instanceof TimeoutException) {
-                    logger.info("Timeout after 1 second", e);
-                    return Results.status(GATEWAY_TIMEOUT, views.html.timeout.render());
-                } else {
-                    return r;
-                }
-            });
+            return futures.timeout(doCall(ctx), 1L, TimeUnit.SECONDS).exceptionally(e -> {
+                return (Results.status(GATEWAY_TIMEOUT, views.html.timeout.render()));
+            }).whenComplete((r, e) -> time.close());
         } else {
-            return CompletableFuture.completedFuture(
+            return completedFuture(
                     status(NOT_ACCEPTABLE, "We only accept application/json")
             );
         }
@@ -83,5 +77,4 @@ public class PostAction extends play.mvc.Action.Simple {
             }
         }, ec.current());
     }
-
 }

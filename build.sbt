@@ -1,6 +1,6 @@
 name := """play-java-rest-api-example"""
 
-version := "1.0-SNAPSHOT"
+version := "2.6.x"
 
 lazy val GatlingTest = config("gatling") extend Test
 
