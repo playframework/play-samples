@@ -1,6 +1,6 @@
-name := """play-chatroom-scala"""
+name := """play-chatroom-scala-example"""
 
-version := "1.0-SNAPSHOT"
+version := "2.6.x"
 
 scalaVersion := "2.12.2"
 
@@ -13,9 +13,7 @@ libraryDependencies += guice
 libraryDependencies += "org.webjars" % "flot" % "0.8.3"
 libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
 
-lazy val akkaVersion = "2.4.11"
-libraryDependencies += "com.typesafe.akka" %% "akka-http-core" % akkaVersion
-libraryDependencies += "com.typesafe.akka" %% "akka-http-experimental" % akkaVersion
+lazy val akkaVersion = "2.5.0"
 libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % akkaVersion
 
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-M3" % Test
