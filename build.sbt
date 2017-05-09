@@ -1,6 +1,6 @@
-name := """play-forms-tutorial"""
+name := """play-scala-forms-example"""
 
-version := "1.0-SNAPSHOT"
+version := "2.6.x"
 
 scalaVersion := "2.12.2"
 

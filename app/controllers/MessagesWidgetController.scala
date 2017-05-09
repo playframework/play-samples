@@ -10,10 +10,10 @@ import play.api.mvc._
 /**
  * MessagesWidgetController is like WidgetController, but does not use I18nSupport.
  *
- * Instead, it uses a [[MessagesActionBuilder]] under the hood, which provides a
- * [[play.api.mvc.MessagesRequest]] that is a [[play.api.i18n.MessagesProvider]].
+ * Instead, it uses MessagesAbstractController -- which uses a [[MessagesActionBuilder]] under the hood, which provides a
+ * [[play.api.mvc.MessagesRequest]] that is also a [[play.api.i18n.MessagesProvider]].
  */
-class MessagesWidgetController @Inject()(cc: MessagesControllerComponents) extends MessagesAbstractController(cc) {
+class MessagesWidgetController @Inject()(mcc: MessagesControllerComponents) extends MessagesAbstractController(mcc) {
   import WidgetForm._
   import play.api.data.Form
 
