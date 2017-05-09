@@ -1,0 +1,29 @@
+@(widgets: Seq[Widget], form: Form[Widget], postUrl: Call)(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@main("Widgets") {
+
+  <h1>Widgets</h1>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Price</th>
+    </thead>
+    <tbody>
+    @for(w <- widgets) {
+      <tr><td>@w.name</td><td>@w.price</td></tr>
+    }
+    </tbody>
+  </table>
+
+  <hr/>
+
+  @helper.form(postUrl) {
+    @helper.CSRF.formField
+
+    @helper.inputText(form("name"))
+
+    @helper.inputText(form("price"))
+
+    <button type="submit">Create widget</button>
+  }
+
+}
