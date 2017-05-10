@@ -9,7 +9,7 @@ import play.controllers.AssetsComponents;
 import play.core.j.DefaultJavaHandlerComponents;
 import play.core.j.JavaHandlerComponents;
 import play.data.FormFactoryComponents;
-import play.filters.components.HttpFiltersComponents;
+import play.filters.components.NoHttpFiltersComponents;
 import play.inject.Injector;
 import play.libs.ws.ahc.AhcWSComponents;
 import router.Routes;
@@ -24,7 +24,7 @@ import java.util.function.Supplier;
  * A components class that contains a clock instance injected from Dagger.
  */
 public class MyComponentsFromContext extends BuiltInComponentsFromContext
-        implements HttpFiltersComponents, AssetsComponents, AhcWSComponents, FormFactoryComponents, BodyParserComponents {
+        implements NoHttpFiltersComponents, AssetsComponents, AhcWSComponents, FormFactoryComponents, BodyParserComponents {
 
     private final Clock clock;
 
