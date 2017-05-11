@@ -1,6 +1,7 @@
 package dagger;
 
 import controllers.TimeController;
+import dagger.SimpleInjector;
 import play.ApplicationLoader;
 import play.BuiltInComponentsFromContext;
 import play.api.routing.Router;
@@ -9,6 +10,7 @@ import play.controllers.AssetsComponents;
 import play.core.j.DefaultJavaHandlerComponents;
 import play.core.j.JavaHandlerComponents;
 import play.data.FormFactoryComponents;
+import play.filters.components.HttpFiltersComponents;
 import play.filters.components.NoHttpFiltersComponents;
 import play.inject.Injector;
 import play.libs.ws.ahc.AhcWSComponents;
@@ -48,7 +50,7 @@ public class MyComponentsFromContext extends BuiltInComponentsFromContext
         return simpleInjector;
     }
 
-    private TimeController timeController(){
+    private TimeController timeController() {
         return new controllers.TimeController(clock, wsClient(), formFactory());
     }
 

@@ -1,15 +1,15 @@
 package controllers;
 
-import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.TimeZone;
 
-public class TimeZoneData {
+import static play.data.validation.Constraints.*;
 
-    @Constraints.Required
+@Validate
+public class TimeZoneData implements Validatable<ValidationError> {
+
+    @Required
     private String timeZone;
 
     public TimeZoneData() {
@@ -28,12 +28,12 @@ public class TimeZoneData {
         this.timeZone = timeZone;
     }
 
-    public List<ValidationError> validate() {
-        List<ValidationError> errors = new ArrayList<>();
+    @Override
+    public ValidationError validate() {
         if (TimeZone.getTimeZone(timeZone) == null) {
-            errors.add(new ValidationError("timeZone", "Invalid time zone"));
+            return new ValidationError("timeZone", "Invalid time zone");
         }
-        return errors.isEmpty() ? null : errors;
+        return null;
     }
 
 }

@@ -12,41 +12,79 @@ sbt run
 
 Then go to http://localhost:9000 to see the time and change the time zone.
 
-Go to http://localhost:9000/ws to see the WS client pull the time from a remote service. 
+Go to http://localhost:9000/ws to see the WS client pull the time from a remote service (really the app itself). 
 
 ## Background
 
-[Dagger 2](https://google.github.io/dagger/) is a compile time dependency injection system.
+[Dagger 2](https://google.github.io/dagger/) is a compile time dependency injection system. This means that [dependencies are still declared](https://google.github.io/dagger/users-guide.html#declaring-dependencies) with `@Inject`, but the compiler is responsible for resolving the graph.
 
-This means that [dependencies are still declared](https://google.github.io/dagger/users-guide.html#declaring-dependencies) with `@Inject`, but the compiler is responsible for resolving the graph.  This means the graph must be carefully thought out and everything must be available using @Provides annotations.
+Play Java supports [Compile Time Dependency Injection](https://www.playframework.com/documentation/2.6.x/JavaCompileTimeDependencyInjection) so the work here is to provide an application loader that hooks into Dagger, rather than using constructor based DI.
 
-Out of the box Play components like play.api.inject.BuiltinModule don't quite work, because they are sequences of classes, and don't have the static API signature that Dagger expects.
+The `dagger.MyApplicationLoader` class provides the core, by calling out to the `DaggerApplicationComponent`:
 
-The key is creating lots of small `Module` that have `@Provides` methods off the injected component so that Dagger can do the delegation:
+```java
+public class dagger.MyApplicationLoader implements ApplicationLoader {
 
-```
-@Module
-class FooModule {
+    @Override
+    public Application load(Context context)
+    {
+        final ClassLoader classLoader = context.environment().classLoader();
+        final Optional<LoggerConfigurator> opt = LoggerConfigurator.apply(classLoader);
+        opt.ifPresent(lc -> lc.configure(context.environment(), context.initialConfig(), emptyMap()));
 
-  private final Foo foo;
+        ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
+                .applicationLoaderContextModule(new ApplicationLoaderContextModule(context))
+                .build();
 
-  @Inject
-  public FooModule(Foo Foo) {
-    this.foo = foo;
-  }
-  
-  @Singleton
-  @Provides
-  public Bar providesBar() {
-    return foo.bar();
-  }
+        return applicationComponent.application();
+    }
 }
 ```
 
-Then, you match all the `@Provides` and `@Inject` dependencies in the `ApplicationComponent` `@Component` annotation.  
+From there, it's a question of providing components by extending `BuiltInComponentsFromContext`.  The `ClockModule` is included to show that you can provide your own custom modules to Dagger.
+ 
+```java
+public class MyComponentsFromContext extends BuiltInComponentsFromContext
+        implements NoHttpFiltersComponents, AssetsComponents, AhcWSComponents, FormFactoryComponents, BodyParserComponents {
 
-## Special Note on Form Handling
+    private final Clock clock;
 
-There are some components which must be delayed until the last possible moment, especially components that depend on an `Injector`.
+    @Inject
+    public MyComponentsFromContext(ApplicationLoader.Context context, Clock clock) {
+        super(context);
+        this.clock = clock;
+    }
 
-This means if you are using forms in your components, you must declare `Lazy<FormFactory>` so that the controller does not resolve the `FormFactory` from the router before the application has finished loading.
+    private TimeController timeController() {
+        return new controllers.TimeController(clock, wsClient(), formFactory());
+    }
+
+    @Override
+    public play.routing.Router router() {
+        Router routes = new Routes(scalaHttpErrorHandler(), timeController(), assets());
+        return routes.asJava();
+    }
+}
+```
+
+## SimpleInjector
+ 
+There is a small amount of extra configuration, because the Java annotation system still requires a small amount of runtime dependency injection -- this is fixed by putting a couple of extra mappings into a delegating injector.
+
+```java
+public class MyComponentsFromContext {
+    @Override
+    public Injector injector() {
+        // This probably should be solved by BuiltInComponentsFromContext itself
+        Injector injector = super.injector();
+    
+        Map<Class, Supplier<Object>> extraMappings = new HashMap<>();
+        SimpleInjector simpleInjector = new SimpleInjector(injector, extraMappings);
+    
+        extraMappings.put(JavaHandlerComponents.class, () -> new DefaultJavaHandlerComponents(simpleInjector.asScala(), actionCreator(), httpConfiguration(), executionContext(), javaContextComponents()));
+        extraMappings.put(play.mvc.BodyParser.Default.class, this::defaultParser);
+    
+        return simpleInjector;
+    }    
+}
+```

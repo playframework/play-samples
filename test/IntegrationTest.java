@@ -20,7 +20,7 @@ public class IntegrationTest extends WithApplication {
 
     @Override
     protected Application provideApplication() {
-        return new MyApplicationLoader().load(ApplicationLoader.Context.create(Environment.simple()));
+        return new MyApplicationLoader().load(ApplicationLoader.create(Environment.simple()));
     }
 
     @Test

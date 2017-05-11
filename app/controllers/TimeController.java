@@ -22,18 +22,16 @@ public class TimeController extends Controller {
 
     private final Clock clock;
     private final WSClient ws;
-    private final FormFactory formFactory;
+    private final Form<TimeZoneData> form ;
 
     @Inject
     public TimeController(Clock clock, WSClient ws, FormFactory formFactory) {
         this.clock = clock;
         this.ws = ws;
-        this.formFactory = formFactory;
+        this.form = formFactory.form(TimeZoneData.class);
     }
 
     public Result index() {
-        final Form<TimeZoneData> form = formFactory.form(TimeZoneData.class);
-
         String timezone = session("timezone");
         Form<TimeZoneData> filledForm;
         if (timezone == null) {
@@ -47,8 +45,6 @@ public class TimeController extends Controller {
     }
 
     public Result indexPost() {
-        final Form<TimeZoneData> form = formFactory.form(TimeZoneData.class);
-
         final Form<TimeZoneData> boundForm = form.bindFromRequest();
         String[] timezones = TimeZone.getAvailableIDs();
         if (boundForm.hasErrors()) {
