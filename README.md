@@ -13,3 +13,7 @@ sbt run
 ```
 
 And open http://localhost:9000/
+
+## Documentation
+
+Please see https://playframework.com/documentation/latest/JavaForms
