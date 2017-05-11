@@ -1,6 +1,4 @@
 import dagger.MyApplicationLoader;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import play.Application;
 import play.ApplicationLoader;
@@ -8,6 +6,7 @@ import play.Environment;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.test.Helpers;
+import play.test.WithApplication;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,19 +16,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static play.test.Helpers.*;
 
-public class IntegrationTest {
+public class IntegrationTest extends WithApplication {
 
-    private static Application app;
-
-    @BeforeClass
-    public static void setup() {
-        app = new MyApplicationLoader().load(ApplicationLoader.Context.create(Environment.simple()));
-        Helpers.start(app);
+    @Override
+    protected Application provideApplication() {
+        return new MyApplicationLoader().load(ApplicationLoader.Context.create(Environment.simple()));
     }
 
     @Test
     public void testIndex() {
-        Http.RequestBuilder request = new Http.RequestBuilder();
+        Http.RequestBuilder request = Helpers.fakeRequest();
         request.uri(controllers.routes.TimeController.index().url());
         // passing app in explicitly here is key since route() overloads without it use the deprecated
         // static Application references
@@ -41,11 +37,6 @@ public class IntegrationTest {
         for (String timezone : timezones) {
             assertTrue(content.contains(timezone));
         }
-    }
-
-    @AfterClass
-    public static void teardown() {
-        Helpers.stop(app);
     }
 
 }
