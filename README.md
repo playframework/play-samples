@@ -1,0 +1,15 @@
+[<img src="https://img.shields.io/travis/playframework/play-java-forms-example.svg"/>](https://travis-ci.org/playframework/play-java-forms-example)
+
+# play-java-forms-example
+
+This example shows form processing and form helper handling in Play.
+
+## How to run
+
+Start the Play app:
+
+```
+sbt run
+```
+
+And open http://localhost:9000/
