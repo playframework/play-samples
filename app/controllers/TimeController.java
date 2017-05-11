@@ -1,9 +1,11 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import dagger.Lazy;
 import play.data.Form;
 import play.data.FormFactory;
+import play.libs.Json;
 import play.libs.ws.WSClient;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -20,18 +22,16 @@ public class TimeController extends Controller {
 
     private final Clock clock;
     private final WSClient ws;
-    private final FormFactory formFactory;
+    private final Form<TimeZoneData> form ;
 
     @Inject
     public TimeController(Clock clock, WSClient ws, FormFactory formFactory) {
         this.clock = clock;
         this.ws = ws;
-        this.formFactory = formFactory;
+        this.form = formFactory.form(TimeZoneData.class);
     }
 
     public Result index() {
-        final Form<TimeZoneData> form = formFactory.form(TimeZoneData.class);
-
         String timezone = session("timezone");
         Form<TimeZoneData> filledForm;
         if (timezone == null) {
@@ -45,8 +45,6 @@ public class TimeController extends Controller {
     }
 
     public Result indexPost() {
-        final Form<TimeZoneData> form = formFactory.form(TimeZoneData.class);
-
         final Form<TimeZoneData> boundForm = form.bindFromRequest();
         String[] timezones = TimeZone.getAvailableIDs();
         if (boundForm.hasErrors()) {
@@ -58,15 +56,22 @@ public class TimeController extends Controller {
         }
     }
 
+    public Result now() {
+        String date = DateTimeFormatter.ISO_INSTANT.format(Instant.now());
+        ObjectNode dateObj = Json.newObject().put("dateString", date);
+        return ok(Json.toJson(dateObj));
+    }
+
+    // call out to local URL as if it's a remote REST API, since timeapi is down
     public CompletionStage<Result> ws() {
-        String url = "http://www.timeapi.org/utc/now.json";
+        String url = "http://localhost:9000/now";
         final String timezone = session("timezone");
         return ws.url(url).get().thenApply(result -> {
             final JsonNode jsonNode = result.asJson();
             final String dateString = jsonNode.findValue("dateString").asText();
-            final LocalDateTime ldt = LocalDateTime.parse(dateString, DateTimeFormatter.ISO_DATE_TIME);
+            final Instant instant = Instant.from(DateTimeFormatter.ISO_INSTANT.parse(dateString));
             final ZoneId zoneId = zoneId(timezone);
-            final ZonedDateTime zdt = ldt.atZone(zoneId);
+            final ZonedDateTime zdt = instant.atZone(zoneId);
             final String formatted = formattedDate(zdt);
             return ok("Hello!  The time is " + formatted + " in time zone " + zoneId);
         });

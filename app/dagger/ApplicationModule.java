@@ -3,7 +3,7 @@ package dagger;
 import play.Application;
 
 @Module
-public class MyComponentsFromContextModule {
+public class ApplicationModule {
 
     @Provides
     public Application providesApplication(MyComponentsFromContext myComponentsFromContext) {

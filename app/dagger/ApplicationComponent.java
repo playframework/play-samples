@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 @Singleton
 @Component(modules = {
     ApplicationLoaderContextModule.class,
-    MyComponentsFromContextModule.class,
+    ApplicationModule.class,
     ClockModule.class
 })
 public interface ApplicationComponent {
