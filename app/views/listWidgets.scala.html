@@ -5,7 +5,7 @@
     <h1>Widgets</h1>
 
     @* Flash shows updates to a page *@
-    @flash.foreach{ case (name, value) =>
+    @flash.asScala.foreach{ case (name, value) =>
     <div class="@name">@value</div>
     }
 
@@ -24,7 +24,7 @@
 
     @* Global errors are not tied to any particular form field *@
     @if(form.hasGlobalErrors) {
-        @form.globalErrors.foreach { error: play.data.validation.ValidationError =>
+        @form.globalErrors.asScala.foreach { error: play.data.validation.ValidationError =>
             <div>
                 @error.key: @error.message
             </div>
