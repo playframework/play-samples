@@ -1,29 +1,44 @@
-@(widgets: Seq[Widget], form: Form[Widget], postUrl: Call)(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+@(widgets: Seq[Widget], form: Form[WidgetForm.Data], postUrl: Call)(implicit request: RequestHeader, messages: Messages)
 
-@main("Widgets") {
+  @main("Widgets") {
 
-  <h1>Widgets</h1>
-  <table>
-    <thead>
-      <tr><th>Name</th><th>Price</th>
-    </thead>
-    <tbody>
-    @for(w <- widgets) {
-      <tr><td>@w.name</td><td>@w.price</td></tr>
+    <h1>Widgets</h1>
+
+    @* Flash shows updates to a page *@
+    @request.flash.data.map{ case (name, value) =>
+      <div>@name: @value</div>
     }
-    </tbody>
-  </table>
 
-  <hr/>
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Price</th>
+      </thead>
+      <tbody>
+      @for(w <- widgets) {
+        <tr><td>@w.name</td><td>@w.price</td></tr>
+      }
+      </tbody>
+    </table>
 
-  @helper.form(postUrl) {
-    @helper.CSRF.formField
+    <hr/>
 
-    @helper.inputText(form("name"))
+    @* Global errors are not tied to any particular form field *@
+    @if(form.hasGlobalErrors) {
+      @form.globalErrors.map { error: FormError =>
+        <div>
+          @error.key: @error.message
+        </div>
+      }
+    }
 
-    @helper.inputText(form("price"))
+    @helper.form(postUrl) {
+      @helper.CSRF.formField
 
-    <button type="submit">Create widget</button>
+      @helper.inputText(form("name"))
+
+      @helper.inputText(form("price"))
+
+      <button>Create widget</button>
+    }
+
   }
-
-}
