@@ -13,9 +13,9 @@ import static play.mvc.Results.ok;
 public class MyApplicationLoader implements ApplicationLoader {
     @Override
     public Application load(Context context) {
-        LoggerConfigurator.apply(context.environment().classLoader()).ifPresent(lc -> {
-            lc.configure(context.environment(), context.initialConfig(), Collections.emptyMap());
-        });
+        LoggerConfigurator.apply(context.environment().classLoader()).ifPresent(lc ->
+            lc.configure(context.environment(), context.initialConfig(), Collections.emptyMap())
+        );
 
         return new MyComponents(context).application();
     }
@@ -29,7 +29,7 @@ class MyComponents extends BuiltInComponentsFromContext implements HttpFiltersCo
 
     @Override
     public play.routing.Router router() {
-        RoutingDsl routingDsl = new RoutingDsl(scalaParsers(), javaContextComponents());
+        RoutingDsl routingDsl = new RoutingDsl(scalaBodyParsers(), javaContextComponents());
         return routingDsl.GET("/").routeTo(() ->
                         ok("Hello")
                 ).build();
