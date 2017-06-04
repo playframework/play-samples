@@ -5,6 +5,7 @@ import dagger.SimpleInjector;
 import play.ApplicationLoader;
 import play.BuiltInComponentsFromContext;
 import play.api.routing.Router;
+import play.components.AkkaComponents;
 import play.components.BodyParserComponents;
 import play.controllers.AssetsComponents;
 import play.core.j.DefaultJavaHandlerComponents;
@@ -15,6 +16,7 @@ import play.filters.components.NoHttpFiltersComponents;
 import play.inject.Injector;
 import play.libs.ws.ahc.AhcWSComponents;
 import router.Routes;
+import scala.concurrent.ExecutionContext;
 
 import javax.inject.Inject;
 import java.time.Clock;
@@ -25,8 +27,11 @@ import java.util.function.Supplier;
 /**
  * A components class that contains a clock instance injected from Dagger.
  */
-public class MyComponentsFromContext extends BuiltInComponentsFromContext
-        implements NoHttpFiltersComponents, AssetsComponents, AhcWSComponents, FormFactoryComponents, BodyParserComponents {
+public class MyComponentsFromContext extends BuiltInComponentsFromContext implements NoHttpFiltersComponents,
+        AssetsComponents,
+        AhcWSComponents,
+        FormFactoryComponents,
+        BodyParserComponents {
 
     private final Clock clock;
 
@@ -34,20 +39,6 @@ public class MyComponentsFromContext extends BuiltInComponentsFromContext
     public MyComponentsFromContext(ApplicationLoader.Context context, Clock clock) {
         super(context);
         this.clock = clock;
-    }
-
-    @Override
-    public Injector injector() {
-        // This probably should be solved by BuiltInComponentsFromContext itself
-        Injector injector = super.injector();
-
-        Map<Class, Supplier<Object>> extraMappings = new HashMap<>();
-        SimpleInjector simpleInjector = new SimpleInjector(injector, extraMappings);
-
-        extraMappings.put(JavaHandlerComponents.class, () -> new DefaultJavaHandlerComponents(simpleInjector.asScala(), actionCreator(), httpConfiguration(), executionContext(), javaContextComponents()));
-        extraMappings.put(play.mvc.BodyParser.Default.class, this::defaultParser);
-
-        return simpleInjector;
     }
 
     private TimeController timeController() {
@@ -58,5 +49,10 @@ public class MyComponentsFromContext extends BuiltInComponentsFromContext
     public play.routing.Router router() {
         Router routes = new Routes(scalaHttpErrorHandler(), timeController(), assets());
         return routes.asJava();
+    }
+
+    @Override
+    public ExecutionContext executionContext() {
+        return actorSystem().dispatcher();
     }
 }
