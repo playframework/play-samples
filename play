@@ -2,6 +2,8 @@
 
 SBT=sbt
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # Export the keystore password for use in ws.conf
 export KEY_PASSWORD=`cat scripts/password`
 
@@ -58,5 +60,11 @@ JVM_OPTIONS="$JVM_OPTIONS -Dsun.security.ssl.allowLegacyHelloMessages=false"
 # http://docs.oracle.com/javase/8/docs/technotes/guides/security/troubleshooting-security.html
 #JVM_OPTIONS="$JVM_OPTIONS -Djava.security.debug=certpath:x509:ocsp"
 
-# Run Play
-$SBT $JVM_OPTIONS -Dkey.password=$KEY_PASSWORD $*;
+JVM_OPTIONS="$JVM_OPTIONS -Dkey.password=$KEY_PASSWORD"
+JVM_OPTIONS="$JVM_OPTIONS -DcertificateDirectory=$DIR/scripts"
+
+AGENT=$DIR/target/universal/stage/jetty-alpn-agent/jetty-alpn-agent-2.0.6.jar
+
+
+# Run Play (this should work for both run and start).
+SBT_OPTS=-javaagent:$AGENT $SBT $JVM_OPTIONS "$* $JVM_OPTIONS";

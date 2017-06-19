@@ -6,10 +6,16 @@ import javax.net.ssl._
 
 import play.core.ApplicationProvider
 import play.server.api._
+import play.core.server._
 
-class CustomSSLEngineProvider(appProvider: ApplicationProvider) extends SSLEngineProvider {
+class CustomSSLEngineProvider(
+  serverConfig: ServerConfig,
+  appProvider: ApplicationProvider
+) extends SSLEngineProvider {
 
-  val certificateDirectory: String = "scripts"
+  val certificateDirectory: String =
+    serverConfig.configuration.getOptional[String]("certificateDirectory").getOrElse(
+      s"${System.getProperty("user.home")}/.certificates")
 
   def readPassword(): Array[Char] = {
     val passwordPath = FileSystems.getDefault.getPath(certificateDirectory, "password")
