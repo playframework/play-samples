@@ -7,7 +7,7 @@ import play.api.test.FakeRequest
 /**
  * Unit tests can run without a full Play application.
  */
-class UnitSpec extends PlaySpec with StubControllerComponentsFactory {
+class UnitSpec extends PlaySpec {
 
   "CountController" should {
 
