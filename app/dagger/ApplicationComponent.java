@@ -14,4 +14,10 @@ import javax.inject.Singleton;
 })
 public interface ApplicationComponent {
     play.Application application();
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance Builder context(play.ApplicationLoader.Context context);
+        ApplicationComponent build();
+    }
 }

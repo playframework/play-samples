@@ -3,10 +3,10 @@ package dagger;
 import play.Application;
 
 @Module
-public class ApplicationModule {
+public abstract class ApplicationModule {
 
     @Provides
-    public Application providesApplication(MyComponentsFromContext myComponentsFromContext) {
+    public static Application providesApplication(MyComponentsFromContext myComponentsFromContext) {
         return myComponentsFromContext.application();
     }
 
