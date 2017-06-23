@@ -21,7 +21,7 @@ public class MyApplicationLoader implements ApplicationLoader {
         opt.ifPresent(lc -> lc.configure(context.environment(), context.initialConfig(), emptyMap()));
 
         ApplicationComponent applicationComponent = DaggerApplicationComponent.builder()
-                .applicationLoaderContextModule(new ApplicationLoaderContextModule(context))
+                .context(context)
                 .build();
 
         return applicationComponent.application();
