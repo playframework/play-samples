@@ -1,4 +1,4 @@
-@(url: String)
+@(webSocketUrl: String)
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -48,7 +48,7 @@
         <script type='text/javascript' src='@routes.Assets.at("lib/jquery/jquery.js")'></script>
         <script type='text/javascript' src='@routes.Assets.at("lib/flot/jquery.flot.js")'></script>
 		<script type='text/javascript' src='@routes.Assets.at("javascripts/modernizr-3.5.0.js")'></script>
-		<script type='text/javascript' src='@routes.Assets.at("javascripts/app.js")' data-url='@url'></script>
+		<script type='text/javascript' src='@routes.Assets.at("javascripts/app.js")' data-url='@webSocketUrl'></script>
 
     </body>
 

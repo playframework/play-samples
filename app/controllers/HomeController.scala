@@ -7,6 +7,7 @@ import akka.actor.ActorSystem
 import akka.event.Logging
 import akka.stream.Materializer
 import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Source}
+import play.api.{Logger, MarkerContext}
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -15,20 +16,20 @@ import scala.concurrent.{ExecutionContext, Future}
  * A very simple chat client using websockets.
  */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents)(implicit actorSystem: ActorSystem,
+class HomeController @Inject()(cc: ControllerComponents)
+                              (implicit actorSystem: ActorSystem,
                                mat: Materializer,
                                executionContext: ExecutionContext) 
-                               extends AbstractController(cc) {
+                               extends AbstractController(cc) with RequestMarkerContext {
 
   private type WSMessage = String
 
-  private val logger = org.slf4j.LoggerFactory.getLogger(this.getClass)
+  private val logger = Logger(getClass)
 
-  private implicit val logging = Logging(actorSystem.eventStream, logger.getName)
+  private implicit val logging = Logging(actorSystem.eventStream, logger.underlyingLogger.getName)
 
   // chat room many clients -> merge hub -> broadcasthub -> many clients
   private val (chatSink, chatSource) = {
-
     // Don't log MergeHub$ProducerFailed as error if the client disconnects.
     // recoverWithRetries -1 is essentially "recoverWith"
     val source = MergeHub.source[WSMessage]
@@ -40,15 +41,16 @@ class HomeController @Inject()(cc: ControllerComponents)(implicit actorSystem: A
   }
 
   private val userFlow: Flow[WSMessage, WSMessage, _] = {
-     Flow.fromSinkAndSource(chatSink, chatSource).log("userFlow")
+     Flow.fromSinkAndSource(chatSink, chatSource)
   }
 
-  def index: Action[AnyContent] = Action { implicit request =>
-    val url = routes.HomeController.chat().webSocketURL()
-    Ok(views.html.index(url))
+  def index: Action[AnyContent] = Action { implicit request: RequestHeader =>
+    val webSocketUrl = routes.HomeController.chat().webSocketURL()
+    logger.info(s"index: ")(request)
+    Ok(views.html.index(webSocketUrl))
   }
 
-  def chat: WebSocket = {
+  def chat(): WebSocket = {
     WebSocket.acceptOrResult[WSMessage, WSMessage] {
       case rh if sameOriginCheck(rh) =>
         Future.successful(userFlow).map { flow =>
@@ -77,7 +79,8 @@ class HomeController @Inject()(cc: ControllerComponents)(implicit actorSystem: A
    * http://blog.dewhurstsecurity.com/2013/08/30/security-testing-html5-websockets.html
    */
   private def sameOriginCheck(rh: RequestHeader): Boolean = {
-    
+    // The Origin header is the domain the request originates from.
+    // https://tools.ietf.org/html/rfc6454#section-7
     logger.debug("Checking the ORIGIN ")
     
     rh.headers.get("Origin") match {

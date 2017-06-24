@@ -10,6 +10,17 @@
     </encoder>
   </appender>
 
+  <appender name="JSON" class="ch.qos.logback.core.FileAppender">
+    <file>${application.home:-.}/logs/application.json</file>
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+      <providers>
+        <timestamp/>
+        <message/>
+        <logstashMarkers/>
+      </providers>
+    </encoder>
+  </appender>
+
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
       <pattern>%coloredLevel %logger{15} - %message%n%xException{10}</pattern>
@@ -20,14 +31,20 @@
     <appender-ref ref="FILE" />
   </appender>
 
+  <appender name="ASYNCJSON" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="JSON" />
+  </appender>
+
   <appender name="ASYNCSTDOUT" class="ch.qos.logback.classic.AsyncAppender">
     <appender-ref ref="STDOUT" />
   </appender>
 
   <logger name="controllers.HomeController" level="DEBUG" />
+  <logger name="akka" level="INFO" />
 
   <root level="INFO">
     <appender-ref ref="ASYNCFILE" />
+    <appender-ref ref="ASYNCJSON" />
     <appender-ref ref="ASYNCSTDOUT" />
   </root>
 
