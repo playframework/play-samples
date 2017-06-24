@@ -15,10 +15,10 @@ import scala.concurrent.{ExecutionContext, Future}
  * A very simple chat client using websockets.
  */
 @Singleton
-class HomeController @Inject()(implicit actorSystem: ActorSystem,
+class HomeController @Inject()(cc: ControllerComponents)(implicit actorSystem: ActorSystem,
                                mat: Materializer,
-                               executionContext: ExecutionContext)
-  extends Controller {
+                               executionContext: ExecutionContext) 
+                               extends AbstractController(cc) {
 
   private type WSMessage = String
 
@@ -77,6 +77,9 @@ class HomeController @Inject()(implicit actorSystem: ActorSystem,
    * http://blog.dewhurstsecurity.com/2013/08/30/security-testing-html5-websockets.html
    */
   private def sameOriginCheck(rh: RequestHeader): Boolean = {
+    
+    logger.debug("Checking the ORIGIN ")
+    
     rh.headers.get("Origin") match {
       case Some(originValue) if originMatches(originValue) =>
         logger.debug(s"originCheck: originValue = $originValue")

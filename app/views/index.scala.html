@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">		
 
         <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap.css")'>
         <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap-theme.css")'>
@@ -47,39 +47,9 @@
 
         <script type='text/javascript' src='@routes.Assets.at("lib/jquery/jquery.js")'></script>
         <script type='text/javascript' src='@routes.Assets.at("lib/flot/jquery.flot.js")'></script>
+		<script type='text/javascript' src='@routes.Assets.at("javascripts/modernizr-3.5.0.js")'></script>
+		<script type='text/javascript' src='@routes.Assets.at("javascripts/app.js")' data-url='@url'></script>
 
-        <script language="javascript">
-                var $messages = $("#messages"),
-                        $send = $("#send"),
-                        $message = $("#message"),
-                        connection = new WebSocket("@url");
-
-                $send.prop("disabled", true);
-
-                var send = function () {
-                    var text = $message.val();
-                    $message.val("");
-                    connection.send(text);
-                };
-
-                connection.onopen = function () {
-                    $send.prop("disabled", false);
-                    $messages.prepend($("<li class='bg-info' style='font-size: 1.5em'>Connected</li>"));
-                    $send.on('click', send);
-                    $message.keypress(function(event){
-                        var keycode = (event.keyCode ? event.keyCode : event.which);
-                        if(keycode == '13'){
-                            send();
-                        }
-                    });
-                };
-                connection.onerror = function (error) {
-                    console.log('WebSocket Error ', error);
-                };
-                connection.onmessage = function (event) {
-                    $messages.append($("<li style='font-size: 1.5em'>" + event.data + "</li>"))
-                }
-        </script>
     </body>
 
 </html>
