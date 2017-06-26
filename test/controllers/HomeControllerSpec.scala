@@ -1,7 +1,7 @@
 package controllers
 
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
-import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatestplus.play._
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test._
@@ -12,7 +12,7 @@ import scala.compat.java8.FutureConverters
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
-class HomeControllerSpec extends PlaySpec with ScalaFutures {
+class HomeControllerSpec extends PlaySpec with ScalaFutures with IntegrationPatience {
 
   "HomeController" should {
 
