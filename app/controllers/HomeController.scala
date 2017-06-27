@@ -46,7 +46,7 @@ class HomeController @Inject()(cc: ControllerComponents)
 
   def index: Action[AnyContent] = Action { implicit request: RequestHeader =>
     val webSocketUrl = routes.HomeController.chat().webSocketURL()
-    logger.info(s"index: ")(request)
+    logger.info(s"index: ")
     Ok(views.html.index(webSocketUrl))
   }
 
@@ -78,7 +78,7 @@ class HomeController @Inject()(cc: ControllerComponents)
    * See https://tools.ietf.org/html/rfc6455#section-1.3 and
    * http://blog.dewhurstsecurity.com/2013/08/30/security-testing-html5-websockets.html
    */
-  private def sameOriginCheck(rh: RequestHeader): Boolean = {
+  private def sameOriginCheck(implicit rh: RequestHeader): Boolean = {
     // The Origin header is the domain the request originates from.
     // https://tools.ietf.org/html/rfc6454#section-7
     logger.debug("Checking the ORIGIN ")

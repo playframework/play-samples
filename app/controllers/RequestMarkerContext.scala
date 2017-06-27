@@ -10,7 +10,7 @@ import scala.language.implicitConversions
  */
 trait RequestMarkerContext {
 
-  implicit def requestHeaderToMarkerContext(request: RequestHeader): MarkerContext = {
+  implicit def requestHeaderToMarkerContext(implicit request: RequestHeader): MarkerContext = {
     import net.logstash.logback.marker.LogstashMarker
     import net.logstash.logback.marker.Markers._
 
