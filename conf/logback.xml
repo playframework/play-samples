@@ -25,7 +25,7 @@
   </appender>
 
   <logger name="play" level="INFO"/>
-  <logger name="akka" level="DEBUG"/>
+  <logger name="akka" level="INFO"/>
 
   <root level="INFO">
     <appender-ref ref="ASYNCFILE" />
