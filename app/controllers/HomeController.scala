@@ -1,10 +1,7 @@
 package controllers
 
 import java.io.File
-import java.nio.file.attribute.PosixFilePermission._
-import java.nio.file.attribute.PosixFilePermissions
 import java.nio.file.{Files, Path}
-import java.util
 import javax.inject._
 
 import akka.stream.IOResult
@@ -13,13 +10,12 @@ import akka.util.ByteString
 import play.api._
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.i18n.MessagesApi
 import play.api.libs.streams._
 import play.api.mvc.MultipartFormData.FilePart
 import play.api.mvc._
 import play.core.parsers.Multipart.FileInfo
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 case class FormData(name: String)
 
@@ -27,9 +23,11 @@ case class FormData(name: String)
  * This controller handles a file upload.
  */
 @Singleton
-class HomeController @Inject() (implicit val messagesApi: MessagesApi) extends Controller with i18n.I18nSupport {
+class HomeController @Inject() (cc:MessagesControllerComponents)
+                               (implicit executionContext: ExecutionContext)
+  extends MessagesAbstractController(cc) {
 
-  private val logger = org.slf4j.LoggerFactory.getLogger(this.getClass)
+  private val logger = Logger(this.getClass)
 
   val form = Form(
     mapping(
@@ -56,16 +54,14 @@ class HomeController @Inject() (implicit val messagesApi: MessagesApi) extends C
    */
   private def handleFilePartAsFile: FilePartHandler[File] = {
     case FileInfo(partName, filename, contentType) =>
-      val attr = PosixFilePermissions.asFileAttribute(util.EnumSet.of(OWNER_READ, OWNER_WRITE))
-      val path: Path = Files.createTempFile("multipartBody", "tempFile", attr)
-      val file = path.toFile
-      val fileSink: Sink[ByteString, Future[IOResult]] = FileIO.toFile(file)
+      val path: Path = Files.createTempFile("multipartBody", "tempFile")
+      val fileSink: Sink[ByteString, Future[IOResult]] = FileIO.toPath(path)
       val accumulator: Accumulator[ByteString, IOResult] = Accumulator(fileSink)
       accumulator.map {
         case IOResult(count, status) =>
           logger.info(s"count = $count, status = $status")
-          FilePart(partName, filename, contentType, file)
-      }(play.api.libs.concurrent.Execution.defaultContext)
+          FilePart(partName, filename, contentType, path.toFile)
+      }
   }
 
   /**
