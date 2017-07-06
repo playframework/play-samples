@@ -11,22 +11,19 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%coloredLevel %logger{15} - %message%n%xException{10}</pattern>
+            <pattern>%coloredLevel %logger{15} - [%marker] %message%n%xException{10}</pattern>
         </encoder>
     </appender>
 
     <logger name="play" level="INFO"/>
 
     <!-- actors logging -->
-    <logger name="akka.actor" level="INFO"/>
+    <logger name="akka" level="DEBUG"/>
 
-    <logger name="actors.UserParentActor" level="INFO"/>
-    <logger name="actors.UserActor" level="INFO"/>
-    <logger name="actors.StocksActor" level="INFO"/>
-    <logger name="actors.StockActor" level="INFO"/>
+    <logger name="actors" level="DEBUG"/>
 
     <!-- controllers -->
-    <logger name="controllers" level="INFO"/>
+    <logger name="controllers" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

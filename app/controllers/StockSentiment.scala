@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject._
 
-import play.api.Configuration
+import play.api.{Configuration, Logger}
 import play.api.libs.json.{JsObject, JsString, JsValue, Json}
 import play.api.libs.ws._
 import play.api.mvc._
@@ -10,17 +10,21 @@ import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class StockSentiment @Inject()(ws: WSClient, configuration: Configuration, cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) {
+class StockSentiment @Inject()(ws: WSClient,
+                               configuration: Configuration,
+                               cc: ControllerComponents)
+                              (implicit ec: ExecutionContext)
+  extends AbstractController(cc) {
 
-  private val logger = org.slf4j.LoggerFactory.getLogger(this.getClass)
+  private val logger = Logger(this.getClass)
 
-  private val sentimentUrl = configuration.getString("sentiment.url").get
+  private val sentimentUrl = configuration.get[String]("sentiment.url")
 
-  private val tweetUrl = configuration.getString("tweet.url").get
+  private val tweetUrl = configuration.get[String]("tweet.url")
 
   case class Tweet(text: String)
   
-  implicit val tweetReads = Json.reads[Tweet]
+  private implicit val tweetReads = Json.reads[Tweet]
 
   def get(symbol: String): Action[AnyContent] = Action.async {
     logger.info(s"getting stock sentiment for $symbol")
@@ -40,7 +44,7 @@ class StockSentiment @Inject()(ws: WSClient, configuration: Configuration, cc: C
   private def getTextSentiment(text: String): Future[WSResponse] = {
     logger.info(s"getTextSentiment: text = $text")
 
-    ws.url(sentimentUrl) post Map("text" -> Seq(text))
+    ws.url(sentimentUrl).post(Map("text" -> Seq(text)))
   }
 
   private def getAverageSentiment(responses: Seq[WSResponse], label: String): Double = {
