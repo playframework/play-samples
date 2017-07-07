@@ -1,7 +1,6 @@
 language: scala
 dist: trusty
-sudo: true
-group: beta
+sudo: required
 scala:
 - 2.12.2
 jdk:

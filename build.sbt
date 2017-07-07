@@ -17,3 +17,4 @@ lazy val akkaVersion = "2.5.3"
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-M3" % Test
+libraryDependencies += "org.awaitility" % "awaitility-scala" % "3.0.0"

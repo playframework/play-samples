@@ -1,12 +1,15 @@
 package controllers
 
+import java.util.concurrent.ArrayBlockingQueue
+
 import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient
-import play.shaded.ahc.org.asynchttpclient.ws.WebSocket
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play._
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.{Helpers, TestServer, WsTestClient}
+import org.awaitility.Awaitility._
+import play.api.libs.json._
 
 import scala.compat.java8.FutureConverters
 import scala.concurrent.Await
@@ -26,11 +29,10 @@ class FunctionalSpec extends PlaySpec with ScalaFutures {
         val serverURL = s"ws://$myPublicAddress/ws"
 
         val asyncHttpClient: AsyncHttpClient = client.underlying[AsyncHttpClient]
-
         val webSocketClient = new WebSocketClient(asyncHttpClient)
         try {
           val origin = "ws://example.com/ws"
-          val listener = new WebSocketClient.LoggingListener
+          val listener = new WebSocketClient.LoggingListener(message => println(message))
           val completionStage = webSocketClient.call(serverURL, origin, listener)
           val f = FutureConverters.toScala(completionStage)
           val result = Await.result(f, atMost = 1000 millis)
@@ -54,16 +56,20 @@ class FunctionalSpec extends PlaySpec with ScalaFutures {
         val serverURL = s"ws://$myPublicAddress/ws"
 
         val asyncHttpClient: AsyncHttpClient = client.underlying[AsyncHttpClient]
-
         val webSocketClient = new WebSocketClient(asyncHttpClient)
-
+        val queue = new ArrayBlockingQueue[String](10)
         val origin = serverURL
-        val listener = new WebSocketClient.LoggingListener
+        val listener = new WebSocketClient.LoggingListener(message => queue.put(message))
         val completionStage = webSocketClient.call(serverURL, origin, listener)
         val f = FutureConverters.toScala(completionStage)
 
+        // Test we can get good output from the websocket
         whenReady(f, timeout = Timeout(1 second)) { webSocket =>
-          webSocket mustBe a [WebSocket]
+          await().until(() => webSocket.isOpen && queue.peek() != null)
+          val input: String = queue.take()
+          val json:JsValue = Json.parse(input)
+          val symbol = (json \ "symbol").as[String]
+          List(symbol) must contain oneOf("AAPL", "GOOG", "ORCL")
         }
       }
     }
