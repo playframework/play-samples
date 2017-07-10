@@ -64,10 +64,7 @@ class HomeController @Inject()(@Named("userParentActor") userParentActor: ActorR
     implicit val timeout = Timeout(1.second) // the first run in dev can take a while :-(
     val future: Future[Any] = userParentActor ? UserParentActor.Create(request.id.toString)
     val futureFlow: Future[Flow[JsValue, JsValue, NotUsed]] = future.mapTo[Flow[JsValue, JsValue, NotUsed]]
-    futureFlow.map { flow =>
-      // Fail the websocket stream if we are backed up by more than a second.
-      flow.backpressureTimeout(10.seconds)
-    }
+    futureFlow
   }
 
 }

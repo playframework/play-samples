@@ -1,8 +1,8 @@
 package stocks
 
 import akka.NotUsed
-import akka.stream.{Materializer, ThrottleMode}
-import akka.stream.scaladsl.{Sink, Source}
+import akka.stream.ThrottleMode
+import akka.stream.scaladsl.Source
 
 import scala.concurrent.duration._
 
@@ -20,20 +20,19 @@ class Stock(val symbol: StockSymbol) {
   }
 
   /**
-   * Returns N elements of the stockquote source.
+   * Returns a source of stock history, containing a single element.
    */
-  def history(n: Int)(implicit mat: Materializer): Source[Seq[StockQuote], NotUsed] = {
-    // It's possible to do far more advanced windows with Akka Streams, i.e.
-    // https://softwaremill.com/windowing-data-in-akka-streams/
-    val stockHistory = source.take(n).runWith(Sink.seq)
-    Source.fromFuture(stockHistory)
+  def history(n: Int): Source[StockHistory, NotUsed] = {
+    source.grouped(n).map(sq => new StockHistory(symbol, sq.map(_.price))).take(1)
   }
 
   /**
    * Provides a source that returns a stock quote every 75 milliseconds.
    */
-  def update: Source[StockQuote, NotUsed] = {
-    source.throttle(elements = 1, per = 75.millis, maximumBurst = 1, ThrottleMode.shaping)
+  def update: Source[StockUpdate, NotUsed] = {
+    source
+      .throttle(elements = 1, per = 75.millis, maximumBurst = 1, ThrottleMode.shaping)
+      .map(sq => new StockUpdate(sq.symbol, sq.price))
   }
 
   override val toString: String = s"Stock($symbol)"
