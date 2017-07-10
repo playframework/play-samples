@@ -11,6 +11,7 @@ import scala.collection.mutable
  * all websocket clients.
  */
 class StocksActor extends Actor with ActorLogging {
+  import Messages._
 
   // May want to remove stocks that aren't viewed by any clients...
   private val stocksMap: mutable.Map[StockSymbol, Stock] = mutable.HashMap()
@@ -21,12 +22,3 @@ class StocksActor extends Actor with ActorLogging {
       sender ! Stocks(stocks)
   }
 }
-
-case class Stocks(stocks: Set[Stock]) {
-  require(stocks.nonEmpty, "Must specify at least one stock!")
-}
-
-case class WatchStocks(symbols: Set[StockSymbol]) {
-  require(symbols.nonEmpty, "Must specify at least one symbol!")
-}
-

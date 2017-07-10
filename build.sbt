@@ -1,4 +1,4 @@
-name := "play-websocket-scala-example"
+name := "play-scala-websocket-example"
 
 version := "1.0-SNAPSHOT"
 
@@ -12,9 +12,7 @@ libraryDependencies += ws
 libraryDependencies += "org.webjars" % "flot" % "0.8.3"
 libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
 
-// should match up with latest Akka
-lazy val akkaVersion = "2.5.3"
-libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
-libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-M3" % Test
-libraryDependencies += "org.awaitility" % "awaitility-scala" % "3.0.0"
+libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % "2.5.3" % Test
+libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % "2.5.3" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0" % Test
+libraryDependencies += "org.awaitility" % "awaitility" % "3.0.0" % Test

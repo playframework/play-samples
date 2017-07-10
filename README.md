@@ -1,6 +1,6 @@
-[<img src="https://img.shields.io/travis/playframework/play-websocket-scala-example.svg"/>](https://travis-ci.org/playframework/play-websocket-scala-example)
+[<img src="https://img.shields.io/travis/playframework/play-scala-websocket-example.svg"/>](https://travis-ci.org/playframework/play-scala-websocket-example)
 
-# play-websocket-scala-example
+# play-scala-websocket-example
 
 This is an example Play application that shows how to use Play's Websocket API in Scala, by showing a series of stock tickers updated using WebSocket.
 

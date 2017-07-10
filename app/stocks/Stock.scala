@@ -1,8 +1,10 @@
 package stocks
-import akka.NotUsed
-import akka.stream.scaladsl.Source
-import play.api.libs.json._ // Combinator syntax
 
+import akka.NotUsed
+import akka.stream.{Materializer, ThrottleMode}
+import akka.stream.scaladsl.{Sink, Source}
+
+import scala.concurrent.duration._
 
 /**
  * A stock is a source of stock quotes and a symbol.
@@ -10,12 +12,28 @@ import play.api.libs.json._ // Combinator syntax
 class Stock(val symbol: StockSymbol) {
   private val stockQuoteGenerator: StockQuoteGenerator = new FakeStockQuoteGenerator(symbol)
 
-  /** Creates a source that works like folding, based off the last quote with some jitter. */
-  val source: Source[StockQuote, NotUsed] = {
+  private val source: Source[StockQuote, NotUsed] = {
     Source.unfold(stockQuoteGenerator.seed) { (last: StockQuote) =>
       val next = stockQuoteGenerator.newQuote(last)
       Some(next, next)
     }
+  }
+
+  /**
+   * Returns N elements of the stockquote source.
+   */
+  def history(n: Int)(implicit mat: Materializer): Source[Seq[StockQuote], NotUsed] = {
+    // It's possible to do far more advanced windows with Akka Streams, i.e.
+    // https://softwaremill.com/windowing-data-in-akka-streams/
+    val stockHistory = source.take(n).runWith(Sink.seq)
+    Source.fromFuture(stockHistory)
+  }
+
+  /**
+   * Provides a source that returns a stock quote every 75 milliseconds.
+   */
+  def update: Source[StockQuote, NotUsed] = {
+    source.throttle(elements = 1, per = 75.millis, maximumBurst = 1, ThrottleMode.shaping)
   }
 
   override val toString: String = s"Stock($symbol)"
@@ -46,6 +64,8 @@ class StockSymbol private (val raw: String) extends AnyVal {
 }
 
 object StockSymbol {
+  import play.api.libs.json._ // Combinator syntax
+
   def apply(raw: String) = new StockSymbol(raw)
 
   implicit val stockSymbolReads: Reads[StockSymbol] = {
@@ -63,9 +83,44 @@ class StockPrice private (val raw: Double) extends AnyVal {
 }
 
 object StockPrice {
+  import play.api.libs.json._ // Combinator syntax
+
   def apply(raw: Double):StockPrice = new StockPrice(raw)
 
   implicit val stockPriceWrites: Writes[StockPrice] = Writes {
     (price: StockPrice) => JsNumber(price.raw)
+  }
+}
+
+// Used for automatic JSON conversion
+// https://www.playframework.com/documentation/2.6.x/ScalaJson
+
+// JSON presentation class for stock history
+case class StockHistory(symbol: StockSymbol, prices: Seq[StockPrice])
+
+object StockHistory {
+  import play.api.libs.json._ // Combinator syntax
+
+  implicit val stockHistoryWrites: Writes[StockHistory] = new Writes[StockHistory] {
+    override def writes(history: StockHistory): JsValue = Json.obj(
+      "type" -> "stockhistory",
+      "symbol" -> history.symbol,
+      "history" -> history.prices
+    )
+  }
+}
+
+// JSON presentation class for stock update
+case class StockUpdate(symbol: StockSymbol, price: StockPrice)
+
+object StockUpdate {
+  import play.api.libs.json._ // Combinator syntax
+
+  implicit val stockUpdateWrites: Writes[StockUpdate] = new Writes[StockUpdate] {
+    override def writes(update: StockUpdate): JsValue = Json.obj(
+      "type" -> "stockupdate",
+      "symbol" -> update.symbol,
+      "price" -> update.price
+    )
   }
 }
