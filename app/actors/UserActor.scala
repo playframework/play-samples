@@ -28,6 +28,7 @@ class UserActor @Inject()(@Assisted id: String, @Named("stocksActor") stocksActo
   extends Actor {
   import Messages._
 
+  // Useful way to mark out individual actors with websocket request context information...
   private val marker = LogMarker(name = self.path.name)
   implicit val log: MarkerLoggingAdapter = akka.event.Logging.withMarker(context.system, this.getClass)
 
@@ -89,8 +90,9 @@ class UserActor @Inject()(@Assisted id: String, @Named("stocksActor") stocksActo
     val future = (stocksActor ? WatchStocks(symbols)).mapTo[Stocks]
 
     // when we get the response back, we want to turn that into a flow by creating a single
-    // source and a single sink, so we merge all of the stock sources together into one, and
-    // set the actor itself up as the sink.
+    // source and a single sink, so we merge all of the stock sources together into one by
+    // pointing them to the hubSink, so we can add them dynamically even after the flow
+    // has started.
     future.map { (newStocks: Stocks) =>
       newStocks.stocks.foreach { stock =>
         if (! stocksMap.contains(stock.symbol)) {
@@ -142,7 +144,6 @@ class UserActor @Inject()(@Assisted id: String, @Named("stocksActor") stocksActo
       stocksMap -= symbol
     }
   }
-
 }
 
 

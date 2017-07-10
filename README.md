@@ -6,21 +6,15 @@ This is an example Play application that shows how to use Play's Websocket API i
 
 The Websocket API is built on Akka Streams, and so is async, non-blocking, and backpressure aware.  Using Akka Streams also means that interacting with Akka Actors is simple.
 
-There are also tests showing how ScalaTest and Akka Testkit are used to test actors and flows.
-
-## Reactive Push
+## Reactive Push using Akka Streams
 
 This application uses a WebSocket to push data to the browser in real-time.  To create a WebSocket connection in Play, first a route must be defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file.  Here is the route which will be used to setup the WebSocket connection:
         
-<pre><code>GET /ws controllers.Application.ws</code></pre>
+<pre><code>GET /ws controllers.HomeController.ws</code></pre>
 
-The <code>ws</code> method in the HomeController.java controller handles the request and does the protocol upgrade to the WebSocket connection.  The <code>UserActor</code> stores the handle to the WebSocket connection.<br/>
+The <code>ws</code> method in the HomeController.java controller handles the request and does the protocol upgrade to the WebSocket connection.  The <code>UserActor</code> stores the input and output streams to the WebSocket connection, and can manipulate the streams in response to messages.<br/>
 
-Once the <code>UserActor</code> is created, the default stocks (defined in `application.conf`) are added to the user's list of watched stocks.<br/>
-
-Each stock symbol has its own <code>StockActor</code> defined in StockActor.scala.  This actor holds the last 50 prices for the stock.  Using a <code>FetchHistory</code> message the whole history can be retrieved.  A <code>FetchLatest</code> message will generate a new price.  Every <code>StockActor</code> sends itself a <code>FetchLatest</code> message every 75 milliseconds.  Once a new price is generated it is added to the history and then a message is sent to each <code>UserActor</code> that is watching the stock.  The <code>UserActor</code> then serializes the data as JSON and pushes it to the client using the WebSocket.<br/>
-
-Underneath the covers, resources (threads) are only allocated to the Actors and WebSockets when they are needed.  This is why Reactive Push is scalable with Play and Akka.
+Once the <code>UserActor</code> is created, the default stocks (defined in `application.conf`) are added to the user's list of watched stocks.<br/>  The flow of stock quotes is managed using MergeHub and BroadcastHub as a publish/subscribe method to dynamically add and remove streams to the Websocket.  The `StockHistory` and `StockQuote` presentation objects are converted using Play-JSON using the implicit `Reads` and `Writes` defined on the companion objects.
 
 ## Reactive UI - Real-time Chart
 
@@ -39,7 +33,7 @@ The message is parsed and depending on whether the message contains the stock hi
 
 When a web server gets a request, it allocates a thread to handle the request and produce a response.  In a typical model the thread is allocated for the entire duration of the request and response, even if the web request is waiting for some other resource.  A Reactive Request is a typical web request and response, but handled in an asynchronous and non-blocking way on the server.  This means that when the thread for a web request is not actively being used, it can be released and reused for something else.
 
-In the Reactive Stocks application the service which determines the stock sentiments is a Reactive Request.  The route is defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file:
+The route is defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file:
 
 <pre><code>GET /sentiment/:symbol controllers.StockSentiment.get(symbol)</code></pre>
 
