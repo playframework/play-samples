@@ -1,4 +1,4 @@
-name := "play-streaming-scala"
+name := "play-scala-streaming-example"
 
 version := "2.6.x"
 
@@ -8,5 +8,5 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 libraryDependencies += guice
 
-libraryDependencies += "com.typesafe.play" %% "play-ahc-ws" % "2.6.0-M4" % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-M3" % Test
+libraryDependencies += ws % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.0" % Test
