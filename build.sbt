@@ -7,3 +7,5 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 scalaVersion := "2.12.2"
 
 libraryDependencies += guice
+
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v")

@@ -25,10 +25,12 @@ public class HomeController extends Controller {
 
     public Result index() {
         Form<FormData> form = formFactory.form(FormData.class);
-        Http.Context context = Http.Context.current();
-        return ok(index.render(form, context.messages()));
+        return ok(index.render(form));
     }
 
+    /**
+     * This method uses MyMultipartFormDataBodyParser as the body parser
+     */
     @BodyParser.Of(MyMultipartFormDataBodyParser.class)
     public Result upload() throws IOException {
         final Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
