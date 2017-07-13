@@ -72,8 +72,8 @@ class UserActor @Inject()(@Assisted id: String, @Named("stocksActor") stocksActo
   private lazy val websocketFlow: Flow[JsValue, JsValue, NotUsed] = {
     // Put the source and sink together to make a flow of hub source as output (aggregating all
     // stocks as JSON to the browser) and the actor as the sink (receiving any JSON messages
-    // from the browse)
-    Flow.fromSinkAndSource(jsonSink, hubSource).watchTermination() { (_, termination) =>
+    // from the browse), using a coupled sink and source.
+    Flow.fromSinkAndSourceCoupled(jsonSink, hubSource).watchTermination() { (_, termination) =>
       // When the flow shuts down, make sure this actor also stops.
       termination.foreach(_ => context.stop(self))
       NotUsed
