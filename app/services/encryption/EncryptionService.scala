@@ -20,8 +20,8 @@ class EncryptionService @Inject() (configuration: Configuration) {
   // utility method for when we're showing off secret key without saving confidential info...
   def newSecretKey: Array[Byte] = {
     // Key must be 32 bytes for secretbox
-    import org.abstractj.kalium.NaCl.Sodium.XSALSA20_POLY1305_SECRETBOX_KEYBYTES
-    val buf = new Array[Byte](XSALSA20_POLY1305_SECRETBOX_KEYBYTES)
+    import org.abstractj.kalium.NaCl.Sodium.CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES
+    val buf = new Array[Byte](CRYPTO_SECRETBOX_XSALSA20POLY1305_KEYBYTES)
     random.nextBytes(buf)
     buf
   }
