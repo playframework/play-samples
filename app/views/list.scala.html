@@ -1,4 +1,4 @@
-@(currentPage: Page[(Computer, Option[Company])], currentOrderBy: Int, currentFilter: String)(implicit flash: play.api.mvc.Flash, messages: Messages)
+@(currentPage: Page[(Computer, Option[Company])], currentOrderBy: Int, currentFilter: String)(implicit request: MessagesRequestHeader)
 
 @import helper._
 
@@ -23,9 +23,9 @@
 
 @main {
 
-    <h1>@Messages("computers.list.title", currentPage.total)</h1>
+    <h1 id="section-title">@Messages("computers.list.title", currentPage.total)</h1>
 
-    @flash.get("success").map { message =>
+    @request.flash.get("success").map { message =>
         <div class="alert-message warning">
             <strong>Done!</strong> @message
         </div>

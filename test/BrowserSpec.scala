@@ -1,63 +1,72 @@
-import play.api.test._
-import play.api.test.Helpers._
-import org.fluentlenium.core.filter.FilterConstructor._
-import org.scalatestplus.play.PlaySpec
-
 import org.scalatestplus.play._
+import org.scalatestplus.play.guice.GuiceOneServerPerTest
 
-class BrowserSpec extends PlaySpec {
-  
+/**
+ * Runs a browser based test against the application.
+ *
+ * http://doc.scalatest.org/3.0.0/index.html#org.scalatest.selenium.WebBrowser
+ * http://www.scalatest.org/user_guide/using_selenium
+ * https://www.playframework.com/documentation/latest/ScalaFunctionalTestingWithScalaTest#Testing-with-a-web-browser
+ */
+class BrowserSpec extends PlaySpec
+  with OneBrowserPerTest
+  with GuiceOneServerPerTest
+  with HtmlUnitFactory {
+
+  def $(str: String) = find(cssSelector(str)).getOrElse(throw new IllegalArgumentException(s"Cannot find $str"))
+
   "Application" should {
     
     "work from within a browser" in {
-      running(TestServer(3333), HTMLUNIT) { browser =>
-        browser.goTo("http://localhost:3333/")
-        
-        browser.$("header h1").first.text() must equal("Play sample application — Computer database")
-        browser.$("section h1").first.text() must equal("574 computers found")
-        
-        browser.$("#pagination li.current").first.text() must equal("Displaying 1 to 10 of 574")
-        
-        browser.$("#pagination li.next a").click()
-        
-        browser.$("#pagination li.current").first.text() must equal("Displaying 11 to 20 of 574")
-        browser.$("#searchbox").fill().`with`("Apple")
-        browser.$("#searchsubmit").click()
-        
-        browser.$("section h1").first.text() must equal("13 computers found")
-        browser.$("a", withText("Apple II")).click()
-        
-        browser.$("section h1").first.text() must equal("Edit computer")
+      System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver")
 
-        browser.$("#discontinued").fill().`with`("xxx")
-        browser.$("input.primary").click()
+      go to(s"http://localhost:$port/")
 
-        browser.$("dl.error").size must equal(1)
-        browser.$("dl.error label").first.text() must equal("Discontinued date")
-
-        browser.$("#discontinued").fill().`with`("")
-        browser.$("input.primary").click()
-
-        browser.$("section h1").first.text() must equal("574 computers found")
-        browser.$(".alert-message").first.text() must equal("Done! Computer Apple II has been updated")
+      find("header-title").get.text must equal("Play sample application — Computer database")
+        find("section-title").get.text must equal("574 computers found")
         
-        browser.$("#searchbox").fill().`with`("Apple")
-        browser.$("#searchsubmit").click()
-        
-        browser.$("a", withText("Apple II")).click()
-        browser.$("input.danger").click()
+      find(cssSelector(".current")).get.text must equal("Displaying 1 to 10 of 574")
 
-        browser.$("section h1").first.text() must equal("573 computers found")
-        browser.$(".alert-message").first.text() must equal("Done! Computer has been deleted")
+        click on $("#pagination li.next a")
         
-        browser.$("#searchbox").fill().`with`("Apple")
-        browser.$("#searchsubmit").click()
-        
-        browser.$("section h1").first.text() must equal("12 computers found")
+        $("#pagination li.current").text must equal("Displaying 11 to 20 of 574")
 
-      }
+        click on id("searchbox")
+        enter("Apple")
+        click on id("searchsubmit")
+        
+        $("section h1").text must equal("13 computers found")
+        click on linkText("Apple II")
+        
+        click on id("discontinued")
+        enter("xxx")
+        submit()
+
+        find(cssSelector("dl.error")) must not be empty
+        $("dl.error label").text must equal("Discontinued date")
+
+        click on id("discontinued")
+        enter("")
+        submit()
+
+        $("section h1").text must equal("574 computers found")
+        $(".alert-message").text must equal("Done! Computer Apple II has been updated")
+
+        click on id("searchbox")
+        enter("Apple")
+        submit
+        
+        click on linkText("Apple II")
+        click on $("input.danger")
+
+        $("section h1").text must equal("573 computers found")
+        $(".alert-message").text must equal("Done! Computer has been deleted")
+        
+        click on $("#searchbox")
+        enter("Apple")
+        submit()  // $("#searchsubmit").click()
+        
+        $("section h1").text must equal("12 computers found")
     }
-    
   }
-  
 }

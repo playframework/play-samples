@@ -1,4 +1,4 @@
-@(content: Html)(implicit messages: Messages)
+@(content: Html)(implicit request: MessagesRequestHeader)
 
 <!DOCTYPE html>
 <html>
@@ -21,7 +21,7 @@
     <body>
         
         <header class="topbar">
-            <h1 class="fill">
+            <h1 class="fill" id="header-title">
                 <a href="@routes.HomeController.index()">
                     Play sample application &mdash; Computer database
                 </a>

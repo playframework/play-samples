@@ -16,8 +16,10 @@ import scala.concurrent.{ExecutionContext, Future}
   */
 class HomeController @Inject()(computerService: ComputerRepository,
                                companyService: CompanyRepository,
-                               cc: ControllerComponents)(implicit ec: ExecutionContext)
-  extends AbstractController(cc) with I18nSupport {
+                               cc: MessagesControllerComponents)(implicit ec: ExecutionContext)
+  extends MessagesAbstractController(cc) {
+
+  private val logger = play.api.Logger(this.getClass)
 
   /**
     * This result directly redirect to the application home.
@@ -82,10 +84,12 @@ class HomeController @Inject()(computerService: ComputerRepository,
     */
   def update(id: Long) = Action.async { implicit request =>
     computerForm.bindFromRequest.fold(
-      formWithErrors =>
+      formWithErrors => {
+        logger.warn(s"form error: $formWithErrors")
         companyService.options.map { options =>
           BadRequest(html.editForm(id, formWithErrors, options))
-        },
+        }
+      },
       computer => {
         computerService.update(id, computer).map { _ =>
           Home.flashing("success" -> "Computer %s has been updated".format(computer.name))
