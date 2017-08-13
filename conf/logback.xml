@@ -17,15 +17,10 @@
 
   <logger name="play" level="INFO"/>
 
-  <!-- actors logging -->
-  <logger name="akka.actor" level="DEBUG"/>
+  <logger name="akka" level="INFO"/>
+  <logger name="akka.stream.Log" level="INFO"/>
 
-  <logger name="actors.UserParentActor" level="INFO"/>
-  <logger name="actors.UserActor" level="INFO"/>
-  <logger name="actors.StocksActor" level="INFO"/>
-  <logger name="actors.StockActor" level="INFO"/>
-
-  <!-- controllers -->
+  <logger name="actors" level="INFO"/>
   <logger name="controllers" level="INFO"/>
 
   <root level="INFO">

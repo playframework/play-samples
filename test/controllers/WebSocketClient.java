@@ -5,12 +5,19 @@ import play.shaded.ahc.org.asynchttpclient.BoundRequestBuilder;
 import play.shaded.ahc.org.asynchttpclient.ListenableFuture;
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocket;
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocketListener;
+import play.shaded.ahc.org.asynchttpclient.ws.WebSocketTextListener;
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocketUpgradeHandler;
 import org.slf4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
 
+/**
+ * A quick wrapper around AHC WebSocket
+ *
+ * https://github.com/AsyncHttpClient/async-http-client/blob/2.0/client/src/main/java/org/asynchttpclient/ws/WebSocket.java
+ */
 public class WebSocketClient {
 
     private AsyncHttpClient client;
@@ -19,16 +26,20 @@ public class WebSocketClient {
         this.client = c;
     }
 
-    public CompletableFuture<WebSocket> call(String url, WebSocketListener listener) throws ExecutionException, InterruptedException {
-        BoundRequestBuilder requestBuilder = client.prepareGet(url);
+    public CompletableFuture<WebSocket> call(String url, WebSocketTextListener listener) throws ExecutionException, InterruptedException {
+        final BoundRequestBuilder requestBuilder = client.prepareGet(url);
 
         final WebSocketUpgradeHandler handler = new WebSocketUpgradeHandler.Builder().addWebSocketListener(listener).build();
         final ListenableFuture<WebSocket> future = requestBuilder.execute(handler);
-        final CompletableFuture<WebSocket> completableFuture = future.toCompletableFuture();
-        return completableFuture;
+        return future.toCompletableFuture();
     }
 
-    static class LoggingListener implements WebSocketListener {
+    static class LoggingListener implements WebSocketTextListener {
+        private final Consumer<String> onMessageCallback;
+
+        public LoggingListener(Consumer<String> onMessageCallback) {
+            this.onMessageCallback = onMessageCallback;
+        }
 
         private Logger logger = org.slf4j.LoggerFactory.getLogger(LoggingListener.class);
 
@@ -50,6 +61,12 @@ public class WebSocketClient {
         public void onError(Throwable t) {
             //logger.error("onError: ", t);
             throwableFound = t;
+        }
+
+        @Override
+        public void onMessage(String s) {
+            //logger.info("onMessage: s = " + s);
+            onMessageCallback.accept(s);
         }
     }
 

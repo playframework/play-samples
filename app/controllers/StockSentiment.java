@@ -1,7 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import play.Configuration;
+import com.typesafe.config.Config;
 import play.libs.Json;
 import play.libs.concurrent.Futures;
 import play.libs.concurrent.HttpExecutionContext;
@@ -21,20 +21,22 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.averagingDouble;
 import static java.util.stream.Collectors.toList;
-import static utils.Streams.stream;
+import static java.util.stream.StreamSupport.stream;
 
 @Singleton
 public class StockSentiment extends Controller {
 
-    private WSClient wsClient;
-    private Configuration configuration;
-    private HttpExecutionContext ec;
+    private final String sentimentUrl;
+    private final String tweetUrl;
+    private final WSClient wsClient;
+    private final HttpExecutionContext ec;
 
     @Inject
-    public StockSentiment(WSClient wsClient, Configuration configuration, HttpExecutionContext ec) {
+    public StockSentiment(WSClient wsClient, Config configuration, HttpExecutionContext ec) {
         this.wsClient = wsClient;
-        this.configuration = configuration;
         this.ec = ec;
+        this.sentimentUrl = configuration.getString("sentiment.url");
+        this.tweetUrl = configuration.getString("tweet.url");
     }
 
     public CompletionStage<Result> get(String symbol) {
@@ -46,10 +48,8 @@ public class StockSentiment extends Controller {
     }
 
     private CompletionStage<List<String>> fetchTweets(String symbol) {
-
-        final String tweetUrl = configuration.getString("tweet.url");
         final CompletionStage<WSResponse> futureResponse = wsClient.url(tweetUrl)
-                .setQueryParameter("q", "$" + symbol)
+                .addQueryParameter("q", "$" + symbol)
                 .get();
 
         final CompletionStage<WSResponse> filter = futureResponse.thenApplyAsync(response -> {
@@ -61,7 +61,7 @@ public class StockSentiment extends Controller {
         }, ec.current());
 
         return filter.thenApplyAsync(response -> {
-            final List<String> statuses = stream(response.asJson().findPath("statuses"))
+            final List<String> statuses = stream(response.asJson().findPath("statuses").spliterator(), false)
                     .map(s -> s.findValue("text").asText())
                     .collect(Collectors.toList());
             return statuses;
@@ -69,9 +69,8 @@ public class StockSentiment extends Controller {
     }
 
     private CompletionStage<List<JsonNode>> fetchSentiments(List<String> tweets) {
-        String url = configuration.getString("sentiment.url");
         Stream<CompletionStage<WSResponse>> sentiments = tweets.stream().map(text -> {
-            return wsClient.url(url).post("text=" + text);
+            return wsClient.url(sentimentUrl).post("text=" + text);
         });
         return Futures.sequence(sentiments::iterator).thenApplyAsync(this::responsesAsJson);
     }
