@@ -1,4 +1,4 @@
-@(widgets: Seq[Widget], form: Form[WidgetForm.Data], postUrl: Call)(implicit request: RequestHeader, messages: Messages)
+@(widgets: Seq[Widget], form: Form[WidgetForm.Data], postUrl: Call)(implicit request: MessagesRequestHeader)
 
   @main("Widgets") {
 
