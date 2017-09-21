@@ -13,7 +13,8 @@ import scala.concurrent.duration._
  * every machine, so there's no remote lookup necessary.
  *
  * Note that this doesn't serialize using protobuf and also isn't being sent over SSL,
- * so it's still not as secure as it could be.
+ * so it's still not as secure as it could be.  Please see http://doc.akka.io/docs/akka/current/scala/remoting-artery.html#remote-security 
+ * for more details.
  *
  * http://doc.akka.io/docs/akka/current/scala/distributed-data.html
  */
