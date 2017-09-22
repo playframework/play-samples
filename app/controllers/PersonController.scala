@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject._
 
-import dal._
+import models._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.validation.Constraints._
@@ -13,9 +13,9 @@ import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future}
 
 class PersonController @Inject()(repo: PersonRepository,
-                                  cc: ControllerComponents
+                                  cc: MessagesControllerComponents
                                 )(implicit ec: ExecutionContext)
-  extends AbstractController(cc) with I18nSupport {
+  extends MessagesAbstractController(cc) {
 
   /**
    * The mapping for the person form.
@@ -52,7 +52,7 @@ class PersonController @Inject()(repo: PersonRepository,
       person => {
         repo.create(person.name, person.age).map { _ =>
           // If successful, we simply redirect to the index page.
-          Redirect(routes.PersonController.index)
+          Redirect(routes.PersonController.index).flashing("success" -> "user.created")
         }
       }
     )
