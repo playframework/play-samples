@@ -13,7 +13,7 @@ import play.mvc.*;
 import akka.event.Logging;
 
 import javax.inject.Inject;
-import java.net.URL;
+import java.net.URI;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -77,7 +77,7 @@ public class HomeController extends Controller {
     private boolean originMatches(String origin) {
         if (origin == null) return false;
         try {
-            URL url = new URL(origin);
+            URI url = new URI(origin);
             return url.getHost().equals("localhost")
                     && (url.getPort() == 9000 || url.getPort() == 19001);
         } catch (Exception e ) {

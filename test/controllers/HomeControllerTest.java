@@ -58,7 +58,7 @@ public class HomeControllerTest extends WithServer {
         WebSocketClient webSocketClient = new WebSocketClient(asyncHttpClient);
         WebSocketClient.LoggingListener listener = new WebSocketClient.LoggingListener();
         CompletableFuture<WebSocket> future = webSocketClient.call(serverURL, origin, listener);
-        await().until(() -> assertThat(future).isDone());
+        await().untilAsserted(() -> assertThat(future).isDone());
         assertThat(future).isCompletedWithValueMatching(result -> result.isOpen());
     }
 
