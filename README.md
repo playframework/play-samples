@@ -64,12 +64,20 @@ Then finally, a `UserInfoAction`, an action builder, handles the work of reading
 
 In a production environment, there will be more than one Play instance.  This means that the session id to secret key to secret key mapping must be available to all the play instances, and when the session is deleted, the secret key must be removed from all the instances immediately.
 
-Play uses `services.session.SessionService` to provide a `Future` based API that internally uses [Akka Distributed Data](http://doc.akka.io/docs/akka/current/scala/distributed-data.html) to share the map throughout all the Play instances through [Akka Clustering](http://doc.akka.io/docs/akka/current/scala/cluster-usage.html).  Per the Akka docs, this is a good solution for up to 100,000 concurrent sessions.
+This example uses `services.session.SessionService` to provide a `Future` based API around a session store.  
+
+### Distributed Data Session Store
+
+The example internally uses [Akka Distributed Data](http://doc.akka.io/docs/akka/current/scala/distributed-data.html) to share the map throughout all the Play instances through [Akka Clustering](http://doc.akka.io/docs/akka/current/scala/cluster-usage.html).  Per the Akka docs, this is a good solution for up to 100,000 concurrent sessions.
 
 The basic structure of the cache is taken from [Akka's ReplicatedCache example](https://github.com/akka/akka-samples/blob/master/akka-sample-distributed-data-scala/src/main/scala/sample/distributeddata/ReplicatedCache.scala), but here an expiration time is added to ensure that an idle session will be reaped after reaching TTL, even if there is no explicit logout.  This does result in an individual actor per session, but the ActorCell only becomes active when there is a change in session state, so this is very low overhead.
 
-Note that the map is not persisted in this example, so if all the Play instances go down at once, then everyone is logged out.
-
-## ClusterSystem
-
 Since this is an example, rather than having to run several Play instances, a ClusterSystem that runs two Akka cluster nodes in the background is used, and are configured as the seed nodes for the cluster, so you can see the cluster messages in the logs.  In production, each Play instance should be part of the cluster and they will take care of themselves.
+
+> Note that the map is not persisted in this example, so **if all the Play instances go down at once, then everyone is logged out.**  
+
+> Also note that this uses Artery, which uses UDP without transport layer encryption.  **It is assumed transport level encryption is handled by the datacenter.**
+
+### Database Session Store
+
+If the example's CRDT implementation is not sufficient, you can use a regular database as a session store. Redis, Cassandra, or even an SQL database are all fine -- SQL databases are [extremely fast](https://thebuild.com/blog/2015/10/30/dont-assume-postgresql-is-slow/) at retrieving simple values.
