@@ -54,7 +54,7 @@ Then go to http://localhost:9000 to see the server.
 
 Encryption is handled by `services.encryption.EncryptionService`.  It uses secret key authenticated encryption with [Kalium](https://github.com/abstractj/kalium/), a thin Java wrapper around libsodium.  Kalium's `SecretBox` is an object oriented mapping to libsodium's `crypto_secretbox_easy` and `crypto_secretbox_open_easy`, described [here](https://download.libsodium.org/doc/secret-key_cryptography/authenticated_encryption.html).  The underlying stream cipher is XSalsa20, used with a Poly1305 MAC.
 
-A abstract [cookie baker](https://www.playframework.com/documentation/latest/api/scala/index.html#play.api.mvc.CookieBaker), `EncryptedCookieBaker` is used to serialize and deserialize encrypted text between a `Map[String, String]` and a case class representation.  `EncryptedCookieBaker` also extends the `JWTCookieDataCodec` trait, which handles the encoding between `Map[String, String` and the raw string data written out in the HTTP response in [JWT format](https://tools.ietf.org/html/rfc7519).
+A abstract [cookie baker](https://www.playframework.com/documentation/latest/api/scala/index.html#play.api.mvc.CookieBaker), `EncryptedCookieBaker` is used to serialize and deserialize encrypted text between a `Map[String, String]` and a case class representation.  `EncryptedCookieBaker` also extends the `JWTCookieDataCodec` trait, which handles the encoding between `Map[String, String]` and the raw string data written out in the HTTP response in [JWT format](https://tools.ietf.org/html/rfc7519).
 
 A factory `UserInfoCookieBakerFactory` creates a `UserInfoCookieBaker` that uses the session specific secret key to map a `UserInfo` case class to and from a cookie.
 
