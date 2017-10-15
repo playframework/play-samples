@@ -5,12 +5,12 @@ version := "2.6.x"
 inThisBuild(
   List(
     scalaVersion := "2.12.3",
-    dependencyOverrides := Set(
+    dependencyOverrides := Seq(
        "org.codehaus.plexus" % "plexus-utils" % "3.0.18",
        "com.google.code.findbugs" % "jsr305" % "3.0.1",
        "com.google.guava" % "guava" % "22.0",
-       "com.typesafe.akka" %% "akka-stream" % "2.5.4",
-       "com.typesafe.akka" %% "akka-actor" % "2.5.4"
+       "com.typesafe.akka" %% "akka-stream" % "2.5.6",
+       "com.typesafe.akka" %% "akka-actor" % "2.5.6"
     )
   )
 )
