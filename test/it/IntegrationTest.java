@@ -46,7 +46,7 @@ public class IntegrationTest extends WithApplication {
         JsonNode json = Json.toJson(new PostResource("1", "http://localhost:9000/v1/posts/1", "some title", "somebody"));
 
         Http.RequestBuilder request = new Http.RequestBuilder()
-                .method(POST)
+                .method(PUT)
                 .bodyJson(json)
                 .uri("/v1/posts/1");
 
