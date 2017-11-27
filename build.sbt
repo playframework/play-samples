@@ -6,13 +6,13 @@ lazy val GatlingTest = config("gatling") extend Test
 scalaVersion in ThisBuild := "2.11.11"
 
 libraryDependencies += guice
-libraryDependencies += "org.joda" % "joda-convert" % "1.8"
-libraryDependencies += "net.logstash.logback" % "logstash-logback-encoder" % "4.9"
+libraryDependencies += "org.joda" % "joda-convert" % "1.9.2"
+libraryDependencies += "net.logstash.logback" % "logstash-logback-encoder" % "4.11"
 
 libraryDependencies += "com.netaporter" %% "scala-uri" % "0.4.16"
-libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.0"
+libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.1"
 
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-M3" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
 libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "2.2.2" % Test
 libraryDependencies += "io.gatling" % "gatling-test-framework" % "2.2.2" % Test
 
