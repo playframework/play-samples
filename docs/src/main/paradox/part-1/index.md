@@ -10,7 +10,7 @@ git clone https://github.com/playframework/play-rest-api.git
 
 We're going to be showing an already working Play project with most of the code available under the "app/v1" directory.  There will be several different versions of the same project as this series expands, so you can compare different versions of the project against each other.
 
-To run Play on your own local computer, please see the instructions in the [appendix](../appendix.md). 
+To run Play on your own local computer, please see the instructions in the [appendix](../appendix.html). 
 
 ## Introduction
 
