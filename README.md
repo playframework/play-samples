@@ -1,11 +1,13 @@
 # Play File Upload using a custom BodyParser
 
+[![Build Status](https://travis-ci.org/playframework/play-java-fileupload-example.svg?branch=2.6.x)](https://travis-ci.org/playframework/play-java-fileupload-example)
+
 This is a sample project that shows how to upload a file through Akka Streams using a custom BodyParser using Akka Streams using the Java API.
 
 ## Default MultipartFormData Body Parser
- 
+
 Play's Java API specifies a BodyParser.MultipartFormData class which uses a TemporaryFile wrapper class that creates a file under a "temporary" name and then deletes it only when the system is under GC pressure.
-     
+
 ```java
 @BodyParser.Of(BodyParser.MultipartFormData.class)
 public Result upload() throws IOException {
@@ -23,13 +25,13 @@ There are cases where it's useful to have more control over where and Play uploa
 
 In short, we want to replace:
 
-```
+```java
 @BodyParser.Of(BodyParser.MultipartFormData.class)
 ```
 
-with 
+with:
 
-```
+```java
 @BodyParser.Of(MyMultipartFormDataBodyParser.class)
 ```
 
@@ -86,10 +88,9 @@ class MyMultipartFormDataBodyParser extends DelegatingMultipartFormDataBodyParse
 The core Accumulator is generated from an `akka.streams.FileIO` sink which writes out bytes to the filesystem, and exposes a CompletionStage when the write operation has been completed.
 
 Because this code delegates to the Scala API implementation, the underlying `DelegatingMultipartFormDataBodyParser<A>` exposes an abstract method:
- 
+
 ```java
 abstract Function<Multipart.FileInfo, Accumulator<ByteString, Http.MultipartFormData.FilePart<A>>> createFilePartHandler();
 ```
 
 `DelegatingMultipartFormDataBodyParser` does not know about any particular type, only `FilePart<A>`, and so it falls to the implementation to fill in the details. 
-

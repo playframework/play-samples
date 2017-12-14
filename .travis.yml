@@ -1,15 +1,36 @@
 language: scala
 scala:
-- 2.12.3
+# When updating Scala versions, also check the excludes
+# in build matrix below.
+- 2.11.12
+- 2.12.4
 jdk:
 - oraclejdk8
+- oraclejdk9
+env:
+  matrix:
+    - SCRIPT=scripts/test-sbt
+    - SCRIPT=scripts/test-gradle
+script:
+- $SCRIPT
 cache:
   directories:
   - "$HOME/.ivy2/cache"
+  - "$HOME/.gradle/caches"
 before_cache:
 - rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
 - rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
 - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+
+# Exclude some combinations from build matrix. See:
+# https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
+matrix:
+  exclude:
+    - scala: 2.11.12
+      jdk: oraclejdk9
+
+# See https://blog.travis-ci.com/2014-03-13-slack-notifications/
+# created with travis encrypt command line tool
 notifications:
   slack:
     secure: cw1Jfpq0W7w4fv7rLYm/mx2T/pNYoJ+zN+X5voxPfWE1/0QVHaFTXRBh7MwdUxE++B6wITVWoJiJoEc/qiqweeFPgL4U+rph3wY6f/xDL1M8xB2OrHnSAzTh6DubDlGtBMi2FDREU2tsdPJQ1XXcYeGr0mTLw5C59G9ZnnM45PcFuwW++3ojzAg7HA8Rc4nw3pvcpMkKywVNw/Q+4zeAdbrCmN+GI3LSa2tdc1SuN5JaM8r/w2Tx/yOnrraYKyi+QpSX6fOk0XMDsI1FpQY4z6253upIgctdf8BPCfz/dQlns8fCmBEQFQeZ0Sk42N1kWuB80FFRBkxH4NMAruZ7eoMbz26LK4br7oTKofHZ2o76952EsoWyGMJyVmL6MGvtAs5L7wv/8q3S0McleTzuEVMD6eL6D6EsbMDEZmgvv/D4dRuIdGydsJMH6ThpXzpJkj86Wqg9/F/Q1z8/y3+OlC8IO14Z8j0PqdKIZdAjQkIWjUKNFJgsagNVUfQFDHpNIMXhrLP68PfzK6XVc2m+iBizje7FM3laxbmrwd2ga1a3tIeIi50q1c4GWLapnv8hj2scTShRyyl4OD/k+6S/mUaAfbVijuAy9V3kKkXPbHAsGDPemjbZB+WCE9pM3chP4DG1dnTdw348b9tdWBtaJ3+lCDtnhTvMQcI74YL88CE=
