@@ -2,7 +2,7 @@ name := """play-java-chatroom-example"""
 
 version := "2.6.x"
 
-scalaVersion := "2.12.3"
+scalaVersion := "2.12.4"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 

@@ -1,6 +1,6 @@
-[<img src="https://img.shields.io/travis/playframework/play-java-chatroom-example.svg"/>](https://travis-ci.org/playframework/play-java-chatroom-example)
-
 # play-java-chatroom-example
+
+[<img src="https://img.shields.io/travis/playframework/play-java-chatroom-example.svg"/>](https://travis-ci.org/playframework/play-java-chatroom-example)
 
 This is a simple chatroom using Play and Websockets with the Java API.
 
@@ -57,11 +57,11 @@ You will need [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/
 
 ## Running
 
-```
+```bash
 sbt run
 ```
 
-Go to http://localhost:9000 and open it in two different browsers.  Typing into one browser will cause it to show up in another browser.
+Go to <http://localhost:9000> and open it in two different browsers.  Typing into one browser will cause it to show up in another browser.
 
 ## Tributes
 
@@ -69,5 +69,4 @@ This project is originally taken from Johan Andrén's [Akka-HTTP version](https:
 
 Johan also has a blog post explaining dynamic streams in more detail:
 
-* http://markatta.com/codemonkey/blog/2016/10/02/chat-with-akka-http-websockets/
-
+* <http://markatta.com/codemonkey/blog/2016/10/02/chat-with-akka-http-websockets/>
