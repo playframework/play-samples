@@ -1,6 +1,6 @@
-[<img src="https://img.shields.io/travis/playframework/play-java-compile-di-example.svg"/>](https://travis-ci.org/playframework/play-java-compile-di-example)
-
 # play-java-compile-di-example
+
+[<img src="https://img.shields.io/travis/playframework/play-java-compile-di-example.svg"/>](https://travis-ci.org/playframework/play-java-compile-di-example)
 
 This is a Play project using the Java API and compile time dependency injection.
 
@@ -16,4 +16,4 @@ Start up the server with sbt:
 sbt run
 ```
 
-Then go to the server at http://localhost:9000 to see "Hello".
+Then go to the server at <http://localhost:9000> to see "Hello".
