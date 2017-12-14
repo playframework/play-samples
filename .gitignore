@@ -3,3 +3,5 @@
 /project/target/
 /target/
 .idea/
+build
+.gradle
