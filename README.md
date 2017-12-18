@@ -16,25 +16,25 @@ However, you must install libsodium before using this application, which is a no
 
 If you are on MacOS, you can use Homebrew:
 
-```
+```bash
 brew install libsodium
 ```
 
 If you are on Ubuntu >= 15.04 or Debian >= 8, you can install with apt-get:
 
-```
+```bash
 apt-get install libsodium-dev
 ```
 
 On Fedora:
 
-```
+```bash
 dnf install libsodium-devel
 ```
 
 On CentOS:
 
-```
+```bash
 yum install libsodium-devel
 ```
 
@@ -44,11 +44,11 @@ For Windows, you can download pre-built libraries using the [install page](https
 
 Run sbt from the command line:
 
-```
+```bash
 sbt run
 ```
 
-Then go to http://localhost:9000 to see the server.
+Then go to <http://localhost:9000> to see the server.
 
 ## Encryption
 
@@ -74,8 +74,8 @@ The basic structure of the cache is taken from [Akka's ReplicatedCache example](
 
 Since this is an example, rather than having to run several Play instances, a ClusterSystem that runs two Akka cluster nodes in the background is used, and are configured as the seed nodes for the cluster, so you can see the cluster messages in the logs.  In production, each Play instance should be part of the cluster and they will take care of themselves.
 
-> Note that the map is not persisted in this example, so **if all the Play instances go down at once, then everyone is logged out.**  
-
+> Note that the map is not persisted in this example, so **if all the Play instances go down at once, then everyone is logged out.**
+>
 > Also note that this uses Artery, which uses UDP without transport layer encryption.  **It is assumed transport level encryption is handled by the datacenter.**
 
 ### Database Session Store
