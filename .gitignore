@@ -37,8 +37,11 @@ server.pid
 .idea/uiDesigner.xml
 
 # Gradle:
+build
+.gradle
 .idea/gradle.xml
 .idea/libraries
+
 
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
