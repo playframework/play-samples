@@ -18,7 +18,7 @@ import scala.concurrent.duration._
  * asynchronous code.
  */
 @Singleton
-class AsyncController @Inject() (actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends Controller {
+class AsyncController @Inject() (val controllerComponents: ControllerComponents, actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends BaseController {
 
   /**
    * Create an Action that returns a plain text message after a delay

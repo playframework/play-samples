@@ -4,11 +4,14 @@ import java.net.URL
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.core.LoggerContext
 import org.apache.logging.log4j.core.config.Configurator
-import play.api.{Environment, LoggerConfigurator, Mode}
+import org.slf4j.ILoggerFactory
+import play.api.{Configuration, Environment, LoggerConfigurator, Mode}
 
 class Log4J2LoggerConfigurator extends LoggerConfigurator {
 
-  override def init(rootPath: File, mode: Mode.Mode): Unit = {
+  private lazy val factory: ILoggerFactory = org.slf4j.impl.StaticLoggerBinder.getSingleton.getLoggerFactory
+
+  override def init(rootPath: File, mode: Mode): Unit = {
     val properties = Map("application.home" -> rootPath.getAbsolutePath)
     val resourceName = "log4j2.xml"
     val resourceUrl = Option(this.getClass.getClassLoader.getResource(resourceName))
@@ -21,7 +24,14 @@ class Log4J2LoggerConfigurator extends LoggerConfigurator {
   }
 
   override def configure(env: Environment): Unit = {
-    val properties = Map("application.home" -> env.rootPath.getAbsolutePath)
+    val properties = LoggerConfigurator.generateProperties(env, Configuration.empty, Map.empty)
+    val resourceUrl = env.resource("log4j2.xml")
+    configure(properties, resourceUrl)
+  }
+
+  override def configure(env: Environment, configuration: Configuration, optionalProperties: Map[String, String]): Unit = {
+    // LoggerConfigurator.generateProperties enables play.logger.includeConfigProperties=true
+    val properties = LoggerConfigurator.generateProperties(env, configuration, optionalProperties)
     val resourceUrl = env.resource("log4j2.xml")
     configure(properties, resourceUrl)
   }
@@ -30,4 +40,6 @@ class Log4J2LoggerConfigurator extends LoggerConfigurator {
     val context = LogManager.getContext(false).asInstanceOf[LoggerContext]
     context.setConfigLocation(config.get.toURI)
   }
+
+  override def loggerFactory: ILoggerFactory = factory
 }
