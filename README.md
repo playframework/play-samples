@@ -1,24 +1,23 @@
-## Play File Upload using a custom BodyParser
+# Play File Upload using a custom BodyParser
 
 This is a sample project that shows how to upload a file through Akka Streams using a custom BodyParser using Akka Streams using the Scala API.
 
-
 Play's Scala API for `parse.multipartFormData` uses a `BodyParser[MultipartFormData[TemporaryFile]]`.  The `TemporaryFile` wrapper class creates a file under a "temporary" name and then deletes it only when the system is under GC pressure.
- 
+
 ## Customizing the Body Parser
 
 There are cases where it's useful to have more control over where and Play uploads multi part form data.  In this case, we'd like to get access to the accumulated byte stream for each file part and generate a file directly, without going through `TemporaryFile`.
 
 In short, we want to replace:
 
-```
-Action(parse.multipartFormData) 
+```scala
+Action(parse.multipartFormData)
 ```
 
-with 
+with
 
-```
-Action(parse.multipartFormData(handleFilePartAsFile)) 
+```scala
+Action(parse.multipartFormData(handleFilePartAsFile))
 ```
 
 And we want to change as little code as possible.  The underlying mechanics are simple -- rather than use the default parser, a method `handleFilePartAsFile` is called in the action and returns a file:
@@ -36,7 +35,7 @@ def upload = Action(parse.multipartFormData(handleFilePartAsFile)) { implicit re
 }
 ```
 
-The implementation of `handleFilePartAsFile` uses a type alias `FilePartHandler` that is returned, and a custom accumulator will pull a file from anywhere on the filesystem (here we are using `Files.createTempFile`) 
+The implementation of `handleFilePartAsFile` uses a type alias `FilePartHandler` that is returned, and a custom accumulator will pull a file from anywhere on the filesystem (here we are using `Files.createTempFile`)
 
 ```scala
 type FilePartHandler[A] = FileInfo => Accumulator[ByteString, FilePart[A]]
@@ -55,4 +54,3 @@ private def handleFilePartAsFile: FilePartHandler[File] = {
     }(play.api.libs.concurrent.Execution.defaultContext)
 }
 ```
-
