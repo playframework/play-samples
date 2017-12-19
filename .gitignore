@@ -1,4 +1,5 @@
 bin/
+build
 /db
 .eclipse
 /lib/
@@ -14,5 +15,4 @@ server.pid
 /dist/
 .cache
 .idea
-
-
+.gradle

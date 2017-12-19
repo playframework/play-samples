@@ -6,6 +6,7 @@ package controllers
 import javax.inject.Inject
 
 import play.api.mvc._
+import play.api.routing._
 
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
@@ -13,4 +14,11 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.index())
   }
 
+  def javascriptRoutes = Action { implicit request =>
+    Ok(
+      JavaScriptReverseRouter("jsRoutes")(
+        routes.javascript.JavaEventSourceController.streamClock
+      )
+    ).as("text/javascript")
+  }
 }
