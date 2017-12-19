@@ -4,8 +4,6 @@ import javax.inject.{ Inject, Singleton }
 import play.api.db.slick.DatabaseConfigProvider
 import slick.jdbc.JdbcProfile
 
-import models.Person
-
 import scala.concurrent.{ Future, ExecutionContext }
 
 /**
