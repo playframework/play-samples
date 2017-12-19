@@ -9,7 +9,6 @@ import play.api.i18n.{Langs, MessagesApi}
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.language.implicitConversions
 
 /**
   * A wrapped request for post resources.

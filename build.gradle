@@ -1,0 +1,65 @@
+plugins {
+    id 'play'
+    id 'idea'
+    id "com.github.lkishalmi.gatling" version "0.7.1"
+}
+
+def playVersion = '2.6.9'
+def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.11")
+def gatlingVersion = "2.3.0"
+
+model {
+    components {
+        play {
+            platform play: playVersion, scala: scalaVersion, java: '1.8'
+            injectedRoutesGenerator = true
+
+            sources {
+                twirlTemplates {
+                    defaultImports = TwirlImports.SCALA
+                }
+            }
+        }
+    }
+}
+
+project.sourceSets {
+    gatling {
+        scala.srcDirs = ["gatling"]
+    }
+}
+
+gatling {
+    sourceRoot = "gatling"
+    simulationsDir = "gatling"
+    toolVersion = gatlingVersion
+}
+
+dependencies {
+    play "com.typesafe.play:play-guice_$scalaVersion:$playVersion"
+    play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
+    play "com.typesafe.play:filters-helpers_$scalaVersion:$playVersion"
+
+    play "org.joda:joda-convert:1.9.2"
+    play "net.logstash.logback:logstash-logback-encoder:4.11"
+
+    play "com.netaporter:scala-uri_$scalaVersion:0.4.16"
+    play "net.codingwell:scala-guice_$scalaVersion:4.1.1"
+
+    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:3.1.2"
+    playTest "io.gatling.highcharts:gatling-charts-highcharts:$gatlingVersion"
+    playTest "io.gatling:gatling-test-framework:$gatlingVersion"
+}
+
+repositories {
+    jcenter()
+    maven {
+        name "lightbend-maven-releases"
+        url "https://repo.lightbend.com/lightbend/maven-release"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+}
