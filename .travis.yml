@@ -1,16 +1,36 @@
 language: scala
 scala:
-- 2.11.8
-- 2.12.2
+# When updating Scala versions, also check the excludes
+# in build matrix below.
+- 2.11.12
+- 2.12.4
 jdk:
 - oraclejdk8
+- oraclejdk9
+env:
+  matrix:
+    - SCRIPT=scripts/test-sbt
+    - SCRIPT=scripts/test-gradle
+script:
+- $SCRIPT
 cache:
   directories:
   - "$HOME/.ivy2/cache"
+  - "$HOME/.gradle/caches"
 before_cache:
 - rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
 - rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
 - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+
+# Exclude some combinations from build matrix. See:
+# https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
+matrix:
+  exclude:
+    - scala: 2.11.12
+      jdk: oraclejdk9
+
+# See https://blog.travis-ci.com/2014-03-13-slack-notifications/
+# created with travis encrypt command line tool
 notifications:
   slack:
-    secure: cZmV1Cz1jrxUd4HcBJ8gf6c3EnK6Qvd4KmNx5qUoP+a8vaDx4lhM9pm8HbzV94uespLNdpGeHv5ZEeqbo70+7XmL7dGDBK1tBCTutQHUQmDpVoja1qnm6ho1QliMqbT8vX5BWny9HeS2XUjywM5PznUYv8N4Mom7Mxx28MLmLcXCkVrDChzuJn1jOefuQ7zxtTPTYY07IckrUBTibmm7zvpfg/oOoav8+oNjjYgGA0FU0YC+W/V1Wt9rdWlIOqZYOe0ATXWv/GinUTemM63WR+e1r3t0WBEFoztsUmdaIcrv5XbiiDZJn2mE6elTmv95n49GRPGqmo/3LDjlIYFjsIiLrWuGFJn7FwOvs1wd4JZ8VD5ah+iDcsUFK26ZbwiFZ5tNsvSc7Qszxd0JRa5s+wJsIJfAIup39XZ8s57tUTXmfE3Q45Ow/Wa09WQ3C3BKwNmCUTbKGozbLhkSJ6M1enovjYQl0iZl0bLojSRQDsl9K53FQFI4tBzdUX+/enwrcU/w43yE15HKkSq2FsIJHydtIltbzas0d8MA6iDfIDNKeSQ1D2vAL+Q+6Y8zXvu57LwN1kgJ/Nad5sBPZ7Seuv6nARGWdqhGI6VNfQc9NLk7ZClayOgIYPCAFXlI5mFP+thBnWcEDF14A7Da09FKsKPDxpIRR32SAW4U5KHWZJo=
+    secure: 3BJCD1KtQdPw+Q/eg4wN4DYHHXvS8/YIdNA1xdwPREuCe6rn4khhTu3HcREI07rG3wfQhphy+f1bs+A3K2h9SGVoa4tslng7Bg2jFlf50pXFJZhhXcHQxCApxhj93TP54SQxRFtYLSOueJa6YRWnqxJMZpuMnGOU9cY3iuYbIaExTncjAZdkLsZbFaJtGhI2PqgIyEPEGo8CMZ1EQs2EP+vWKAS0rsKYQNHPd2hp7Z1cHzU0w8SNOFmkgy11J/NFe/Of3Bt67PfIMUnxA61hB/Xl5llqCkWmf5shntyAGCo8bxqWHlK+O8+ZU49EODl+kChJklcQ7btPB7vc3AXFpDllegDg4d8dWszwbo7yX3zEjr4iQtv2j5QW6euHMW9LBkBiLBuAg5vEB2ERQDsz888YL2djRtATuvwS77HSznmnmsENYTsOdm+mjm+x2R9k1uZ68+z3qBoLhsVpsxRakJBuwcJO8EE0NUTQOTm/ftgJ0NQpf7TWfByOqDCv/bZeZU/lK71NLKARJbe5bC2QW0oD5LjINITT+nd5UFmkirmy10EVFiNvF+GLKNfSk3pVQ2lUVKrF22qI9d+wR+Oy5aZBNxKK7tySKiT2XNbgNdNzmX66bV2ib+zm4A3Te5dvetNMIFy8kcU34LTe5NIbZt/efGagpo+1ijhLS6gBiKk=
