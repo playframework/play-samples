@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 import static akka.pattern.PatternsCS.ask;
 
+import org.webjars.play.WebJarsUtil;
+
 /**
  * The main web controller that handles returning the index page, setting up a WebSocket, and watching a stock.
  */
@@ -30,18 +32,19 @@ import static akka.pattern.PatternsCS.ask;
 public class HomeController extends Controller {
 
     private final Timeout t = new Timeout(Duration.create(1, TimeUnit.SECONDS));
-
     private final Logger logger = org.slf4j.LoggerFactory.getLogger("controllers.HomeController");
-
     private final ActorRef userParentActor;
 
+    private WebJarsUtil webJarsUtil;
+
     @Inject
-    public HomeController(@Named("userParentActor") ActorRef userParentActor) {
+    public HomeController(@Named("userParentActor") ActorRef userParentActor, WebJarsUtil webJarsUtil) {
         this.userParentActor = userParentActor;
+        this.webJarsUtil = webJarsUtil;
     }
 
     public Result index() {
-        return ok(views.html.index.render(request()));
+        return ok(views.html.index.render(request(), webJarsUtil));
     }
 
     public WebSocket ws() {
