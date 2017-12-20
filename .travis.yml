@@ -1,21 +1,37 @@
 language: scala
-dist: trusty
-sudo: true
-group: beta
 scala:
+# When updating Scala versions, also check the excludes
+# in build matrix below.
+- 2.11.12
 - 2.12.4
 jdk:
 - oraclejdk8
+- oraclejdk9
+env:
+  matrix:
+    - SCRIPT=scripts/test-sbt
+    - SCRIPT=scripts/test-gradle
+script:
+- $SCRIPT
 cache:
   directories:
   - "$HOME/.ivy2/cache"
   - "$HOME/.sbt/boot/"
+  - "$HOME/.gradle/caches"
 before_cache:
+- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
+- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
-  # Delete all ivydata files since ivy touches them on each build
-  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
-  # Delete any SBT lock files
-  - find $HOME/.sbt -name "*.lock" -delete
+
+# Exclude some combinations from build matrix. See:
+# https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
+matrix:
+  exclude:
+    - scala: 2.11.12
+      jdk: oraclejdk9
+
+# See https://blog.travis-ci.com/2014-03-13-slack-notifications/
+# created with travis encrypt command line tool
 notifications:
   slack:
     secure: a738ADtNq3eN26B6LCcd+NY83s+PQjQagL0S9HhBFvCpvzkQ/CwAK9l5keWayM2S4IUBOmsS/uMuKodmP7QoPN3XxUGgsZNTMjHT1FAa/rc6N2MKF5C20fBII1/cJOuXBZ5x+2EW+odch3+0pafMCXI/RZZLiHELD2Jx6JGS0lQ=
