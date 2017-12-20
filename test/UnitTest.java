@@ -2,8 +2,9 @@ import controllers.PersonController;
 import models.Person;
 import models.PersonRepository;
 import org.junit.Test;
+import play.api.mvc.Request;
 import play.core.j.JavaContextComponents;
-import play.core.j.JavaHelpers;
+import play.core.j.JavaHelpers$;
 import play.data.FormFactory;
 import play.data.format.Formatters;
 import play.i18n.MessagesApi;
@@ -34,7 +35,7 @@ import static play.test.Helpers.contentAsString;
  * <p>
  * https://www.playframework.com/documentation/latest/JavaTest
  */
-public class UnitTest implements JavaHelpers {
+public class UnitTest {
 
     @Test
     public void checkIndex() {
@@ -54,6 +55,14 @@ public class UnitTest implements JavaHelpers {
         final Result result = controller.index();
 
         assertThat(result.status()).isEqualTo(OK);
+    }
+
+    private Http.Context createJavaContext(Request<Http.RequestBody> request, JavaContextComponents contextComponents) {
+        return JavaHelpers$.MODULE$.createJavaContext(request, contextComponents);
+    }
+
+    private JavaContextComponents createContextComponents() {
+        return JavaHelpers$.MODULE$.createContextComponents();
     }
 
     @Test
