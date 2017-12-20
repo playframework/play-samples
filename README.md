@@ -1,5 +1,7 @@
 # play-scala-secure-session-example
 
+[![Build Status](https://travis-ci.org/playframework/play-scala-secure-session-example.svg?branch=2.6.x)](https://travis-ci.org/playframework/play-scala-secure-session-example)
+
 This is an example application that shows how to do simple secure session management in Play, using the Scala API and session cookies.
 
 ## Overview
@@ -64,7 +66,7 @@ Then finally, a `UserInfoAction`, an action builder, handles the work of reading
 
 In a production environment, there will be more than one Play instance.  This means that the session id to secret key to secret key mapping must be available to all the play instances, and when the session is deleted, the secret key must be removed from all the instances immediately.
 
-This example uses `services.session.SessionService` to provide a `Future` based API around a session store.  
+This example uses `services.session.SessionService` to provide a `Future` based API around a session store.
 
 ### Distributed Data Session Store
 

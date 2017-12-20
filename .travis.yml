@@ -1,30 +1,43 @@
-language: scala
-# Trusty VM has 1.8u101
-# https://github.com/travis-ci/travis-ci/issues/3259#issuecomment-243534696
 dist: trusty
 sudo: true
 group: beta
+language: scala
 scala:
+# When updating Scala versions, also check the excludes
+# in build matrix below.
 - 2.11.12
 - 2.12.4
 jdk:
 - oraclejdk8
+- oraclejdk9
 before_install:
 - sudo add-apt-repository -y ppa:ondrej/php
 - sudo apt-get -qq update
 - sudo apt-get install -y libsodium-dev
+env:
+  matrix:
+    - SCRIPT=scripts/test-sbt
+    - SCRIPT=scripts/test-gradle
+script:
+- $SCRIPT
 cache:
   directories:
-    - $HOME/.ivy2/cache
-    - $HOME/.sbt/boot/
+  - "$HOME/.ivy2/cache"
+  - "$HOME/.gradle/caches"
 before_cache:
-  # Ensure changes to the cache aren't persisted
   - rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
   - rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
-  # Delete all ivydata files since ivy touches them on each build
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
-  # Delete any SBT lock files
-  - find $HOME/.sbt -name "*.lock" -delete
+
+# Exclude some combinations from build matrix. See:
+# https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
+matrix:
+  exclude:
+    - scala: 2.11.12
+      jdk: oraclejdk9
+
+# See https://blog.travis-ci.com/2014-03-13-slack-notifications/
+# created with travis encrypt command line tool
 notifications:
   slack:
     secure: D5Mj39P4P/mCRk/rSThkRRLKRCnv4qwY1ZMgYAljXAcJQDX2dFe7ZhUHeNHL02jGTL6QJqyM2lgKA1+yXjphmabqYB/fJmmaHZEx3c9XcfhRVdveIANdzVBfaHuM1YOzpx6LCO/6YlHHTxPMyBxl3q9ELguKs04nja0NTiKeSVAS7+rI8RUciqZ41zzq32PrdWmsPB76yxvftdHtCrTjIepnKfUfU/xvekWKybk0L6tj9P/rSu7Ao6pqJCRw8ct954dKHEY01C9tw3lyc7f9/kNsFVRq4A8+tuiGB/yM5pRHgmxbAzjQRyCUjccDgMf8P+NmSenb/JIMQcPt/ZR/dzABrzgQe225Y3b53IeuOyMO2j6ZtBUwJ27OQdXeAiY5VtUqcG3nmlrjQkSyjqWz7Frjj4Trgqlv1/9lSJs+ciwOiYcBjTew9zrVlfyqmza32VPKOvvStTrtYpSS99c4KkiOeEKZGX45yVMnqEdn4g6ox3bYj6oGst0t87KiX+rvnmPfsE1c+RfCI7M7wAieAeXQsX5PaLXQLKG0VedDJe8x6IP+zd9AxrzKSNlcjo6SsBHO1h9VrTNd/WKYkzkjeF0UwfUXqmZErz0y+bvfF77ATw4vmyagSy60a8tJjekJYDB/Qu5IXnlWrg96niKpf3j4Jcyn1CVvlTnTD0sbZM4=
