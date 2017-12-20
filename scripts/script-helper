@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+java_version=$(java -version 2>&1 | java -version 2>&1 | awk -F '"' '/version/ {print $2}')
+
+if [[ $java_version = 9* ]] ; then
+    echo "The build is using Java 9 ($java_version). We need additional JVM parameters"
+    export _JAVA_OPTIONS="$_JAVA_OPTIONS --add-modules=java.xml.bind"
+else
+    echo "The build is NOT using Java 9 ($java_version). No addional JVM params needed."
+fi

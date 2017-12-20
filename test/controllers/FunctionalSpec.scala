@@ -1,6 +1,7 @@
 package controllers
 
-import java.util.concurrent.ArrayBlockingQueue
+import java.util.concurrent.{ArrayBlockingQueue, Callable}
+import java.util.function.Consumer
 
 import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
@@ -32,10 +33,13 @@ class FunctionalSpec extends PlaySpec with ScalaFutures {
         val webSocketClient = new WebSocketClient(asyncHttpClient)
         try {
           val origin = "ws://example.com/ws"
-          val listener = new WebSocketClient.LoggingListener(message => println(message))
+          val consumer: Consumer[String] = new Consumer[String] {
+            override def accept(message: String): Unit = println(message)
+          }
+          val listener = new WebSocketClient.LoggingListener(consumer)
           val completionStage = webSocketClient.call(serverURL, origin, listener)
           val f = FutureConverters.toScala(completionStage)
-          val result = Await.result(f, atMost = 1000 millis)
+          Await.result(f, atMost = 1000.millis)
           listener.getThrowable mustBe a[IllegalStateException]
         } catch {
           case e: IllegalStateException =>
@@ -59,13 +63,19 @@ class FunctionalSpec extends PlaySpec with ScalaFutures {
         val webSocketClient = new WebSocketClient(asyncHttpClient)
         val queue = new ArrayBlockingQueue[String](10)
         val origin = serverURL
-        val listener = new WebSocketClient.LoggingListener(message => queue.put(message))
+        val consumer: Consumer[String] = new Consumer[String] {
+          override def accept(message: String): Unit = queue.put(message)
+        }
+        val listener = new WebSocketClient.LoggingListener(consumer)
         val completionStage = webSocketClient.call(serverURL, origin, listener)
         val f = FutureConverters.toScala(completionStage)
 
         // Test we can get good output from the websocket
-        whenReady(f, timeout = Timeout(1 second)) { webSocket =>
-          await().until(() => webSocket.isOpen && queue.peek() != null)
+        whenReady(f, timeout = Timeout(1.second)) { webSocket =>
+          val condition: Callable[java.lang.Boolean] = new Callable[java.lang.Boolean] {
+            override def call(): java.lang.Boolean = webSocket.isOpen && queue.peek() != null
+          }
+          await().until(condition)
           val input: String = queue.take()
           val json:JsValue = Json.parse(input)
           val symbol = (json \ "symbol").as[String]
