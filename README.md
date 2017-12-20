@@ -1,5 +1,7 @@
 # Play using Log4j 2
 
+[![Build Status](https://travis-ci.org/playframework/play-scala-log4j2-example.svg?branch=2.6.x)](https://travis-ci.org/playframework/play-scala-log4j2-example)
+
 This is an example project showing a sample Play application that use Log4J 2 instead of using Logback.
 
 Please see [Using a custom logging framework](https://www.playframework.com/documentation/2.6.x/SettingsLogger#Using-a-Custom-Logging-Framework) in the Play documentation for more details.
@@ -21,27 +23,28 @@ sbt -Dlog4j.configurationFile=conf/log4j2.xml
 If you do not run with `log4j.configurationFile` loaded, you will see this error:
 
 ```log
-ERROR StatusLogger No log4j2 configuration file found. Using default configuration: logging only errors to the console.
+ERROR StatusLogger No log4j2 configuration file found. Using default configuration: logging only errors to the console. Set system property 'log4j2.debug' to show Log4j2 internal initialization logging.
 ```
 
 After you define the log4j system property, running the application should look like this:
 
 ```log
-[info] Loading project definition from /Users/wsargent/work/play-2.5-log4j2/project
-[info] Set current project to play-2.5-log4j2 (in build file:/Users/wsargent/work/play-2.5-log4j2/)
-[play-2.5-log4j2] $ run
+[info] Loading project definition from /Users/player/play-scala-log4j2-example/project
+[info] Set current project to play-2.6-log4j2 (in build file:/Users/player/play-scala-log4j2-example/)
 
 No play.logger.configurator found: logging must be configured entirely by the application.
 --- (Running the application, auto-reloading is enabled) ---
 
-[INFO ] 2016-03-29 13:09:05.265 [pool-6-thread-2] NettyServer - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+[INFO ] 2017-12-20 09:41:12.268 [pool-7-thread-2] AkkaHttpServer - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
-(Server started, use Ctrl+D to stop and go back to the console...)
+(Server started, use Enter to stop and go back to the console...)
 
-[info] Compiling 1 Scala source to /Users/wsargent/work/play-2.5-log4j2/target/scala-2.11/classes...
-[INFO ] 2016-03-29 13:09:14.051 [ForkJoinPool-1-worker-1] application - ApplicationTimer demo: Starting application at 2016-03-29T20:09:14.031Z.
-[INFO ] 2016-03-29 13:09:14.279 [application-akka.actor.default-dispatcher-2] Slf4jLogger - Slf4jLogger started
-[INFO ] 2016-03-29 13:09:14.307 [ForkJoinPool-1-worker-1] Play - Application started (Dev)
+[info] Compiling 1 Scala source to /Users/player/play-scala-log4j2-example/target/scala-2.12/classes ...
+[info] Done compiling.
+[INFO ] 2017-12-20 09:41:41.296 [play-dev-mode-akka.actor.default-dispatcher-4] application - ApplicationTimer demo: Starting application at 2017-12-20T11:41:41.295Z.
+[INFO ] 2017-12-20 09:41:41.477 [application-akka.actor.default-dispatcher-2] Slf4jLogger - Slf4jLogger started
+[WARN ] 2017-12-20 09:41:41.655 [play-dev-mode-akka.actor.default-dispatcher-4] application - Using the following cache for assets
+[INFO ] 2017-12-20 09:41:41.670 [play-dev-mode-akka.actor.default-dispatcher-4] Play - Application started (Dev)
 ````
 
 Note that you will see
