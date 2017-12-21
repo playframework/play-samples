@@ -16,7 +16,7 @@ object Main {
   private val logger = org.slf4j.LoggerFactory.getLogger("application")
 
   def printResponse(response:WSResponse) = {
-    response.allHeaders.foreach { header =>
+    response.headers.foreach { header =>
       logger.info(s"header = $header")
     }
     val body = response.body

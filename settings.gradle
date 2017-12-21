@@ -1,0 +1,4 @@
+include 'one', 'two'
+
+project(':one').projectDir = new File(settingsDir, 'modules/one')
+project(':two').projectDir = new File(settingsDir, 'modules/two')

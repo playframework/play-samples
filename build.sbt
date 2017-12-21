@@ -11,11 +11,11 @@ lazy val root = (project in file("."))
   .aggregate(one, two)
   .dependsOn(one, two)
 
-scalaVersion := "2.12.2"
+scalaVersion := "2.12.4"
 
 libraryDependencies += ws
 libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-M3" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
 
 fork in run := true
 

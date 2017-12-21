@@ -1,7 +1,7 @@
 # Example Play TLS Application
 
 This application shows how to use Play with SSL/TLS, using the Java Secure Socket Extension (JSSE) API.
- 
+
 ## Requirements
 
 You must have JDK 1.8 installed on your machine to run this, to take advantage of the new [security enhancements in JSSE](http://blog.ivanristic.com/2014/03/ssl-tls-improvements-in-java-8.html).
@@ -22,7 +22,7 @@ To use HTTPS, you must have X.509 certificates.  Generating certificates can be 
 
 To generate certificates, run:
 
-```
+```bash
 cd scripts/
 ./gencerts.sh
 ```
@@ -33,11 +33,11 @@ You may have noticed that the name on the generated certificates is `example.com
 
 Rather than setting up a DNS entry or a remote server, we'll modify `/etc/hosts` to point to the local directory.
 
-```
+```bash
 $ sudo vi /etc/hosts
 ```
 
-```
+```bash
 127.0.0.1       example.com one.example.com two.example.com three.example.com
 ```
 
@@ -49,7 +49,7 @@ This application is not run with `activator` -- you should run it with `./play` 
 
 The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](http://www.playframework.com/documentation/2.5.x/ConfiguringHttps).
 
-```
+```bash
 ./play run
 ```
 
@@ -69,14 +69,14 @@ Download SSLyze:
 
 And then run SSLyze against the play application:
 
-```
+```bash
 cd sslyze-0_9-osx64
 python sslyze.py --regular www.example.com:9443
 ```
 
 You should see results like:
 
-```
+```bash
  REGISTERING AVAILABLE PLUGINS
  -----------------------------
 
@@ -170,13 +170,13 @@ exceptions.KeyError - 'exponent'
 
 Now that you've verified that the server is running and can speak HTTPS, go into `./play` script and uncomment the `play.ssl.needClientAuth` setting:
 
-```
+```bash
 JVM_OPTIONS="$JVM_OPTIONS -Dplay.ssl.needClientAuth=true"
 ```
 
 Then restart the server.  You should see
 
-```
+```bash
    ECDHE-ECDSA-RC4-SHA             ClientCertificateRequested - Server requested a client certificate issued by one of the following CAs: '/C=US/ST=California/L=San Francisco/O=Example Company/OU=Example Org/CN=clientca'.
 ```
 
@@ -188,7 +188,7 @@ Fortunately, we happen to have [Play WS](http://www.playframework.com/documentat
 
 The `ws.conf` script looks like this:
 
-```
+```HOCON
 ws.ssl {
 
   protocol = "TLSv1.2"
@@ -224,14 +224,14 @@ Normally you would use [Play WS](http://www.playframework.com/documentation/2.3.
 
 Open up a new shell, and type:
 
-```
+```bash
 $ ./play
 > runMain Main
 ```
 
 You should see:
 
-```
+```bash
 [info] Running Main
 header = (Content-Length,Buffer(106))
 header = (Content-Type,Buffer(text/html; charset=utf-8))
@@ -246,7 +246,7 @@ body =
 
 Now, to verify that it's only working because of the client's key, comment out the keyManager section in `ws.conf` and rerun `Main` -- you will see that the WS client fails client authentication:
 
-```
+```bash
 failure = java.net.ConnectException: Received fatal alert: bad_certificate to https://example.com:9443/
 ```
 

@@ -1,3 +1,4 @@
+build
 logs
 project/project
 project/target
@@ -6,6 +7,7 @@ tmp
 .history
 dist
 /.idea
+/.gradle
 /*.iml
 /out
 /certs
