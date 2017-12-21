@@ -16,16 +16,21 @@ import javax.inject.Inject;
 import java.net.URI;
 import java.util.concurrent.CompletableFuture;
 
+import org.webjars.play.WebJarsUtil;
+
 /**
  * A very simple chat client using websockets.
  */
 public class HomeController extends Controller {
 
     private final Flow<String, String, NotUsed> userFlow;
+    private final WebJarsUtil webJarsUtil;
+
 
     @Inject
     public HomeController(ActorSystem actorSystem,
-                          Materializer mat) {
+                          Materializer mat,
+                          WebJarsUtil webJarsUtil) {
         org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());
         LoggingAdapter logging = Logging.getLogger(actorSystem.eventStream(), logger.getName());
 
@@ -39,12 +44,14 @@ public class HomeController extends Controller {
         Sink<String, NotUsed> chatSink = sinkSourcePair.first();
         Source<String, NotUsed> chatSource = sinkSourcePair.second();
         this.userFlow = Flow.fromSinkAndSource(chatSink, chatSource).log("userFlow", logging);
+
+        this.webJarsUtil = webJarsUtil;
     }
 
     public Result index() {
         Http.Request request = request();
         String url = routes.HomeController.chat().webSocketURL(request);
-        return Results.ok(views.html.index.render(url));
+        return Results.ok(views.html.index.render(url, webJarsUtil));
     }
 
     public WebSocket chat() {

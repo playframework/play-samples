@@ -26,6 +26,7 @@ dependencies {
     play "com.typesafe.play:play-ahc-ws_$scalaVersion:$playVersion"
     play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
 
+    play "org.webjars:webjars-play_$scalaVersion:2.6.2"
     play "org.webjars:flot:0.8.3"
     play "org.webjars:bootstrap:3.3.6"
 
