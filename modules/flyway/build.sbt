@@ -1,5 +1,3 @@
-
-
 // Database Migrations:
 // run with "sbt flywayMigrate"
 // http://flywaydb.org/getstarted/firststeps/sbt.html
@@ -8,7 +6,7 @@
 //$ export DB_DEFAULT_USER="sa"
 //$ export DB_DEFAULT_PASSWORD=""
 
-libraryDependencies += "org.flywaydb" % "flyway-core" % "4.0"
+libraryDependencies += "org.flywaydb" % "flyway-core" % "5.0.3"
 
 lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")

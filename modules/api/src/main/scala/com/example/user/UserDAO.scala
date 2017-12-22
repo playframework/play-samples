@@ -2,7 +2,7 @@ package com.example.user
 
 import org.joda.time.DateTime
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 /**
  * An implementation dependent DAO.  This could be implemented by Slick, Cassandra, or a REST API.
