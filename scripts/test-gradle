@@ -10,4 +10,4 @@ scala_binary_version=$(echo $TRAVIS_SCALA_VERSION | cut -c1-4)
 echo "+------------------------------+"
 echo "| Executing tests using Gradle |" 
 echo "+------------------------------+"
-./gradlew -Dscala.binary.version=$scala_binary_version test -i --stacktrace
+./gradlew -Dscala.binary.version=$scala_binary_version check -i --stacktrace
