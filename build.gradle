@@ -1,5 +1,6 @@
 plugins {
     id 'play'
+    id 'play-coffeescript'
     id 'idea'
 }
 
@@ -38,6 +39,10 @@ dependencies {
 
 repositories {
     jcenter()
+    maven {
+        name "gradle-javascript-public"
+        url "https://repo.gradle.org/gradle/javascript-public"
+    }
     maven {
         name "lightbend-maven-releases"
         url "https://repo.lightbend.com/lightbend/maven-release"
