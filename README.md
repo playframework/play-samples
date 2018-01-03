@@ -6,7 +6,7 @@ A REST API showing Play with a JPA backend.  For the Scala version, please see <
 
 ## Best Practices for Blocking API
 
-If you look at the controller: <https://github.com/playframework/play-java-rest-api-example/blob/master/app/v1/post/PostController.java>
+If you look at the controller: <https://github.com/playframework/play-java-rest-api-example/blob/2.6.x/app/v1/post/PostController.java>
 then you can see that when calling out to a blocking API like JDBC, you should put it behind an asynchronous boundary -- in practice, this means using the CompletionStage API to make sure that you're not blocking the rendering thread while the database call is going on in the background.
 
 ```java
