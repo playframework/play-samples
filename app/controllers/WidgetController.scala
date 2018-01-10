@@ -11,8 +11,8 @@ import play.api.mvc._
  * The classic WidgetController using MessagesAbstractController.
  *
  * Instead of MessagesAbstractController, you can use the I18nSupport trait,
- * which provides implicits that create a Messages instances from
- * a request using implicit conversion.
+ * which provides implicits that create a Messages instance from a request
+ * using implicit conversion.
  *
  * See https://www.playframework.com/documentation/2.6.x/ScalaForms#passing-messagesprovider-to-form-helpers
  * for details.
@@ -27,7 +27,7 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
   )
 
   // The URL to the widget.  You can call this directly from the template, but it
-  // can be more convenient to leave the template commpletely stateless i.e. all
+  // can be more convenient to leave the template completely stateless i.e. all
   // of the "WidgetController" references are inside the .scala file.
   private val postUrl = routes.WidgetController.createWidget()
 
@@ -50,7 +50,7 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
     }
 
     val successFunction = { data: Data =>
-      // This is the good case, where the form was successfully parsed as a Data.
+      // This is the good case, where the form was successfully parsed as a Data object.
       val widget = Widget(name = data.name, price = data.price)
       widgets.append(widget)
       Redirect(routes.WidgetController.listWidgets()).flashing("info" -> "Widget added!")
@@ -59,5 +59,4 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
     val formValidationResult = form.bindFromRequest
     formValidationResult.fold(errorFunction, successFunction)
   }
-
 }
