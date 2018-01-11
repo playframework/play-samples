@@ -1,6 +1,6 @@
 # play-websocket-java-example
 
-[![Travis](https://img.shields.io/travis/playframework/play-websocket-java.svg?style=flat)](https://travis-ci.org/playframework/play-websocket-java) [![GitHub issues](https://img.shields.io/github/issues/playframework/play-websocket-java.svg?style=flat)](https://github.com/playframework/play-websocket-java/issues) [![GitHub forks](https://img.shields.io/github/forks/playframework/play-websocket-java.svg?style=flat)](https://github.com/playframework/play-websocket-java/network) [![GitHub stars](https://img.shields.io/github/stars/playframework/play-websocket-java.svg?style=flat)](https://github.com/playframework/play-websocket-java/stargazers)
+[![Build Status](https://travis-ci.org/playframework/play-java-websocket-example.svg?branch=2.6.x)](https://travis-ci.org/playframework/play-java-websocket-example) [![GitHub issues](https://img.shields.io/github/issues/playframework/play-websocket-java.svg?style=flat)](https://github.com/playframework/play-websocket-java/issues) [![GitHub forks](https://img.shields.io/github/forks/playframework/play-websocket-java.svg?style=flat)](https://github.com/playframework/play-websocket-java/network) [![GitHub stars](https://img.shields.io/github/stars/playframework/play-websocket-java.svg?style=flat)](https://github.com/playframework/play-websocket-java/stargazers)
 
 This is an example Play application that shows how to use Play's Websocket API in Java, by showing a series of stock tickers updated using WebSocket.
 
@@ -10,9 +10,9 @@ There are also tests showing how Junit and Akka Testkit are used to test actors 
 
 ## Reactive Push
 
-This application uses a WebSocket to push data to the browser in real-time.  To create a WebSocket connection in Play, first a route must be defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file.  Here is the route which will be used to setup the WebSocket connection:
+This application uses a WebSocket to push data to the browser in real-time.  To create a WebSocket connection in Play, first a route must be defined in the `routes` file.  Here is the route which will be used to setup the WebSocket connection:
 
-```
+```routes
 GET /ws controllers.Application.ws
 ```
 
@@ -26,7 +26,7 @@ Underneath the covers, resources (threads) are only allocated to the Actors and 
 
 ## Reactive UI - Real-time Chart
 
-On the client-side, a Reactive UI updates the stock charts every time a message is received.  The <a href="#code/app/views/index.scala.html" class="shortcut">index.scala.html</a> file produces the web page at <http://localhost:9000> and loads the JavaScript and CSS needed render the page and setup the UI.
+On the client-side, a Reactive UI updates the stock charts every time a message is received.  The `index.scala.html` file produces the web page at <http://localhost:9000> and loads the JavaScript and CSS needed render the page and setup the UI.
 
 The JavaScript for the page is compiled from the index.coffee file which is written in CoffeeScript (an elegant way to write JavaScript).  Using jQuery, a page ready handler sets up the WebSocket connection and sets up functions which will be called when the server sends a message to the client through the WebSocket:
 
@@ -43,15 +43,15 @@ The message is parsed and depending on whether the message contains the stock hi
 
 When a web server gets a request, it allocates a thread to handle the request and produce a response.  In a typical model the thread is allocated for the entire duration of the request and response, even if the web request is waiting for some other resource.  A Reactive Request is a typical web request and response, but handled in an asynchronous and non-blocking way on the server.  This means that when the thread for a web request is not actively being used, it can be released and reused for something else.
 
-In the Reactive Stocks application the service which determines the stock sentiments is a Reactive Request.  The route is defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file:
+In the Reactive Stocks application the service which determines the stock sentiments is a Reactive Request.  The route is defined in the `routes` file:
 
-```
+```routes
 GET /sentiment/:symbol controllers.StockSentiment.get(symbol)
 ```
 
 A `GET` request to `/sentiment/GOOG` will call `get("GOOG")` on the StockSentiment.java controller.  That method begins with:
 
-```
+```scala
 def get(symbol: String): Action[AnyContent] = Action.async {
 ```
 
