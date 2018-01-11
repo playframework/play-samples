@@ -6,6 +6,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
 scalaVersion := "2.12.4"
 
+crossScalaVersions := Seq("2.11.12", "2.12.4")
+
 libraryDependencies += ws
 
 libraryDependencies += "com.google.dagger" % "dagger" % "2.13"
