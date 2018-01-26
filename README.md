@@ -18,4 +18,4 @@ Anorm is a Scala ORM library that uses SQL:
 
 and
 
-<https://cchantep.github.io/anorm/>
+<https://playframework.github.io/anorm/>
