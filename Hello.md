@@ -33,8 +33,8 @@ sbt sbt-version
 
 If you do not have the required versions, follow these links to obtain them:
 
-* [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html).
-* [sbt](http://www.scala-sbt.org/download.html).
+* [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [sbt](http://www.scala-sbt.org/download.html)
 
 ## Create and run the project
 
@@ -144,7 +144,7 @@ Let's add a second page to this project. If this were a real application, we wou
 
 As the final part of this tutorial, modify the `About` page to accept an HTTP request parameter. First, create an action that accepts a name from the request and outputs it. We will introduce an error to demonstrate how Play provides useful feedback.  Then, bind an HTTP query parameter to the action parameter. Finally, create a page template so that you can style the results:
 
-1. In the `HomeController.java` file, add a new `hello` action method using the following code. In the return parameter, note the deliberate omission of the final quote in the "Hello" string:
+1. In the `HomeController.java` file, add a new `hello` action method using the following code. In the return parameter, be sure to leave out the end quote in the `"Hello` string to cause an error:
 
     ```java
     public Result hello(String name) {
