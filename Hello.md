@@ -166,7 +166,7 @@ As the final part of this tutorial, modify the `About` page to accept an HTTP re
 
     ![Compilation error](images/compilation-error.png)
 
-1. In the `HomeController.java file`, add the missing closing quote for "Hello" in the return statement: `return ok ("Hello " + name);`.
+1. In the `HomeController.java` file, add the missing closing quote for "Hello" in the return statement: `return ok ("Hello " + name);`.
 
 1. Refresh the browser, and you should see something like this:
 
