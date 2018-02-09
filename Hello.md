@@ -92,7 +92,7 @@ Let's take a look at the implementation:
     }
     ```
 
-1. Navigate to the project `conf` directory and open the `routes` file. The following line maps a GET request from the browser to the `index` action in `HomeController.java`. In this case, it is mapping the root URL `/`:
+1. Navigate to the project `conf` directory and open the `routes` file. A route consists of an HTTP method, a path, and an action method. This control over the URL schema makes it easy to design clean, human-readable, bookmarkable URLs. The following line maps a GET request for the root URL `/` to the `index` action in `HomeController.java`:
 
     ```routes    GET     /           controllers.HomeController.index
     ```
