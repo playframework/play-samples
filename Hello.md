@@ -60,19 +60,19 @@ Use the template to create and run a project:
 
     <http://localhost:9000>
 
-    The Play application responds `Welcome to Play!`:
+    The Play application responds `Welcome to Play!`.
 
 ## Explore the project
 
-If you browse the project, you will find application components under the `app` subdirectory. Within that subdirectory, you will find a familiar organization of controllers and views. Since this simple project does not use data, it does not contain a `model` directory, but this is where you would add it. You'll find the location for images, javascript, and stylesheets in the `public` subdirectory. For more details, see [The Play application layout](https://www.playframework.com/documentation/2.6.x/Anatomy#The-Play-application-layout)
+If you browse the project, you will find application components under the `app` subdirectory. Within that subdirectory, you will find a familiar organization of controllers and views. Since this simple project does not use data, it does not contain a `model` directory, but this is where you would add it. You'll find the location for images, javascript, and stylesheets in the `public` subdirectory. For more details, see [The Play application layout](https://www.playframework.com/documentation/2.6.x/Anatomy#The-Play-application-layout).
 
 > Change to a local cross-reference to the doc when this tutorial is included in the doc. [[the Play application layout|Anatomy]]
 
 To construct the simple welcome message, the project uses:
 
 * A controller that defines an `index` action method.
-* A `routes` file that maps a request to the `localhost` root to the `index` action.
-* A Twirl template to generate HTML page contents. The [Twirl](https://www.playframework.com/documentation/2.6.x/JavaTemplates) template language is:
+* A `routes` file that maps a request to the `localhost` root URL to the `index` action.
+* A Twirl template that the `index` action calls to generate HTML page contents. The [Twirl](https://www.playframework.com/documentation/2.6.x/JavaTemplates) template language is:
     * Easy to learn
     * Requires no special editor
     * Provides type safety
@@ -84,7 +84,7 @@ Note: in the remaining content, for Windows shells, substitute `/` for `\` in pa
 
 Let's take a look at the implementation:
 
-1. Navigate to the `app/controllers` project directory and open `HomeController.java` with your favorite editor. The controller class includes an `index` action method that tells the web server to return the contents of the `index.html` file in response to a request:
+1. Navigate to the `app/controllers` project directory and open `HomeController.java` with your favorite editor. The controller class includes the `index` action method that tells the web server to return the contents of the `index.html` file in response to a request:
 
     ```java
     public Result index() {
