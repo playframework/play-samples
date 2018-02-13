@@ -60,7 +60,7 @@ Use the template to create and run a project:
 
     <http://localhost:9000>
 
-    The Play application responds `Welcome to Play!`.
+    The Play application responds: `Welcome to Play!`
 
 ## Explore the project
 
@@ -71,7 +71,7 @@ If you browse the project, you will find application components under the `app` 
 To construct the simple welcome message, the project uses:
 
 * A controller that defines an `index` action method.
-* A `routes` file that maps a request to the `localhost` root URL to the `index` action.
+* A `routes` file that maps the browser request to the `index` action.
 * A Twirl template that the `index` action calls to generate HTML page contents. The [Twirl](https://www.playframework.com/documentation/2.6.x/JavaTemplates) template language is:
     * Easy to learn
     * Requires no special editor
