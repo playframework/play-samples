@@ -8,7 +8,7 @@ This tutorial shows you how to create a Play project from a [giter8](http://www.
 
 In contrast with web frameworks that were designed to support large eco-systems, such as Java EE, Play was developed by web developers&mdash;for web development. Play saves precious development time by directly supporting common tasks and hot reloading so that you can immediately view the results of your work. As a full-stack framework, it includes all of the components you need to build a web application such as an integrated HTTP server, form validation, Cross-Site Request Forgery (CSRF) protection, RESTful web services API, and more.
 
-Play offers both Java and Scala APIs and its Model-View-Controller (MVC) architecture is easy to learn. As a Scala developer, you will appreciate the concise and familiar functional programming paradigm without side effects. The large Scala community using Play offers an excellent resource for getting questions answered.
+Play offers both Java and Scala APIs and its Model-View-Controller (MVC) architecture is easy to learn. As a Scala developer, you will appreciate using the concise and familiar functional programming patterns. The large Scala community using Play offers an excellent resource for getting questions answered.
 
 The Play Framework uses Scala and Akka under the hood. This endows Play applications with a stateless, non-blocking, event-driven architecture that provides horizontal and vertical scalability and uses resources more efficiently.  
 
