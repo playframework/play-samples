@@ -89,6 +89,7 @@ Let's take a look at the implementation:
     ```scala
     def index() = Action { implicit request: Request[AnyContent] =>
       Ok(views.html.index())
+    }
     ```
 
 1. Navigate to the project `conf` directory and open the `routes` file. A route consists of an HTTP method, a path, and an action method. Because Play gives you this control over the URL schema, it is easy to design clean, human-readable, bookmarkable URLs. The following line maps a GET request for the root URL `/` to the `index` action in `HomeController.scala`:
@@ -148,7 +149,7 @@ As the final part of this tutorial, modify the `About` page to accept an HTTP re
 
     ```scala
     def hello(name:String) = Action { implicit request: Request[AnyContent] =>
-        Ok("Hello  " + name + "")
+        Ok(s"Hello $name")
     }
     ```
 
