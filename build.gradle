@@ -30,7 +30,7 @@ dependencies {
 
     play "com.h2database:h2:1.4.196"
 
-    play "com.typesafe.play:anorm_$scalaVersion:2.5.3"
+    play "org.playframework.anorm:anorm_$scalaVersion:2.6.1"
     playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:3.1.2"
 }
 

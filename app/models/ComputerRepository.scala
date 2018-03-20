@@ -3,7 +3,7 @@ package models
 import java.util.Date
 import javax.inject.Inject
 
-import anorm.SqlParser._
+import anorm.SqlParser.{ get, scalar }
 import anorm._
 import play.api.db.DBApi
 
@@ -14,6 +14,11 @@ case class Computer(id: Option[Long] = None,
                     introduced: Option[Date],
                     discontinued: Option[Date],
                     companyId: Option[Long])
+
+object Computer {
+  implicit def toParameters: ToParameterList[Computer] =
+    Macro.toParameters[Computer]
+}
 
 /**
  * Helper for pagination.
@@ -40,7 +45,7 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
       get[Option[Date]]("computer.introduced") ~
       get[Option[Date]]("computer.discontinued") ~
       get[Option[Long]]("computer.company_id") map {
-      case id~name~introduced~discontinued~companyId =>
+      case id ~ name ~ introduced ~ discontinued ~ companyId =>
         Computer(id, name, introduced, discontinued, companyId)
     }
   }
@@ -48,8 +53,8 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
   /**
    * Parse a (Computer,Company) from a ResultSet
    */
-  private val withCompany = simple ~ (companyRepository.simple ?) map {
-    case computer~company => (computer,company)
+  private val withCompany = simple ~ (companyRepository.simple.?) map {
+    case computer ~ company => computer -> company
   }
 
   // -- Queries
@@ -59,7 +64,7 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
    */
   def findById(id: Long): Future[Option[Computer]] = Future {
     db.withConnection { implicit connection =>
-      SQL("select * from computer where id = {id}").on('id -> id).as(simple.singleOpt)
+      SQL"select * from computer where id = $id".as(simple.singleOpt)
     }
   }(ec)
 
@@ -73,39 +78,26 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
    */
   def list(page: Int = 0, pageSize: Int = 10, orderBy: Int = 1, filter: String = "%"): Future[Page[(Computer, Option[Company])]] = Future {
 
-    val offest = pageSize * page
+    val offset = pageSize * page
 
     db.withConnection { implicit connection =>
 
-      val computers = SQL(
-        """
-          select * from computer
-          left join company on computer.company_id = company.id
-          where computer.name like {filter}
-          order by {orderBy} nulls last
-          limit {pageSize} offset {offset}
-        """
-      ).on(
-        'pageSize -> pageSize,
-        'offset -> offest,
-        'filter -> filter,
-        'orderBy -> orderBy
-      ).as(withCompany *)
+      val computers = SQL"""
+        select * from computer
+        left join company on computer.company_id = company.id
+        where computer.name like ${filter}
+        order by ${orderBy} nulls last
+        limit ${pageSize} offset ${offset}
+      """.as(withCompany.*)
 
-      val totalRows = SQL(
-        """
-          select count(*) from computer
-          left join company on computer.company_id = company.id
-          where computer.name like {filter}
-        """
-      ).on(
-        'filter -> filter
-      ).as(scalar[Long].single)
+      val totalRows = SQL"""
+        select count(*) from computer
+        left join company on computer.company_id = company.id
+        where computer.name like ${filter}
+      """.as(scalar[Long].single)
 
-      Page(computers, page, offest, totalRows)
-
+      Page(computers, page, offset, totalRows)
     }
-
   }(ec)
 
   /**
@@ -116,19 +108,13 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
    */
   def update(id: Long, computer: Computer) = Future {
     db.withConnection { implicit connection =>
-      SQL(
-        """
-          update computer
-          set name = {name}, introduced = {introduced}, discontinued = {discontinued}, company_id = {company_id}
-          where id = {id}
-        """
-      ).on(
-        'id -> id,
-        'name -> computer.name,
-        'introduced -> computer.introduced,
-        'discontinued -> computer.discontinued,
-        'company_id -> computer.companyId
-      ).executeUpdate()
+      SQL("""
+        update computer set name = {name}, introduced = {introduced}, 
+          discontinued = {discontinued}, company_id = {companyId}
+        where id = {id}
+      """).bind(computer.copy(id = Some(id)/* ensure */)).executeUpdate()
+      // case class binding using ToParameterList,
+      // note using SQL(..) but not SQL.. interpolation
     }
   }(ec)
 
@@ -137,21 +123,14 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
    *
    * @param computer The computer values.
    */
-  def insert(computer: Computer) = Future {
+  def insert(computer: Computer): Future[Option[Long]] = Future {
     db.withConnection { implicit connection =>
-      SQL(
-        """
-          insert into computer values (
-            (select next value for computer_seq),
-            {name}, {introduced}, {discontinued}, {company_id}
-          )
-        """
-      ).on(
-        'name -> computer.name,
-        'introduced -> computer.introduced,
-        'discontinued -> computer.discontinued,
-        'company_id -> computer.companyId
-      ).executeUpdate()
+      SQL("""
+        insert into computer values (
+          (select next value for computer_seq),
+          {name}, {introduced}, {discontinued}, {companyId}
+        )
+      """).bind(computer).executeInsert()
     }
   }(ec)
 
@@ -162,7 +141,7 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
    */
   def delete(id: Long) = Future {
     db.withConnection { implicit connection =>
-      SQL("delete from computer where id = {id}").on('id -> id).executeUpdate()
+      SQL"delete from computer where id = ${id}".executeUpdate()
     }
   }(ec)
 

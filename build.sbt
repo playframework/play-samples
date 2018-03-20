@@ -12,5 +12,5 @@ libraryDependencies += evolutions
 
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"
 
-libraryDependencies += "com.typesafe.play" %% "anorm" % "2.5.3"
+libraryDependencies += "org.playframework.anorm" %% "anorm" % "2.6.1"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
