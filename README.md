@@ -12,10 +12,7 @@ Play documentation is here:
 
 ## Anorm
 
-Anorm is a Scala ORM library that uses SQL:
+Anorm is a Scala library that uses SQL.
 
-<https://www.playframework.com/documentation/latest/ScalaAnorm>
-
-and
-
-<https://playframework.github.io/anorm/>
+- up to 2.5.3: <https://www.playframework.com/documentation/latest/ScalaAnorm>
+- 2.6+: <https://playframework.github.io/anorm/>
