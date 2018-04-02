@@ -6,7 +6,7 @@ This is an example Play template that demonstrates Streaming with Server Sent Ev
 
 Please see the documentation at:
 
-* <https://www.playframework.com/documentation/current/ScalaComet>
+* <https://www.playframework.com/documentation/latest/ScalaComet>
 
 ## Running
 
