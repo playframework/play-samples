@@ -19,8 +19,8 @@ libraryDependencies += "com.netaporter" %% "scala-uri" % "0.4.16"
 libraryDependencies += "net.codingwell" %% "scala-guice" % "4.1.1"
 
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
-libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion(scalaBinaryVersion.value) % Test
-libraryDependencies += "io.gatling" % "gatling-test-framework" % gatlingVersion(scalaBinaryVersion.value) % Test
+libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "2.3.1" % Test
+libraryDependencies += "io.gatling" % "gatling-test-framework" % "2.3.1" % Test
 
 // The Play project itself
 lazy val root = (project in file("."))
