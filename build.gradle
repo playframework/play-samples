@@ -4,7 +4,7 @@ plugins {
     id "com.github.lkishalmi.gatling" version "0.7.1"
 }
 
-def playVersion = "2.6.13"
+def playVersion = "2.6.15"
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 def gatlingVersion = getGlatlingVersion(scalaVersion)
 
@@ -45,7 +45,7 @@ dependencies {
     play "com.typesafe.play:play-guice_$scalaVersion:$playVersion"
     play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
     play "com.typesafe.play:play-java-jpa_$scalaVersion:$playVersion"
-    play "com.h2database:h2:1.4.196"
+    play "com.h2database:h2:1.4.197"
 
     play "org.hibernate:hibernate-core:5.2.9.Final"
     play "io.dropwizard.metrics:metrics-core:3.2.1"

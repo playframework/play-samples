@@ -9,7 +9,7 @@ def gatlingVersion(scalaBinVer: String): String = scalaBinVer match {
 
 inThisBuild(
   List(
-    scalaVersion := "2.12.4",
+scalaVersion := "2.12.6"
     crossScalaVersions := Seq("2.11.12", "2.12.4"),
     dependencyOverrides := Seq(
        "org.codehaus.plexus" % "plexus-utils" % "3.0.18",
@@ -30,15 +30,15 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava, GatlingPlugin).co
 
 libraryDependencies += guice
 libraryDependencies += javaJpa
-libraryDependencies += "com.h2database" % "h2" % "1.4.196"
+libraryDependencies += "com.h2database" % "h2" % "1.4.197"
 
 libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.9.Final"
 libraryDependencies += "io.dropwizard.metrics" % "metrics-core" % "3.2.1"
 libraryDependencies += "com.palominolabs.http" % "url-builder" % "1.1.0"
 libraryDependencies += "net.jodah" % "failsafe" % "1.0.3"
 
-libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion(scalaBinaryVersion.value) % Test
-libraryDependencies += "io.gatling" % "gatling-test-framework" % gatlingVersion(scalaBinaryVersion.value) % Test
+libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "2.3.1" % Test
+libraryDependencies += "io.gatling" % "gatling-test-framework" % "2.3.1" % Test
 
 PlayKeys.externalizeResources := false
 
