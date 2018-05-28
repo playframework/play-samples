@@ -4,7 +4,7 @@ plugins {
     id 'idea'
 }
 
-def playVersion = "2.6.13"
+def playVersion = "2.6.15"
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 
 model {
@@ -30,7 +30,7 @@ dependencies {
     play "com.typesafe.play:play-java-jpa_$scalaVersion:$playVersion"
 
     play "org.hibernate:hibernate-core:5.2.5.Final"
-    play "com.h2database:h2:1.4.196"
+    play "com.h2database:h2:1.4.197"
 
     playTest "org.awaitility:awaitility:2.0.0"
     playTest "org.assertj:assertj-core:3.6.2"
