@@ -37,8 +37,8 @@ libraryDependencies += "io.dropwizard.metrics" % "metrics-core" % "3.2.1"
 libraryDependencies += "com.palominolabs.http" % "url-builder" % "1.1.0"
 libraryDependencies += "net.jodah" % "failsafe" % "1.0.3"
 
-libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % "2.3.1" % Test
-libraryDependencies += "io.gatling" % "gatling-test-framework" % "2.3.1" % Test
+libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion(scalaBinaryVersion.value) % Test
+libraryDependencies += "io.gatling" % "gatling-test-framework" % gatlingVersion(scalaBinaryVersion.value) % Test
 
 PlayKeys.externalizeResources := false
 
