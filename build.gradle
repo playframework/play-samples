@@ -3,7 +3,7 @@ plugins {
     id 'idea'
 }
 
-def playVersion = "2.6.13"
+def playVersion = "2.6.15"
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 
 model {
@@ -29,7 +29,7 @@ dependencies {
     play "com.typesafe.play:play-slick_$scalaVersion:3.0.3"
     play "com.typesafe.play:play-slick-evolutions_$scalaVersion:3.0.3"
 
-    play "com.h2database:h2:1.4.196"
+    play "com.h2database:h2:1.4.197"
 
     playTest "com.typesafe.play:play-specs2_$scalaVersion:$playVersion"
 }
