@@ -9,8 +9,8 @@ def gatlingVersion(scalaBinVer: String): String = scalaBinVer match {
 
 inThisBuild(
   List(
-    scalaVersion := "2.12.4",
-    crossScalaVersions := Seq("2.11.12", "2.12.4"),
+    scalaVersion := "2.12.6",
+    crossScalaVersions := Seq("2.11.12", "2.12.6"),
     dependencyOverrides := Seq(
        "org.codehaus.plexus" % "plexus-utils" % "3.0.18",
        "com.google.code.findbugs" % "jsr305" % "3.0.1",
@@ -30,7 +30,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava, GatlingPlugin).co
 
 libraryDependencies += guice
 libraryDependencies += javaJpa
-libraryDependencies += "com.h2database" % "h2" % "1.4.196"
+libraryDependencies += "com.h2database" % "h2" % "1.4.197"
 
 libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.9.Final"
 libraryDependencies += "io.dropwizard.metrics" % "metrics-core" % "3.2.1"
