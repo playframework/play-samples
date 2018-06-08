@@ -3,7 +3,7 @@ scala:
 # When updating Scala versions, also check the excludes
 # in build matrix below.
 - 2.11.12
-- 2.12.4
+- 2.12.6
 jdk:
 - oraclejdk8
 - oraclejdk9
