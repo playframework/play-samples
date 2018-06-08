@@ -7,14 +7,14 @@ This appendix covers how to download, run, use and load test Play.
 
 You will need a JDK 1.8 that is more recent than b20.  You can download the JDK from [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
 
-You will need to have git installed.
+You will need to have [git](https://git-scm.com/) installed.
 
 ## Downloading
 
-You can download the example project from Github:
+You can clone the example project from Github:
 
-```
-git clone https://github.com/playframework/play-rest-api.git
+```bash
+git clone https://github.com/playframework/play-scala-rest-api-example.git
 ```
 
 ## Running
@@ -23,21 +23,21 @@ You need to download and install sbt for this application to run.  You can do th
 
 Once you have sbt installed, the following at the command prompt will download any required library dependencies, and start up Play in development mode:
 
-```
+```bash
 sbt run
 ```
 
-Play will start up on the HTTP port at http://localhost:9000/.   You don't need to reploy or reload anything -- changing any source code while the server is running will automatically recompile and hot-reload the application on the next HTTP request.  You can read more about using Play [here](https://www.playframework.com/documentation/2.5.x/PlayConsole).
+Play will start up on the HTTP port at <http://localhost:9000/>.   You don't need to deploy or reload anything -- changing any source code while the server is running will automatically recompile and hot-reload the application on the next HTTP request.  You can read more about using Play [here](https://www.playframework.com/documentation/latest/PlayConsole).
 
 ## Usage
 
 If you call the same URL from the command line, you’ll see JSON. Using [httpie](https://httpie.org/), we can execute the command:
 
-```
+```bash
 http --verbose http://localhost:9000/v1/posts
 ```
 
-and get back:
+And get back:
 
 ```
 GET /v1/posts HTTP/1.1
@@ -45,7 +45,7 @@ GET /v1/posts HTTP/1.1
 
 Likewise, you can also send a POST directly as JSON:
 
-```
+```bash
 http --verbose POST http://localhost:9000/v1/posts title="hello" body="world"
 ```
 
@@ -57,19 +57,18 @@ POST /v1/posts HTTP/1.1
 
 ## Load Testing
 
-The best way to see what Play can do is to run a load test.  We've included Gatling in this test project for integrated load testing.
+The best way to see what Play can do is to run a load test.  We've included [Gatling](https://gatling.io/) in this test project for integrated load testing.
 
-Start Play in production mode, by [staging the application](https://www.playframework.com/documentation/2.5.x/Deploying) and running the play scripts:
+Start Play in production mode, by [staging the application](https://www.playframework.com/documentation/latest/Deploying) and running the play scripts:
 
-```
+```bash
 sbt stage
-cd target/universal/stage
-bin/play-rest-api -Dplay.crypto.secret=testing
+./target/universal/stage/bin/play-scala-rest-api-example -Dplay.http.secret.key=testing
 ```
 
 Then you'll start the Gatling load test up (it's already integrated into the project):
 
-```
+```bash
 sbt gatling:test
 ```
 
@@ -77,8 +76,8 @@ For best results, start the gatling load test up on another machine so you do no
 
 Once the test completes, you'll see an HTML file containing the load test chart:
 
-```
- ./rest-api/target/gatling/gatlingspec-1472579540405/index.html
+```bash
+./rest-api/target/gatling/gatlingspec-1472579540405/index.html
 ```
 
 That will contain your load test results.

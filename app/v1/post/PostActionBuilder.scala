@@ -52,7 +52,7 @@ class PostActionBuilder @Inject()(messagesApi: MessagesApi, playBodyParsers: Pla
     with RequestMarkerContext
     with HttpVerbs {
 
-  val parser: BodyParser[AnyContent] = playBodyParsers.anyContent
+  override val parser: BodyParser[AnyContent] = playBodyParsers.anyContent
 
   type PostRequestBlock[A] = PostRequest[A] => Future[Result]
 
