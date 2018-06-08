@@ -64,7 +64,7 @@ With that caveat, let's start working with Play!
 
 @@@index
 
-* [Basics](part-1/index.md)
-* [Appendix](appendix.md)
+* @ref[Basics](part-1/index.md)
+* @ref[Appendix](appendix.md)
 
 @@@
