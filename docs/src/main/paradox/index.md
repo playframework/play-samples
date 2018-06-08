@@ -8,7 +8,7 @@ We’ll demonstrate with a "best practices" REST API.  You can get source code f
 
 Download a pre-packaged bundle with this link [https://example.lightbend.com/v1/download/play-scala-rest-api-example](https://example.lightbend.com/v1/download/play-scala-rest-api-example)
 
-### Linux/Mac
+**Linux/Mac:**
 
 ```bash
 unzip play-scala-rest-api-example.zip
@@ -16,7 +16,7 @@ cd play-scala-rest-api-example
 ./sbt
 ```
 
-### Windows
+**Windows:**
 
 1. Unzip the download
 1. From a command line `cd` into the directory where you expanded the downloaded `zip` file and run:
@@ -66,11 +66,11 @@ One thing to note here is that although this guide covers how to make a REST API
 
 For full scale microservices, you want [Lagom](http://www.lagomframework.com/), which builds on top of Play -- a microservices framework for dealing with the ["data on the outside"](https://blog.acolyer.org/2016/09/13/data-on-the-outside-versus-data-on-the-inside/) problem, set up with persistence and service APIs that ensure that the service always stays up and responsive even in the face of chaos monkeys and network partitions.
 
-With that caveat, let's start working with Play!
+With that caveat, let's @ref[start working with Play](part-1/index.md)!
 
 @@@index
 
-* @ref[Basics](part-1/index.md)
-* @ref[Appendix](appendix.md)
+* [Basics](part-1/index.md)
+* [Appendix](appendix.md)
 
 @@@
