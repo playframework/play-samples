@@ -10,8 +10,8 @@ crossScalaVersions := Seq("2.11.12", "2.12.4")
 
 libraryDependencies += ws
 
-libraryDependencies += "com.google.dagger" % "dagger" % "2.13"
-libraryDependencies += "com.google.dagger" % "dagger-compiler" % "2.13"
+libraryDependencies += "com.google.dagger" % "dagger" % "2.16"
+libraryDependencies += "com.google.dagger" % "dagger-compiler" % "2.16"
 
 javacOptions in Compile := { (managedSourceDirectories in Compile).value.head.mkdirs(); javacOptions.value }
 
