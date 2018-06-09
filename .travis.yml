@@ -3,10 +3,12 @@ scala:
 # When updating Scala versions, also check the excludes
 # in build matrix below.
 - 2.11.12
-- 2.12.4
+- 2.12.6
 jdk:
 - oraclejdk8
 - oraclejdk9
+- oraclejdk10
+- oraclejdk11
 env:
   matrix:
     - SCRIPT=scripts/test-sbt
@@ -28,6 +30,18 @@ matrix:
   exclude:
     - scala: 2.11.12
       jdk: oraclejdk9
+    - scala: 2.11.12
+      jdk: oraclejdk10
+    - scala: 2.11.12
+      jdk: oraclejdk11
+  allow_failures:
+    # We should allow failures here since Java 11 removed some modules including
+    # java.xml.bind which we are adding when running with Java 9+. For more details
+    # see http://openjdk.java.net/jeps/320
+    #
+    # Play already has a fix for that, but it needs to be backported and released
+    # for 2.6.x: https://github.com/playframework/playframework/pull/8382
+    - jdk: oraclejdk11
 
 # See https://blog.travis-ci.com/2014-03-13-slack-notifications/
 # created with travis encrypt command line tool
