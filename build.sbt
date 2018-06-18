@@ -4,7 +4,7 @@ version := "2.6.x"
 
 def gatlingVersion(scalaBinVer: String): String = scalaBinVer match {
   case "2.11" => "2.2.5"
-  case "2.12" => "2.3.0"
+  case "2.12" => "2.3.1"
 }
 
 inThisBuild(
@@ -32,7 +32,7 @@ libraryDependencies += guice
 libraryDependencies += javaJpa
 libraryDependencies += "com.h2database" % "h2" % "1.4.197"
 
-libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.9.Final"
+libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.17.Final"
 libraryDependencies += "io.dropwizard.metrics" % "metrics-core" % "3.2.1"
 libraryDependencies += "com.palominolabs.http" % "url-builder" % "1.1.0"
 libraryDependencies += "net.jodah" % "failsafe" % "1.0.3"
