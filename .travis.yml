@@ -1,8 +1,11 @@
 language: scala
 scala:
-- 2.12.4
+- 2.12.6
 jdk:
 - oraclejdk8
+- oraclejdk9
+- oraclejdk10
+- oraclejdk11
 script:
   sbt ++$TRAVIS_SCALA_VERSION clean flyway/flywayMigrate slickCodegen compile test
 cache:
@@ -12,6 +15,26 @@ before_cache:
 - rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
 - rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
 - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+
+# Exclude some combinations from build matrix. See:
+# https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
+matrix:
+  exclude:
+    - scala: 2.11.12
+      jdk: oraclejdk9
+    - scala: 2.11.12
+      jdk: oraclejdk10
+    - scala: 2.11.12
+      jdk: oraclejdk11
+  allow_failures:
+    # We should allow failures here since Java 11 removed some modules including
+    # java.xml.bind which we are adding when running with Java 9+. For more details
+    # see http://openjdk.java.net/jeps/320
+    #
+    # Play already has a fix for that, but it needs to be backported and released
+    # for 2.6.x: https://github.com/playframework/playframework/pull/8382
+    - jdk: oraclejdk11
+
 notifications:
   slack:
     secure: bHNB8qvP8Da51PgA8tHiM4ePhusZlLIFXNItkyo0HuS1L1I06BRKOe2tFyU6dy8hz8cIEh2lFbQ5WIhjXFXPxqez6SdacFtInX4BRj7Q6QJP7Q+79h3OHQAz6niYWaGZZ1BtMucSlZcXYiAky5Tsj3cOesUM18T/HLrSfg8UjJHflSyT3wWnYcuRIHuC/YPjNqUn7Brrf/yaRClR80ffgx7eq/KF912bupsj/17eF/rPs65B2ux6M0yeSdUiXLIDNSm9Dh18ZTb+Hq4RjryT9EySO4X7rsuauqPWbA2OM0EFT3+0QLxD+y8EEAZGqGvEYnoEfikuIqCCr5v5Zsayg3J7mb5hgpqTZQWazmJFQ/+m76vP5YOP8/xI2+gbCv95kYHmkSItHza/VZhwP06pQyVMs2kXVoejwRm27M+WG36r+2bjU23o7R/EmyLMjcOdvXF/+Czi3KzMCDyX8AxVl9VOilvGlvTitwkmba1GM2pST9Pr81zh6ktyBsfx3f/DstalgkaVB+ftFrxRsawwlxKy6Xg8hSIR/ifsWdIhTucqMwjvUa7PmCtDZcIiXTgQVBBTVHtHmzuM07zo/0jTaQ/sP0Hlj4YgHz87/1lwoTTEVErLcVyl1FG30vrt8rophMk/cl8UGmw17f5XRh9jVfGwokh5UuUS1/4RcUvBqlM=
