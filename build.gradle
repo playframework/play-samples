@@ -4,7 +4,7 @@ plugins {
     id "com.github.lkishalmi.gatling" version "0.7.1"
 }
 
-def playVersion = "2.6.15"
+def playVersion = "2.6.16"
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 def gatlingVersion = "2.3.0"
 
