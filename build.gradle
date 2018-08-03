@@ -1,0 +1,67 @@
+plugins {
+    id 'play'
+    id 'idea'
+}
+
+def playVersion = "2.6.17"
+def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
+
+apply plugin: 'com.lightbend.akka.grpc.gradle'
+
+model {
+    components {
+        play {
+            platform play: playVersion, scala: scalaVersion, java: '1.8'
+            injectedRoutesGenerator = true
+
+            sources {
+                twirlTemplates {
+                    defaultImports = TwirlImports.JAVA
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    play "com.typesafe.play:play-guice_$scalaVersion:$playVersion"
+    play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
+    play "com.h2database:h2:1.4.197"
+
+    playTest "org.assertj:assertj-core:3.6.2"
+    playTest "org.awaitility:awaitility:2.0.0"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven {
+        name "lightbend-maven-releases"
+        url "https://repo.lightbend.com/lightbend/maven-release"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+    }
+    dependencies {
+        // see https://plugins.gradle.org/plugin/com.lightbend.akka.grpc.gradle
+        // for the currently latest version.
+        classpath 'gradle.plugin.com.lightbend.akka.grpc:akka-grpc-gradle-plugin:0.2'
+    }
+}
+
+// These are the default options for a Java project (not necessary to define)
+akkaGrpc {
+    language = "Scala"
+    generateClient = true
+    generateServer = true
+}
