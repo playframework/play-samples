@@ -5,7 +5,8 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
-  .enablePlugins(AkkaGrpcPlugin)
+  .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
+  .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
     .settings(
       akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java),
       akkaGrpcExtraGenerators += PlayJavaClientCodeGenerator,
