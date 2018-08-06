@@ -32,8 +32,4 @@ There are several demonstration files available in this template.
 
   An example of a component that contains state, in this case a simple counter.
 
-- ApplicationTimer.java:
-
-  An example of a component that starts when the application starts and stops
-  when the application stops.
 
