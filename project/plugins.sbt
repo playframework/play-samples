@@ -10,5 +10,5 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.7.0-M2")
 addSbtPlugin("com.typesafe.sbt" % "sbt-play-enhancer" % "1.2.2")
 
 // Akka GRPC
-addSbtPlugin("com.lightbend.akka.grpc" %% "sbt-akka-grpc" % "0.2")
+addSbtPlugin("com.lightbend.akka.grpc" %% "sbt-akka-grpc" % "0.2-RC1")
 

@@ -14,7 +14,7 @@ you will need to change the:
 play.http.secret.key = ...
 ``` 
 
-in `application.conf` to different value, as we will be using the `start` mode to launch the play app.
+in `application.conf` to different value, as we will be using the `runProd` mode to launch the play app.
 
 
 ## Running
@@ -22,7 +22,7 @@ in `application.conf` to different value, as we will be using the `start` mode t
 Run this using [sbt](http://www.scala-sbt.org/).  If you downloaded this project from http://www.playframework.com/download then you'll find a prepackaged version of sbt in the project directory:
 
 ```
-sbt start
+sbt runProd
 ```
 
 And then go to http://localhost:9000 to see the running web application.
