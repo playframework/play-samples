@@ -16,7 +16,7 @@ play.http.secret.key = ...
 
 in `application.conf` to different value, as we will be using the `runProd` mode to launch the play app.
 
-You may also want to look at the `project/plugins.sbt` and `build.sbt` or `build.gradle` where the akka-grpc plugin is included. 
+You may also want to look at the `project/plugins.sbt` and `build.sbt` where the akka-grpc plugin is included. 
 
 Note that the source generation for the services/client is all done by the `AkkaGrpcPlugin`, so remember to `enablePlugins(AkkaGrpcPlugin)` it when using sbt in all the projects of your build that want to use it.
 
