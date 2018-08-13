@@ -6,7 +6,15 @@ plugins {
 def playVersion = "2.7.0-M2"
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 
+// Enable Akka gRPC plugin, and generate Play modules:
 apply plugin: 'com.lightbend.akka.grpc.gradle'
+
+akkaGrpc {
+    language = "Java"
+    generateClient = true
+    generateServer = true
+    generatePlay = true
+}
 
 model {
     components {
@@ -57,11 +65,4 @@ buildscript {
         // for the currently latest version.
         classpath 'gradle.plugin.com.lightbend.akka.grpc:akka-grpc-gradle-plugin:0.2'
     }
-}
-
-// These are the default options for a Java project (not necessary to define)
-akkaGrpc {
-    language = "Scala"
-    generateClient = true
-    generateServer = true
 }
