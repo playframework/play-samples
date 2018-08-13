@@ -5,8 +5,6 @@ import example.myapp.helloworld.grpc.HelloReply;
 import example.myapp.helloworld.grpc.HelloRequest;
 import play.mvc.*;
 
-import views.html.*;
-
 import javax.inject.Inject;
 import java.util.concurrent.CompletionStage;
 

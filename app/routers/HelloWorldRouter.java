@@ -1,12 +1,8 @@
-package controllers;
+package routers;
 
 import akka.stream.Materializer;
 import example.myapp.helloworld.grpc.HelloReply;
 import example.myapp.helloworld.grpc.HelloRequest;
-import play.mvc.*;
-
-import scala.concurrent.Future;
-import views.html.*;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
