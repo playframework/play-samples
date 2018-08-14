@@ -1,4 +1,4 @@
-# akka-grpc-play-quickstart-java
+# akka-grpc-play-quickstart-scala
 
 This is a starter application that shows how to use Akka gRPC to both expose and use gRPC services inside an Play application.
 
