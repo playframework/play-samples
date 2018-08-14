@@ -11,6 +11,11 @@ lazy val root = (project in file("."))
       akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java),
       akkaGrpcExtraGenerators += PlayJavaClientCodeGenerator,
       akkaGrpcExtraGenerators += PlayJavaServerCodeGenerator,
+      PlayKeys.devSettings ++= Seq(
+        "play.server.http.port" -> "disabled",
+        "play.server.https.port" -> "9443",
+        "play.server.https.keyStore.path" -> "conf/selfsigned.keystore",
+      )
     )
 
 scalaVersion := "2.12.6"
