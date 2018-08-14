@@ -1,12 +1,43 @@
+/*
+ * Akka gRPC is not currently supported with Play through Gradle,
+ * because it requires Play 2.7.x, and at the time of writing the
+ * Gradle does not yet work with Play. See also:
+ *
+ * Track https://github.com/akka/akka-grpc/issues/342 for progress.
+ */
+
+buildscript {
+  repositories {
+    mavenLocal()
+    gradlePluginPortal()
+  }
+  dependencies {
+    // see https://plugins.gradle.org/plugin/com.lightbend.akka.grpc.gradle
+    // for the currently latest version.
+    classpath 'com.lightbend.akka.grpc:akka-grpc-gradle-plugin:0.1+123-bdd6a389'
+    //classpath 'gradle.plugin.com.lightbend.akka.grpc:akka-grpc-gradle-plugin:0.1-RC1'
+  }
+}
+
 plugins {
     id 'play'
     id 'idea'
+    id 'java'
 }
 
 def playVersion = "2.7.0-M2"
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 
+apply plugin: 'com.google.protobuf'
 apply plugin: 'com.lightbend.akka.grpc.gradle'
+
+// Enable Akka gRPC plugin, and generate Play modules:
+akkaGrpc {
+    language = "Java"
+    generateClient = true
+    generateServer = true
+    generatePlay = true
+}
 
 model {
     components {
@@ -45,23 +76,4 @@ repositories {
         url "https://repo.lightbend.com/lightbend/ivy-releases"
         layout "ivy"
     }
-}
-
-buildscript {
-    repositories {
-        mavenLocal()
-        gradlePluginPortal()
-    }
-    dependencies {
-        // see https://plugins.gradle.org/plugin/com.lightbend.akka.grpc.gradle
-        // for the currently latest version.
-        classpath 'gradle.plugin.com.lightbend.akka.grpc:akka-grpc-gradle-plugin:0.2'
-    }
-}
-
-// These are the default options for a Java project (not necessary to define)
-akkaGrpc {
-    language = "Scala"
-    generateClient = true
-    generateServer = true
 }
