@@ -72,7 +72,7 @@ play.modules {
 
 Which in turn allows us to inject clients to any of the services defined in our `app/proto` directory, just like so:
 
-```
+```scala
 import akka.stream.Materializer
 import example.myapp.helloworld.grpc.{HelloReply, HelloRequest}
 import javax.inject.Inject
