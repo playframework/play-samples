@@ -68,7 +68,7 @@ play.modules {
 
 Which in turn allows us to inject clients to any of the services defined in our `app/proto` directory, just like so:
 
-```
+```java
 import example.myapp.helloworld.routers.GreeterServiceClient;
 import example.myapp.helloworld.routers.HelloReply;
 import example.myapp.helloworld.routers.HelloRequest;
