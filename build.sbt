@@ -1,3 +1,4 @@
+
 name := """play-2.6-log4j2"""
 
 version := "1.0-SNAPSHOT"
@@ -21,3 +22,5 @@ scalaVersion in ThisBuild := "2.12.4"
 crossScalaVersions := Seq("2.11.12", "2.12.4")
 
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+
+javaOptions += "-Dlog4j.configurationFile=conf/log4j2.xml"

@@ -19,7 +19,10 @@ You must define the `log4j.configurationFile` explicitly when the JVM is loaded 
 ```bash
 sbt -Dlog4j.configurationFile=conf/log4j2.xml
 ```
-
+Or you can set as javaOptions in `build.sbt`:
+```bash
+javaOptions += "-Dlog4j.configurationFile=conf/log4j2.xml"
+```
 If you do not run with `log4j.configurationFile` loaded, you will see this error:
 
 ```log
