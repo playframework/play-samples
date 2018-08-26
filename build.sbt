@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       PlayKeys.devSettings ++= Seq(
         "play.server.http.port" -> "disabled",
         "play.server.https.port" -> "9443",
-        "play.server.https.keyStore.path" -> "./generated.keystore",
+        "play.server.https.keyStore.path" -> "conf/selfsigned.keystore",
       )
     )
 
