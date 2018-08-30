@@ -12,7 +12,8 @@ jdk:
 env:
   matrix:
     - SCRIPT=scripts/test-sbt
-    - SCRIPT=scripts/test-gradle
+    # https://github.com/akka/akka-grpc/issues/342
+    #- SCRIPT=scripts/test-gradle
 script:
 - $SCRIPT
 cache:
@@ -28,10 +29,16 @@ before_cache:
 # https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
 matrix:
   exclude:
+    # https://github.com/akka/akka-grpc/issues/345
+    - scala: 2.11.12
+      jdk: oraclejdk8
+    # https://github.com/akka/akka-grpc/issues/345
     - scala: 2.11.12
       jdk: oraclejdk9
+    # https://github.com/akka/akka-grpc/issues/345
     - scala: 2.11.12
       jdk: oraclejdk10
+    # https://github.com/akka/akka-grpc/issues/345
     - scala: 2.11.12
       jdk: oraclejdk11
   allow_failures:

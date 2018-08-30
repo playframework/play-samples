@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       PlayKeys.devSettings ++= Seq(
         "play.server.http.port" -> "disabled",
         "play.server.https.port" -> "9443",
-        "play.server.https.keyStore.path" -> "./generated.keystore",
+        "play.server.https.keyStore.path" -> "conf/selfsigned.keystore",
       )
     )
 
@@ -23,6 +23,12 @@ scalaVersion := "2.12.6"
 crossScalaVersions := Seq("2.11.12", "2.12.6")
 
 libraryDependencies += guice
+
+// There is a bug in akka-http 10.1.4 that makes it not work with gRPC+Play,
+// so we need to downgrade to 10.1.3 (or move to 10.1.5 when that's out)
+// https://github.com/akka/akka-http/issues/2168
+dependencyOverrides += "com.typesafe.akka" %% "akka-http-core" % "10.1.3"
+dependencyOverrides += "com.typesafe.akka" %% "akka-http" % "10.1.3"
 
 // Test Database
 libraryDependencies += "com.h2database" % "h2" % "1.4.197"
