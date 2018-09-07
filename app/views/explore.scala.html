@@ -18,7 +18,7 @@
       <li>The HTTP server returned the response as an HTML page.</li>
     </ul>
     <p> At a high level, the flow looks something like this:</p>
-    <p><img src="assets/images/play-request-response.png" alt="Request and response" "small-5 medium-4 large-3"/></p>
+    <p><img src="assets/images/play-request-response.png" alt="Request and response" class="small-5 medium-4 large-3"/></p>
     <h3>Explore the project</h3>
     <p>Next, let's look at the tutorial project to locate the implementation for the following:</p>
     <ul>
@@ -33,7 +33,7 @@
     <ol>
       <li>The <code>app</code> subdirectory is where you put your Java code and packages. It contains directories for <code>controllers</code> and <code>views</code>, which will be familiar to those experienced with the Model View Controller (MVC) architecture. Since this simple project does not need an external data repository, it does not contain a <code>models</code> directory, but this is where you would add it. You could also add a <code>service</code> package and <code>utils</code> here.  </li>
       <li>The <code>public</code> subdirectory contains directories for <code>images</code>, <code>javascripts</code>, and <code>stylesheets</code>.</li>
-      <li>The <code>conf</code> directory contains application configuration. For a more detailed explanation of the project's structure, see <a href="https://www.playframework.com/documentation/latest/Anatomy#The-Play-application-layout" target="blank" />Play Application Layout</a>.</li>
+      <li>The <code>conf</code> directory contains application configuration. For a more detailed explanation of the project's structure, see <a href="https://www.playframework.com/documentation/@version/Anatomy#The-Play-application-layout" target="blank" />Play Application Layout</a>.</li>
     
       <li>To locate the controller action method, open <code>app/controllers/HomeController.java</code> file with your favorite text editor. 
         <p>The <code>Homecontroller</code> class includes the <code>index</code> action method, as shown below. This is a very simple action method that generate an HTML page from the <code>index.scala.html</code> Twirl template file.</p>
@@ -49,6 +49,7 @@
           You can open <code>app/views/main.scala.html</code> to see how a <code>String</code> parameter sets the page title.</p></li>
     </ol>
   </p>
+  <h3 id="next-steps">Next steps</h3>
  <p>With this overview of the tutorial application, you are ready to <a href="@routes.HomeController.tutorial">add  your own "Hello World" greeting</a>.</p>
 </article>
 <aside>
