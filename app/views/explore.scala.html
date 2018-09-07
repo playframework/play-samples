@@ -48,14 +48,16 @@
             the project's structure, see <a href="https://www.playframework.com/documentation/@version/Anatomy#The-Play-application-layout"
               target="blank" />Play Application Layout</a>.</li>
 
-          <li>To locate the controller action method, open <code>app/controllers/HomeController.java</code> file with
-            your favorite text editor.
+          <li>
+            <p>To locate the controller action method, open <code>app/controllers/HomeController.java</code> file with
+            your favorite text editor.</p>
+
             <p>The <code>Homecontroller</code> class includes the <code>index</code> action method, as shown below.
               This is a very simple action method that generate an HTML page from the <code>index.scala.html</code>
               Twirl template file.</p>
-            <pre><code>public Result index() {
-            return ok(views.html.index.render());
-        }</code></pre>
+              <pre><code class="language-java">public Result index() {
+  return ok(views.html.index.render());
+}</code></pre>
           </li>
           <li>To view the route that maps the browser request to the controller method, open the <code>conf/routes</code>
             file.

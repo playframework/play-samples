@@ -25,18 +25,18 @@
         <li>With any text editor, create a file named <code>hello.scala.html</code> and save it in the <code>app/views</code>
           directory of this tutorial project.</li>
         <li>Add the following contents to the file:
-          <pre><code>&#64;main("Hello") {
-      &lt;section id="content"&gt;
-          &lt;div class="wrapper doc"&gt;
-             &lt;article&gt;
-              &lt;h1&gt;Hello World&lt;/h1&gt;
-            &lt;/article&gt;  
-            &lt;aside&gt;
-              &#64;commonSidebar()
-            &lt;/aside&gt;
-          &lt;/div&gt;
-        &lt;/section&gt;
-  }</code></pre>
+          <pre><code class="language-html">&#64;main("Hello") {
+  &lt;section id="content"&gt;
+    &lt;div class="wrapper doc"&gt;
+      &lt;article&gt;
+        &lt;h1&gt;Hello World&lt;/h1&gt;
+      &lt;/article&gt;  
+      &lt;aside&gt;
+        &#64;commonSidebar()
+      &lt;/aside&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+}</code></pre>
           <p>The Twirl and HTML markup for your new page accomplishes the following:</p>
           <ul>
             <li>The <code>&#64;</code> sign tells the template engine to interpret what follows.
@@ -55,10 +55,9 @@
         you wish.</p>
       <p>Open the <code>app/controllers/HomeController.java</code> file. Below the tutorial method and above the
         closing brace, add the following method:
-        <pre><code>public Result hello() {
-            return ok(views.html.hello.render());
-        
-      }</code></pre>
+        <pre><code class="language-java">public Result hello() {
+  return ok(views.html.hello.render());      
+}</code></pre>
       </p>
       <p>This method has no input parameters and simply renders the new <code>hello</code> page.</p>
 
@@ -96,9 +95,9 @@
         <li>In the <code>app/controllers/HomeController.java</code> file, modify the <code>hello</code> action
           method to accept a <code>String name</code> parameter. The modified action should look like the
           following:
-          <pre><code>public Result hello(String name) {
-           return ok(views.html.hello.render());
-         }</code></pre>
+          <pre><code class="language-java">public Result hello(String name) {
+  return ok(views.html.hello.render());
+}</code></pre>
         </li>
         <li>In the <code>conf/routes</code> file, add a <code>(name: String)</code> parameter at the end of the
           <code>/hello</code> route:
@@ -128,9 +127,9 @@
         <li>
           <p>To fix the compilation error, modify the <code>hello</code> action method in <code>HomeController</code>
             so that the it includes the <code>name</code> parameter when rendering the view:</p>
-          <pre><code>public Result hello(String name) {
-          return ok(javaguide.hello.html.helloName.render(name));
-  }</code></pre>
+          <pre><code class="language-java">public Result hello(String name) {
+  return ok(javaguide.hello.html.helloName.render(name));
+}</code></pre>
         </li>
         <li>
           <p>Save the file and refresh the browser. Play detects the change, automatically recompiles, and reloads
