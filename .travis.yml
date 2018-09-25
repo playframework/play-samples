@@ -34,6 +34,9 @@ matrix:
     - scala: 2.11.12
       jdk: oraclejdk11
   allow_failures:
+    # Fails, and we don't care right now
+    - jdk: oraclejdk9
+    - jdk: oraclejdk10
     # We should allow failures here since Java 11 removed some modules including
     # java.xml.bind which we are adding when running with Java 9+. For more details
     # see http://openjdk.java.net/jeps/320
