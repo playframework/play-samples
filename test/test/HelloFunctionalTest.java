@@ -55,6 +55,26 @@ public final class HelloFunctionalTest {
     return wsClient.url(url).get().toCompletableFuture().get();
   }
 
+  private final class CloseableGreeterServiceClient implements AutoCloseable {
+    final GreeterServiceClient _0;
+
+    private CloseableGreeterServiceClient(final GreeterServiceClient greeterServiceClient) {
+      _0 = greeterServiceClient;
+    }
+
+    @Override public void close() throws Exception {
+      _0.close().toCompletableFuture().get(30, TimeUnit.SECONDS);
+    }
+  }
+
+  private CloseableGreeterServiceClient newGreeterServiceClient() {
+    final GrpcClientSettings grpcClientSettings =
+        JavaAkkaGrpcClientHelpers.grpcClientSettings(testServer);
+    final GreeterServiceClient greeterServiceClient = GreeterServiceClient.create(
+        grpcClientSettings, app.asScala().materializer(), app.asScala().actorSystem().dispatcher());
+    return new CloseableGreeterServiceClient(greeterServiceClient);
+  }
+
   @Test public void returns404OnNonGrpcRequest() throws Exception {
     assertEquals(404, wsGet("/").getStatus());
   }
@@ -71,15 +91,9 @@ public final class HelloFunctionalTest {
 
   @Test public void worksWithAGrpcClient() throws Exception {
     final HelloRequest req = HelloRequest.newBuilder().setName("Alice").build();
-    final GrpcClientSettings grpcClientSettings =
-        JavaAkkaGrpcClientHelpers.grpcClientSettings(testServer);
-    final GreeterServiceClient greeterServiceClient = GreeterServiceClient.create(
-        grpcClientSettings, app.asScala().materializer(), app.asScala().actorSystem().dispatcher());
-    try {
-      final HelloReply helloReply = greeterServiceClient.sayHello(req).toCompletableFuture().get();
+    try (final CloseableGreeterServiceClient greeterServiceClient = newGreeterServiceClient()) {
+      final HelloReply helloReply = greeterServiceClient._0.sayHello(req).toCompletableFuture().get();
       assertEquals("Hello Alice!", helloReply.getMessage());
-    } finally {
-      greeterServiceClient.close().toCompletableFuture().get(30, TimeUnit.SECONDS);
     }
   }
 
