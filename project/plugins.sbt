@@ -1,4 +1,4 @@
-resolvers += Resolver.file("local-plugins", file("/Users/ktoso/.ivy2/local"))(Resolver.ivyStylePatterns)
+resolvers += Resolver.sonatypeRepo("releases")
 
 // The Play plugin
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.7.0-M3")
