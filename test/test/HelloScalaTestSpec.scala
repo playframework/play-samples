@@ -1,0 +1,44 @@
+package test
+
+import akka.grpc.scalatestplus.play.ServerGrpcClient
+
+import org.scalatest.concurrent.{ IntegrationPatience, ScalaFutures }
+import org.scalatestplus.play.{ NewGuiceOneServerPerTest, PlaySpec }
+
+import play.api.Application
+import play.api.inject.bind
+import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.libs.ws.WSClient
+import play.api.routing.Router
+
+import example.myapp.helloworld.grpc.{ GreeterService, GreeterServiceClient, HelloRequest }
+import routers.HelloWorldRouter
+
+class HelloScalaTestSpec extends PlaySpec with ServerGrpcClient
+    with NewGuiceOneServerPerTest with ScalaFutures with IntegrationPatience {
+
+  override def fakeApplication(): Application =
+    GuiceApplicationBuilder().overrides(bind[Router].to[HelloWorldRouter]).build()
+
+  implicit def ws: WSClient = app.injector.instanceOf(classOf[WSClient])
+
+  "A Play server bound to a gRPC router" must {
+    "give a 404 when routing a non-gRPC request" in {
+      val result = wsUrl("/").get.futureValue
+      result.status must be(404) // Maybe should be a 426, see #396
+    }
+    "give an Ok header (and hopefully a not implemented trailer) when routing a non-existent gRPC method" in {
+      val result = wsUrl(s"/${GreeterService.name}/FooBar").get.futureValue
+      result.status must be(200) // Maybe should be a 426, see #396
+      // TODO: Test that trailer has a not implemented status
+    }
+    "give a 500 when routing an empty request to a gRPC method" in {
+      val result = wsUrl(s"/${GreeterService.name}/SayHello").get.futureValue
+      result.status must be(500) // Maybe should be a 426, see #396
+    }
+    "work with a gRPC client" in withGrpcClient[GreeterServiceClient] { client: GreeterServiceClient =>
+      val reply = client.sayHello(HelloRequest("Alice")).futureValue
+      reply.message must be("Hello, Alice!")
+    }
+  }
+}
