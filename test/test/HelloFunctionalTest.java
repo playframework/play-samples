@@ -52,7 +52,7 @@ public final class HelloFunctionalTest {
   private WSResponse wsGet(final String path) throws Exception {
     final WSClient wsClient = app.injector().instanceOf(WSClient.class);
     final String url = testServer.endpoints().httpEndpoint().get().pathUrl(path);
-    return wsClient.url(url).get().toCompletableFuture().get();
+    return wsClient.url(url).get().toCompletableFuture().get(30, TimeUnit.SECONDS);
   }
 
   private GreeterServiceClient newGreeterServiceClient() {
@@ -80,7 +80,7 @@ public final class HelloFunctionalTest {
     final GreeterServiceClient greeterServiceClient = newGreeterServiceClient();
     final HelloRequest req = HelloRequest.newBuilder().setName("Alice").build();
     try {
-      final HelloReply helloReply = greeterServiceClient.sayHello(req).toCompletableFuture().get();
+      final HelloReply helloReply = greeterServiceClient.sayHello(req).toCompletableFuture().get(30, TimeUnit.SECONDS);
       assertEquals("Hello Alice!", helloReply.getMessage());
     } finally {
       greeterServiceClient.close().toCompletableFuture().get(30, TimeUnit.SECONDS);
