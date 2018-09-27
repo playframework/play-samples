@@ -24,6 +24,13 @@ crossScalaVersions := Seq("2.11.12", "2.12.6")
 
 libraryDependencies += guice
 
+// Test libraries
+resolvers += Resolver.sonatypeRepo("releases")
+libraryDependencies += "com.lightbend.akka.grpc" %% "akka-grpc-play-testkit" % "0.4.1"     % Test
+libraryDependencies += "com.typesafe.play"       %% "play-test"              % "2.7.0-M3"  % Test
+libraryDependencies += "com.typesafe.play"       %% "play-specs2"            % "2.7.0-M3"  % Test
+libraryDependencies += "org.scalatestplus.play"  %% "scalatestplus-play"     % "4.0.0-M1"  % Test
+
 // Test Database
 libraryDependencies += "com.h2database" % "h2" % "1.4.197"
 
