@@ -22,8 +22,7 @@ Note that the source generation for the services/client is all done by the `Akka
 
 ## Running
 
-Run this using [sbt](http://www.scala-sbt.org/). Since we want to run the application using HTTP/2 (which implies HTTPS)
-since gRPC requires the transport to be HTTP/2, we'll use the below helper script:   
+Running this using application requires [sbt](http://www.scala-sbt.org/). gRPC requires the transport to be HTTP/2 so we want to Play to use HTTP/2 (which, in Play, implies HTTPS). We'll use the below helper script:   
 
 ```
 ./ssl-play runProd
@@ -32,7 +31,7 @@ since gRPC requires the transport to be HTTP/2, we'll use the below helper scrip
 This will also generate the server and client sources based on the `app/proto/*.proto` files, thanks to the Akka gRPC
 plugin being enabled. 
 
-Note that in this example repository the `generated.keystore` is prepared already, normally it would be generated for 
+Note that in this example repository a `generated.keystore` is prepared already, normally it would be generated for 
 you in developer mode (`sbt -Dhttps.port=9443 run`), though in order to serve HTTP/2 services (such as gRPC) you (currently)
 still need to run using `runProd`.
 
