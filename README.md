@@ -22,7 +22,7 @@ Note that the source generation for the services/client is all done by the `Akka
 
 ## Running
 
-Run this using application requires [sbt](http://www.scala-sbt.org/). gRPC requires the transport to be HTTP/2 so we want to Play to use HTTP/2 (which, in Play, implies HTTPS). We'll use the below helper script:   
+Running this using application requires [sbt](http://www.scala-sbt.org/). gRPC requires the transport to be HTTP/2 so we want to Play to use HTTP/2 (which, in Play, implies HTTPS). We'll use the below helper script:   
 
 ```
 ./ssl-play runProd
