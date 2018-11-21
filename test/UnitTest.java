@@ -42,11 +42,10 @@ public class UnitTest {
             final CompletionStage<Result> future = controller.message();
 
             // Block until the result is completed
-            await().until(() -> {
-                assertThat(future.toCompletableFuture()).isCompletedWithValueMatching(result -> {
-                    return contentAsString(result).equals("Hi!");
-                });
-            });
+            await().untilAsserted(() ->
+                    assertThat(future.toCompletableFuture())
+                        .isCompletedWithValueMatching(result -> contentAsString(result).equals("Hi!"))
+            );
         } finally {
             actorSystem.terminate();
         }
