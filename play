@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SBT=sbt
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Export the keystore password for use in ws.conf
@@ -63,8 +61,23 @@ JVM_OPTIONS="$JVM_OPTIONS -Dsun.security.ssl.allowLegacyHelloMessages=false"
 JVM_OPTIONS="$JVM_OPTIONS -Dkey.password=$KEY_PASSWORD"
 JVM_OPTIONS="$JVM_OPTIONS -DcertificateDirectory=$DIR/scripts"
 
-AGENT=$DIR/target/universal/stage/jetty-alpn-agent/jetty-alpn-agent-2.0.6.jar
+# ssl-play requires an ALPN Agent. This is downdloaded and stored in the target folder.
+# This snippet detects when the ALPN agent hasn't been downloaded yet and runs
+# `sbt stage` to obtain it.
+export AGENT_TEST=$(pwd)/$(find target -name 'jetty-alpn-agent-*.jar')
+export NUM_AGENTS_FOUND=$(echo $AGENT_TEST| grep target | wc -l)
 
+if [ $NUM_AGENTS_FOUND -eq "0" ]; then
+   echo "No ALPN Agent jar found, running 'sbt stage'"
+   sbt stage;
+fi
+
+# Start `sbt` with the JVM_OPTIONS and the ALPN agent
+export AGENT=$(pwd)/$(find target -name 'jetty-alpn-agent-*.jar' | head -1)
+echo "Detected ALPN Agent: $AGENT "
 
 # Run Play (this should work for both run and start).
-SBT_OPTS=-javaagent:$AGENT $SBT $JVM_OPTIONS "$* $JVM_OPTIONS";
+export SBT_OPTS="$SBT_OPTS -javaagent:$AGENT"
+
+# Run Play
+sbt $JVM_OPTIONS $*;

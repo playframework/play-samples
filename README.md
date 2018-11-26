@@ -45,7 +45,7 @@ $ sudo vi /etc/hosts
 
 Now that you've generated the certificates and added the `example.com` host entries to `/etc/hosts`, you can start Play itself.
 
-This application is not run with `activator` -- you should run it with `./play` instead, as there are a number of system properties required to use it effectively.
+This application is not run with `sbt` -- you should run it with `./play` instead, as there are a number of system properties required to use it effectively.
 
 The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](http://www.playframework.com/documentation/2.5.x/ConfiguringHttps).
 
