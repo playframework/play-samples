@@ -5,6 +5,8 @@ import play.api.test.{Helpers, TestServer}
 import play.api.{Application, Mode}
 import org.scalatest._
 import org.scalatestplus.play.guice.GuiceFakeApplicationFactory
+import play.core.server
+import play.core.server.AkkaHttpServer.Context
 import play.core.server.{AkkaHttpServer, ServerConfig, ServerProvider}
 
 /**
@@ -56,7 +58,6 @@ trait GuiceOneHttpsServerPerTest extends TestSuiteMixin with ServerProvider with
   }
 
   def createServer(context: ServerProvider.Context) =
-    new AkkaHttpServer(context.config, context.appProvider, context.actorSystem, context.materializer,
-      context.stopHook)
+    new AkkaHttpServer(AkkaHttpServer.Context.fromServerProviderContext(context))
 
 }
