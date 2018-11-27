@@ -14,7 +14,8 @@ case class PostFormInput(title: String, body: String)
 /**
   * Takes HTTP requests and produces JSON.
   */
-class PostController @Inject()(cc: PostControllerComponents)(implicit ec: ExecutionContext)
+class PostController @Inject()(cc: PostControllerComponents)(
+    implicit ec: ExecutionContext)
     extends PostBaseController(cc) {
 
   private val logger = Logger(getClass)
@@ -42,14 +43,16 @@ class PostController @Inject()(cc: PostControllerComponents)(implicit ec: Execut
     processJsonPost()
   }
 
-  def show(id: String): Action[AnyContent] = PostAction.async { implicit request =>
-    logger.trace(s"show: id = $id")
-    postResourceHandler.lookup(id).map { post =>
-      Ok(Json.toJson(post))
-    }
+  def show(id: String): Action[AnyContent] = PostAction.async {
+    implicit request =>
+      logger.trace(s"show: id = $id")
+      postResourceHandler.lookup(id).map { post =>
+        Ok(Json.toJson(post))
+      }
   }
 
-  private def processJsonPost[A]()(implicit request: PostRequest[A]): Future[Result] = {
+  private def processJsonPost[A]()(
+      implicit request: PostRequest[A]): Future[Result] = {
     def failure(badForm: Form[PostFormInput]) = {
       Future.successful(BadRequest(badForm.errorsAsJson))
     }

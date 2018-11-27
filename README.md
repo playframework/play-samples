@@ -53,7 +53,7 @@ Start Play in production mode, by [staging the application](https://www.playfram
 ```bash
 sbt stage
 cd target/universal/stage
-bin/play-rest-api-example -Dplay.crypto.secret=testing
+./bin/play-scala-rest-api-example -Dplay.http.secret.key=some-long-key-that-will-be-used-by-your-application
 ```
 
 Then you'll start the Gatling load test up (it's already integrated into the project):
