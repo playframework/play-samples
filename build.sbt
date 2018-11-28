@@ -8,8 +8,12 @@ resolvers += Resolver.sonatypeRepo("snapshots")
 
 scalaVersion := "2.12.7"
 
-crossScalaVersions := Seq("2.11.12", "2.12.7")
-
 libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC1" % Test
 libraryDependencies += "com.h2database" % "h2" % "1.4.197"
+
+scalacOptions ++= Seq(
+  "-feature",
+  "-deprecation",
+  "-Xfatal-warnings"
+)
