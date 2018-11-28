@@ -3,7 +3,7 @@ plugins {
     id 'idea'
 }
 
-def playVersion = "2.6.20"
+def playVersion = "2.7.0-RC3"
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 
 model {
@@ -26,8 +26,8 @@ dependencies {
     play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
     play "com.typesafe.play:filters-helpers_$scalaVersion:$playVersion"
 
-    play "com.typesafe.play:play-slick_$scalaVersion:3.0.3"
-    play "com.typesafe.play:play-slick-evolutions_$scalaVersion:3.0.3"
+    play "com.typesafe.play:play-slick_$scalaVersion:4.0.0-RC1"
+    play "com.typesafe.play:play-slick-evolutions_$scalaVersion:4.0.0-RC1"
 
     play "com.h2database:h2:1.4.197"
 

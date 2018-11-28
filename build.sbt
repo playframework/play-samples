@@ -1,17 +1,21 @@
 name := """play-scala-slick-example"""
 
-version := "2.6.x"
+version := "2.7.x"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.12.6"
-
-crossScalaVersions := Seq("2.11.12", "2.12.4")
+scalaVersion := "2.12.7"
 
 libraryDependencies += guice
-libraryDependencies += "com.typesafe.play" %% "play-slick" % "3.0.3"
-libraryDependencies += "com.typesafe.play" %% "play-slick-evolutions" % "3.0.3"
+libraryDependencies += "com.typesafe.play" %% "play-slick" % "4.0.0-RC1"
+libraryDependencies += "com.typesafe.play" %% "play-slick-evolutions" % "4.0.0-RC1"
 
 libraryDependencies += "com.h2database" % "h2" % "1.4.197"
 
 libraryDependencies += specs2 % Test
+
+scalacOptions ++= Seq(
+  "-feature",
+  "-deprecation",
+  "-Xfatal-warnings"
+)
