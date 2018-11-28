@@ -2,21 +2,20 @@ package controllers;
 
 import akka.NotUsed;
 import akka.actor.ActorSystem;
+import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.Pair;
 import akka.japi.pf.PFBuilder;
 import akka.stream.Materializer;
 import akka.stream.javadsl.*;
+import org.webjars.play.WebJarsUtil;
 import play.libs.F;
 import play.mvc.*;
 
-import akka.event.Logging;
-
 import javax.inject.Inject;
 import java.net.URI;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
-
-import org.webjars.play.WebJarsUtil;
 
 /**
  * A very simple chat client using websockets.
@@ -48,8 +47,7 @@ public class HomeController extends Controller {
         this.webJarsUtil = webJarsUtil;
     }
 
-    public Result index() {
-        Http.Request request = request();
+    public Result index(Http.Request request) {
         String url = routes.HomeController.chat().webSocketURL(request);
         return Results.ok(views.html.index.render(url, webJarsUtil));
     }
@@ -72,12 +70,12 @@ public class HomeController extends Controller {
      * http://blog.dewhurstsecurity.com/2013/08/30/security-testing-html5-websockets.html
      */
     private boolean sameOriginCheck(Http.RequestHeader request) {
-        String[] origins = request.headers().get("Origin");
-        if (origins.length > 1) {
+        List<String> origins = request.getHeaders().getAll("Origin");
+        if (origins.size() > 1) {
             // more than one origin found
             return false;
         }
-        String origin = origins[0];
+        String origin = origins.get(0);
         return originMatches(origin);
     }
 
