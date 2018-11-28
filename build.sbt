@@ -2,13 +2,17 @@ name := "play-scala-streaming-example"
 
 version := "2.6.x"
 
-scalaVersion := "2.12.6"
-
-crossScalaVersions := Seq("2.11.12", "2.12.4")
+scalaVersion := "2.12.7"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 libraryDependencies += guice
 
 libraryDependencies += ws % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC1" % Test
+
+scalacOptions ++= Seq(
+  "-feature",
+  "-deprecation",
+  "-Xfatal-warnings"
+)
