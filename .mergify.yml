@@ -34,7 +34,7 @@ pull_request_rules:
   - name: remove label after merge
     conditions:
       - merged
-      - label=[merge-when-green]
+      - label=merge-when-green
     actions:
       label:
         remove: [merge-when-green]
@@ -43,7 +43,7 @@ pull_request_rules:
   - name: remove label after merge
     conditions:
       - merged
-      - label=[template-control]
+      - label=template-control
     actions:
       label:
         remove: [template-control]
