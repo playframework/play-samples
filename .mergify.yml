@@ -8,7 +8,7 @@ pull_request_rules:
       - label!=work-in-progress
     actions:
       merge:
-        method: merge
+        method: squash
         strict: smart
 
   - name: automatic merge on CI success for TemplateControl
@@ -19,7 +19,7 @@ pull_request_rules:
       - label!=work-in-progress
     actions:
       merge:
-        method: merge
+        method: squash
         strict: smart
 
   # delete any branch when already merged
