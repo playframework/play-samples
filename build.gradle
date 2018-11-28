@@ -3,7 +3,7 @@ plugins {
     id 'idea'
 }
 
-def playVersion = "2.6.11"
+def playVersion = "2.7.0-RC3"
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 
 model {
@@ -30,7 +30,7 @@ dependencies {
     play project(":one")
     play project(":two")
 
-    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:3.1.2"
+    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:4.0.0-RC1"
 }
 
 allprojects {

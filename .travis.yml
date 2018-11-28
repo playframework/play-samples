@@ -2,11 +2,10 @@ language: scala
 scala:
 # When updating Scala versions, also check the excludes
 # in build matrix below.
-- 2.11.12
-- 2.12.4
+- 2.12.7
 jdk:
 - oraclejdk8
-- oraclejdk9
+- openjdk11
 env:
   matrix:
     - SCRIPT=scripts/test-sbt
@@ -25,10 +24,17 @@ before_cache:
 # Exclude some combinations from build matrix. See:
 # https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
 matrix:
-  exclude:
-    - scala: 2.11.12
-      jdk: oraclejdk9
-
+  fast_finish: true
+  allow_failures:
+    # Current release of Gradle still does not supports Play 2.7.x releases
+    # As soon as there is a release of Gradle that fixes that, we can then
+    # remove this allowed failure.
+    - env: SCRIPT=scripts/test-gradle
+    # We are not fully validating for Java 11 yet, so we allow this to
+    # failure until we tackle all the problems. Anyway, having it at the
+    # build helps us to track the progress and discover problems sooner.
+    - jdk: openjdk11
+    
 # See https://blog.travis-ci.com/2014-03-13-slack-notifications/
 # created with travis encrypt command line tool
 notifications:

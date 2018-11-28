@@ -13,6 +13,6 @@ dist
 /certs
 /.idea_modules
 /.classpath
-/.project
+.project
 /RUNNING_PID
-/.settings
+.settings
