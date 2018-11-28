@@ -1,4 +1,5 @@
-@(form: Form[controllers.FormData])
+@import play.mvc.Http.Request
+@(form: Form[controllers.FormData])(implicit request: Request, messages: play.i18n.Messages)
 
 @main("Welcome to Play") {
 

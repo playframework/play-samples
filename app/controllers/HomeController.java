@@ -1,6 +1,8 @@
 package controllers;
 
 import play.data.Form;
+import play.i18n.Messages;
+import play.i18n.MessagesApi;
 import play.mvc.*;
 import views.html.index;
 
@@ -17,15 +19,18 @@ import java.nio.file.Files;
 public class HomeController extends Controller {
 
     private final play.data.FormFactory formFactory;
+    private MessagesApi messagesApi;
 
     @Inject
-    public HomeController(play.data.FormFactory formFactory) {
+    public HomeController(play.data.FormFactory formFactory, MessagesApi messagesApi) {
         this.formFactory = formFactory;
+        this.messagesApi = messagesApi;
     }
 
-    public Result index() {
-        Form<FormData> form = formFactory.form(FormData.class);
-        return ok(index.render(form));
+    public Result index(Http.Request request ) {
+        Form<FormData> form = formFactory.form(FormData.class).bindFromRequest(request);
+        Messages messages = this.messagesApi.preferred(request);
+        return ok(index.render(form, request, messages));
     }
 
     /**
