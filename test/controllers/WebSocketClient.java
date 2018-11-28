@@ -3,14 +3,13 @@ package controllers;
 import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient;
 import play.shaded.ahc.org.asynchttpclient.BoundRequestBuilder;
 import play.shaded.ahc.org.asynchttpclient.ListenableFuture;
+import play.shaded.ahc.org.asynchttpclient.netty.ws.NettyWebSocket;
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocket;
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocketListener;
-import play.shaded.ahc.org.asynchttpclient.ws.WebSocketTextListener;
+
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocketUpgradeHandler;
-import org.slf4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
 /**
@@ -26,22 +25,20 @@ public class WebSocketClient {
         this.client = c;
     }
 
-    public CompletableFuture<WebSocket> call(String url, String origin, WebSocketTextListener listener) throws ExecutionException, InterruptedException {
+    public CompletableFuture<NettyWebSocket> call(String url, String origin, WebSocketListener listener) {
         final BoundRequestBuilder requestBuilder = client.prepareGet(url).addHeader("Origin", origin);
 
         final WebSocketUpgradeHandler handler = new WebSocketUpgradeHandler.Builder().addWebSocketListener(listener).build();
-        final ListenableFuture<WebSocket> future = requestBuilder.execute(handler);
+        ListenableFuture<NettyWebSocket> future = requestBuilder.execute(handler);
         return future.toCompletableFuture();
     }
 
-    static class LoggingListener implements WebSocketTextListener {
+    static class LoggingListener implements WebSocketListener {
         private final Consumer<String> onMessageCallback;
 
         public LoggingListener(Consumer<String> onMessageCallback) {
             this.onMessageCallback = onMessageCallback;
         }
-
-        private Logger logger = org.slf4j.LoggerFactory.getLogger(LoggingListener.class);
 
         private Throwable throwableFound = null;
 
@@ -50,12 +47,12 @@ public class WebSocketClient {
         }
 
         public void onOpen(WebSocket websocket) {
-            //logger.info("onClose: ");
-            //websocket.sendMessage("hello");
+            // do nothing
         }
 
-        public void onClose(WebSocket websocket) {
-            //logger.info("onClose: ");
+        @Override
+        public void onClose(WebSocket webSocket, int i, String s) {
+            // do nothing
         }
 
         public void onError(Throwable t) {
@@ -64,9 +61,8 @@ public class WebSocketClient {
         }
 
         @Override
-        public void onMessage(String s) {
-            //logger.info("onMessage: s = " + s);
-            onMessageCallback.accept(s);
+        public void onTextFrame(String payload, boolean finalFragment, int rsv) {
+            onMessageCallback.accept(payload);
         }
     }
 

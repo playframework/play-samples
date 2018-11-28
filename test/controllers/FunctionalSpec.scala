@@ -1,5 +1,6 @@
 package controllers
 
+import java.io.IOException
 import java.util.concurrent.{ArrayBlockingQueue, Callable}
 import java.util.function.Consumer
 
@@ -40,7 +41,8 @@ class FunctionalSpec extends PlaySpec with ScalaFutures {
           val completionStage = webSocketClient.call(serverURL, origin, listener)
           val f = FutureConverters.toScala(completionStage)
           Await.result(f, atMost = 1000.millis)
-          listener.getThrowable mustBe a[IllegalStateException]
+          listener.getThrowable.printStackTrace()
+          listener.getThrowable mustBe a[IOException]
         } catch {
           case e: IllegalStateException =>
             e mustBe an [IllegalStateException]
