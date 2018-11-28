@@ -2,6 +2,7 @@ package controllers;
 
 import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient;
 import play.shaded.ahc.org.asynchttpclient.DefaultAsyncHttpClient;
+import play.shaded.ahc.org.asynchttpclient.netty.ws.NettyWebSocket;
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocket;
 import org.junit.After;
 import org.junit.Before;
@@ -39,8 +40,9 @@ public class HomeControllerTest extends WithServer {
     // Functional test to run through the server and check the page comes ups
     @Test
     public void testInServer() throws Exception {
-        String url = "http://localhost:" + this.testServer.port() + "/";
-        try (WSClient ws = play.test.WSTestClient.newClient(this.testServer.port())) {
+        int port = this.testServer.getRunningHttpPort().getAsInt();
+        String url = "http://localhost:" + port + "/";
+        try (WSClient ws = play.test.WSTestClient.newClient(port)) {
             CompletionStage<WSResponse> stage = ws.url(url).get();
             WSResponse response = stage.toCompletableFuture().get();
             assertEquals(OK, response.getStatus());
@@ -52,15 +54,14 @@ public class HomeControllerTest extends WithServer {
     // Functional test to check websocket comes up
     @Test
     public void testWebsocket() throws Exception {
-        String serverURL = "ws://localhost:" + this.testServer.port() + "/chat";
-        String origin = serverURL;
+        int port = this.testServer.getRunningHttpPort().getAsInt();
+        String serverURL = "ws://localhost:" + port + "/chat";
 
         WebSocketClient webSocketClient = new WebSocketClient(asyncHttpClient);
         WebSocketClient.LoggingListener listener = new WebSocketClient.LoggingListener();
-        CompletableFuture<WebSocket> future = webSocketClient.call(serverURL, origin, listener);
+        CompletableFuture<NettyWebSocket> future = webSocketClient.call(serverURL, serverURL, listener);
         await().untilAsserted(() -> assertThat(future).isDone());
-        assertThat(future).isCompletedWithValueMatching(result -> result.isOpen());
+        assertThat(future).isCompletedWithValueMatching(NettyWebSocket::isOpen);
     }
-
 
 }
