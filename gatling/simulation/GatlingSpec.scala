@@ -27,7 +27,7 @@ object Index {
 
   def post = {
     val body = StringBody("""{ "title": "hello", "body": "world" }""")
-    exec(http("Index").post("/v1/posts").body(body).asJSON.check(status.is(200))).pause(1)
+    exec(http("Index").post("/v1/posts/").body(body).asJSON.check(status.is(200))).pause(1)
   }
 
   def refreshAfterOneSecond =
