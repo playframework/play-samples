@@ -8,7 +8,7 @@ crossScalaVersions := Seq("2.11.12", "2.12.4")
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-libraryDependencies += "org.webjars" %% "webjars-play" % "77aeed4ccbc46f7bf8bd8f2ccea6adcb8469c1b3-SNAPSHOT"
+libraryDependencies += "org.webjars" %% "webjars-play" % "2.7.0-RC3"
 libraryDependencies += "org.webjars" % "flot" % "0.8.3"
 libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
 
