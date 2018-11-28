@@ -4,7 +4,8 @@ import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
 import net.jodah.failsafe.FailsafeException;
-import play.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import play.libs.concurrent.Futures;
 import play.libs.concurrent.HttpExecutionContext;
 import play.mvc.Http;
@@ -22,7 +23,7 @@ import static java.util.concurrent.CompletableFuture.completedFuture;
 import static play.mvc.Http.Status.*;
 
 public class PostAction extends play.mvc.Action.Simple {
-    private final Logger.ALogger logger = play.Logger.of("application.PostAction");
+    private final Logger logger = LoggerFactory.getLogger("application.PostAction");
 
     private final Meter requestsMeter;
     private final Timer responsesTimer;
@@ -38,15 +39,15 @@ public class PostAction extends play.mvc.Action.Simple {
         this.responsesTimer = metrics.timer(name(PostAction.class, "responsesTimer"));
     }
 
-    public CompletionStage<Result> call(Http.Context ctx) {
+    public CompletionStage<Result> call(Http.Request request) {
         if (logger.isTraceEnabled()) {
-            logger.trace("call: ctx = " + ctx);
+            logger.trace("call: request = " + request);
         }
 
         requestsMeter.mark();
-        if (ctx.request().accepts("application/json")) {
+        if (request.accepts("application/json")) {
             final Timer.Context time = responsesTimer.time();
-            return futures.timeout(doCall(ctx), 1L, TimeUnit.SECONDS).exceptionally(e -> {
+            return futures.timeout(doCall(request), 1L, TimeUnit.SECONDS).exceptionally(e -> {
                 return (Results.status(GATEWAY_TIMEOUT, views.html.timeout.render()));
             }).whenComplete((r, e) -> time.close());
         } else {
@@ -56,8 +57,8 @@ public class PostAction extends play.mvc.Action.Simple {
         }
     }
 
-    private CompletionStage<Result> doCall(Http.Context ctx) {
-        return delegate.call(ctx).handleAsync((result, e) -> {
+    private CompletionStage<Result> doCall(Http.Request request) {
+        return delegate.call(request).handleAsync((result, e) -> {
             if (e != null) {
                 if (e instanceof CompletionException) {
                     Throwable completionException = e.getCause();
