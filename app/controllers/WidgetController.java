@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.data.Form;
 import play.data.FormFactory;
+import play.i18n.MessagesApi;
 import play.mvc.*;
 
 import javax.inject.Inject;
@@ -22,11 +23,15 @@ import static play.libs.Scala.asScala;
 public class WidgetController extends Controller {
 
     private final Form<WidgetData> form;
+    private MessagesApi messagesApi;
     private final List<Widget> widgets;
 
+    private final Logger logger = LoggerFactory.getLogger(getClass()) ;
+
     @Inject
-    public WidgetController(FormFactory formFactory) {
+    public WidgetController(FormFactory formFactory, MessagesApi messagesApi) {
         this.form = formFactory.form(WidgetData.class);
+        this.messagesApi = messagesApi;
         this.widgets = com.google.common.collect.Lists.newArrayList(
                 new Widget("Data 1", 123),
                 new Widget("Data 2", 456),
@@ -38,22 +43,21 @@ public class WidgetController extends Controller {
         return ok(views.html.index.render());
     }
 
-    public Result listWidgets() {
-        return ok(views.html.listWidgets.render(asScala(widgets), form));
+    public Result listWidgets(Http.Request request) {
+        return ok(views.html.listWidgets.render(asScala(widgets), form, request, messagesApi.preferred(request)));
     }
 
-    public Result createWidget() {
-        final Form<WidgetData> boundForm = form.bindFromRequest();
+    public Result createWidget(Http.Request request) {
+        final Form<WidgetData> boundForm = form.bindFromRequest(request);
 
         if (boundForm.hasErrors()) {
-            play.Logger.ALogger logger = play.Logger.of(getClass());
             logger.error("errors = {}", boundForm.errors());
-            return badRequest(views.html.listWidgets.render(asScala(widgets), boundForm));
+            return badRequest(views.html.listWidgets.render(asScala(widgets), boundForm, request, messagesApi.preferred(request)));
         } else {
             WidgetData data = boundForm.get();
             widgets.add(new Widget(data.getName(), data.getPrice()));
-            flash("info", "Widget added!");
-            return redirect(routes.WidgetController.listWidgets());
+            return redirect(routes.WidgetController.listWidgets())
+                .flashing("info", "Widget added!");
         }
     }
 }
