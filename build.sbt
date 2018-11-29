@@ -4,9 +4,7 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-scalaVersion := "2.12.6"
-
-crossScalaVersions := Seq("2.11.12", "2.12.4")
+scalaVersion := "2.12.7"
 
 libraryDependencies += ws
 
@@ -17,3 +15,8 @@ javacOptions in Compile := { (managedSourceDirectories in Compile).value.head.mk
 
 // move the java annotation code into generated directory
 javacOptions in Compile ++= Seq("-s", (managedSourceDirectories in Compile).value.head.getAbsolutePath)
+
+javacOptions ++= Seq(
+  "-Xlint:unchecked",
+  "-Xlint:deprecation"
+)
