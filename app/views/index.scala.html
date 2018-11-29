@@ -1,10 +1,11 @@
-@(form: play.data.Form[TimeZoneData], renderedTime: String, timeZones: List[String])
+@import play.mvc.Http.Request
+@(form: play.data.Form[TimeZoneData], renderedTime: String, timeZones: List[String])(implicit request: Request, messages: play.i18n.Messages)
 
 @main("Welcome to Play!") {
 
     <h1>@renderedTime</h1>
 
-    @flash().getOrDefault("success", "")
+    @request.flash.getOptional("success").orElse("")
 
     @helper.form(action = routes.TimeController.indexPost()) {
 
