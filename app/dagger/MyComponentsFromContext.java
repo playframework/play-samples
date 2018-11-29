@@ -13,6 +13,7 @@ import play.core.j.JavaHandlerComponents;
 import play.data.FormFactoryComponents;
 import play.filters.components.HttpFiltersComponents;
 import play.filters.components.NoHttpFiltersComponents;
+import play.i18n.I18nComponents;
 import play.inject.Injector;
 import play.libs.ws.ahc.AhcWSComponents;
 import router.Routes;
@@ -31,7 +32,8 @@ public class MyComponentsFromContext extends BuiltInComponentsFromContext implem
         AssetsComponents,
         AhcWSComponents,
         FormFactoryComponents,
-        BodyParserComponents {
+        BodyParserComponents,
+        I18nComponents{
 
     private final Clock clock;
 
@@ -42,7 +44,7 @@ public class MyComponentsFromContext extends BuiltInComponentsFromContext implem
     }
 
     private TimeController timeController() {
-        return new controllers.TimeController(clock, wsClient(), formFactory());
+        return new controllers.TimeController(clock, wsClient(), formFactory(), messagesApi());
     }
 
     @Override

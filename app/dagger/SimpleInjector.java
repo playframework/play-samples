@@ -20,6 +20,7 @@ public class SimpleInjector implements Injector {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T instanceOf(Class<T> clazz) {
         try {
             return injector.instanceOf(clazz);
@@ -58,6 +59,7 @@ public class SimpleInjector implements Injector {
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             public <T> T instanceOf(ClassTag<T> evidence) {
                 return thisInjector.instanceOf((Class<T>) evidence.runtimeClass());
             }
