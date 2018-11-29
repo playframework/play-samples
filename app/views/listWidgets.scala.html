@@ -1,11 +1,12 @@
-@(widgets: Seq[Widget], form: Form[WidgetData])
+@import play.mvc.Http.Request
+@(widgets: Seq[Widget], form: Form[WidgetData])(implicit request: Request, messages: play.i18n.Messages)
 
 @main("Widgets") {
 
     <h1>Widgets</h1>
 
     @* Flash shows updates to a page *@
-    @flash.asScala.map{ case (name, value) =>
+    @request.flash.asScala().data.map { case (name, value) =>
     <div class="@name">@value</div>
     }
 
