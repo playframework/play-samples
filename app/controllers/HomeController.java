@@ -3,27 +3,26 @@ package controllers;
 import actors.UserParentActor;
 import akka.NotUsed;
 import akka.actor.ActorRef;
-import akka.event.Logging;
-import akka.event.LoggingAdapter;
 import akka.stream.javadsl.Flow;
-import akka.util.Timeout;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
+import org.webjars.play.WebJarsUtil;
 import play.libs.F.Either;
 import play.mvc.*;
-import scala.concurrent.duration.Duration;
+
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.TimeUnit;
 
 import static akka.pattern.PatternsCS.ask;
-
-import org.webjars.play.WebJarsUtil;
 
 /**
  * The main web controller that handles returning the index page, setting up a WebSocket, and watching a stock.
@@ -31,7 +30,7 @@ import org.webjars.play.WebJarsUtil;
 @Singleton
 public class HomeController extends Controller {
 
-    private final Timeout t = new Timeout(Duration.create(1, TimeUnit.SECONDS));
+    private final Duration t = Duration.of(1, ChronoUnit.SECONDS);
     private final Logger logger = org.slf4j.LoggerFactory.getLogger("controllers.HomeController");
     private final ActorRef userParentActor;
 
@@ -43,8 +42,8 @@ public class HomeController extends Controller {
         this.webJarsUtil = webJarsUtil;
     }
 
-    public Result index() {
-        return ok(views.html.index.render(request(), webJarsUtil));
+    public Result index(Http.Request request) {
+        return ok(views.html.index.render(request, webJarsUtil));
     }
 
     public WebSocket ws() {
@@ -100,13 +99,15 @@ public class HomeController extends Controller {
             logger.debug("originCheck: originValue = " + origin);
             return true;
         } else {
-            logger.error("originCheck: rejecting request because Origin header value " + origin + " is not in the same origin");
+            logger.error("originCheck: rejecting request because Origin header value " + origin + " is not in the same origin: "
+                + String.join(", ", validOrigins));
             return false;
         }
     }
 
-    private boolean originMatches(String origin) {
-        return origin.contains("localhost:9000") || origin.contains("localhost:19001");
+    private List<String> validOrigins = Arrays.asList("localhost:9000", "localhost:19001");
+    private boolean originMatches(String actualOrigin) {
+        return validOrigins.stream().anyMatch(actualOrigin::contains);
     }
 
 }

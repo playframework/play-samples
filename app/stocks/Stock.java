@@ -5,11 +5,10 @@ import akka.japi.Pair;
 import akka.japi.function.Function;
 import akka.stream.ThrottleMode;
 import akka.stream.javadsl.Source;
-import scala.concurrent.duration.Duration;
-import scala.concurrent.duration.FiniteDuration;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
@@ -24,7 +23,7 @@ public class Stock {
 
     private final Source<StockQuote, NotUsed> source;
 
-    private static final FiniteDuration duration = Duration.create(75, TimeUnit.MILLISECONDS);
+    private static final Duration duration = Duration.of(75, ChronoUnit.MILLIS);
 
     public Stock(String symbol) {
         this.symbol = requireNonNull(symbol);

@@ -15,21 +15,20 @@ import akka.stream.KillSwitches;
 import akka.stream.Materializer;
 import akka.stream.UniqueKillSwitch;
 import akka.stream.javadsl.*;
-import akka.util.Timeout;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.assistedinject.Assisted;
 import play.libs.Json;
-import scala.concurrent.duration.Duration;
 import stocks.Stock;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.TimeUnit;
 
 import static akka.pattern.PatternsCS.ask;
 
@@ -39,7 +38,7 @@ import static akka.pattern.PatternsCS.ask;
  */
 public class UserActor extends AbstractActor {
 
-    private final Timeout timeout = new Timeout(Duration.create(5, TimeUnit.SECONDS));
+    private final Duration timeout = Duration.of(5, ChronoUnit.MILLIS);
 
     private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this);
 

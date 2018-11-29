@@ -7,11 +7,12 @@
 
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
-    @Html(webJarsUtil.css("bootstrap.min.css"))
+
+    @webJarsUtil.locate("bootstrap.min.css").css()
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.min.css")">
 
-    @Html(webJarsUtil.script("jquery.min.js"))
-    @Html(webJarsUtil.script("jquery.flot.js"))
+    @webJarsUtil.locate("jquery.min.js").script()
+    @webJarsUtil.locate("jquery.flot.js").script()
     <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
 </head>
 <body data-ws-url="@routes.HomeController.ws.webSocketURL(request)">
