@@ -31,6 +31,7 @@ matrix:
     # testing our sample applications to better discover possible problems
     # but we can allow failures here too.
     - jdk: openjdk11
+  fast_finish: true
 
 # See https://blog.travis-ci.com/2014-03-13-slack-notifications/
 # created with travis encrypt command line tool
