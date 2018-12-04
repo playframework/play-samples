@@ -1,9 +1,5 @@
 language: scala
-scala:
-# When updating Scala versions, also check the excludes
-# in build matrix below.
-- 2.11.12
-- 2.12.6
+scala: 2.12.6
 jdk:
 - oraclejdk8
 - oraclejdk9
@@ -27,13 +23,6 @@ before_cache:
 # Exclude some combinations from build matrix. See:
 # https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
 matrix:
-  exclude:
-    - scala: 2.11.12
-      jdk: oraclejdk9
-    - scala: 2.11.12
-      jdk: openjdk10
-    - scala: 2.11.12
-      jdk: oraclejdk11
   allow_failures:
     # We should allow failures here since Java 11 removed some modules including
     # java.xml.bind which we are adding when running with Java 9+. For more details
