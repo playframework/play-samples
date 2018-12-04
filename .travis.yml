@@ -24,6 +24,10 @@ before_cache:
 # https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
 matrix:
   allow_failures:
+    # Current release of Gradle still does not supports Play 2.7.x releases
+    # As soon as there is a release of Gradle that fixes that, we can then
+    # remove this allowed failure.
+    - env: SCRIPT=scripts/test-gradle
     # We should allow failures here since Java 11 removed some modules including
     # java.xml.bind which we are adding when running with Java 9+. For more details
     # see http://openjdk.java.net/jeps/320
