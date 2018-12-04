@@ -7,7 +7,6 @@ scala:
 jdk:
 - oraclejdk8
 - oraclejdk9
-- oraclejdk10
 - oraclejdk11
 env:
   matrix:
@@ -30,8 +29,6 @@ matrix:
   exclude:
     - scala: 2.11.12
       jdk: oraclejdk9
-    - scala: 2.11.12
-      jdk: oraclejdk10
     - scala: 2.11.12
       jdk: oraclejdk11
   allow_failures:
