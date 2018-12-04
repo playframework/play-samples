@@ -2,9 +2,9 @@ import play.Application;
 import play.ApplicationLoader;
 import play.BuiltInComponentsFromContext;
 import play.LoggerConfigurator;
-import play.components.BodyParserComponents;
 import play.filters.components.HttpFiltersComponents;
 import play.routing.RoutingDsl;
+import play.routing.RoutingDslComponents;
 
 import java.util.Collections;
 
@@ -21,7 +21,7 @@ public class MyApplicationLoader implements ApplicationLoader {
     }
 }
 
-class MyComponents extends BuiltInComponentsFromContext implements HttpFiltersComponents, BodyParserComponents {
+class MyComponents extends BuiltInComponentsFromContext implements HttpFiltersComponents, RoutingDslComponents {
 
     public MyComponents(ApplicationLoader.Context context) {
          super(context);
@@ -29,8 +29,8 @@ class MyComponents extends BuiltInComponentsFromContext implements HttpFiltersCo
 
     @Override
     public play.routing.Router router() {
-        RoutingDsl routingDsl = new RoutingDsl(scalaBodyParsers(), javaContextComponents());
-        return routingDsl.GET("/").routeTo(() ->
+        RoutingDsl routingDsl = routingDsl();
+        return routingDsl.GET("/").routingTo(_request ->
                         ok("Hello")
                 ).build();
     }
