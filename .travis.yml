@@ -13,6 +13,7 @@ cache:
   directories:
   - "$HOME/.ivy2/cache"
   - "$HOME/.gradle/caches"
+  - "$HOME/.sbt/boot"
 before_cache:
 - rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
 - rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
