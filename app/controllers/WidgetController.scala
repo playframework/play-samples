@@ -53,7 +53,7 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
       // This is the good case, where the form was successfully parsed as a Data object.
       val widget = Widget(name = data.name, price = data.price)
       widgets.append(widget)
-      Redirect(routes.WidgetController.listWidgets()).flashing("info" -> "Widget added!")
+      Redirect(routes.WidgetController.listWidgets()).flash("info" -> "Widget added!")
     }
 
     val formValidationResult = form.bindFromRequest
