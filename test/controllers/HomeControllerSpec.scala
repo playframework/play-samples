@@ -21,7 +21,7 @@ class HomeControllerSpec extends PlaySpec with GuiceOneServerPerSuite with Injec
       val msg = "hello world"
       Files.write(tmpFile.toPath, msg.getBytes())
 
-      val url = s"http://localhost:${Helpers.testServerPort}/upload"
+      val url = s"http://localhost:${port}/upload"
       val responseFuture = inject[WSClient].url(url).post(postSource(tmpFile))
       val response = await(responseFuture)
       response.status mustBe OK
