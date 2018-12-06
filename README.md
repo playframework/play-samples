@@ -1,10 +1,10 @@
 # Play using Log4j 2
 
-[![Build Status](https://travis-ci.org/playframework/play-scala-log4j2-example.svg?branch=2.6.x)](https://travis-ci.org/playframework/play-scala-log4j2-example)
+[![Build Status](https://travis-ci.org/playframework/play-scala-log4j2-example.svg?branch=2.7.x)](https://travis-ci.org/playframework/play-scala-log4j2-example)
 
 This is an example project showing a sample Play application that use Log4J 2 instead of using Logback.
 
-Please see [Using a custom logging framework](https://www.playframework.com/documentation/2.6.x/SettingsLogger#Using-a-Custom-Logging-Framework) in the Play documentation for more details.
+Please see [Using a custom logging framework](https://www.playframework.com/documentation/latest/SettingsLogger#Using-a-Custom-Logging-Framework) in the Play documentation for more details.
 
 ## Running in Production
 
@@ -19,10 +19,13 @@ You must define the `log4j.configurationFile` explicitly when the JVM is loaded 
 ```bash
 sbt -Dlog4j.configurationFile=conf/log4j2.xml
 ```
+
 Or you can set as javaOptions in `build.sbt`:
-```bash
+
+```scala
 javaOptions += "-Dlog4j.configurationFile=conf/log4j2.xml"
 ```
+
 If you do not run with `log4j.configurationFile` loaded, you will see this error:
 
 ```log
@@ -56,4 +59,4 @@ Note that you will see
 No play.logger.configurator found: logging must be configured entirely by the application.
 ```
 
-when you first start it -- this is a side effect of Play's immediate reload functionality, and will not affect the application itself.  You won't see the `play.logger.configurator`  warning if you run the Play application in production, because there isn't a different class loader for SBT vs for the Play application.
+When you first start it -- this is a side effect of Play's immediate reload functionality, and will not affect the application itself.  You won't see the `play.logger.configurator`  warning if you run the Play application in production, because there isn't a different class loader for SBT vs for the Play application.
