@@ -1,11 +1,9 @@
 package controllers
 
 import javax.inject.Inject
-
 import models._
 import play.api.data.Forms._
 import play.api.data._
-import play.api.i18n._
 import play.api.mvc._
 import views._
 
@@ -92,7 +90,7 @@ class HomeController @Inject()(computerService: ComputerRepository,
       },
       computer => {
         computerService.update(id, computer).map { _ =>
-          Home.flashing("success" -> "Computer %s has been updated".format(computer.name))
+          Home.flash("success" -> "Computer %s has been updated".format(computer.name))
         }
       }
     )
@@ -117,7 +115,7 @@ class HomeController @Inject()(computerService: ComputerRepository,
       },
       computer => {
         computerService.insert(computer).map { _ =>
-          Home.flashing("success" -> "Computer %s has been created".format(computer.name))
+          Home.flash("success" -> "Computer %s has been created".format(computer.name))
         }
       }
     )
@@ -128,7 +126,7 @@ class HomeController @Inject()(computerService: ComputerRepository,
     */
   def delete(id: Long) = Action.async {
     computerService.delete(id).map { _ =>
-      Home.flashing("success" -> "Computer has been deleted")
+      Home.flash("success" -> "Computer has been deleted")
     }
   }
 
