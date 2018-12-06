@@ -3,8 +3,6 @@ scala:
 - 2.12.6
 jdk:
 - oraclejdk8
-- oraclejdk9
-- oraclejdk10
 - oraclejdk11
 script:
   sbt ++$TRAVIS_SCALA_VERSION clean flyway/flywayMigrate slickCodegen compile test
@@ -19,11 +17,8 @@ before_cache:
 # Exclude some combinations from build matrix. See:
 # https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
 matrix:
+  fast_finish: true
   exclude:
-    - scala: 2.11.12
-      jdk: oraclejdk9
-    - scala: 2.11.12
-      jdk: oraclejdk10
     - scala: 2.11.12
       jdk: oraclejdk11
   allow_failures:
