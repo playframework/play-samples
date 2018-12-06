@@ -11,7 +11,15 @@ This project makes use of [dynamic streams](http://doc.akka.io/docs/akka/current
 The flow is defined once in the controller, and used everywhere from the `chat` action:
 
 ```scala
-class HomeController extends Controller {
+import javax.inject._
+import play.api.mvc._
+
+import akka.stream.scaladsl._
+import scala.concurrent._
+
+class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+
+    private type WSMessage = String
 
   // chat room many clients -> merge hub -> broadcasthub -> many clients
   private val (chatSink, chatSource) = {
@@ -37,14 +45,10 @@ class HomeController extends Controller {
           Right(flow)
         }.recover {
           case e: Exception =>
-            val msg = "Cannot create websocket"
-            logger.error(msg, e)
-            val result = InternalServerError(msg)
-            Left(result)
+            Left(InternalServerError("Cannot create websocket"))
         }
 
       case rejected =>
-        logger.error(s"Request ${rejected} failed same origin check")
         Future.successful {
           Left(Forbidden("forbidden"))
         }

@@ -1,5 +1,7 @@
 package controllers
 
+import java.io.IOException
+
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatestplus.play._
@@ -11,6 +13,7 @@ import play.shaded.ahc.org.asynchttpclient.ws.WebSocket
 import scala.compat.java8.FutureConverters
 import scala.concurrent.Await
 import scala.concurrent.duration._
+import scala.language.postfixOps
 
 class HomeControllerSpec extends PlaySpec with ScalaFutures with IntegrationPatience {
 
@@ -33,15 +36,15 @@ class HomeControllerSpec extends PlaySpec with ScalaFutures with IntegrationPati
           val listener = new WebSocketClient.LoggingListener
           val completionStage = webSocketClient.call(serverURL, origin, listener)
           val f = FutureConverters.toScala(completionStage)
-          val result = Await.result(f, atMost = 1000 millis)
-          listener.getThrowable mustBe a[IllegalStateException]
+          Await.result(f, atMost = 1000 millis)
+          listener.getThrowable mustBe a[IOException]
         } catch {
           case e: IllegalStateException =>
             e mustBe an [IllegalStateException]
 
           case e: java.util.concurrent.ExecutionException =>
             val foo = e.getCause
-            foo mustBe an [IllegalStateException]
+            foo mustBe an [IOException]
         }
       }
     }

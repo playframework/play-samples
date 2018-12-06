@@ -7,7 +7,7 @@ import akka.actor.ActorSystem
 import akka.event.Logging
 import akka.stream.Materializer
 import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Source}
-import play.api.{Logger, MarkerContext}
+import play.api.Logger
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -16,12 +16,12 @@ import scala.concurrent.{ExecutionContext, Future}
  * A very simple chat client using websockets.
  */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents)
+class HomeController @Inject()(val controllerComponents: ControllerComponents, inputSanitizer: InputSanitizer)
                               (implicit actorSystem: ActorSystem,
                                mat: Materializer,
                                executionContext: ExecutionContext,
-                               webJarsUtil: org.webjars.play.WebJarsUtil) 
-                               extends AbstractController(cc) with RequestMarkerContext {
+                               webJarsUtil: org.webjars.play.WebJarsUtil)
+                               extends BaseController with RequestMarkerContext {
 
   private type WSMessage = String
 
@@ -35,6 +35,8 @@ class HomeController @Inject()(cc: ControllerComponents)
     // recoverWithRetries -1 is essentially "recoverWith"
     val source = MergeHub.source[WSMessage]
       .log("source")
+      // Let's also do some input sanitization to avoid XSS attacks
+      .map(inputSanitizer.sanitize)
       .recoverWithRetries(-1, { case _: Exception ⇒ Source.empty })
 
     val sink = BroadcastHub.sink[WSMessage]
@@ -42,7 +44,7 @@ class HomeController @Inject()(cc: ControllerComponents)
   }
 
   private val userFlow: Flow[WSMessage, WSMessage, _] = {
-     Flow.fromSinkAndSource(chatSink, chatSource)
+    Flow.fromSinkAndSource(chatSink, chatSource)
   }
 
   def index: Action[AnyContent] = Action { implicit request: RequestHeader =>
@@ -83,7 +85,7 @@ class HomeController @Inject()(cc: ControllerComponents)
     // The Origin header is the domain the request originates from.
     // https://tools.ietf.org/html/rfc6454#section-7
     logger.debug("Checking the ORIGIN ")
-    
+
     rh.headers.get("Origin") match {
       case Some(originValue) if originMatches(originValue) =>
         logger.debug(s"originCheck: originValue = $originValue")
