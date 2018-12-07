@@ -1,12 +1,15 @@
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import controllers.PersonController;
 import models.Person;
 import models.PersonRepository;
+import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 import org.junit.Test;
-import play.api.mvc.Request;
-import play.core.j.JavaContextComponents;
-import play.core.j.JavaHelpers$;
+import play.api.test.CSRFTokenHelper;
 import play.data.FormFactory;
 import play.data.format.Formatters;
+import play.filters.csrf.CSRF;
+import play.i18n.Messages;
 import play.i18n.MessagesApi;
 import play.libs.Json;
 import play.libs.concurrent.HttpExecutionContext;
@@ -15,13 +18,15 @@ import play.mvc.Result;
 import play.test.Helpers;
 import play.twirl.api.Content;
 
-import javax.validation.Validator;
+import javax.validation.Validation;
+import javax.validation.ValidatorFactory;
+import javax.xml.validation.Validator;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ForkJoinPool;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -39,46 +44,27 @@ public class UnitTest {
 
     @Test
     public void checkIndex() {
-        // XXX This is a gap in the test API -- it should be play.test.Helpers.httpContext() by 2.6.0-M4
-        // and JavaHelpers should be removed.
-        Http.RequestBuilder request = Helpers.fakeRequest("GET", "/");
-
-        // XXX This should be play.test.CSRFTokenHelper
-        Http.RequestBuilder tokenRequest = play.api.test.CSRFTokenHelper.addCSRFToken(request);
-        JavaContextComponents contextComponents = createContextComponents();
-        Http.Context.current.set(createJavaContext(tokenRequest.build()._underlyingRequest(), contextComponents));
+        Http.RequestBuilder request = CSRFTokenHelper.addCSRFToken(Helpers.fakeRequest("GET", "/"));
 
         PersonRepository repository = mock(PersonRepository.class);
         FormFactory formFactory = mock(FormFactory.class);
         HttpExecutionContext ec = new HttpExecutionContext(ForkJoinPool.commonPool());
         final PersonController controller = new PersonController(formFactory, repository, ec);
-        final Result result = controller.index();
+        final Result result = controller.index(request.build());
 
         assertThat(result.status()).isEqualTo(OK);
     }
 
-    private Http.Context createJavaContext(Request<Http.RequestBody> request, JavaContextComponents contextComponents) {
-        return JavaHelpers$.MODULE$.createJavaContext(request, contextComponents);
-    }
-
-    private JavaContextComponents createContextComponents() {
-        return JavaHelpers$.MODULE$.createContextComponents();
-    }
-
     @Test
     public void checkTemplate() {
-        Content html = views.html.index.render();
+        Http.RequestBuilder request = CSRFTokenHelper.addCSRFToken(Helpers.fakeRequest("GET", "/"));
+        Content html = views.html.index.render(request.build());
         assertThat(html.contentType()).isEqualTo("text/html");
         assertThat(contentAsString(html)).contains("Add Person");
     }
 
     @Test
     public void checkAddPerson() {
-        // Easier to mock out the form factory inputs here
-        MessagesApi messagesApi = mock(MessagesApi.class);
-        Validator validator = mock(Validator.class);
-        FormFactory formFactory = new FormFactory(messagesApi, new Formatters(messagesApi), validator);
-
         // Don't need to be this involved in setting up the mock, but for demo it works:
         PersonRepository repository = mock(PersonRepository.class);
         Person person = new Person();
@@ -87,24 +73,32 @@ public class UnitTest {
         when(repository.add(any())).thenReturn(supplyAsync(() -> person));
 
         // Set up the request builder to reflect input
-        final Http.RequestBuilder requestBuilder = new Http.RequestBuilder().method("post").bodyJson(Json.toJson(person));
+        Http.Request request = Helpers.fakeRequest("POST", "/").bodyJson(Json.toJson(person)).build().withTransientLang("es");
 
-        // Add in an Http.Context here using invokeWithContext:
-        // XXX extending JavaHelpers is a cheat to get at JavaContextComponents easily, put this into helpers
-        JavaContextComponents components = createContextComponents();
-        final CompletionStage<Result> stage = Helpers.invokeWithContext(requestBuilder, components, () -> {
-            HttpExecutionContext ec = new HttpExecutionContext(ForkJoinPool.commonPool());
+        // Easier to mock out the form factory inputs here
+        Messages messages = mock(Messages.class);
+        MessagesApi messagesApi = mock(MessagesApi.class);
+        when(messagesApi.preferred(request)).thenReturn(messages);
 
-            // Create controller and call method under test:
-            final PersonController controller = new PersonController(formFactory, repository, ec);
-            return controller.addPerson();
-        });
+        ValidatorFactory validatorFactory = Validation.byDefaultProvider().configure()
+                .messageInterpolator(new ParameterMessageInterpolator())
+                .buildValidatorFactory();
 
-        // Test the completed result
-        await().atMost(1, SECONDS).until(() ->
-            assertThat(stage.toCompletableFuture()).isCompletedWithValueMatching(result ->
-                result.status() == SEE_OTHER, "Should redirect after operation"
-            )
+        Config config = ConfigFactory.load();
+        FormFactory formFactory = new FormFactory(messagesApi, new Formatters(messagesApi), validatorFactory, config);
+
+        // It is okay to use commonPool here since this is just a test.
+        HttpExecutionContext ec = new HttpExecutionContext(ForkJoinPool.commonPool());
+
+        // Create controller and call method under test:
+        final PersonController controller = new PersonController(formFactory, repository, ec);
+
+        CompletionStage<Result> stage = controller.addPerson(request);
+
+        await().atMost(1, SECONDS).untilAsserted(
+                () -> assertThat(stage.toCompletableFuture()).isCompletedWithValueMatching(
+                        result -> result.status() == SEE_OTHER, "Should redirect after operation"
+                )
         );
     }
 

@@ -1,4 +1,5 @@
 import org.junit.Test;
+import play.api.test.CSRFTokenHelper;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.mvc.Http;
@@ -23,7 +24,7 @@ public class IntegrationTest extends WithServer {
     @Test
     public void testInServerThroughUrl() throws Exception {
         // Tests using a scoped WSClient to talk to the server through a port.
-        try (WSClient ws = WSTestClient.newClient(this.testServer.port())) {
+        try (WSClient ws = WSTestClient.newClient(this.testServer.getRunningHttpPort().getAsInt())) {
             CompletionStage<WSResponse> stage = ws.url("/").get();
             WSResponse response = stage.toCompletableFuture().get();
             String body = response.getBody();
@@ -41,7 +42,7 @@ public class IntegrationTest extends WithServer {
                 .uri("/");
 
         // XXX This should be play.test.CSRFTokenHelper
-        Http.RequestBuilder tokenRequest = play.api.test.CSRFTokenHelper.addCSRFToken(request);
+        Http.RequestBuilder tokenRequest = CSRFTokenHelper.addCSRFToken(request);
 
         Result result = route(app, tokenRequest);
         final String body = contentAsString(result);
