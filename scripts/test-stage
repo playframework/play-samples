@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+echo "+----------------------------+"
+echo "| Testing staged application |"
+echo "+----------------------------+"
+# Stage the application
+sbt stage
+
+# Ensure the generated script can run
+if [[ -s target/universal/stage/bin/play-java-jpa-example ]]; then
+    chmod +x target/universal/stage/bin/play-java-jpa-example
+else
+    echo "Could not find the script for staged application"
+    exit 1
+fi
+
+# Have a valid application secret
+app_secret=$(openssl rand -base64 32)
+
+# Start the application in background
+./target/universal/stage/bin/play-java-jpa-example -Dplay.http.secret.key="${app_secret}" &
+
+# Starts with a failed exit_code
+exit_code=1
+retries=0
+
+until [[ $retries -ge 5 && $exit_code -eq 0 ]]
+do
+    curl 'http://localhost:9000/persons'
+    exit_code=$?
+    retries=$retries+1
+    sleep 5
+done
+
+# Kill it for good
+kill -9 "$(cat target/universal/stage/RUNNING_PID)"
+
+# And finally remove leftover pid file
+rm target/universal/stage/RUNNING_PID
+
+exit ${exit_code}

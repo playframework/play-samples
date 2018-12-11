@@ -6,6 +6,7 @@ jdk:
 env:
   matrix:
     - SCRIPT=scripts/test-sbt
+    - SCRIPT=scripts/test-stage
     - SCRIPT=scripts/test-gradle
 script:
   - $SCRIPT
