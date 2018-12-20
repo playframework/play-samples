@@ -52,7 +52,7 @@ public class BrowserTest extends WithBrowser {
         browser.$("a", withText("Apple II")).click();
         browser.$("input.danger").click();
 
-        browser.takeHtmlDump("delete.html");
+        browser.takeHtmlDump("target/delete.html");
 
         assertThat(browser.$("section h1").first().text(), equalTo("573 computers found"));
         assertThat(browser.$(".alert-message").first().text(), equalTo("Done! Computer has been deleted"));

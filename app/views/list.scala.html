@@ -1,4 +1,9 @@
-@(currentPage: io.ebean.PagedList[Computer], currentSortBy: String, currentOrder: String, currentFilter: String)
+@(currentPage: io.ebean.PagedList[Computer],
+        currentSortBy: String,
+        currentOrder: String,
+        currentFilter: String)(
+        implicit request: Http.Request,
+        messages: play.i18n.Messages)
 
 @****************************************
 * Helper generating navigation links    *
@@ -39,9 +44,9 @@
 
     <h1 id="homeTitle">@Messages("computers.list.title", currentPage.getTotalCount)</h1>
 
-    @if(flash.containsKey("success")) {
+    @request.flash.asScala().get("success").map { successFlashValue =>
         <div class="alert-message warning">
-            <strong>Done!</strong> @flash.get("success")
+            <strong>Done!</strong> @successFlashValue
         </div>
     }
 

@@ -1,20 +1,34 @@
-dist: trusty
-sudo: true
-group: beta
 language: scala
 scala:
-- 2.11.11
-- 2.12.3
+  - 2.12.7
 jdk:
-- oraclejdk8
+  - oraclejdk8
+  - openjdk11
+env:
+  matrix:
+    - SCRIPT=scripts/test-sbt
+script:
+  - $SCRIPT
 cache:
   directories:
-  - "$HOME/.ivy2/cache"
-  - "$HOME/.sbt/launchers"
+    - "$HOME/.ivy2/cache"
 before_cache:
-- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
-- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
-- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+  - rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
+  - rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+
+# Exclude some combinations from build matrix. See:
+# https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
+matrix:
+  fast_finish: true
+  allow_failures:
+    # Java 11 is still not fully supported. It is good that we are already
+    # testing our sample applications to better discover possible problems
+    # but we can allow failures here too.
+    - jdk: openjdk11
+
+# See https://blog.travis-ci.com/2014-03-13-slack-notifications/
+# created with travis encrypt command line tool
 notifications:
   slack:
     secure: K6HWTI6zJpQfxS7sH5ZQ1jEK5TkkUl5GtcGinNecHMBqvfS4IXAnU23lz/kLqCqMVPIFaRx1g6UwgJgMvR4XWeIhpzLOzAnOOcmv+kQzv7A8vEJBM20z1HNzDcxzvuNNO2BHn8EjXh5VD65vXMcA+lKzUxASey/Rs+CBReQWE7M=

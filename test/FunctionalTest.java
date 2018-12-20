@@ -65,7 +65,7 @@ public class FunctionalTest extends WithApplication {
 
         assertThat(result.status()).isEqualTo(SEE_OTHER);
         assertThat(result.redirectLocation().get()).isEqualTo("/computers");
-        assertThat(result.flash().get("success")).isEqualTo("Computer FooBar has been created");
+        assertThat(result.flash().getOptional("success").get()).isEqualTo("Computer FooBar has been created");
 
         result = route(app, controllers.routes.HomeController.list(0, "name", "asc", "FooBar"));
         assertThat(result.status()).isEqualTo(OK);

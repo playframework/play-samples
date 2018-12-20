@@ -6,15 +6,15 @@
 GET     /                           controllers.HomeController.index()
 
 # Computers list (look at the default values for pagination parameters)
-GET     /computers                  controllers.HomeController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+GET     /computers                  controllers.HomeController.list(request: Request, p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 
 # Add computer
-GET     /computers/new              controllers.HomeController.create()
-POST    /computers                  controllers.HomeController.save()
+GET     /computers/new              controllers.HomeController.create(request: Request)
+POST    /computers                  controllers.HomeController.save(request: Request)
 
 # Edit existing computer
-GET     /computers/:id              controllers.HomeController.edit(id:Long)
-POST    /computers/:id              controllers.HomeController.update(id:Long)
+GET     /computers/:id              controllers.HomeController.edit(request: Request, id:Long)
+POST    /computers/:id              controllers.HomeController.update(request: Request, id:Long)
 
 # Delete a computer
 POST    /computers/:id/delete       controllers.HomeController.delete(id:Long)

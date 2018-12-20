@@ -1,4 +1,4 @@
-@(id: Long, computerForm: Form[Computer], companies: Map[String, String])
+@(id: Long, computerForm: Form[Computer], companies: Map[String, String])(implicit request: Http.Request, messages: play.i18n.Messages)
 
 @import helper._
 
