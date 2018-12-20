@@ -7,3 +7,4 @@ build
 /.project
 /.settings
 /RUNNING_PID
+/.gradle

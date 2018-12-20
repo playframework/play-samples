@@ -10,6 +10,7 @@ jdk:
 env:
   matrix:
     - SCRIPT=scripts/test-sbt
+    - SCRIPT=scripts/test-gradle
 script:
 - $SCRIPT
 cache:
