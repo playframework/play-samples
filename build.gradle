@@ -25,7 +25,6 @@ dependencies {
     play "com.typesafe.play:play-guice_$scalaVersion:$playVersion"
     play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
     play "com.typesafe.play:filters-helpers_$scalaVersion:$playVersion"
-    play "com.softwaremill.macwire:macros_$scalaVersion:2.3.0"
 
     playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:3.1.2"
 }
