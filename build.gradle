@@ -29,7 +29,7 @@ dependencies {
     play "com.typesafe.play:filters-helpers_$scalaVersion:$playVersion"
     play "com.typesafe.play:play-java-jpa_$scalaVersion:$playVersion"
 
-    play "org.hibernate:hibernate-core:5.3.7.Final"
+    play "org.hibernate:hibernate-core:5.4.0.Final"
     play "com.h2database:h2:1.4.197"
 
     playTest "org.awaitility:awaitility:3.1.5"
