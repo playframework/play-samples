@@ -18,4 +18,4 @@ ThisBuild / scalacOptions ++= List(
   "-unchecked",
 )
 
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC1" % Test
