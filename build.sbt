@@ -2,7 +2,7 @@ name := "play-java-websocket-example"
 
 version := "1.0"
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.12.8"
 
 // https://github.com/sbt/junit-interface
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v")
