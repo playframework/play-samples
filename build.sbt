@@ -9,7 +9,7 @@ def gatlingVersion(scalaBinVer: String): String = scalaBinVer match {
 
 inThisBuild(
   List(
-    scalaVersion := "2.12.7",
+    scalaVersion := "2.12.8",
     crossScalaVersions := Seq("2.11.12", "2.12.7"),
     dependencyOverrides := Seq(
        "org.codehaus.plexus" % "plexus-utils" % "3.0.18",
