@@ -6,7 +6,7 @@ name := """play-chatroom-scala-example"""
 
 version := "2.7.x"
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.12.8"
 
 crossScalaVersions := Seq("2.11.12", "2.12.7")
 
@@ -24,7 +24,7 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % akkaVersion
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC1" % Test
 
 scalacOptions ++= Seq(
     "-feature",
