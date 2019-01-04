@@ -2,7 +2,7 @@ name := """play-scala-forms-example"""
 
 version := "2.6.x"
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.12.8"
 
 crossScalaVersions := Seq("2.11.12", "2.12.4")
 
