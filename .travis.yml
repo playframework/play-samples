@@ -1,45 +1,50 @@
 language: scala
 scala:
-# When updating Scala versions, also check the excludes
-# in build matrix below.
-- 2.11.12
-- 2.12.6
-jdk:
-- oraclejdk8
-- oraclejdk11
+  - 2.12.8
+
+before_install:
+  - curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
+
 env:
+  global:
+    - JABBA_HOME=$HOME/.jabba
   matrix:
-    - SCRIPT=scripts/test-sbt
-    - SCRIPT=scripts/test-gradle
-script:
-- $SCRIPT
-cache:
-  directories:
-  - "$HOME/.ivy2/cache"
-  - "$HOME/.gradle/caches"
-before_cache:
-- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
-- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
-- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+    # There is no concise way to specify multi-dimensional build matrix:
+    # https://github.com/travis-ci/travis-ci/issues/1519
+    - SCRIPT=scripts/test-sbt     TRAVIS_JDK=adopt@1.8.192-12
+    - SCRIPT=scripts/test-sbt     TRAVIS_JDK=adopt@1.11.0-1
+    - SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.8.192-12
+    - SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.11.0-1
 
 # Exclude some combinations from build matrix. See:
 # https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
 matrix:
   fast_finish: true
-  exclude:
-    - scala: 2.11.12
-      jdk: oraclejdk11
   allow_failures:
-    # We should allow failures here since Java 11 removed some modules including
-    # java.xml.bind which we are adding when running with Java 9+. For more details
-    # see http://openjdk.java.net/jeps/320
-    #
-    # Play already has a fix for that, but it needs to be backported and released
-    # for 2.6.x: https://github.com/playframework/playframework/pull/8382
-    - jdk: oraclejdk11
+    # Current release of Gradle still does not supports Play 2.7.x releases
+    # As soon as there is a release of Gradle that fixes that, we can then
+    # remove this allowed failure.
+    - env: SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.8.192-12
+    - env: SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.11.0-1
+    # Java 11 is still not fully supported. It is good that we are already
+    # testing our sample applications to better discover possible problems
+    # but we can allow failures here too.
+    - env: SCRIPT=scripts/test-sbt     TRAVIS_JDK=adopt@1.11.0-1
 
-# See https://blog.travis-ci.com/2014-03-13-slack-notifications/
-# created with travis encrypt command line tool
-notifications:
-  slack:
-    secure: 3BJCD1KtQdPw+Q/eg4wN4DYHHXvS8/YIdNA1xdwPREuCe6rn4khhTu3HcREI07rG3wfQhphy+f1bs+A3K2h9SGVoa4tslng7Bg2jFlf50pXFJZhhXcHQxCApxhj93TP54SQxRFtYLSOueJa6YRWnqxJMZpuMnGOU9cY3iuYbIaExTncjAZdkLsZbFaJtGhI2PqgIyEPEGo8CMZ1EQs2EP+vWKAS0rsKYQNHPd2hp7Z1cHzU0w8SNOFmkgy11J/NFe/Of3Bt67PfIMUnxA61hB/Xl5llqCkWmf5shntyAGCo8bxqWHlK+O8+ZU49EODl+kChJklcQ7btPB7vc3AXFpDllegDg4d8dWszwbo7yX3zEjr4iQtv2j5QW6euHMW9LBkBiLBuAg5vEB2ERQDsz888YL2djRtATuvwS77HSznmnmsENYTsOdm+mjm+x2R9k1uZ68+z3qBoLhsVpsxRakJBuwcJO8EE0NUTQOTm/ftgJ0NQpf7TWfByOqDCv/bZeZU/lK71NLKARJbe5bC2QW0oD5LjINITT+nd5UFmkirmy10EVFiNvF+GLKNfSk3pVQ2lUVKrF22qI9d+wR+Oy5aZBNxKK7tySKiT2XNbgNdNzmX66bV2ib+zm4A3Te5dvetNMIFy8kcU34LTe5NIbZt/efGagpo+1ijhLS6gBiKk=
+install:
+  - $JABBA_HOME/bin/jabba install $TRAVIS_JDK
+  - unset _JAVA_OPTIONS
+  - export JAVA_HOME="$JABBA_HOME/jdk/$TRAVIS_JDK" && export PATH="$JAVA_HOME/bin:$PATH" && java -Xmx32m -version
+
+script:
+  - $SCRIPT
+
+before_cache:
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt -name "*.lock" -delete
+
+cache:
+  directories:
+    - "$HOME/.ivy2/cache"
+    - "$HOME/.gradle/caches"
+    - "$HOME/.jabba/jdk"
