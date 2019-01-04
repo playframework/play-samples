@@ -4,12 +4,12 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.12.8"
 
 libraryDependencies += ws
 
-libraryDependencies += "com.google.dagger" % "dagger" % "2.19"
-libraryDependencies += "com.google.dagger" % "dagger-compiler" % "2.19"
+libraryDependencies += "com.google.dagger" % "dagger" % "2.16"
+libraryDependencies += "com.google.dagger" % "dagger-compiler" % "2.16"
 
 javacOptions in Compile := { (managedSourceDirectories in Compile).value.head.mkdirs(); javacOptions.value }
 
