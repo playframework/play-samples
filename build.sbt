@@ -4,7 +4,7 @@ version := "2.6.x"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.12.8"
 
 crossScalaVersions := Seq("2.11.12", "2.12.7")
 
