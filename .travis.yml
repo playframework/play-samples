@@ -1,6 +1,6 @@
 language: scala
 scala:
-  - 2.12.7
+  - 2.12.8
 
 before_install:
   - curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
