@@ -3,7 +3,7 @@ plugins {
     id 'idea'
 }
 
-def playVersion = "2.7.0-RC3"
+def playVersion = "2.7.0-RC8"
 def akkaVersion = '2.5.8'
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 
@@ -32,7 +32,7 @@ dependencies {
 
     playTest "com.typesafe.akka:akka-testkit_$scalaVersion:$akkaVersion"
     playTest "com.typesafe.akka:akka-stream-testkit_$scalaVersion:$akkaVersion"
-    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:4.0.0-RC1"
+    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:4.0.0-RC2"
     playTest "org.awaitility:awaitility:3.0.0"
 }
 
