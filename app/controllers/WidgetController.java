@@ -57,7 +57,7 @@ public class WidgetController extends Controller {
             WidgetData data = boundForm.get();
             widgets.add(new Widget(data.getName(), data.getPrice()));
             return redirect(routes.WidgetController.listWidgets())
-                .flashing("info", "Widget added!");
+                .flash("info", "Widget added!");
         }
     }
 }
