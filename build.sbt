@@ -8,7 +8,7 @@ scalaVersion := "2.12.8"
 
 crossScalaVersions := Seq("2.11.12", "2.12.7")
 
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC1" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC2" % Test
 libraryDependencies += "com.softwaremill.macwire" %% "macros" % "2.3.1" % "provided"
 
 scalacOptions ++= Seq(
