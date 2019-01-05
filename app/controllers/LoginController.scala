@@ -28,7 +28,7 @@ class LoginController @Inject() (
 
     val errorFunc = { badForm: Form[UserInfo] =>
       Future.successful {
-        BadRequest(views.html.index(badForm)).flashing(FLASH_ERROR -> "Could not login!")
+        BadRequest(views.html.index(badForm)).flash(FLASH_ERROR -> "Could not login!")
       }
     }
 
