@@ -1,23 +1,20 @@
 language: scala
 scala:
-- 2.12.7
-jdk:
-- oraclejdk8
-- openjdk11
+  - 2.12.8
+
+before_install:
+  - curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
+
 env:
+  global:
+    - JABBA_HOME=$HOME/.jabba
   matrix:
-    - SCRIPT=scripts/test-sbt
-    - SCRIPT=scripts/test-gradle
-script:
-- $SCRIPT
-cache:
-  directories:
-  - "$HOME/.ivy2/cache"
-  - "$HOME/.gradle/caches"
-before_cache:
-- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
-- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
-- find $HOME/.ivy2/cache -name "ivydata-*.properties" -print0 | xargs -n10 -0 rm
+    # There is no concise way to specify multi-dimensional build matrix:
+    # https://github.com/travis-ci/travis-ci/issues/1519
+    - SCRIPT=scripts/test-sbt     TRAVIS_JDK=adopt@1.8.192-12
+    - SCRIPT=scripts/test-sbt     TRAVIS_JDK=adopt@1.11.0-1
+    - SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.8.192-12
+    - SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.11.0-1
 
 # Exclude some combinations from build matrix. See:
 # https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
@@ -27,14 +24,27 @@ matrix:
     # Current release of Gradle still does not supports Play 2.7.x releases
     # As soon as there is a release of Gradle that fixes that, we can then
     # remove this allowed failure.
-    - env: SCRIPT=scripts/test-gradle
+    - env: SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.8.192-12
+    - env: SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.11.0-1
     # Java 11 is still not fully supported. It is good that we are already
     # testing our sample applications to better discover possible problems
     # but we can allow failures here too.
-    - jdk: openjdk11
+    - env: SCRIPT=scripts/test-sbt     TRAVIS_JDK=adopt@1.11.0-1
 
-# See https://blog.travis-ci.com/2014-03-13-slack-notifications/
-# created with travis encrypt command line tool
-notifications:
-  slack:
-    secure: MXiGfzhp5a9/rUs1sOZXapwWHVlNjxwtyIIOrmfWbHs5pQ9yF+BYrOKTmip1c8rOJuvXGFGDjifQDoC/rJ6GuKZAV/IHbcngKrYbCD1fC+xE5PnNWjVfpj2TUc2wZujX5s7wdz99RlEtXmShpwp4wGIRFsfBpCPg8DmQBbuOzyc=
+install:
+  - $JABBA_HOME/bin/jabba install $TRAVIS_JDK
+  - unset _JAVA_OPTIONS
+  - export JAVA_HOME="$JABBA_HOME/jdk/$TRAVIS_JDK" && export PATH="$JAVA_HOME/bin:$PATH" && java -Xmx32m -version
+
+script:
+  - $SCRIPT
+
+before_cache:
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt -name "*.lock" -delete
+
+cache:
+  directories:
+    - "$HOME/.ivy2/cache"
+    - "$HOME/.gradle/caches"
+    - "$HOME/.jabba/jdk"
