@@ -17,7 +17,7 @@ libraryDependencies += "org.apache.logging.log4j" % "log4j-slf4j-impl" % "2.11.1
 libraryDependencies += "org.apache.logging.log4j" % "log4j-api" % "2.11.1"
 libraryDependencies += "org.apache.logging.log4j" % "log4j-core" % "2.11.1"
 
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC1" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC2" % Test
 
 javaOptions += "-Dlog4j.configurationFile=conf/log4j2.xml"
 
