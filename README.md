@@ -102,4 +102,3 @@ We can trigger such request and see it correctly reply with a "Hello Caplin!" (w
 $ curl --insecure https://localhost:9443 ; echo
 Hello Caplin!
 ```
-
