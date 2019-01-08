@@ -18,19 +18,22 @@ lazy val root = (project in file("."))
       )
     )
 
-scalaVersion := "2.12.6"
-crossScalaVersions := Seq("2.11.12", "2.12.6")
+scalaVersion := "2.12.8"
+crossScalaVersions := Seq("2.11.12", "2.12.8")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")
+javacOptions -= "-Werror" // https://github.com/akka/akka-grpc/issues/490
 
 libraryDependencies += guice
 
 // Test libraries
-resolvers += Resolver.sonatypeRepo("releases")
-libraryDependencies += "com.lightbend.akka.grpc" %% "akka-grpc-play-testkit" % "0.4.1"     % Test
-libraryDependencies += "com.typesafe.play"       %% "play-test"              % "2.7.0-M3"  % Test
-libraryDependencies += "com.typesafe.play"       %% "play-specs2"            % "2.7.0-M3"  % Test
-libraryDependencies += "org.scalatestplus.play"  %% "scalatestplus-play"     % "4.0.0-M1"  % Test
+val playVersion = play.core.PlayVersion.current
+val playGrpcVersion = "0.5.0-M7"
+libraryDependencies += "com.lightbend.play"      %% "play-grpc-scalatest" % playGrpcVersion % Test
+libraryDependencies += "com.lightbend.play"      %% "play-grpc-specs2"    % playGrpcVersion % Test
+libraryDependencies += "com.typesafe.play"       %% "play-test"           % playVersion     % Test
+libraryDependencies += "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC2" % Test
 
 // Test Database
 libraryDependencies += "com.h2database" % "h2" % "1.4.197"
