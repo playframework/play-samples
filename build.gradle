@@ -3,7 +3,7 @@ plugins {
     id 'idea'
 }
 
-def playVersion = "2.6.20"
+def playVersion = "2.6.21"
 def akkaVersion = '2.5.8'
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 
@@ -34,7 +34,7 @@ dependencies {
     play "com.typesafe.akka:akka-slf4j_$scalaVersion:$akkaVersion"
     play "ch.qos.logback:logback-classic:1.2.3"
 
-    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:3.1.2"
+    playTest "org.scalatestplus.play:scalatestplus-play_\$scalaVersion:3.1.2"
     playTest "com.typesafe.akka:akka-testkit_$scalaVersion:$akkaVersion"
     playTest "com.typesafe.akka:akka-stream-testkit_$scalaVersion:$akkaVersion"
 }
