@@ -1,20 +1,20 @@
 package test
 
-import akka.grpc.play.api.specs2.ServerGrpcClient
+import play.grpc.specs2.ServerGrpcClient
 
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.ws.{ WSClient, WSRequest }
 import play.api.routing.Router
-import play.api.test.{ ApplicationFactories, ApplicationFactory, NewForServer, PlaySpecification, RunningServer }
+import play.api.test.{ ApplicationFactories, ApplicationFactory, ForServer, PlaySpecification, RunningServer }
 
 import example.myapp.helloworld.grpc.{ GreeterService, GreeterServiceClient, HelloRequest }
 import routers.HelloWorldRouter
 
-class HelloSpecs2Spec extends NewForServer with ServerGrpcClient with PlaySpecification with ApplicationFactories {
+class HelloSpecs2Spec extends ForServer with ServerGrpcClient with PlaySpecification with ApplicationFactories {
 
   protected def applicationFactory: ApplicationFactory =
-    appFromGuice(GuiceApplicationBuilder().overrides(bind[Router].to[HelloWorldRouter]))
+    withGuiceApp(GuiceApplicationBuilder().overrides(bind[Router].to[HelloWorldRouter]))
 
   def wsUrl(path: String)(implicit running: RunningServer): WSRequest = {
     val ws = running.app.injector.instanceOf[WSClient]
