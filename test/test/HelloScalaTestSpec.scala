@@ -1,9 +1,10 @@
 package test
 
-import akka.grpc.scalatestplus.play.ServerGrpcClient
+import play.grpc.scalatest.ServerGrpcClient
 
 import org.scalatest.concurrent.{ IntegrationPatience, ScalaFutures }
-import org.scalatestplus.play.{ NewGuiceOneServerPerTest, PlaySpec }
+import org.scalatestplus.play.PlaySpec
+import org.scalatestplus.play.guice.GuiceOneServerPerTest
 
 import play.api.Application
 import play.api.inject.bind
@@ -14,8 +15,8 @@ import play.api.routing.Router
 import example.myapp.helloworld.grpc.{ GreeterService, GreeterServiceClient, HelloRequest }
 import routers.HelloWorldRouter
 
-class HelloScalaTestSpec extends PlaySpec with ServerGrpcClient
-    with NewGuiceOneServerPerTest with ScalaFutures with IntegrationPatience {
+class HelloScalaTestSpec extends PlaySpec with GuiceOneServerPerTest with ServerGrpcClient
+    with ScalaFutures with IntegrationPatience {
 
   override def fakeApplication(): Application =
     GuiceApplicationBuilder().overrides(bind[Router].to[HelloWorldRouter]).build()
