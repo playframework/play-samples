@@ -19,8 +19,8 @@ lazy val root = (project in file("."))
     )
 
 scalaVersion := "2.12.6"
-
 crossScalaVersions := Seq("2.11.12", "2.12.6")
+scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 
 libraryDependencies += guice
 
