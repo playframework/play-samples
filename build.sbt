@@ -6,12 +6,12 @@ val gatlingVersion = "2.3.1"
 
 inThisBuild(
   List(
-    scalaVersion := "2.12.8",
     dependencyOverrides := Seq(
       "org.codehaus.plexus" % "plexus-utils" % "3.0.18",
       "com.google.code.findbugs" % "jsr305" % "3.0.1",
       "com.google.guava" % "guava" % "22.0"
-    )
+    ),
+    scalaVersion := "2.12.8"
   )
 )
 
