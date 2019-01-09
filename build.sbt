@@ -2,9 +2,9 @@ name := """play-isolated-slick"""
 
 version := "1.1-SNAPSHOT"
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.12.8"
 
-crossScalaVersions := Seq("2.11.12", "2.12.6")
+crossScalaVersions := Seq("2.11.12", "2.12.8")
 
 lazy val flyway = (project in file("modules/flyway"))
   .enablePlugins(FlywayPlugin)
@@ -29,7 +29,7 @@ libraryDependencies += "com.h2database" % "h2" % "1.4.197"
 
 // Automatic database migration available in testing
 fork in Test := true
+val playVersion = play.core.PlayVersion.current
 libraryDependencies += "org.flywaydb" % "flyway-core" % "5.1.1"
-libraryDependencies += "com.typesafe.play" %% "play-ahc-ws" % "2.6.15" % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
-
+libraryDependencies += "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC2" % Test
