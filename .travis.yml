@@ -1,50 +1,36 @@
 language: scala
-scala:
-  - 2.12.8
-
-before_install:
-  - curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
+scala: 2.12.8
+script: $SCRIPT
 
 env:
-  global:
-    - JABBA_HOME=$HOME/.jabba
   matrix:
-    # There is no concise way to specify multi-dimensional build matrix:
-    # https://github.com/travis-ci/travis-ci/issues/1519
-    - SCRIPT=scripts/test-sbt     TRAVIS_JDK=adopt@1.8.192-12
-    - SCRIPT=scripts/test-sbt     TRAVIS_JDK=adopt@1.11.0-1
-    - SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.8.192-12
-    - SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.11.0-1
+    - SCRIPT=scripts/test-sbt    TRAVIS_JDK=adopt@1.8.192-12
+    - SCRIPT=scripts/test-sbt    TRAVIS_JDK=adopt@1.11.0-1
+    - SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.8.192-12
+    - SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.11.0-1
 
-# Exclude some combinations from build matrix. See:
-# https://docs.travis-ci.com/user/customizing-the-build/#Build-Matrix
 matrix:
   fast_finish: true
   allow_failures:
-    # Current release of Gradle still does not supports Play 2.7.x releases
-    # As soon as there is a release of Gradle that fixes that, we can then
-    # remove this allowed failure.
-    - env: SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.8.192-12
-    - env: SCRIPT=scripts/test-gradle  TRAVIS_JDK=adopt@1.11.0-1
-    # Java 11 is still not fully supported. It is good that we are already
-    # testing our sample applications to better discover possible problems
-    # but we can allow failures here too.
-    - env: SCRIPT=scripts/test-sbt     TRAVIS_JDK=adopt@1.11.0-1
+    - env: SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.8.192-12 # current gradle doesn't support play 2.7
+    - env: SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.11.0-1   # current gradle doesn't support play 2.7
+    - env: SCRIPT=scripts/test-sbt    TRAVIS_JDK=adopt@1.11.0-1 # not fully supported but allows problem discovery
+
+before_install:
+  - curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
 
 install:
   - $JABBA_HOME/bin/jabba install $TRAVIS_JDK
   - unset _JAVA_OPTIONS
   - export JAVA_HOME="$JABBA_HOME/jdk/$TRAVIS_JDK" && export PATH="$JAVA_HOME/bin:$PATH" && java -Xmx32m -version
 
-script:
-  - $SCRIPT
+cache:
+  directories:
+    - "$HOME/.gradle/caches"
+    - "$HOME/.ivy2/cache"
+    - "$HOME/.jabba/jdk"
+    - "$HOME/.sbt"
 
 before_cache:
   - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
-  - find $HOME/.sbt -name "*.lock" -delete
-
-cache:
-  directories:
-    - "$HOME/.ivy2/cache"
-    - "$HOME/.gradle/caches"
-    - "$HOME/.jabba/jdk"
+  - find $HOME/.sbt  -name "*.lock"               -delete
