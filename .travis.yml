@@ -1,24 +1,9 @@
 language: scala
 scala: 2.12.8
-
-cache:
-  directories:
-  - "$HOME/.ivy2/cache"
-  - "$HOME/.gradle/caches"
-  - "$HOME/.jabba/jdk"
-  - "$HOME/.sbt"
-
-before_cache:
-- rm -rf $HOME/.ivy2/cache/com.typesafe.play/*
-- rm -rf $HOME/.ivy2/cache/scala_*/sbt_*/com.typesafe.play/*
-- find $HOME/.ivy2 -name "ivydata-*.properties" -delete
-- find $HOME/.sbt  -name "*.lock"               -delete
+script: $SCRIPT
 
 env:
-  global: JABBA_HOME=$HOME/.jabba
   matrix:
-    # There is no concise way to specify multi-dimensional build matrix:
-    # https://github.com/travis-ci/travis-ci/issues/1519
     - SCRIPT=scripts/test-sbt    TRAVIS_JDK=adopt@1.8.192-12
     - SCRIPT=scripts/test-sbt    TRAVIS_JDK=adopt@1.11.0-1
     - SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.8.192-12
@@ -39,4 +24,13 @@ install:
   - unset _JAVA_OPTIONS
   - export JAVA_HOME="$JABBA_HOME/jdk/$TRAVIS_JDK" && export PATH="$JAVA_HOME/bin:$PATH" && java -Xmx32m -version
 
-script: $SCRIPT
+cache:
+  directories:
+    - "$HOME/.gradle/caches"
+    - "$HOME/.ivy2/cache"
+    - "$HOME/.jabba/jdk"
+    - "$HOME/.sbt"
+
+before_cache:
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt  -name "*.lock"               -delete
