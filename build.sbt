@@ -1,9 +1,9 @@
 import akka.grpc.gen.scaladsl.play._
 
-name := """akka-grpc-play-quickstart-scala"""
+name := "play-scala-grpc-example"
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file("."))
+lazy val `play-scala-grpc-example` = (project in file("."))
   .enablePlugins(PlayScala)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
