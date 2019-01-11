@@ -75,7 +75,7 @@ package object controllers {
             Future.successful {
               discardingSession {
                 Redirect(routes.HomeController.index())
-              }.flash(FLASH_ERROR -> "Your session has expired!")
+              }.flashing(FLASH_ERROR -> "Your session has expired!")
             }
         }
       }
