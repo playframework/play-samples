@@ -1,4 +1,4 @@
-package test;
+package example.myapp.helloworld;
 
 import akka.grpc.GrpcClientSettings;
 import play.grpc.testkit.JavaAkkaGrpcClientHelpers;
