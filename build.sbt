@@ -1,9 +1,6 @@
 import akka.grpc.gen.javadsl.play._
 
-name := """akka-grpc-play-quickstart-java"""
-version := "1.0-SNAPSHOT"
-
-lazy val root = (project in file("."))
+val `play-java-grpc-example` = (project in file("."))
   .enablePlugins(PlayJava)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
