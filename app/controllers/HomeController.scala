@@ -53,7 +53,7 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
    * @return
    */
   private def handleFilePartAsFile: FilePartHandler[File] = {
-    case FileInfo(partName, filename, contentType) =>
+    case FileInfo(partName, filename, contentType, _) =>
       val path: Path = Files.createTempFile("multipartBody", "tempFile")
       val fileSink: Sink[ByteString, Future[IOResult]] = FileIO.toPath(path)
       val accumulator: Accumulator[ByteString, IOResult] = Accumulator(fileSink)
@@ -81,7 +81,7 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
    */
   def upload = Action(parse.multipartFormData(handleFilePartAsFile)) { implicit request =>
     val fileOption = request.body.file("name").map {
-      case FilePart(key, filename, contentType, file) =>
+      case FilePart(key, filename, contentType, file, _) =>
         logger.info(s"key = ${key}, filename = ${filename}, contentType = ${contentType}, file = $file")
         val data = operateOnTempFile(file)
         data
