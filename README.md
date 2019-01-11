@@ -1,6 +1,6 @@
-# akka-grpc-play-quickstart-scala
+# play-scala-grpc-example
 
-This is a starter application that shows how to use Akka gRPC to both expose and use gRPC services inside an Play application.
+This is an example application that shows how to use Akka gRPC to both expose and use gRPC services inside an Play application.
 
 For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://developer.lightbend.com/docs/akka-grpc/current/ .
 
