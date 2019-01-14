@@ -14,6 +14,8 @@ lazy val `play-scala-grpc-example` = (project in file("."))
       PlayKeys.devSettings ++= Seq(
         "play.server.http.port" -> "disabled",
         "play.server.https.port" -> "9443",
+        // Configures the keystore to use in Dev mode. This setting is equivalent to `play.server.https.keyStore.path` 
+        // in `application.conf`.
         "play.server.https.keyStore.path" -> "conf/selfsigned.keystore",
       )
     )
@@ -23,12 +25,6 @@ crossScalaVersions := Seq("2.11.12", "2.12.8")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 
 libraryDependencies += guice
-
-// There is a bug in akka-http 10.1.4 that makes it not work with gRPC+Play,
-// so we need to downgrade to 10.1.3 (or move to 10.1.5 when that's out)
-// https://github.com/akka/akka-http/issues/2168
-dependencyOverrides += "com.typesafe.akka" %% "akka-http-core" % "10.1.3"
-dependencyOverrides += "com.typesafe.akka" %% "akka-http" % "10.1.3"
 
 // Test libraries
 val playVersion = play.core.PlayVersion.current
