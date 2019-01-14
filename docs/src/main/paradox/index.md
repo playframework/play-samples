@@ -132,9 +132,8 @@ class HomeController @Inject() (mat: Materializer, greeterServiceClient: Greeter
 ```
 
 Since you may want to configure what service discovery or hardcoded location to use for each client, you may do so 
-as well in `conf/application.conf`, though we will not dive into this here.
-
-You can read more about [using a gRPC client in a Play App](https://developer.lightbend.com/docs/akka-grpc/current/play-framework.html#using-a-grpc-client-in-a-play-framework-app) in the docs.
+as well in `conf/application.conf`, though we will not dive into this here. Refer to the documentation on 
+[using Akka Discovery for endpoint discovery](https://developer.lightbend.com/docs/akka-grpc/current/client/configuration.html#using-akka-discovery-for-endpoint-discovery) for more details.
 
 ## Verifying
 
