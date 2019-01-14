@@ -41,3 +41,10 @@ libraryDependencies += "org.awaitility" % "awaitility" % "2.0.0" % Test
 
 // Make verbose tests
 testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
+
+
+// Documentation for this project:
+//    sbt "project docs" "~ paradox"
+//    open docs/target/paradox/site/main/index.html
+lazy val docs = (project in file("docs"))
+  .enablePlugins(ParadoxPlugin) 
