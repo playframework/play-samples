@@ -11,18 +11,6 @@ gRPC servers and clients on top of Akka Streams.
 
 For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://developer.lightbend.com/docs/akka-grpc/current/.
 
-
-## Limitations
-
-As gRPC requires using HTTP/2 only some setups are supported:
- 
-1. you may use `sbt runProd` to run Play locally in PROD mode, or
-1. you may use `./ssl-play run` to run Play in DEV mode.
-
-Note: `ssl-play` is a wrapper around `sbt` enabling extra options on the `sbt` process so Play's Dev Mode 
-supports SSL and HTTP/2.
-
-
 ## Configuring your project
 
 Add the Akka gRPC plugin on `project/plugins.sbt` 
@@ -46,20 +34,31 @@ in all the projects of your build that want to use it.
 
 Note how the `PlayAkkaHttp2Support` is also enabled. gRPC requires HTTP/2 transport and Play supports it only as an opt-in plugin.
 
+## Limitations
+
+As gRPC requires using HTTP/2 only some setups are supported:
+ 
+1. you may use `sbt runProd` to run Play locally in PROD mode, or
+1. you may use `./ssl-play run` to run Play in DEV mode.
+
+Note: `ssl-play` is a wrapper around `sbt` enabling extra options on the `sbt` process so Play's Dev Mode 
+supports SSL and HTTP/2.
+
 ## Running
 
 Running this application requires [sbt](http://www.scala-sbt.org/). gRPC, in turn, requires the transport to be 
-HTTP/2 so we want Play to use HTTP/2 (which, in Play, implies HTTPS). So rather than invoke `sbt` directly we'll use 
-a helper script invoked as such:
+HTTP/2 so we want Play to use HTTP/2 (which, in Play, implies HTTPS). These requirements limit which setups are 
+supported to run Play and only the following can be used at the moment:
 
-```
-./ssl-play run
-```
+1. you may use `sbt runProd` to run Play locally in a forked JVM in PROD mode, or
+1. you may use `./ssl-play run` to run Play in DEV mode within `sbt`.
 
-This will also generate the server and client sources based on the `app/proto/*.proto` files, thanks to the Akka gRPC
-plugin being enabled. 
+`ssl-play` is a wrapper script around `sbt` that sets up the ALPN agent (required for HTTP/2) on the JVM running `sbt`.  
 
-For your convenience, a self-signed certificate is provided in this example (see `conf/selfsigned.keystore`). Setting 
+In both execution modes above, `sbt` will also generate the server and client sources based on the `app/proto/*.proto` 
+files, which happens thanks to the Akka gRPC plugin being enabled. 
+
+Finally, for your convenience, a self-signed certificate is provided in this example (see `conf/selfsigned.keystore`). Setting 
 up a keystore works different in DEV mode and PROD mode. Locate the `play.server.https.keyStore.path` setting in 
 `application.conf` and `build.sbt` for an example on how to set the keystore on each environment.
 
