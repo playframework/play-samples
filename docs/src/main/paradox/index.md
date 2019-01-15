@@ -11,6 +11,11 @@ gRPC servers and clients on top of Akka Streams.
 
 For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://developer.lightbend.com/docs/akka-grpc/current/.
 
+## Obtaining this example
+
+You may download the code from [GitHub](https://github.com/playframework/play-java-grpc-example) directly or you can 
+kickstart your Play gRPC project on [Lightbend's Tech Hub](https://developer.lightbend.com/start/?group=play&project=play-java-grpc-example). 
+
 ## Configuring your project
 
 Add the Akka gRPC plugin on `project/plugins.sbt` 
