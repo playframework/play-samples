@@ -31,7 +31,7 @@ dependencies {
     play "com.h2database:h2:1.4.197"
 
     play "org.playframework.anorm:anorm_$scalaVersion:2.6.1"
-    playTest "org.scalatestplus.play:scalatestplus-play_\$scalaVersion:3.1.2"
+    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:3.1.2"
 }
 
 repositories {
