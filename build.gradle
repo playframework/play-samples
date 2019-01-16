@@ -29,7 +29,7 @@ dependencies {
     play "org.apache.logging.log4j:log4j-api:$log4jVersion"
     play "org.apache.logging.log4j:log4j-core:$log4jVersion"
 
-    playTest "org.scalatestplus.play:scalatestplus-play_\$scalaVersion:3.1.2"
+    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:3.1.2"
 }
 
 repositories {
