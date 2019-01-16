@@ -15,7 +15,7 @@ inThisBuild(
        "com.google.code.findbugs" % "jsr305" % "3.0.1",
        "com.google.guava" % "guava" % "22.0"
     ),
-    scalaVersion := "2.12.8"
+scalaVersion := "2.12.8"
   )
 )
 
