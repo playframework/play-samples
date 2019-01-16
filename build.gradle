@@ -44,11 +44,11 @@ dependencies {
     play "net.logstash.logback:logstash-logback-encoder:5.6"
 
     play "com.netaporter:scala-uri_$scalaVersion:0.4.16"
-    play "net.codingwell:scala-guice_\$scalaVersion:4.2.1"
+    play "net.codingwell:scala-guice_$scalaVersion:4.2.1"
 
     playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:4.0.0-RC2"
-    playTest "io.gatling.highcharts:gatling-charts-highcharts:\$gatlingVersion"
-    playTest "io.gatling:gatling-test-framework:\$gatlingVersion"
+    playTest "io.gatling.highcharts:gatling-charts-highcharts:$gatlingVersion"
+    playTest "io.gatling:gatling-test-framework:$gatlingVersion"
 }
 
 repositories {
