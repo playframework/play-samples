@@ -27,7 +27,7 @@ dependencies {
     play "com.typesafe.play:filters-helpers_$scalaVersion:$playVersion"
     play "com.softwaremill.macwire:macros_$scalaVersion:2.3.0"
 
-    playTest "org.scalatestplus.play:scalatestplus-play_\$scalaVersion:3.1.2"
+    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:3.1.2"
 }
 
 repositories {
