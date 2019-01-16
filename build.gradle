@@ -30,7 +30,7 @@ dependencies {
     play project(":one")
     play project(":two")
 
-    playTest "org.scalatestplus.play:scalatestplus-play_\$scalaVersion:3.1.2"
+    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:3.1.2"
 }
 
 allprojects {
