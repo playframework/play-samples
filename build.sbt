@@ -1,10 +1,11 @@
 import akka.grpc.gen.scaladsl.play._
+import com.typesafe.sbt.packager.docker.DockerAlias
 
 name := "play-scala-grpc-example"
 version := "1.0-SNAPSHOT"
 
 lazy val `play-scala-grpc-example` = (project in file("."))
-  .enablePlugins(PlayScala)
+  .enablePlugins(PlayScala, SbtReactiveAppPlugin)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
     .settings(
@@ -14,11 +15,27 @@ lazy val `play-scala-grpc-example` = (project in file("."))
       PlayKeys.devSettings ++= Seq(
         "play.server.http.port" -> "disabled",
         "play.server.https.port" -> "9443",
-        // Configures the keystore to use in Dev mode. This setting is equivalent to `play.server.https.keyStore.path` 
+        // Configures the keystore to use in Dev mode. This setting is equivalent to `play.server.https.keyStore.path`
         // in `application.conf`.
         "play.server.https.keyStore.path" -> "conf/selfsigned.keystore",
       )
     )
+    .settings(
+      dockerAliases in Docker += DockerAlias(None, None, "play-scala-grpc-example", None),
+      packageName in Docker := "play-scala-grpc-example",
+      httpIngressPaths := Seq("/"),
+      endpoints += HttpEndpoint(
+        name = "http",
+        ingress = HttpIngress(
+          ingressPorts = Vector(80, 443),
+          hosts = Vector("myservice.example.org"),
+          paths = Vector.empty))
+    )
+    .settings(
+      // workaround for https://github.com/lightbend/sbt-reactive-app/issues/171
+      libraryDependencies += "com.lightbend.rp" %% "reactive-lib-akka-management" % "1.6.0"
+    )
+
 
 scalaVersion := "2.12.8"
 crossScalaVersions := Seq("2.11.12", "2.12.8")
