@@ -26,7 +26,7 @@ dependencies {
     play "com.typesafe.play:play-guice_$scalaVersion:$playVersion"
     play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
 
-    play "org.webjars:webjars-play_$scalaVersion:2.6.2"
+    play "org.webjars:webjars-play_$scalaVersion:2.6.2
     play "org.webjars:flot:0.8.3"
     play "org.webjars:bootstrap:3.3.6"
     play "net.logstash.logback:logstash-logback-encoder:4.11"
@@ -34,7 +34,7 @@ dependencies {
     play "com.typesafe.akka:akka-slf4j_$scalaVersion:$akkaVersion"
     play "ch.qos.logback:logback-classic:1.2.3"
 
-    playTest "org.scalatestplus.play:scalatestplus-play_\$scalaVersion:3.1.2"
+    playTest "org.scalatestplus.play:scalatestplus-play_$scalaVersion:3.1.2"
     playTest "com.typesafe.akka:akka-testkit_$scalaVersion:$akkaVersion"
     playTest "com.typesafe.akka:akka-stream-testkit_$scalaVersion:$akkaVersion"
 }
