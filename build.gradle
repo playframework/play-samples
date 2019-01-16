@@ -52,8 +52,8 @@ dependencies {
     play "com.palominolabs.http:url-builder:1.1.0"
     play "net.jodah:failsafe:1.0.3"
 
-    playTest "io.gatling.highcharts:gatling-charts-highcharts:\$gatlingVersion"
-    playTest "io.gatling:gatling-test-framework:\$gatlingVersion"
+    playTest "io.gatling.highcharts:gatling-charts-highcharts:$gatlingVersion"
+    playTest "io.gatling:gatling-test-framework:$gatlingVersion"
 }
 
 repositories {
