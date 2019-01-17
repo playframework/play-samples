@@ -31,7 +31,7 @@ pod/play-scala-grpc-example-v1-0-snapshot-6c7b575d86-jlsfq   1/1     Running   0
 
 NAME                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)               AGE
 service/kubernetes                ClusterIP   10.96.0.1       <none>        443/TCP               17h
-service/play-scala-grpc-example   ClusterIP   10.106.226.87   <none>        10000/TCP,10001/TCP   3m
+service/play-scala-grpc-example   ClusterIP   10.106.226.87   <none>        9000/TCP,9443/TCP     3m
 
 NAME                                                    DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 deployment.apps/play-scala-grpc-example-v1-0-snapshot   2         2         2            2           3m
