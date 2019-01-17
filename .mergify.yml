@@ -4,7 +4,6 @@ pull_request_rules:
       - status-success=continuous-integration/travis-ci/pr
       - "#approved-reviews-by>=1"
       - "#changes-requested-reviews-by=0"
-      - label=merge-when-green
       - label!=block-merge
     actions:
       merge:
@@ -15,7 +14,6 @@ pull_request_rules:
     conditions:
       - status-success=continuous-integration/travis-ci/pr
       - label=merge-when-green
-      - label=template-control
       - label!=block-merge
     actions:
       merge:
@@ -35,19 +33,3 @@ pull_request_rules:
     actions:
       label:
         remove: [merge-when-green]
-
-  - name: remove template-control label after merge
-    conditions:
-      - merged
-      - label=template-control
-    actions:
-      label:
-        remove: [template-control]
-
-  - name: auto add wip
-    conditions:
-      # match a few flavours of wip
-      - title~=^(\[wip\]( |:) |\[WIP\]( |:) |wip( |:) |WIP( |:)).*
-    actions:
-      label:
-        add: ["block-merge"]
