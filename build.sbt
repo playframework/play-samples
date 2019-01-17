@@ -1,11 +1,11 @@
 import akka.grpc.gen.scaladsl.play._
-import com.typesafe.sbt.packager.docker.DockerAlias
+import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 
 name := "play-scala-grpc-example"
 version := "1.0-SNAPSHOT"
 
 lazy val `play-scala-grpc-example` = (project in file("."))
-  .enablePlugins(PlayScala, SbtReactiveAppPlugin)
+  .enablePlugins(PlayScala)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
     .settings(
@@ -21,21 +21,18 @@ lazy val `play-scala-grpc-example` = (project in file("."))
       )
     )
     .settings(
+      // workaround to https://github.com/akka/akka-grpc/pull/470#issuecomment-442133680
+      dockerBaseImage := "openjdk:8-alpine",
+      dockerCommands  := 
+        Seq.empty[CmdLike] ++
+        Seq(
+          Cmd("FROM", "openjdk:8-alpine"), 
+          ExecCmd("RUN", "apk", "add", "--no-cache", "bash")
+        ) ++
+        dockerCommands.value.tail ,
       dockerAliases in Docker += DockerAlias(None, None, "play-scala-grpc-example", None),
       packageName in Docker := "play-scala-grpc-example",
-      httpIngressPaths := Seq("/"),
-      endpoints += HttpEndpoint(
-        name = "http",
-        ingress = HttpIngress(
-          ingressPorts = Vector(80, 443),
-          hosts = Vector("myservice.example.org"),
-          paths = Vector.empty))
     )
-    .settings(
-      // workaround for https://github.com/lightbend/sbt-reactive-app/issues/171
-      libraryDependencies += "com.lightbend.rp" %% "reactive-lib-akka-management" % "1.6.0"
-    )
-
 
 scalaVersion := "2.12.8"
 crossScalaVersions := Seq("2.11.12", "2.12.8")

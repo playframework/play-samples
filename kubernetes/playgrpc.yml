@@ -1,0 +1,143 @@
+---
+apiVersion: "apps/v1beta2"
+kind: Deployment
+metadata:
+  name: "play-scala-grpc-example-v1-0-snapshot"
+  labels:
+    appName: "play-scala-grpc-example"
+    appNameVersion: "play-scala-grpc-example-v1-0-snapshot"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      appNameVersion: "play-scala-grpc-example-v1-0-snapshot"
+  template:
+    metadata:
+      labels:
+        appName: "play-scala-grpc-example"
+        appNameVersion: "play-scala-grpc-example-v1-0-snapshot"
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: "play-scala-grpc-example"
+          image: "play-scala-grpc-example:1.0-SNAPSHOT"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: "JAVA_OPTS"
+              value: "-Dplay.http.secret.key=a-very-strong-key-for-production -Djavax.net.debug=all -Dplay.filters.hosts.allowed.0=myservice.example.org -Dplay.filters.hosts.allowed.1=192.168.99.100"
+            - name: "RP_APP_NAME"
+              value: "play-scala-grpc-example"
+            - name: "RP_APP_TYPE"
+              value: basic
+            - name: "RP_APP_VERSION"
+              value: "1.0-SNAPSHOT"
+            - name: "RP_ENDPOINTS"
+              value: HTTP, HTTPS
+            - name: "RP_ENDPOINTS_COUNT"
+              value: "2"
+            - name: "RP_ENDPOINT_0_BIND_HOST"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "RP_ENDPOINT_0_BIND_PORT"
+              value: "10000"
+            - name: "RP_ENDPOINT_0_HOST"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "RP_ENDPOINT_0_PORT"
+              value: "10000"
+            - name: "RP_ENDPOINT_1_BIND_HOST"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "RP_ENDPOINT_1_BIND_PORT"
+              value: "10001"
+            - name: "RP_ENDPOINT_1_HOST"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "RP_ENDPOINT_1_PORT"
+              value: "10001"
+            - name: "RP_ENDPOINT_HTTP_BIND_HOST"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "RP_ENDPOINT_HTTP_BIND_PORT"
+              value: "10000"
+            - name: "RP_ENDPOINT_HTTP_HOST"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "RP_ENDPOINT_HTTP_PORT"
+              value: "10000"
+            - name: "RP_ENDPOINT_HTTPS_BIND_HOST"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "RP_ENDPOINT_HTTPS_BIND_PORT"
+              value: "10001"
+            - name: "RP_ENDPOINT_HTTPS_HOST"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "RP_ENDPOINT_HTTPS_PORT"
+              value: "10001"
+            - name: "RP_KUBERNETES_POD_IP"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "RP_KUBERNETES_POD_NAME"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "metadata.name"
+            - name: "RP_MODULES"
+              value: common
+            - name: "RP_NAMESPACE"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "metadata.namespace"
+            - name: "RP_PLATFORM"
+              value: kubernetes
+          ports:
+            - containerPort: 10000
+              name: http
+            - containerPort: 10001
+              name: https
+          volumeMounts: []
+          command:
+            - "/opt/docker/bin/play-scala-grpc-example"
+      volumes: []
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    appName: "play-scala-grpc-example"
+  name: "play-scala-grpc-example"
+spec:
+  ports:
+    - name: http
+      port: 10000
+      protocol: TCP
+      targetPort: 10000
+    - name: https
+      port: 10001
+      protocol: TCP
+      targetPort: 10001
+  selector:
+    appName: "play-scala-grpc-example"
+---
+apiVersion: "extensions/v1beta1"
+kind: Ingress
+metadata:
+  name: "play-scala-grpc"
+spec:
+  rules:
+  - host: "myservice.example.org"
+    http:
+      paths:
+      - backend:
+          serviceName: "play-scala-grpc-example"
+          servicePort: 10000
+

@@ -5,11 +5,12 @@ import example.myapp.helloworld.grpc.HelloReply
 import example.myapp.helloworld.grpc.HelloRequest
 import javax.inject.Inject
 import akka.stream.Materializer
+import com.typesafe.config.Config
 import play.api.mvc._
 
 import scala.concurrent.Future
 
-class HomeController @Inject() (mat: Materializer, greeterServiceClient: GreeterServiceClient) extends InjectedController {
+class HomeController @Inject() (greeterServiceClient: GreeterServiceClient, config:Config, mat: Materializer) extends InjectedController {
   implicit val ec = mat.executionContext
 
   def index = Action.async {
@@ -22,4 +23,15 @@ class HomeController @Inject() (mat: Materializer, greeterServiceClient: Greeter
   def ping = Action {
     Ok("pong")
   }
+
+  def debug = Action {
+    Ok(
+      s"""
+        | ${sys.props.map{case (k,v) => s"$k -> $v"}.mkString("\n") }
+        |
+        | ${config.toString}
+        |
+      """.stripMargin )
+  }
+
 }
