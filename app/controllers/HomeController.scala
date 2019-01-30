@@ -20,18 +20,4 @@ class HomeController @Inject() (greeterServiceClient: GreeterServiceClient, conf
     reply.map(_.message).map(m ⇒ Ok(m))
   }
 
-  def ping = Action {
-    Ok("pong")
-  }
-
-  def debug = Action {
-    Ok(
-      s"""
-        | ${sys.props.map{case (k,v) => s"$k -> $v"}.mkString("\n") }
-        |
-        | ${config.toString}
-        |
-      """.stripMargin )
-  }
-
 }

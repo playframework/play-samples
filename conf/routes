@@ -4,8 +4,6 @@
 
 # An example controller showing a sample home page
 GET        /            controllers.HomeController.index
-GET        /ping        controllers.HomeController.ping
-GET        /debug       controllers.HomeController.debug
 
 # ----     gRPC services    ----
 ->      /                    routers.HelloWorldRouter
