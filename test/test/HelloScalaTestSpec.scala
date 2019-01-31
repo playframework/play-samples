@@ -1,18 +1,15 @@
 package test
 
-import play.grpc.scalatest.ServerGrpcClient
-
+import example.myapp.helloworld.grpc.{ GreeterService, GreeterServiceClient, HelloRequest }
 import org.scalatest.concurrent.{ IntegrationPatience, ScalaFutures }
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneServerPerTest
-
 import play.api.Application
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.ws.WSClient
 import play.api.routing.Router
-
-import example.myapp.helloworld.grpc.{ GreeterService, GreeterServiceClient, HelloRequest }
+import play.grpc.scalatest.ServerGrpcClient
 import routers.HelloWorldRouter
 
 class HelloScalaTestSpec extends PlaySpec with GuiceOneServerPerTest with ServerGrpcClient

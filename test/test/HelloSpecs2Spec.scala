@@ -1,14 +1,12 @@
 package test
 
-import play.grpc.specs2.ServerGrpcClient
-
+import example.myapp.helloworld.grpc.{ GreeterService, GreeterServiceClient, HelloRequest }
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.ws.{ WSClient, WSRequest }
 import play.api.routing.Router
-import play.api.test.{ ApplicationFactories, ApplicationFactory, ForServer, PlaySpecification, RunningServer }
-
-import example.myapp.helloworld.grpc.{ GreeterService, GreeterServiceClient, HelloRequest }
+import play.api.test._
+import play.grpc.specs2.ServerGrpcClient
 import routers.HelloWorldRouter
 
 class HelloSpecs2Spec extends ForServer with ServerGrpcClient with PlaySpecification with ApplicationFactories {
