@@ -18,7 +18,7 @@ Once minikube is running the application can be deployed using:
 ```
 $ eval $(minikube docker-env)
 $ sbt docker:publishLocal
-$ kubectl apply -f kubernetes/playgrpc.yml
+$ kubectl apply -f kubernetes/play-grpc.yml
 ```
 
 Verify the deployment status:
