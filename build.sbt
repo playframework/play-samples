@@ -15,7 +15,7 @@ scalaVersion := "2.12.8"
 
 libraryDependencies += ws
 libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.1" % Test
 
 fork in run := true
 
