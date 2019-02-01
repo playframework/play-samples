@@ -25,11 +25,3 @@ pull_request_rules:
       - merged
     actions:
       delete_head_branch: {}
-
-  - name: remove merge-when-green label after merge
-    conditions:
-      - merged
-      - label=merge-when-green
-    actions:
-      label:
-        remove: [merge-when-green]
