@@ -32,4 +32,4 @@ fork in Test := true
 val playVersion = play.core.PlayVersion.current
 libraryDependencies += "org.flywaydb" % "flyway-core" % "5.1.1"
 libraryDependencies += "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.1" % Test
