@@ -63,7 +63,8 @@ supported to run Play and only the following can be used at the moment:
 In both execution modes above, `sbt` will also generate the server and client sources based on the `app/proto/*.proto` 
 files, which happens thanks to the Akka gRPC plugin being enabled. 
 
-Finally, for your convenience, a self-signed certificate is provided in this example (see `conf/selfsigned.keystore`). Setting 
+Finally, for your convenience, a fake certificate chain (a self-signed root CA and a server certificate for 
+`CN='localhost' issued by that CA) is provided in this example (see `conf/selfsigned.keystore`). Setting 
 up a keystore works different in DEV mode and PROD mode. Locate the `play.server.https.keyStore.path` setting in 
 `application.conf` and `build.sbt` for an example on how to set the keystore on each environment.
 

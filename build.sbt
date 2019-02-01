@@ -1,4 +1,5 @@
 import akka.grpc.gen.scaladsl.play._
+import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 
 name := "play-scala-grpc-example"
 version := "1.0-SNAPSHOT"
@@ -14,10 +15,23 @@ lazy val `play-scala-grpc-example` = (project in file("."))
       PlayKeys.devSettings ++= Seq(
         "play.server.http.port" -> "disabled",
         "play.server.https.port" -> "9443",
-        // Configures the keystore to use in Dev mode. This setting is equivalent to `play.server.https.keyStore.path` 
+        // Configures the keystore to use in Dev mode. This setting is equivalent to `play.server.https.keyStore.path`
         // in `application.conf`.
         "play.server.https.keyStore.path" -> "conf/selfsigned.keystore",
       )
+    )
+    .settings(
+      // workaround to https://github.com/akka/akka-grpc/pull/470#issuecomment-442133680
+      dockerBaseImage := "openjdk:8-alpine",
+      dockerCommands  := 
+        Seq.empty[CmdLike] ++
+        Seq(
+          Cmd("FROM", "openjdk:8-alpine"), 
+          ExecCmd("RUN", "apk", "add", "--no-cache", "bash")
+        ) ++
+        dockerCommands.value.tail ,
+      dockerAliases in Docker += DockerAlias(None, None, "play-scala-grpc-example", None),
+      packageName in Docker := "play-scala-grpc-example",
     )
 
 scalaVersion := "2.12.8"
@@ -28,12 +42,12 @@ libraryDependencies += guice
 
 // Test libraries
 val playVersion = play.core.PlayVersion.current
-val playGrpcVersion = "0.5.0-M7"
+val playGrpcVersion = "0.5.0"
 libraryDependencies += "com.lightbend.play"      %% "play-grpc-scalatest" % playGrpcVersion % Test
 libraryDependencies += "com.lightbend.play"      %% "play-grpc-specs2"    % playGrpcVersion % Test
 libraryDependencies += "com.typesafe.play"       %% "play-test"           % playVersion     % Test
 libraryDependencies += "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0" % Test
 
 // Test Database
 libraryDependencies += "com.h2database" % "h2" % "1.4.197"
