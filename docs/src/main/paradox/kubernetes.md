@@ -53,7 +53,7 @@ The Kubernetes descriptor creates an Ingress rule based on the `myservice.exampl
 means that any incoming request with `Host: myservice.example.org` will be forwarded to our 
 `service/play-scala-grpc-example`. The externally exposed port uses plaintext `HTTP/1.1` and hits 
 the `HomeController`. The code in the `HomeController`, then, uses a gRPC client to connect to a gRPC Router 
-running on the same process (see the client configuration in `application.conf` using `RP_KUBERNETES_POD_NAME`). 
+running on the same process (see the client configuration in `application.conf` using `DEPLOYMENT_SERVICE_NAME `). 
 
 This sample exposes gRPC over CYPHERTEXT HTTP/2. In this example we pay the price of some added complexity: the 
 Play process is using a fake certificate issued to `localhost` (the certificate is issued by a self-signed CA). The consequence of using a certificate issued to `localhost` is that the TLS handshake will only succeed if the 
