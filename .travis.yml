@@ -21,7 +21,7 @@ before_install:
 
 install:
   - $JABBA_HOME/bin/jabba install $TRAVIS_JDK
-  - unset _JAVA_OPTIONS
+  - export _JAVA_OPTIONS=""
   - export JAVA_HOME="$JABBA_HOME/jdk/$TRAVIS_JDK" && export PATH="$JAVA_HOME/bin:$PATH" && java -Xmx32m -version
 
 cache:

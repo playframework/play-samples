@@ -81,8 +81,8 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
    */
   def upload = Action(parse.multipartFormData(handleFilePartAsFile)) { implicit request =>
     val fileOption = request.body.file("name").map {
-      case FilePart(key, filename, contentType, file, _) =>
-        logger.info(s"key = ${key}, filename = ${filename}, contentType = ${contentType}, file = $file")
+      case FilePart(key, filename, contentType, file, fileSize, dispositionType) =>
+        logger.info(s"key = $key, filename = $filename, contentType = $contentType, file = $file, fileSize = $fileSize, dispositionType = $dispositionType")
         val data = operateOnTempFile(file)
         data
     }
