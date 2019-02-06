@@ -14,7 +14,7 @@ matrix:
   allow_failures:
     - env: SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.8.192-12 # current gradle doesn't support play 2.7
     - env: SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.11.0-1   # current gradle doesn't support play 2.7
-    - env: SCRIPT=scripts/test-sbt    TRAVIS_JDK=adopt@1.11.0-1 # not fully supported but allows problem discovery
+    - env: SCRIPT=scripts/test-sbt    TRAVIS_JDK=adopt@1.11.0-1   # not fully supported but allows problem discovery
 
 before_install:
   - curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
