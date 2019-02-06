@@ -2,9 +2,9 @@
 
 This example is described in the [Play Java gRPC Example site](https://developer.lightbend.com/guides/play-java-grpc-example/).
 
-This is an example application that shows how to use Akka gRPC to both expose and use gRPC services inside a Play application.
+This is an example application that shows how to use Akka gRPC to both expose and use gRPC services inside an Play application.
 
-For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://developer.lightbend.com/docs/akka-grpc/current/.
+For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://developer.lightbend.com/docs/akka-grpc/current/ .
 
 
 ## Sample license
