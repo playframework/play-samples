@@ -4,14 +4,23 @@ import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 name := "play-scala-grpc-example"
 version := "1.0-SNAPSHOT"
 
+// #grpc_play_plugins
+// build.sbt
 lazy val `play-scala-grpc-example` = (project in file("."))
   .enablePlugins(PlayScala)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
+// #grpc_play_plugins
     .settings(
       akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Scala),
+      // #grpc_client_generators
+      // build.sbt
       akkaGrpcExtraGenerators += PlayScalaClientCodeGenerator,
+      // #grpc_client_generators
+      // #grpc_server_generators
+      // build.sbt
       akkaGrpcExtraGenerators += PlayScalaServerCodeGenerator,
+      // #grpc_server_generators
       PlayKeys.devSettings ++= Seq(
         "play.server.http.port" -> "disabled",
         "play.server.https.port" -> "9443",

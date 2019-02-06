@@ -6,7 +6,7 @@ Install the following:
 
 * [Docker](https://docs.docker.com/install/)
 * [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* OpenShift's CLI: [`oc`](https://docs.openshift.com/container-platform/3.10/cli_reference/get_started_cli.html#installing-the-cli)
+* OpenShift's CLI: [`oc`](https://docs.openshift.com/container-platform/3.10/cli_reference/get_started_cli.html#installing-the-cli) (["Installing the CLI"](https://docs.openshift.com/container-platform/3.10/cli_reference/get_started_cli.html#installing-the-cli))
 * [Sbt](https://www.scala-sbt.org/)
 
 
@@ -26,24 +26,27 @@ openshift v3.10.45
 kubernetes v1.10.0+b81c8f8
 ```
 
-Where `centralpark.lightbend.com` is an [OpenShift Container Platform](https://www.openshift.com/products/container-platform/).
+Where `centralpark.lightbend.com` is Lightbend's private [OpenShift Container Platform](https://www.openshift.com/products/container-platform/) cluster. This
+guide uses `centralpark.lightbend.com` as an example, you will have to use your own OpenShift cluster or a local `minishift` instance. 
 
 ### Running
 
 Login to OpenShift from your terminal and create the OpenShift project:
 
-```
+```bash
 ## obtain the token from https://<your-openshift-server>/console/command-line
+export OPENSHIFT_SERVER=centralpark.lightbend.com
 export TOKEN=<my-token>
 export OPENSHIFT_PROJECT=play-scala-grpc-example
 export IMAGE=play-scala-grpc-example
 export TAG=1.0-SNAPSHOT
 
-oc login https://centralpark.lightbend.com --token=$TOKEN
+oc login https://OPENSHIFT_SERVER --token=$TOKEN
 oc new-project $OPENSHIFT_PROJECT
 ```
 
-Create the docker image of your application and push it to the image registry (for this example we're using the Red Hat Container Registry in CentralPark).
+Create the docker image of your application and push it to the image registry. In this guide we're using the Red Hat 
+Container Registry in Lightbend's OpenShift cluster, CentralPark. You will have to use your own registry.
 
 ```bash
 sbt docker:publishLocal

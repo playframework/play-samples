@@ -1,5 +1,7 @@
 package controllers
 
+// #grpc_client_injection
+//app/controllers/HomeController.scala
 import com.typesafe.config.Config
 import example.myapp.helloworld.grpc.{ GreeterServiceClient, HelloReply, HelloRequest }
 import javax.inject.Inject
@@ -7,7 +9,11 @@ import play.api.mvc._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
-class HomeController @Inject() (greeterServiceClient: GreeterServiceClient, config:Config)(implicit ec: ExecutionContext) extends InjectedController {
+class HomeController @Inject()(greeterServiceClient: GreeterServiceClient,
+                               config: Config
+                              )(implicit ec: ExecutionContext
+                              ) extends InjectedController {
+  // #grpc_client_injection
 
   def index = Action.async {
     val request = HelloRequest("Caplin")
