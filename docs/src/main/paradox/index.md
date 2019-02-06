@@ -1,4 +1,4 @@
-# Play Scala gRPC Example
+# Play Java gRPC Example
 
 This example application shows how to use Akka gRPC to both expose and use gRPC services inside an Play application.
 
@@ -13,8 +13,8 @@ For detailed documentation refer to https://www.playframework.com/documentation/
 
 ## Obtaining this example
 
-You may download the code from [GitHub](https://github.com/playframework/play-scala-grpc-example) directly or you can 
-kickstart your Play gRPC project on [Lightbend's Tech Hub](https://developer.lightbend.com/start/?group=play&project=play-scala-grpc-example). 
+You may download the code from [GitHub](https://github.com/playframework/play-java-grpc-example) directly or you can
+kickstart your Play gRPC project on [Lightbend's Tech Hub](https://developer.lightbend.com/start/?group=play&project=play-java-grpc-example).
 
 ## What this example does
 

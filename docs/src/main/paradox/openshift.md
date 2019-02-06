@@ -37,8 +37,8 @@ Login to OpenShift from your terminal and create the OpenShift project:
 ## obtain the token from https://<your-openshift-server>/console/command-line
 export OPENSHIFT_SERVER=centralpark.lightbend.com
 export TOKEN=<my-token>
-export OPENSHIFT_PROJECT=play-scala-grpc-example
-export IMAGE=play-scala-grpc-example
+export OPENSHIFT_PROJECT=play-java-grpc-example
+export IMAGE=play-java-grpc-example
 export TAG=1.0-SNAPSHOT
 
 oc login https://OPENSHIFT_SERVER --token=$TOKEN
@@ -62,10 +62,10 @@ docker push $DOCKER_REGISTRY/$IMAGE:$TAG
 Apply your deployment : 
 
 ```bash
-$ oc apply -f deployment/openshift-play-scala-grpc-example.yml
-deployment.apps "play-scala-grpc-example-v1-0-snapshot" configured
-service "play-scala-grpc-example" unchanged
-route.route.openshift.io "play-scala-grpc-route" created
+$ oc apply -f deployment/openshift-play-java-grpc-example.yml
+deployment.apps "play-java-grpc-example-v1-0-snapshot" configured
+service "play-java-grpc-example" unchanged
+route.route.openshift.io "play-java-grpc-route" created
 ```
 
 and verify the deployment completed successfully:
@@ -73,23 +73,23 @@ and verify the deployment completed successfully:
 ```bash
 $ oc get all 
 NAME                                                         READY     STATUS    RESTARTS   AGE
-pod/play-scala-grpc-example-v1-0-snapshot-5b77bd9849-69wws   1/1       Running   0          16h
-pod/play-scala-grpc-example-v1-0-snapshot-5b77bd9849-9p657   1/1       Running   0          16h
+pod/play-java-grpc-example-v1-0-snapshot-5b77bd9849-69wws   1/1       Running   0          16h
+pod/play-java-grpc-example-v1-0-snapshot-5b77bd9849-9p657   1/1       Running   0          16h
 
 NAME                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
-service/play-scala-grpc-example   ClusterIP   172.30.205.57   <none>        9000/TCP,9443/TCP   17h
+service/play-java-grpc-example   ClusterIP   172.30.205.57   <none>        9000/TCP,9443/TCP   17h
 
 NAME                                                    DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/play-scala-grpc-example-v1-0-snapshot   2         2         2            2           17h
+deployment.apps/play-java-grpc-example-v1-0-snapshot   2         2         2            2           17h
 
 NAME                                                               DESIRED   CURRENT   READY     AGE
-replicaset.apps/play-scala-grpc-example-v1-0-snapshot-5b77bd9849   2         2         2         16h
+replicaset.apps/play-java-grpc-example-v1-0-snapshot-5b77bd9849   2         2         2         16h
 
 NAME                                                     DOCKER REPO                                                                                         TAGS           UPDATED
-imagestream.image.openshift.io/play-scala-grpc-example   docker-registry-default.centralpark.lightbend.com/play-scala-grpc-example/play-scala-grpc-example   1.0-SNAPSHOT   17 hours ago
+imagestream.image.openshift.io/play-java-grpc-example   docker-registry-default.centralpark.lightbend.com/play-java-grpc-example/play-java-grpc-example   1.0-SNAPSHOT   17 hours ago
 
 NAME                                             HOST/PORT               PATH      SERVICES                  PORT      TERMINATION   WILDCARD
-route.route.openshift.io/play-scala-grpc-route   myservice.example.org             play-scala-grpc-example   http                    None
+route.route.openshift.io/play-java-grpc-route   myservice.example.org             play-java-grpc-example   http                    None
 ```
 
 Test the application:

@@ -47,7 +47,7 @@ example app this has been done already though):
 
 Which in turn allows us to inject clients to any of the services defined in our `app/proto` directory, just like so:
 
-@@snip [HomeController.scala](../../../../app/controllers/HomeController.scala) { #grpc_client_injection }
+@@snip [HomeController.java](../../../../app/controllers/HomeController.java) { #grpc_client_injection }
 
 Since you may want to configure what service discovery or hardcoded location to use for each client, you may do so 
 as well in `conf/application.conf`, though we will not dive into this here. Refer to the documentation on 

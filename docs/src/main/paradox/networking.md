@@ -7,7 +7,7 @@ Service exposes both 9000 and 9443 but the Ingress/Router only expose the `PLAIN
 The Kubernetes and OpenShift descriptors create an Ingress or Route rules based on the
 `myservice.example.org` virtual host. This means that any external request arriving into 
 the cluster with a `Host: myservice.example.org` header will be forwarded to our 
-`service/play-scala-grpc-example`. 
+`service/play-java-grpc-example`.
 
 
 ```

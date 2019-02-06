@@ -4,14 +4,23 @@ import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 name := "play-java-grpc-example"
 version := "1.0-SNAPSHOT"
 
+// #grpc_play_plugins
+// build.sbt
 lazy val `play-java-grpc-example` = (project in file("."))
   .enablePlugins(PlayJava)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
+  // #grpc_play_plugins
   .settings(
   akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java),
+  // #grpc_client_generators
+  // build.sbt
   akkaGrpcExtraGenerators += PlayJavaClientCodeGenerator,
+  // #grpc_client_generators
+  // #grpc_server_generators
+  // build.sbt
   akkaGrpcExtraGenerators += PlayJavaServerCodeGenerator,
+  // #grpc_server_generators
   PlayKeys.devSettings ++= Seq(
     "play.server.http.port" -> "disabled",
     "play.server.https.port" -> "9443",
