@@ -4,8 +4,8 @@ import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 name := "play-java-grpc-example"
 version := "1.0-SNAPSHOT"
 
-lazy val `play-scala-grpc-example` = (project in file("."))
-  .enablePlugins(PlayScala)
+lazy val `play-java-grpc-example` = (project in file("."))
+  .enablePlugins(PlayJava)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
   .settings(
@@ -30,8 +30,8 @@ lazy val `play-scala-grpc-example` = (project in file("."))
           ExecCmd("RUN", "apk", "add", "--no-cache", "bash")
         ) ++
         dockerCommands.value.tail ,
-    dockerAliases in Docker += DockerAlias(None, None, "play-scala-grpc-example", None),
-    packageName in Docker := "play-scala-grpc-example",
+    dockerAliases in Docker += DockerAlias(None, None, "play-java-grpc-example", None),
+    packageName in Docker := "play-java-grpc-example",
   )
 
 scalaVersion := "2.12.8"

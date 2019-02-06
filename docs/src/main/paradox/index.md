@@ -28,7 +28,7 @@ addSbtPlugin("com.lightbend.akka.grpc" %% "sbt-akka-grpc" % "0.4.2")
 and enable it on your project (in `build.sbt`):
 
 ```scala
-lazy val `play-scala-grpc-example` = (project in file("."))
+lazy val `play-java-grpc-example` = (project in file("."))
   .enablePlugins(PlayJava)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
