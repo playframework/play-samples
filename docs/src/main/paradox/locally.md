@@ -17,7 +17,7 @@ Finally, for your convenience, a self-signed certificate for `CN='localhost'` is
 example (see `conf/selfsigned.keystore`). Setting up a keystore works different in DEV mode and PROD mode. Locate 
 the `play.server.https.keyStore.path` setting in `application.conf` and `build.sbt` for an example on how to set 
 the keystore on each environment.
-s
+
 ## Verifying
 
 Finally, since now we know what the application is: an HTTP endpoint that hits its own gRPC endpoint to reply to the incoming request. 
