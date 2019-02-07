@@ -4,10 +4,10 @@ kind: Route
 metadata:
   labels:
     appName: play-java-grpc-example
-  name: play-scala-grpc-route
+  name: play-java-grpc-route
   namespace: play-java-grpc-example
   selfLink: >-
-    /apis/route.openshift.io/v1/namespaces/play-java-grpc-example/routes/play-scala-grpc-route
+    /apis/route.openshift.io/v1/namespaces/play-java-grpc-example/routes/play-java-grpc-route
 spec:
   host: myservice.example.org
   port:

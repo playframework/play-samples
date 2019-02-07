@@ -9,3 +9,4 @@ build
 /.gradle
 /RUNNING_PID
 *.iml
+.envrc
