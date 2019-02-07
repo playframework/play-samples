@@ -1,8 +1,12 @@
 package example.myapp.helloworld;
 
 import akka.grpc.GrpcClientSettings;
+import play.api.test.DefaultTestServerFactory;
+import play.api.test.RunningServer;
+import play.api.test.TestServerFactory;
 import play.grpc.testkit.JavaAkkaGrpcClientHelpers;
 
+import play.test.WithApplication;
 import routers.HelloWorldRouter;
 import example.myapp.helloworld.grpc.*;
 
@@ -10,7 +14,7 @@ import org.junit.*;
 
 import play.*;
 import play.api.routing.*;
-import play.api.test.*;
+
 import play.inject.guice.*;
 import play.libs.ws.*;
 
@@ -19,25 +23,21 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.*;
 import static play.inject.Bindings.*;
 
-public final class HelloFunctionalTest {
-  private final TestServerFactory testServerFactory = new DefaultTestServerFactory();
+public final class HelloFunctionalTest extends WithApplication {
 
-  private Application app;
+  private final TestServerFactory testServerFactory = new DefaultTestServerFactory();
   private RunningServer runningServer;
 
-  private Application provideApplication() {
+  @Override
+  public Application provideApplication() {
     return new GuiceApplicationBuilder()
         .overrides(bind(Router.class).to(HelloWorldRouter.class))
         .build();
   }
 
   @Before
-  public void startServer() throws Exception {
-    if (runningServer != null)
-      runningServer.stopServer().close();
-    app = provideApplication();
-    final play.api.Application app = this.app.asScala();
-    runningServer = testServerFactory.start(app);
+  public void startServer() {
+    runningServer = testServerFactory.start(app.asScala());
   }
 
   @After
@@ -45,7 +45,6 @@ public final class HelloFunctionalTest {
     if (runningServer != null) {
       runningServer.stopServer().close();
       runningServer = null;
-      app = null;
     }
   }
 
