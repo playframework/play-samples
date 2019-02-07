@@ -24,7 +24,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: "JAVA_OPTS"
-              value: "-Dplay.http.secret.key=a-very-strong-key-for-production -Dplay.filters.hosts.allowed.0=myservice.example.org -Dplay.filters.hosts.allowed.1=192.168.99.100"
+              value: "-Dplay.http.secret.key=a-very-strong-key-for-production -Dplay.filters.hosts.allowed.0=myservice.example.org -Dplay.server.pidfile.path=/dev/null"
             - name: "TRANSPORT_HTTP_BIND_ADDRESS"
               valueFrom:
                 fieldRef:
@@ -44,34 +44,3 @@ spec:
           command:
             - "/opt/docker/bin/play-scala-grpc-example"
       volumes: []
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    appName: "play-scala-grpc-example"
-  name: "play-scala-grpc-example"
-spec:
-  ports:
-    - name: http
-      port: 9000
-      protocol: TCP
-    - name: https
-      port: 9443
-      protocol: TCP
-  selector:
-    appName: "play-scala-grpc-example"
----
-apiVersion: "extensions/v1beta1"
-kind: Ingress
-metadata:
-  name: "play-scala-grpc"
-spec:
-  rules:
-  - host: "myservice.example.org"
-    http:
-      paths:
-      - backend:
-          serviceName: "play-scala-grpc-example"
-          servicePort: 9000
-

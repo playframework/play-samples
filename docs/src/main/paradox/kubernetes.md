@@ -8,17 +8,23 @@ Install the following:
 * [Docker](https://docs.docker.com/install/)
 * [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Minikube](https://github.com/kubernetes/minikube)
+* [`kustomize`](https://github.com/kubernetes-sigs/kustomize) (v2.0.0+)
 * [Sbt](https://www.scala-sbt.org/)
 
 
 ### Running
 
-Once minikube is running the application can be deployed using:
+Once minikube is running the application can be deployed. Create the image:
 
-```
+```bash
 $ eval $(minikube docker-env)
 $ sbt docker:publishLocal
-$ kubectl apply -f deployment/kubernetes-play-scala-grpc-example.ymls
+```
+
+Apply the `Deployment`, the `Service` and the `Ingress` into your `minikube` cluster:   
+
+```bash
+$ kustomize build deployment/overlays/minikube | kubectl apply -f -
 ```
 
 Verify the deployment status:

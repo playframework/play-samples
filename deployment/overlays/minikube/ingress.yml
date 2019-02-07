@@ -1,0 +1,14 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: Ingress
+metadata:
+  name: "play-scala-grpc-ingress"
+spec:
+  rules:
+  - host: "myservice.example.org"
+    http:
+      paths:
+      - backend:
+          serviceName: "play-scala-grpc-example"
+          servicePort: 9000
+

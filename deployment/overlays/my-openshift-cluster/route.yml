@@ -1,0 +1,24 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    appName: play-scala-grpc-example
+  name: play-scala-grpc-route
+  namespace: play-scala-grpc-example
+  selfLink: >-
+    /apis/route.openshift.io/v1/namespaces/play-scala-grpc-example/routes/play-scala-grpc-route
+spec:
+  host: myservice.example.org
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: play-scala-grpc-example
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    host: myservice.example.org
+    routerName: router
