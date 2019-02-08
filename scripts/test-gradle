@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/script-helper"
-
 # Use travis scala version or defaults to 2.12.4
 SCALA_VERSION=${TRAVIS_SCALA_VERSION:-"2.12.4"}
 

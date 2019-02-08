@@ -3,7 +3,7 @@ plugins {
     id 'idea'
 }
 
-def playVersion = "2.7.0-RC9"
+def playVersion = "2.7.0"
 def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
 
 model {
@@ -26,7 +26,7 @@ dependencies {
     play "com.typesafe.play:play-ahc-ws_$scalaVersion:$playVersion"
     play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
 
-    play "org.webjars:webjars-play_$scalaVersion:2.7.0-RC9
+    play "org.webjars:webjars-play_$scalaVersion:2.7.0
     play "org.webjars:flot:0.8.3"
     play "org.webjars:bootstrap:3.3.6"
 
