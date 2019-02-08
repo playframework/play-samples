@@ -1,0 +1,24 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    appName: play-java-grpc-example
+  name: play-java-grpc-route
+  namespace: play-java-grpc-example
+  selfLink: >-
+    /apis/route.openshift.io/v1/namespaces/play-java-grpc-example/routes/play-java-grpc-route
+spec:
+  host: myservice.example.org
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: play-java-grpc-example
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    host: myservice.example.org
+    routerName: router

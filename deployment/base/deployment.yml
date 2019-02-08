@@ -1,0 +1,46 @@
+---
+apiVersion: "apps/v1beta2"
+kind: Deployment
+metadata:
+  name: "play-java-grpc-example-v1-0-snapshot"
+  labels:
+    appName: "play-java-grpc-example"
+    appNameVersion: "play-java-grpc-example-v1-0-snapshot"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      appNameVersion: "play-java-grpc-example-v1-0-snapshot"
+  template:
+    metadata:
+      labels:
+        appName: "play-java-grpc-example"
+        appNameVersion: "play-java-grpc-example-v1-0-snapshot"
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: "play-java-grpc-example"
+          image: "play-java-grpc-example:1.0-SNAPSHOT"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: "JAVA_OPTS"
+              value: "-Dplay.http.secret.key=a-very-strong-key-for-production -Dplay.filters.hosts.allowed.0=myservice.example.org -Dplay.server.pidfile.path=/dev/null"
+            - name: "TRANSPORT_HTTP_BIND_ADDRESS"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "TRANSPORT_HTTPS_BIND_ADDRESS"
+              valueFrom:
+                fieldRef:
+                  fieldPath: "status.podIP"
+            - name: "DEPLOYMENT_SERVICE_NAME"
+              value: "play-java-grpc-example"
+          ports:
+            - containerPort: 9000
+              name: http
+            - containerPort: 9443
+              name: https
+          volumeMounts: []
+          command:
+            - "/opt/docker/bin/play-java-grpc-example"
+      volumes: []

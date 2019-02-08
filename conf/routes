@@ -3,10 +3,10 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                    controllers.HomeController.index
+GET        /                 controllers.HomeController.index
 
 # ----     gRPC services    ----
-->      /                    routers.HelloWorldRouter
+->        /                  routers.HelloWorldRouter
 # ---- end of gRPC services ----
 
 # Map static resources from the /public folder to the /assets URL path
