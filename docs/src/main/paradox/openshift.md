@@ -87,7 +87,7 @@ NAME                                                               DESIRED   CUR
 replicaset.apps/play-java-grpc-example-v1-0-snapshot-5b77bd9849   2         2         2         16h
 
 NAME                                                     DOCKER REPO                                                                                         TAGS           UPDATED
-imagestream.image.openshift.io/play-java-grpc-example   docker-registry-default.centralpark.lightbend.com/play-java-grpc-example/play-java-grpc-example   1.0-SNAPSHOT   17 hours ago
+imagestream.image.openshift.io/play-java-grpc-example   my-docker-registry.mycompany.com/play-java-grpc-example/play-java-grpc-example   1.0-SNAPSHOT   17 hours ago
 
 NAME                                             HOST/PORT               PATH      SERVICES                  PORT      TERMINATION   WILDCARD
 route.route.openshift.io/play-java-grpc-route   myservice.example.org             play-java-grpc-example   http                    None
@@ -97,7 +97,7 @@ Test the application:
 
 ```bash
 $ curl -H "Host: myservice.example.org" \
-        http://$OPENSHIFT_PROJECT.centralpark.lightbend.com  
+         http://$OPENSHIFT_PROJECT.$OPENSHIFT_SERVER
 Hello, Caplin!
 ```
 
