@@ -12,7 +12,7 @@ crossScalaVersions := Seq("2.11.12", "2.12.7")
 
 libraryDependencies += guice
 
-libraryDependencies += "org.webjars" %% "webjars-play" % "2.7.0-RC9"
+libraryDependencies += "org.webjars" %% "webjars-play" % "2.7.0"
 libraryDependencies += "org.webjars" % "flot" % "0.8.3-1"
 libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
 
@@ -24,7 +24,7 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % akkaVersion
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.0-RC2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.1" % Test
 
 scalacOptions ++= Seq(
     "-feature",
