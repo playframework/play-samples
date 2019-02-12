@@ -38,14 +38,15 @@ First, let's prepare a few environment variables to make things easier:
 ## obtain the token at the Console UI on you Openshift server
 export TOKEN=<my-token>
 export OPENSHIFT_SERVER=mycluster.mycompany.com
-## The registry should be accessible from the cluster where you deploy
-export DOCKER_REGISTRY_SERVER=my-docker-registry.mycompany.com
 
-export DOCKER_REGISTRY=$DOCKER_REGISTRY_SERVER/$OPENSHIFT_PROJECT
 ## Use a project name that will not clash with other deployments on the cluster
 export OPENSHIFT_PROJECT=play-scala-grpc-example
 export IMAGE=play-scala-grpc-example
 export TAG=1.0-SNAPSHOT
+
+## The registry should be accessible from the cluster where you deploy
+export DOCKER_REGISTRY_SERVER=my-docker-registry.mycompany.com
+export DOCKER_REGISTRY=$DOCKER_REGISTRY_SERVER/$OPENSHIFT_PROJECT
 ```
 
 Login to OpenShift from your terminal and create the OpenShift project:
