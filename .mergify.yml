@@ -1,10 +1,10 @@
 pull_request_rules:
   - name: automatic merge on CI success require review
     conditions:
-      - status-success=continuous-integration/travis-ci/pr
+      - status-success=Travis CI - Pull Request
       - "#approved-reviews-by>=1"
       - "#changes-requested-reviews-by=0"
-      - label!=block-merge
+      - label!=status:block-merge
     actions:
       merge:
         method: squash
@@ -12,9 +12,9 @@ pull_request_rules:
 
   - name: automatic merge on CI success for TemplateControl
     conditions:
-      - status-success=continuous-integration/travis-ci/pr
-      - label=merge-when-green
-      - label!=block-merge
+      - status-success=Travis CI - Pull Request
+      - label=status:merge-when-green
+      - label!=status:block-merge
     actions:
       merge:
         method: squash
