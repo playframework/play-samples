@@ -1,6 +1,7 @@
 package test
 
 import example.myapp.helloworld.grpc.{ GreeterService, GreeterServiceClient, HelloRequest }
+import io.grpc.Status
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.ws.{ WSClient, WSRequest }
@@ -29,9 +30,9 @@ class HelloSpecs2Spec extends ForServer with ServerGrpcClient with PlaySpecifica
       val result = await(wsUrl(s"/${GreeterService.name}/FooBar").get)
       result.status must ===(200)
     }
-    "give a 500 when routing an empty request to a gRPC method" >> { implicit rs: RunningServer =>
+    "give a 200 when routing an empty request to a gRPC method" >> { implicit rs: RunningServer =>
       val result = await(wsUrl(s"/${GreeterService.name}/SayHello").get)
-      result.status must ===(500)
+      result.status must ===(200)
     }
     "work with a gRPC client" >> { implicit rs: RunningServer =>
       withGrpcClient[GreeterServiceClient] { client: GreeterServiceClient =>
