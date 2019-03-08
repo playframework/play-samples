@@ -1,5 +1,6 @@
 package routers;
 
+import akka.actor.ActorSystem;
 import akka.stream.Materializer;
 import example.myapp.helloworld.grpc.HelloReply;
 import example.myapp.helloworld.grpc.HelloRequest;
@@ -13,8 +14,8 @@ import java.util.concurrent.CompletionStage;
 public class HelloWorldRouter extends example.myapp.helloworld.grpc.AbstractGreeterServiceRouter {
 
   @Inject
-  public HelloWorldRouter(Materializer mat) {
-    super(mat);
+  public HelloWorldRouter(Materializer mat, ActorSystem system) {
+    super(mat, system);
   }
 
   @Override
