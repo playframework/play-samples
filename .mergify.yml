@@ -12,7 +12,7 @@ pull_request_rules:
         method: squash
         strict: smart
 
-  - name: Merge TemplateControl's PRs that are r-r-ready
+  - name: Merge TemplateControl's PRs that are ready
     conditions:
       - status-success=Travis CI - Pull Request
       - "#review-requested=0"
