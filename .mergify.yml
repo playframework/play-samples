@@ -1,5 +1,5 @@
 pull_request_rules:
-  - name: Merge PRs that are ready
+  - name: Merge PRs that are r-r-ready
     conditions:
       - status-success=Travis CI - Pull Request
       - status-success=typesafe-cla-validator
