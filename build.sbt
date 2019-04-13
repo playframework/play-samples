@@ -1,3 +1,4 @@
+import play.sbt.PlaySettings
 import sbt.Keys._
 
 lazy val GatlingTest = config("gatling") extend Test
@@ -17,7 +18,7 @@ libraryDependencies += "io.gatling" % "gatling-test-framework" % "3.0.1.1" % Tes
 
 // The Play project itself
 lazy val root = (project in file("."))
-  .enablePlugins(Common, PlayScala, GatlingPlugin)
+  .enablePlugins(Common, PlayService, PlayLayoutPlugin, GatlingPlugin)
   .configs(GatlingTest)
   .settings(inConfig(GatlingTest)(Defaults.testSettings): _*)
   .settings(

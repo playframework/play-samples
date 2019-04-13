@@ -13,21 +13,12 @@ import play.api.libs.json._
 case class PostResource(id: String, link: String, title: String, body: String)
 
 object PostResource {
-
   /**
-    * Mapping to write a PostResource out as a JSON value.
+    * Mapping to read/write a PostResource out as a JSON value.
     */
-  implicit val implicitWrites = new Writes[PostResource] {
-    def writes(post: PostResource): JsValue = {
-      Json.obj(
-        "id" -> post.id,
-        "link" -> post.link,
-        "title" -> post.title,
-        "body" -> post.body
-      )
-    }
-  }
+    implicit val format: Format[PostResource] = Json.format
 }
+
 
 /**
   * Controls access to the backend data, returning [[PostResource]]
