@@ -1,66 +1,62 @@
-import org.junit.Test;
-import play.api.test.Helpers;
-import play.test.WithBrowser;
-
 import static org.fluentlenium.core.filter.FilterConstructor.withText;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+import org.junit.Test;
+import play.api.test.Helpers;
+import play.test.WithBrowser;
+
 public class BrowserTest extends WithBrowser {
 
-    @Test
-    public void testBrowser() {
-        browser.goTo("http://localhost:" + Helpers.testServerPort());
+  @Test
+  public void testBrowser() {
+    browser.goTo("http://localhost:" + Helpers.testServerPort());
 
-        assertThat(browser.$("header h1").first().text(), equalTo("Play sample application — Computer database"));
-        assertThat(browser.$("section h1").first().text(), equalTo("574 computers found"));
+    assertThat(browser.$(".navbar-brand").first().text(), equalTo("Play sample application — Computer database"));
+    assertThat(browser.$("#page-title").first().text(), equalTo("574 computers found"));
 
-        assertThat(browser.$("#pagination li.current").first().text(), equalTo("Displaying 1 to 10 of 574"));
+    assertThat(browser.$(".pagination li[aria-current]").first().text(), equalTo("Displaying 1 to 10 of 574"));
 
-        browser.$("#pagination li.next a").click();
+    browser.$(".pagination li.next a").click();
 
-        assertThat(browser.$("#pagination li.current").first().text(), equalTo("Displaying 11 to 20 of 574"));
-        browser.$("#searchbox").fill().with("Apple");
-        browser.$("#searchsubmit").click();
+    assertThat(browser.$(".pagination li[aria-current]").first().text(), equalTo("Displaying 11 to 20 of 574"));
 
-        assertThat(browser.$("section h1").first().text(), equalTo("13 computers found"));
-        browser.$("a", withText("Apple II")).click();
+    browser.$("#searchbox").fill().with("Apple");
+    browser.$("#searchsubmit").click();
 
-        assertThat(browser.$("section h1").first().text(), equalTo("Edit computer"));
+    assertThat(browser.$("#page-title").first().text(), equalTo("13 computers found"));
+    browser.$("a", withText("Apple II")).click();
 
-        browser.$("#discontinued").fill().with("10-10-2001");
-        browser.$("input.primary").click();
+    assertThat(browser.$("#page-title").first().text(), equalTo("Edit computer"));
 
-        assertThat(browser.$("dl.error").size(), equalTo(1));
-        assertThat(browser.$("dl.error label").first().text() ,equalTo("Discontinued date"));
+    browser.$("#name").fill().with("");
+    browser.$("button.btn-success").click();
 
-        browser.$("#discontinued").fill().with("xxx");
-        browser.$("input.primary").click();
+    assertThat(browser.$("#name").attributes("class").get(0), equalTo("form-control is-invalid"));
+    assertThat(browser.$("div#input-for-name span").first().text(), equalTo("This field is required"));
 
-        assertThat(browser.$("dl.error").size(), equalTo(1));
-        assertThat(browser.$("dl.error label").first().text(), equalTo("Discontinued date"));
+    browser.$("#name").fill().with("Apple IIa");
 
-        browser.$("#discontinued").fill().with("");
-        browser.$("input.primary").click();
+    browser.$("button.btn-success").click();
 
-        assertThat(browser.$("section h1").first().text(), equalTo("574 computers found"));
-        assertThat(browser.$(".alert-message").first().text(), equalTo("Done! Computer Apple II has been updated"));
+    assertThat(browser.$("#page-title").first().text(), equalTo("574 computers found"));
+    assertThat(browser.$(".alert-warning").first().text(), equalTo("Done! Computer Apple IIa has been updated"));
 
-        browser.$("#searchbox").fill().with("Apple");
-        browser.$("#searchsubmit").click();
+    browser.$("#searchbox").fill().with("Apple");
+    browser.$("#searchsubmit").click();
 
-        browser.$("a", withText("Apple II")).click();
-        browser.$("input.danger").click();
+    browser.$("a", withText("Apple IIa")).click();
+    browser.$("button.btn-danger").click();
 
-        browser.takeHtmlDump("target/delete.html");
+    browser.takeHtmlDump("target/delete.html");
 
-        assertThat(browser.$("section h1").first().text(), equalTo("573 computers found"));
-        assertThat(browser.$(".alert-message").first().text(), equalTo("Done! Computer has been deleted"));
+    assertThat(browser.$("#page-title").first().text(), equalTo("573 computers found"));
+    assertThat(browser.$(".alert-warning").first().text(), equalTo("Done! Computer has been deleted"));
 
-        browser.$("#searchbox").fill().with("Apple");
-        browser.$("#searchsubmit").click();
+    browser.$("#searchbox").fill().with("Apple");
+    browser.$("#searchsubmit").click();
 
-        assertThat(browser.$("section h1").first().text(), equalTo("12 computers found"));
-    }
+    assertThat(browser.$("#page-title").first().text(), equalTo("12 computers found"));
+  }
 
 }

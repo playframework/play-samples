@@ -55,9 +55,9 @@ public class FunctionalTest extends WithApplication {
         assertThat(result.status()).isEqualTo(BAD_REQUEST);
         assertThat(contentAsString(result)).contains("<option value=\"1\" selected=\"selected\">Apple Inc.</option>");
         //  <input type="text" id="introduced" name="introduced" value="badbadbad" aria-describedby="introduced_info_0 introduced_error_0" aria-invalid="true" class="form-control">
-        assertThat(contentAsString(result)).contains("<input type=\"text\" id=\"introduced\" name=\"introduced\" value=\"badbadbad\" ");
+        assertThat(contentAsString(result)).contains("<input class=\"form-control is-invalid\" type=\"date\" id=\"introduced\" name=\"introduced\" value=\"badbadbad\" ");
         // <input type="text" id="name" name="name" value="FooBar" aria-describedby="name_info_0" required="true" class="form-control">
-        assertThat(contentAsString(result)).contains("<input type=\"text\" id=\"name\" name=\"name\" value=\"FooBar\" ");
+        assertThat(contentAsString(result)).contains("<input class=\"form-control\" type=\"text\" id=\"name\" name=\"name\" value=\"FooBar\" ");
 
         data.put("introduced", "2011-12-24");
 
