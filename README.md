@@ -13,7 +13,7 @@ To check your Java version, enter the following in a command window:
 
 To check your sbt version, enter the following in a command window:
 
-`sbt sbt-version`
+`sbt sbtVersion`
 
 If you do not have the required versions, follow these links to obtain them:
 
