@@ -1,0 +1,16 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+
+GET        /                                   controllers.HomeController.index()
+
+GET        /scala/comet                        controllers.ScalaCometController.index()
+GET        /scala/comet/liveClock              controllers.ScalaCometController.streamClock()
+
+GET        /scala/eventSource                  controllers.ScalaEventSourceController.index()
+GET        /scala/eventSource/liveClock        controllers.ScalaEventSourceController.streamClock()
+
+# Map static resources from the /public folder to the /assets URL path
+GET        /assets/*file                       controllers.Assets.at(path="/public", file)
