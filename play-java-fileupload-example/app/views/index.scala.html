@@ -1,0 +1,11 @@
+@import play.mvc.Http.Request
+@(form: Form[controllers.FormData])(implicit request: Request, messages: play.i18n.Messages)
+
+@main("Welcome to Play") {
+
+ @helper.form(action = routes.HomeController.upload, 'enctype -> "multipart/form-data") {
+  @helper.inputFile(form("name"))
+  @helper.CSRF.formField
+  <input type="submit" value="upload file"/>
+ }
+}
