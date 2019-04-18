@@ -1,0 +1,55 @@
+plugins {
+    id 'play'
+    id 'play-coffeescript'
+    id 'idea'
+}
+
+def playVersion = "2.7.0"
+def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
+
+model {
+    components {
+        play {
+            platform play: playVersion, scala: scalaVersion, java: '1.8'
+            injectedRoutesGenerator = true
+
+            sources {
+                twirlTemplates {
+                    defaultImports = TwirlImports.JAVA
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    play "com.typesafe.play:play-guice_$scalaVersion:$playVersion"
+    play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
+    play "com.typesafe.play:play-ahc-ws_$scalaVersion:$playVersion"
+    play "com.typesafe.play:filters-helpers_$scalaVersion:$playVersion"
+    play "com.typesafe.play:play-java-jpa_$scalaVersion:$playVersion"
+
+    play "org.hibernate:hibernate-core:5.4.0.Final"
+    play "com.h2database:h2:1.4.197"
+
+    playTest "org.awaitility:awaitility:3.1.5"
+    playTest "org.assertj:assertj-core:3.11.1"
+    playTest "org.mockito:mockito-core:2.23.4"
+}
+
+repositories {
+    jcenter()
+    maven {
+        name "gradle-javascript-public"
+        url "https://repo.gradle.org/gradle/javascript-public"
+    }
+    maven {
+        name "lightbend-maven-releases"
+        url "https://repo.lightbend.com/lightbend/maven-release"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+}
