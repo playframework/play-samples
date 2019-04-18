@@ -1,0 +1,27 @@
+#!/bin/bash
+
+## Based on https://github.com/playframework/play-scala-tls-example/edit/2.5.x/play but using a minimal collection of
+## settings to demonstrate gRPC. For a larger list of settings check https://github.com/playframework/play-scala-tls-example/edit/2.5.x/play
+
+# Turn on HTTPS, turn off HTTP.
+# This should be https://example.com:9443
+JVM_OPTIONS="$JVM_OPTIONS -Dhttp.port=disabled"
+JVM_OPTIONS="$JVM_OPTIONS -Dhttps.port=9443"
+
+# ssl-play requires an ALPN Agent. This is downdloaded and stored in the target folder.
+# This snippet detects when the ALPN agent hasn't been downloaded yet and runs
+# `sbt stage` to obtain it.
+export AGENT_TEST=$(pwd)/$(find target -name 'jetty-alpn-agent-*.jar')
+export NUM_AGENTS_FOUND=$(echo $AGENT_TEST| grep target | wc -l)
+
+if [ $NUM_AGENTS_FOUND -eq "0" ]; then
+   sbt stage;
+fi
+
+# Start `sbt` with the JVM_OPTIONS and the ALPN agent
+export AGENT=$(pwd)/$(find target -name 'jetty-alpn-agent-*.jar' | head -1)
+echo "Detected ALPN Agent: $AGENT "
+export SBT_OPTS="$SBT_OPTS -javaagent:$AGENT"
+# Run Play
+sbt $JVM_OPTIONS $*;
+
