@@ -1,0 +1,45 @@
+@import play.mvc.Http.Request
+@(widgets: Seq[Widget], form: Form[WidgetData])(implicit request: Request, messages: play.i18n.Messages)
+
+@main("Widgets") {
+
+    <h1>Widgets</h1>
+
+    @* Flash shows updates to a page *@
+    @request.flash.asScala().data.map { case (name, value) =>
+    <div class="@name">@value</div>
+    }
+
+    <table>
+        <thead>
+            <tr><th>Name</th><th>Price</th>
+        </thead>
+        <tbody>
+        @for(w <- widgets) {
+            <tr><td>@w.name</td><td>@w.price</td></tr>
+        }
+        </tbody>
+    </table>
+
+    <hr/>
+
+    @* Global errors are not tied to any particular form field *@
+    @if(form.hasGlobalErrors) {
+        @form.globalErrors.asScala.map { error: play.data.validation.ValidationError =>
+            <div>
+                @error.key: @error.message
+            </div>
+        }
+    }
+
+    @helper.form(routes.WidgetController.createWidget) {
+        @helper.CSRF.formField
+
+        @helper.inputText(form("name"))
+
+        @helper.inputText(form("price"))
+
+        <button type="submit">Create widget</button>
+    }
+
+}
