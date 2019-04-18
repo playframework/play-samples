@@ -1,0 +1,17 @@
+@import play.mvc.Http.Request
+@(form: play.data.Form[TimeZoneData], renderedTime: String, timeZones: List[String])(implicit request: Request, messages: play.i18n.Messages)
+
+@main("Welcome to Play!") {
+
+    <h1>@renderedTime</h1>
+
+    @request.flash.getOptional("success").orElse("")
+
+    @helper.form(action = routes.TimeController.indexPost()) {
+
+        @helper.select(field = form("timeZone"), options = helper.options(timeZones))
+        <input type="submit" value="submit"/>
+    }
+
+    <a href="@routes.TimeController.ws()">See time rendered from a remote REST API</a>
+}

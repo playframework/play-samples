@@ -1,0 +1,8 @@
+GET   /              controllers.TimeController.index(request:Request)
+POST  /              controllers.TimeController.indexPost(request:Request)
+
+GET   /ws            controllers.TimeController.ws(request:Request)
+GET   /now            controllers.TimeController.now
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
