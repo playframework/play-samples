@@ -1,0 +1,19 @@
+@(elements : helper.FieldElements)
+
+@import views.tags.forms.FormHelper.addClassValue
+
+@input = @{
+  if(elements.hasErrors) {
+    addClassValue(elements.input.toString(), "form-control is-invalid")
+  } else {
+    addClassValue(elements.input.toString(), "form-control")
+  }
+}
+
+<label for="@elements.id">@elements.label</label>
+<div id="input-for-@elements.id" class="input">
+  @Html(input)
+  <span class="invalid-feedback">@elements.errors.mkString(", ")</span>
+  <small class="form-text text-muted">@elements.infos.mkString(", ")</small>
+</div>
+

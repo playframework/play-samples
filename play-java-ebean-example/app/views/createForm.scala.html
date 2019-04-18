@@ -1,0 +1,48 @@
+@(computerForm: Form[Computer], companies: Map[String, String])(implicit request: Http.Request, messages: play.i18n.Messages)
+
+@import helper._
+
+@implicitField = @{ FieldConstructor(tags.forms.field_constructor.render) }
+
+@main {
+
+    <h1 class="my-3" id="page-title">Add a computer</h1>
+
+    @form(routes.HomeController.save()) {
+
+        @CSRF.formField
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputText(computerForm("name"), '_label -> "Computer name", '_help -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputDate(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @inputDate(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 mb-3">
+            @select(
+                computerForm("company.id"),
+                options(companies),
+                '_label -> "Company", '_default -> "-- Choose a company --",
+                '_showConstraints -> false
+            )
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-success" type="submit">Create this computer</button>
+            <span class="mx-2">or</span>
+            <a href="@routes.HomeController.list()" id="add" class="btn btn-light" role="button">Cancel</a>
+        </div>
+    }
+
+}

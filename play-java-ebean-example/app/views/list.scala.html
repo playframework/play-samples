@@ -1,0 +1,154 @@
+@(currentPage: io.ebean.PagedList[Computer],
+    currentSortBy: String,
+    currentOrder: String,
+    currentFilter: String)(
+    implicit request: Http.Request,
+    messages: play.i18n.Messages)
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+
+  var sortBy = currentSortBy
+  var order = currentOrder
+
+  if(newSortBy != null) {
+    sortBy = newSortBy
+    if(currentSortBy == newSortBy) {
+      if(currentOrder == "asc") {
+        order = "desc"
+      } else {
+        order = "asc"
+      }
+    } else {
+      order = "asc"
+    }
+  }
+
+  // Generate the link
+  routes.HomeController.list(newPage, sortBy, order, currentFilter)
+
+}
+
+  @**********************************
+  * Helper generating table headers *
+  ***********************************@
+@header(key:String, title:String) = {
+  <th scope="col" class="@key.replace(".","_")">
+    <a class="sort-link @if(currentSortBy != key) { sort-link-inactive }" href="@link(0, key)">@title @sortIcon(key)</a>
+  </th>
+}
+
+
+@sortIcon(key:String) = {
+@if(currentOrder == "asc") {
+  <i class="fa fa-fw fa-caret-down"></i>
+} else {
+  <i class="fa fa-fw fa-caret-up"></i>
+}
+
+}
+
+@main {
+
+  <h1 class="my-3" id="page-title">@Messages("computers.list.title", currentPage.getTotalCount)</h1>
+
+  @request.flash.asScala().get("success").map { successFlashValue =>
+    <div class="alert alert-warning" role="alert">
+      <strong>Done!</strong> @successFlashValue
+    </div>
+  }
+
+  <div class="row">
+    <div class="col-sm-6">
+      <form class="form-inline" action="@link(0, "name")" method="GET">
+        <div class="form-group mr-sm-2 mb-2">
+          <label for="searchbox" class="sr-only">Filter by computer name...</label>
+          <input type="search" class="form-control" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by computer name...">
+        </div>
+        <button type="submit" id="searchsubmit" class="btn btn-primary mb-2">Filter by name</button>
+      </form>
+    </div>
+    <div class="col-sm-6">
+      <a href="@routes.HomeController.create()" id="add" class="btn btn-success float-right" role="button"1>Add a new computer</a>
+    </div>
+  </div>
+
+  @if(currentPage.getTotalCount == 0) {
+
+    <div class="card card-body bg-light">
+      <em>Nothing to display</em>
+    </div>
+
+  } else {
+
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="thead-light">
+        <tr>
+          @header("name", "Computer name")
+          @header("introduced", "Introduced")
+          @header("discontinued", "Discontinued")
+          @header("company.name", "Company")
+        </tr>
+      </thead>
+      <tbody>
+
+      @for(computer <- currentPage.getList.asScala) {
+        <tr>
+          <td><a href="@routes.HomeController.edit(computer.id)">@computer.name</a></td>
+          <td>
+          @if(computer.introduced == null) {
+            <em>-</em>
+          } else {
+            @computer.introduced.format("dd MMM yyyy")
+          }
+          </td>
+          <td>
+          @if(computer.discontinued == null) {
+            <em>-</em>
+          } else {
+            @computer.discontinued.format("dd MMM yyyy")
+          }
+          </td>
+          <td>
+          @if(computer.company == null) {
+            <em>-</em>
+          } else {
+            @computer.company.name
+          }
+          </td>
+        </tr>
+      }
+
+      </tbody>
+    </table>
+
+    <nav aria-label="...">
+      <ul class="pagination float-right">
+        @if(currentPage.hasPrev) {
+          <li class="page-item previous">
+            <a class="page-link" href="@link(currentPage.getPageIndex - 1, null)">&larr; Previous</a>
+          </li>
+        } else {
+          <li class="page-item previous disabled">
+            <a class="page-link">&larr; Previous</a>
+          </li>
+        }
+        <li class="page-item disabled" aria-current="page">
+          <a class="page-link" href="#">Displaying @currentPage.getDisplayXtoYofZ(" to "," of ")</a>
+        </li>
+        @if(currentPage.hasNext) {
+          <li class="page-item next">
+            <a class="page-link" href="@link(currentPage.getPageIndex + 1, null)">Next &rarr;</a>
+          </li>
+        } else {
+          <li class="page-item next disabled">
+            <a class="page-link" >Next &rarr;</a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+  }
+}

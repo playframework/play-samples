@@ -1,0 +1,13 @@
+.sort-link-inactive i {
+  visibility: hidden;
+}
+
+.sort-link-inactive:hover i {
+  visibility: visible;
+}
+
+.top-right {
+  position: absolute;
+  right: 20px;
+  top: 70px;
+}
