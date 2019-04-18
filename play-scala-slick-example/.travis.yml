@@ -1,0 +1,36 @@
+language: scala
+scala: 2.12.8
+script: $SCRIPT
+
+env:
+  matrix:
+    - SCRIPT=scripts/test-sbt    TRAVIS_JDK=adopt@1.8.192-12
+    - SCRIPT=scripts/test-sbt    TRAVIS_JDK=adopt@1.11.0-1
+    - SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.8.192-12
+    - SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.11.0-1
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.8.192-12 # current gradle doesn't support play 2.7
+    - env: SCRIPT=scripts/test-gradle TRAVIS_JDK=adopt@1.11.0-1   # current gradle doesn't support play 2.7
+    - env: SCRIPT=scripts/test-sbt    TRAVIS_JDK=adopt@1.11.0-1 # not fully supported but allows problem discovery
+
+before_install:
+  - curl -sL https://github.com/shyiko/jabba/raw/master/install.sh | bash && . ~/.jabba/jabba.sh
+
+install:
+  - $JABBA_HOME/bin/jabba install $TRAVIS_JDK
+  - unset _JAVA_OPTIONS
+  - export JAVA_HOME="$JABBA_HOME/jdk/$TRAVIS_JDK" && export PATH="$JAVA_HOME/bin:$PATH" && java -Xmx32m -version
+
+cache:
+  directories:
+    - "$HOME/.gradle/caches"
+    - "$HOME/.ivy2/cache"
+    - "$HOME/.jabba/jdk"
+    - "$HOME/.sbt"
+
+before_cache:
+  - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+  - find $HOME/.sbt  -name "*.lock"               -delete
