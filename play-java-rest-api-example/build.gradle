@@ -1,0 +1,70 @@
+plugins {
+    id 'play'
+    id 'idea'
+    id "com.github.lkishalmi.gatling" version "0.7.1"
+}
+
+def playVersion = "2.7.0"
+def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
+def gatlingVersion = getGlatlingVersion(scalaVersion)
+
+// Gatling 2.3.0 works for Scala 2.12
+// Gatling 2.2.5 works for Scala 2.11
+String getGlatlingVersion(String scalaVer) {
+    if (scalaVer == "2.12") "2.3.0" else "2.2.5"
+}
+
+model {
+    components {
+        play {
+            platform play: playVersion, scala: scalaVersion, java: '1.8'
+            injectedRoutesGenerator = true
+
+            sources {
+                twirlTemplates {
+                    defaultImports = TwirlImports.JAVA
+                }
+            }
+        }
+    }
+}
+
+project.sourceSets {
+    gatling {
+        scala.srcDirs = ["gatling"]
+    }
+}
+
+gatling {
+    sourceRoot = "gatling"
+    simulationsDir = "gatling"
+    toolVersion = gatlingVersion
+}
+
+dependencies {
+    play "com.typesafe.play:play-guice_$scalaVersion:$playVersion"
+    play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
+    play "com.typesafe.play:play-java-jpa_$scalaVersion:$playVersion"
+    play "com.h2database:h2:1.4.197"
+
+    play "org.hibernate:hibernate-core:5.2.9.Final"
+    play "io.dropwizard.metrics:metrics-core:3.2.1"
+    play "com.palominolabs.http:url-builder:1.1.0"
+    play "net.jodah:failsafe:1.0.3"
+
+    playTest "io.gatling.highcharts:gatling-charts-highcharts:$gatlingVersion"
+    playTest "io.gatling:gatling-test-framework:$gatlingVersion"
+}
+
+repositories {
+    jcenter()
+    maven {
+        name "lightbend-maven-releases"
+        url "https://repo.lightbend.com/lightbend/maven-release"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+}

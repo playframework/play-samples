@@ -1,0 +1,3 @@
+GET     /                           controllers.HomeController.index
+
+->     /v1/posts                    posts.Routes
