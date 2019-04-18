@@ -1,0 +1,14 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+- ../../base/
+resources:
+- ingress.yml
+
+## The minikube kustomization doesn't doe anything because the deployment.yml has all the right defaults.
+#images:
+#- name: "play-scala-grpc-example"
+#  newName: "play-scala-grpc-example"
+#  newTag: "1.0-SNAPSHOT"
