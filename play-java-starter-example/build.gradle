@@ -1,0 +1,44 @@
+plugins {
+    id 'play'
+    id 'idea'
+}
+
+def playVersion = "2.7.0"
+def scalaVersion = System.getProperty("scala.binary.version", /* default = */ "2.12")
+
+model {
+    components {
+        play {
+            platform play: playVersion, scala: scalaVersion, java: '1.8'
+            injectedRoutesGenerator = true
+
+            sources {
+                twirlTemplates {
+                    defaultImports = TwirlImports.JAVA
+                }
+            }
+        }
+    }
+}
+
+dependencies {
+    play "com.typesafe.play:play-guice_$scalaVersion:$playVersion"
+    play "com.typesafe.play:play-logback_$scalaVersion:$playVersion"
+    play "com.h2database:h2:1.4.197"
+
+    playTest "org.assertj:assertj-core:3.11.1"
+    playTest "org.awaitility:awaitility:3.1.3"
+}
+
+repositories {
+    jcenter()
+    maven {
+        name "lightbend-maven-releases"
+        url "https://repo.lightbend.com/lightbend/maven-release"
+    }
+    ivy {
+        name "lightbend-ivy-release"
+        url "https://repo.lightbend.com/lightbend/ivy-releases"
+        layout "ivy"
+    }
+}
