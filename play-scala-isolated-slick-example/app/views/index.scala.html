@@ -1,0 +1,22 @@
+@(users: Seq[User])
+
+@main("Title Page") {
+    <h2>Users</h2>
+
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Email</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+        </tr>
+        @for(user <- users){
+            <tr>
+                <td>@user.id</td>
+                <td>@user.email</td>
+                <td>@user.createdAt</td>
+                <td>@user.updatedAt</td>
+            </tr>
+        }
+    </table>
+}
