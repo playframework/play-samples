@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/script-helper"
+
+echo "+----------------------------+"
+echo "| Executing tests using sbt  |" 
+echo "+----------------------------+"
+sbt ++$TRAVIS_SCALA_VERSION test
