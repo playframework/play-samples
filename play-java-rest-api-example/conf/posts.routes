@@ -1,0 +1,6 @@
+
+GET    /                     v1.post.PostController.list
+POST   /                     v1.post.PostController.create
+
+GET    /:id                 v1.post.PostController.show(id)
+PUT    /:id                 v1.post.PostController.update(id)
