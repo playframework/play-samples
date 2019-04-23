@@ -1,0 +1,87 @@
+body {
+  padding-top: 60px;
+  background-color: #fbfcfe;
+}
+.navbar-default {
+  background-color: #797979;
+}
+.navbar-default .navbar-brand {
+  color: #eeeeee;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  background-color: #868686;
+  color: white;
+}
+.navbar-default .navbar-brand.active {
+  background-color: #9f9f9f;
+  color: white;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #eeeeee;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  background-color: #868686;
+  color: white;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  background-color: #9f9f9f;
+  color: white;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  background-color: #9f9f9f;
+  color: white;
+}
+.navbar-default .dropdown-menu {
+  background-color: #9f9f9f;
+}
+.navbar-default .dropdown-menu > li > a {
+  color: white;
+}
+.navbar-default .dropdown-menu > li > a:hover {
+  background-color: #868686;
+  color: white;
+}
+.container {
+  max-width: 960px;
+}
+.footer {
+  background-color: #ececec;
+  margin-top: 20px;
+  padding: 20px 0;
+  line-height: 15px;
+}
+h3,
+h4 {
+  margin-top: 35px;
+}
+h1 + h2,
+h2 + h3,
+h3 + h4 {
+  margin-top: 15px;
+}
+.highlight {
+  background-color: #FFFFF8;
+}
+pre code {
+  white-space: pre;
+}
+span.def {
+  color: #888;
+  font-size: 0.75em;
+  font-style: italic;
+  margin-left: 20px;
+}
+.error dd {
+  color: red;
+}
+.info {
+  color: blue;
+}
+
+/*# sourceMappingURL=main.css.map */

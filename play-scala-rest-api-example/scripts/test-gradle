@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/script-helper"
+
+# Using cut because TRAVIS_SCALA_VERSION is the full Scala
+# version (for example 2.12.4), but Gradle expects just the
+# binary version (for example 2.12)
+scala_binary_version=$(echo $TRAVIS_SCALA_VERSION | cut -c1-4)
+
+echo "+------------------------------+"
+echo "| Executing tests using Gradle |" 
+echo "+------------------------------+"
+./gradlew -Dscala.binary.version=$scala_binary_version check -i --stacktrace
