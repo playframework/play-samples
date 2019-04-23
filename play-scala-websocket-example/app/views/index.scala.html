@@ -1,0 +1,31 @@
+@()(implicit r: Request[_])
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Reactive Stock News Dashboard</title>
+    <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap.min.css")'>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <script type='text/javascript' src='@routes.Assets.at("lib/jquery/jquery.min.js")'></script>
+    <script type='text/javascript' src='@routes.Assets.at("lib/flot/jquery.flot.js")'></script>
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+</head>
+<body data-ws-url="@routes.HomeController.ws.webSocketURL()">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">Reactive Stocks</a>
+                <form id="addsymbolform" class="navbar-form pull-right">
+                    <input id="addsymboltext" type="text" class="span2" placeholder="SYMBOL">
+                    <button type="submit" class="btn">Add Stock</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="stocks" class="container">
+
+    </div>
+</body>
+</html>
