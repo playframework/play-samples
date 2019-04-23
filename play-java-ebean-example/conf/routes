@@ -1,0 +1,24 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Default path will just redirect to the computer list
+GET     /                           controllers.HomeController.index()
+
+# Computers list (look at the default values for pagination parameters)
+GET     /computers                  controllers.HomeController.list(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
+
+# Add computer
+GET     /computers/new              controllers.HomeController.create()
+POST    /computers                  controllers.HomeController.save()
+
+# Edit existing computer
+GET     /computers/:id              controllers.HomeController.edit(id:Long)
+POST    /computers/:id              controllers.HomeController.update(id:Long)
+
+# Delete a computer
+POST    /computers/:id/delete       controllers.HomeController.delete(id:Long)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+

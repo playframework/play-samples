@@ -1,0 +1,32 @@
+@(computerForm: Form[Computer], companies: Map[String, String])
+
+@import helper._
+
+@main {
+    
+    <h1>Add a computer</h1>
+    
+    @form(routes.HomeController.save()) {
+        
+        <fieldset>
+            @CSRF.formField
+            @inputText(computerForm("name"), '_label -> "Computer name", '_help -> "")
+            @inputText(computerForm("introduced"), '_label -> "Introduced date", '_help -> "")
+            @inputText(computerForm("discontinued"), '_label -> "Discontinued date", '_help -> "")
+
+            @select(
+                computerForm("company.id"), 
+                options(companies),
+                '_label -> "Company", '_default -> "-- Choose a company --",
+                '_showConstraints -> false
+            )
+        </fieldset>
+        
+        <div class="actions">
+            <input type="submit" value="Create this computer" class="btn primary"> or 
+            <a href="@routes.HomeController.list()" class="btn">Cancel</a>
+        </div>
+        
+    }
+    
+}
