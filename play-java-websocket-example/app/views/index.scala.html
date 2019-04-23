@@ -1,0 +1,34 @@
+@(request: play.mvc.Http.Request, webJarsUtil: org.webjars.play.WebJarsUtil)
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Reactive Stock News Dashboard</title>
+
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+
+    @Html(webJarsUtil.css("bootstrap.min.css"))
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.min.css")">
+
+    @Html(webJarsUtil.script("jquery.min.js"))
+    @Html(webJarsUtil.script("jquery.flot.js"))
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+</head>
+<body data-ws-url="@routes.HomeController.ws.webSocketURL(request)">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">Reactive Stocks</a>
+                <form id="addsymbolform" class="navbar-form pull-right">
+                    <input id="addsymboltext" type="text" class="span2" placeholder="SYMBOL">
+                    <button type="submit" class="btn">Add Stock</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="stocks" class="container">
+
+    </div>
+</body>
+</html>
