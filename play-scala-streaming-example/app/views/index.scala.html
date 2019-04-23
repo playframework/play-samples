@@ -1,0 +1,15 @@
+@()
+
+@main {
+
+    <h2>Comet Clock</h2>
+    <div>
+        <div><a href="@routes.ScalaCometController.index()">Scala Comet</a></div>
+    </div>
+
+
+    <h2>Server Sent Event Clock</h2>
+    <div>
+        <div><a href="@routes.ScalaEventSourceController.index()">Scala EventSource</a></div>
+    </div>
+}
