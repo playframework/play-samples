@@ -1,0 +1,15 @@
+@()
+
+@main {
+
+    <h2>Comet Clock</h2>
+    <div>
+        <div><a href="@routes.JavaCometController.index()">Java Comet</a></div>
+    </div>
+
+
+    <h2>Server Sent Event Clock</h2>
+    <div>
+        <div><a href="@routes.JavaEventSourceController.index()">Java EventSource</a></div>
+    </div>
+}
