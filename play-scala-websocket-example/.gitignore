@@ -1,4 +1,3 @@
-build
 logs
 project/project
 project/target
@@ -11,7 +10,6 @@ dist
 /out
 /.idea_modules
 /.classpath
-/.gradle
 /.project
 /RUNNING_PID
 /.settings
