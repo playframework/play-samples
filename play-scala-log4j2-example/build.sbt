@@ -8,9 +8,9 @@ lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .disablePlugins(PlayLogback)
 
-scalaVersion in ThisBuild := "2.12.7"
+scalaVersion in ThisBuild := "2.12.8"
 
-crossScalaVersions := Seq("2.11.12", "2.12.7")
+crossScalaVersions := Seq("2.11.12", "2.12.8")
 
 libraryDependencies += guice
 libraryDependencies += "org.apache.logging.log4j" % "log4j-slf4j-impl" % "2.11.1"
