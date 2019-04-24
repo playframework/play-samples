@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export KEY_PASSWORD=`cat scripts/password` 
+
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |" 
 echo "+----------------------------+"
