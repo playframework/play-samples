@@ -1,7 +1,5 @@
 package services.session
 
-import javax.inject.Inject
-
 import akka.actor.{ Actor, ActorLogging, ActorRef, Cancellable, Props }
 import akka.event.LoggingReceive
 
@@ -13,7 +11,7 @@ import scala.concurrent.duration._
  * every machine, so there's no remote lookup necessary.
  *
  * Note that this doesn't serialize using protobuf and also isn't being sent over SSL,
- * so it's still not as secure as it could be.  Please see http://doc.akka.io/docs/akka/current/scala/remoting-artery.html#remote-security 
+ * so it's still not as secure as it could be.  Please see http://doc.akka.io/docs/akka/current/scala/remoting-artery.html#remote-security
  * for more details.
  *
  * http://doc.akka.io/docs/akka/current/scala/distributed-data.html
@@ -32,18 +30,20 @@ class SessionCache extends Actor with ActorLogging {
     Duration(expirationString).asInstanceOf[FiniteDuration]
   }
 
-  private[this] val replicator = DistributedData(context.system).replicator
+  private val distributedData: DistributedData = DistributedData(context.system)
+  private[this] val replicator = distributedData.replicator
+  private[this] implicit val uniqAddress = distributedData.selfUniqueAddress
   private[this] implicit val cluster = Cluster(context.system)
 
   def receive = {
 
     case PutInCache(key, value) =>
       refreshSessionExpiration(key)
-      replicator ! Update(dataKey(key), LWWMap(), WriteLocal)(_ + (key -> value))
+      replicator ! Update(dataKey(key), LWWMap(), WriteLocal)(_ :+ (key -> value))
 
     case Evict(key) =>
       destroySessionExpiration(key)
-      replicator ! Update(dataKey(key), LWWMap(), WriteLocal)(_ - key)
+      replicator ! Update(dataKey(key), LWWMap(), WriteLocal)(_.remove(uniqAddress, key))
 
     case GetFromCache(key) =>
       replicator ! Get(dataKey(key), ReadLocal, Some(Request(key, sender())))

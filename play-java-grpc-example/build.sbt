@@ -19,7 +19,7 @@ lazy val `play-java-grpc-example` = (project in file("."))
   // #grpc_client_generators
   // #grpc_server_generators
   // build.sbt
-  akkaGrpcExtraGenerators += PlayJavaServerCodeGenerator,
+  akkaGrpcExtraGenerators += PlayJavaServerCodeGenerator(),
   // #grpc_server_generators
   PlayKeys.devSettings ++= Seq(
     "play.server.http.port" -> "disabled",
@@ -50,11 +50,8 @@ javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
 libraryDependencies ++= Seq(
   guice,
   javaWs,
-  // Force the Akka version to 2.5.20. Play 2.7.0 depends on Akka 2.5.19 and akka-grpc on Akka 2.5.20
-  // This explicit dependency is the only required to solve the cross-version warnings on sbt 
-  "com.typesafe.akka" %% "akka-slf4j" % "2.5.20",
   // used in tests
-  "com.lightbend.play" %% "play-grpc-testkit" % "0.6.0" % Test
+  "com.lightbend.play" %% "play-grpc-testkit" % "0.7.0" % Test
 
 )
 
