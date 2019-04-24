@@ -73,9 +73,7 @@ matrix:
   allow_failures:
     # Java 11 is not fully supported, look at and resolve these issues
     - env: SCRIPT="cd play-java-ebean-example           && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - env: SCRIPT="cd play-java-grpc-example            && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
     - env: SCRIPT="cd play-java-rest-api-example        && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - env: SCRIPT="cd play-scala-grpc-example           && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
     - env: SCRIPT="cd play-scala-tls-example            && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
 
 before_install:
