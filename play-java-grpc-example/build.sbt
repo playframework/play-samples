@@ -54,7 +54,7 @@ libraryDependencies ++= Seq(
   // This explicit dependency is the only required to solve the cross-version warnings on sbt 
   "com.typesafe.akka" %% "akka-slf4j" % "2.5.20",
   // used in tests
-  "com.lightbend.play" %% "play-grpc-testkit" % "0.6.0" % Test
+  "com.lightbend.play" %% "play-grpc-testkit" % "0.7.0" % Test
 
 )
 
