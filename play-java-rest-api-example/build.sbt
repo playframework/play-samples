@@ -28,12 +28,12 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava, GatlingPlugin).co
 
 libraryDependencies += guice
 libraryDependencies += javaJpa
-libraryDependencies += "com.h2database" % "h2" % "1.4.197"
+libraryDependencies += "com.h2database" % "h2" % "1.4.199"
 
-libraryDependencies += "org.hibernate" % "hibernate-core" % "5.2.17.Final"
-libraryDependencies += "io.dropwizard.metrics" % "metrics-core" % "3.2.1"
+libraryDependencies += "org.hibernate" % "hibernate-core" % "5.4.2.Final"
+libraryDependencies += "io.dropwizard.metrics" % "metrics-core" % "3.2.6"
 libraryDependencies += "com.palominolabs.http" % "url-builder" % "1.1.0"
-libraryDependencies += "net.jodah" % "failsafe" % "1.0.3"
+libraryDependencies += "net.jodah" % "failsafe" % "1.0.5"
 
 libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion % Test
 libraryDependencies += "io.gatling" % "gatling-test-framework" % gatlingVersion % Test
