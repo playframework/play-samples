@@ -55,10 +55,6 @@ libraryDependencies += "com.lightbend.play"      %% "play-grpc-scalatest" % play
 libraryDependencies += "com.lightbend.play"      %% "play-grpc-specs2"    % playGrpcVersion % Test
 libraryDependencies += "com.typesafe.play"       %% "play-test"           % playVersion     % Test
 libraryDependencies += "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test
-
-// Force the Akka version to 2.5.20. Play 2.7.0 depends on Akka 2.5.19 and akka-grpc on Akka 2.5.20
-// This explicit dependency is the only required to solve the cross-version warnings on sbt
-libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % "2.5.20"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.2" % Test
 
 // Test Database
