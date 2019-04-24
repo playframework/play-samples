@@ -1,6 +1,4 @@
-build
 target/
 .idea
-.gradle
 project/project/
 *.class
