@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-. "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/script-helper"
+export KEY_PASSWORD=`cat scripts/password` 
 
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |" 
 echo "+----------------------------+"
-sbt test
+sbt ++$TRAVIS_SCALA_VERSION test

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-set -o pipefail
-
-# Export the keystore password for use in ws.conf
-export KEY_PASSWORD=`cat scripts/password`
