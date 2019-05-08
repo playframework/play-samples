@@ -8,7 +8,7 @@ scalaVersion := "2.12.8"
 
 libraryDependencies += guice
 libraryDependencies += javaJpa
-libraryDependencies += "com.h2database" % "h2" % "1.4.197"
+libraryDependencies += "com.h2database" % "h2" % "1.4.199"
 libraryDependencies += "org.hibernate" % "hibernate-core" % "5.4.0.Final"
 
 libraryDependencies += javaWs % "test"
