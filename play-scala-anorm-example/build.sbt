@@ -10,7 +10,7 @@ libraryDependencies += guice
 libraryDependencies += jdbc
 libraryDependencies += evolutions
 
-libraryDependencies += "com.h2database" % "h2" % "1.4.197"
+libraryDependencies += "com.h2database" % "h2" % "1.4.199"
 
 libraryDependencies += "org.playframework.anorm" %% "anorm" % "2.6.2"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.2" % Test

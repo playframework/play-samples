@@ -58,7 +58,7 @@ libraryDependencies += "com.typesafe.play"       %% "play-specs2"         % play
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.2" % Test
 
 // Test Database
-libraryDependencies += "com.h2database" % "h2" % "1.4.197"
+libraryDependencies += "com.h2database" % "h2" % "1.4.199"
 
 // Testing libraries for dealing with CompletionStage...
 libraryDependencies += "org.assertj"    % "assertj-core" % "3.6.2" % Test
