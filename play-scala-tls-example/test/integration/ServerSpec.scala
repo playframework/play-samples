@@ -22,7 +22,7 @@ class ServerSpec extends PlaySpec with GuiceOneHttpsServerPerTest with ScalaFutu
   val client = AhcWSClient(wsConfig)
 
   "Server" should {
-    "work fine over https" in pendingUntilFixed {
+    "work fine over https" in {
       whenReady(client.url(s"https://example.com:$port/").get()) { result =>
         result.body must include("This is the page")
       }

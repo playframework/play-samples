@@ -25,3 +25,7 @@ fork in run := true
 javaOptions in run += "-Djavax.net.debug=ssl:handshake"
 
 addCommandAlias("client", "runMain Main")
+
+// Must not run tests in fork because the `play` script sets
+// some JVM properties (-D) which tests need.
+fork in Test := false
