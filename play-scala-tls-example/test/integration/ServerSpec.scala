@@ -4,9 +4,16 @@ import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
 import org.scalatest.BeforeAndAfterAll
+import org.scalatest.concurrent.PatienceConfiguration
+import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.time.Seconds
+import org.scalatest.time.Span
 import org.scalatestplus.play._
-import play.api.libs.ws.ahc.{AhcWSClient, AhcWSClientConfigFactory}
+import play.api.libs.ws.WSResponse
+import play.api.libs.ws.ahc.{ AhcWSClient, AhcWSClientConfigFactory }
+
+import scala.concurrent.Future
 
 /**
  * Test the server comes up with given settings
@@ -23,7 +30,9 @@ class ServerSpec extends PlaySpec with GuiceOneHttpsServerPerTest with ScalaFutu
 
   "Server" should {
     "work fine over https" in {
-      whenReady(client.url(s"https://example.com:$port/").get()) { result =>
+      val eventualResponse: Future[WSResponse] = client.url(s"https://example.com:$port/").get()
+      val timeout:PatienceConfiguration.Timeout = Timeout(Span(30, Seconds))
+      whenReady(eventualResponse, timeout) { result =>
         result.body must include("This is the page")
       }
     }
