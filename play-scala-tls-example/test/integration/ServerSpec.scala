@@ -11,7 +11,7 @@ import org.scalatest.time.Seconds
 import org.scalatest.time.Span
 import org.scalatestplus.play._
 import play.api.libs.ws.WSResponse
-import play.api.libs.ws.ahc.{ AhcWSClient, AhcWSClientConfigFactory }
+import play.api.libs.ws.ahc.{AhcWSClient, AhcWSClientConfigFactory}
 
 import scala.concurrent.Future
 
@@ -30,8 +30,12 @@ class ServerSpec extends PlaySpec with GuiceOneHttpsServerPerTest with ScalaFutu
 
   "Server" should {
     "work fine over https" in {
-      val eventualResponse: Future[WSResponse] = client.url(s"https://example.com:$port/").get()
-      val timeout:PatienceConfiguration.Timeout = Timeout(Span(30, Seconds))
+      val eventualResponse: Future[WSResponse] =
+        client
+          .url(s"https://localhost:$port/")
+          .withVirtualHost("example.com")
+          .get()
+      val timeout: PatienceConfiguration.Timeout = Timeout(Span(30, Seconds))
       whenReady(eventualResponse, timeout) { result =>
         result.body must include("This is the page")
       }
