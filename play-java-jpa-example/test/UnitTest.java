@@ -8,7 +8,7 @@ import org.junit.Test;
 import play.api.test.CSRFTokenHelper;
 import play.data.FormFactory;
 import play.data.format.Formatters;
-import play.filters.csrf.CSRF;
+import play.i18n.Lang;
 import play.i18n.Messages;
 import play.i18n.MessagesApi;
 import play.libs.Json;
@@ -20,7 +20,6 @@ import play.twirl.api.Content;
 
 import javax.validation.Validation;
 import javax.validation.ValidatorFactory;
-import javax.xml.validation.Validator;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ForkJoinPool;
 
@@ -73,7 +72,7 @@ public class UnitTest {
         when(repository.add(any())).thenReturn(supplyAsync(() -> person));
 
         // Set up the request builder to reflect input
-        Http.Request request = Helpers.fakeRequest("POST", "/").bodyJson(Json.toJson(person)).build().withTransientLang("es");
+        Http.Request request = Helpers.fakeRequest("POST", "/").bodyJson(Json.toJson(person)).build().withTransientLang(Lang.forCode("es"));
 
         // Easier to mock out the form factory inputs here
         Messages messages = mock(Messages.class);
