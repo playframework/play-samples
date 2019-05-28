@@ -2,7 +2,7 @@
 
 export KEY_PASSWORD=`cat scripts/password` 
 
-echo "+----------------------------+"
-echo "| Executing tests using sbt  |" 
-echo "+----------------------------+"
-sbt ++$TRAVIS_SCALA_VERSION test
+echo "+---------------------------------------+"
+echo "| Executing tests using (modified sbt)  |"
+echo "+---------------------------------------+"
+./play ++$TRAVIS_SCALA_VERSION test
