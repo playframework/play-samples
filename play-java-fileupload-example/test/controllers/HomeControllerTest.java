@@ -40,7 +40,7 @@ public class HomeControllerTest {
                 Http.MultipartFormData.FilePart<Source<ByteString, ?>> part = new Http.MultipartFormData.FilePart<>("name", "filename", "text/plain", source);
                 Http.RequestBuilder request = fakeRequest()
                         .method(POST)
-                        .bodyMultipart(singletonList(part), temporaryFileCreator, materializer)
+                        .bodyRaw(singletonList(part), temporaryFileCreator, materializer)
                         .uri("/upload");
 
                 Result result = route(app, request);
