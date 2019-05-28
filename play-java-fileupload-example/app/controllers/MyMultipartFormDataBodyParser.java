@@ -56,7 +56,7 @@ class MyMultipartFormDataBodyParser extends BodyParser.DelegatingMultipartFormDa
         final String contentType = fileInfo.contentType().getOrElse(null);
         final File file = generateTempFile();
 
-        final Sink<ByteString, CompletionStage<IOResult>> sink = FileIO.toFile(file);
+        final Sink<ByteString, CompletionStage<IOResult>> sink = FileIO.toPath(file.toPath());
         return Accumulator.fromSink(
                 sink.mapMaterializedValue(completionStage ->
                         completionStage.thenApplyAsync(results -> {

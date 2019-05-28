@@ -37,10 +37,10 @@ public class HomeController extends Controller {
      * This method uses MyMultipartFormDataBodyParser as the body parser
      */
     @BodyParser.Of(MyMultipartFormDataBodyParser.class)
-    public Result upload() throws IOException {
-        final Http.MultipartFormData<File> formData = request().body().asMultipartFormData();
+    public Result upload(Http.Request request) throws IOException {
+        final Http.MultipartFormData<File> formData = request.body().asMultipartFormData();
         final Http.MultipartFormData.FilePart<File> filePart = formData.getFile("name");
-        final File file = filePart.getFile();
+        final File file = filePart.getRef();
         final long data = operateOnTempFile(file);
         return ok("file size = " + data + "");
     }
