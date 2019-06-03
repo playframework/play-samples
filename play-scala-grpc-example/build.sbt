@@ -19,7 +19,7 @@ lazy val `play-scala-grpc-example` = (project in file("."))
       // #grpc_client_generators
       // #grpc_server_generators
       // build.sbt
-      akkaGrpcExtraGenerators += PlayScalaServerCodeGenerator(),
+      akkaGrpcExtraGenerators += PlayScalaServerCodeGenerator,
       // #grpc_server_generators
       PlayKeys.devSettings ++= Seq(
         "play.server.http.port" -> "disabled",
