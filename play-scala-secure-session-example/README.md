@@ -1,7 +1,5 @@
 # play-scala-secure-session-example
 
-[![Build Status](https://travis-ci.org/playframework/play-scala-secure-session-example.svg?branch=2.6.x)](https://travis-ci.org/playframework/play-scala-secure-session-example)
-
 This is an example application that shows how to do simple secure session management in Play, using the Scala API and session cookies.
 
 ## Overview

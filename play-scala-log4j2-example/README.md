@@ -1,7 +1,5 @@
 # Play using Log4j 2
 
-[![Build Status](https://travis-ci.org/playframework/play-scala-log4j2-example.svg?branch=2.6.x)](https://travis-ci.org/playframework/play-scala-log4j2-example)
-
 This is an example project showing a sample Play application that use Log4J 2 instead of using Logback.
 
 Please see [Using a custom logging framework](https://www.playframework.com/documentation/2.6.x/SettingsLogger#Using-a-Custom-Logging-Framework) in the Play documentation for more details.

@@ -1,7 +1,5 @@
 # play-scala-anorm-example
 
-[<img src="https://img.shields.io/travis/playframework/play-scala-anorm-example.svg"/>](https://travis-ci.org/playframework/play-scala-anorm-example)
-
 This is an example Play application that uses Scala on the front end, and communicates with an in memory database using Anorm.
 
 ## Play

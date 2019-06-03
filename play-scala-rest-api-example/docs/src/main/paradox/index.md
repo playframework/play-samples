@@ -6,7 +6,7 @@ We’ll demonstrate with a "best practices" REST API.  You can get source code f
 
 ## From Lightbend Tech Hub
 
-Download a pre-packaged bundle with this link [https://example.lightbend.com/v1/download/play-scala-rest-api-example](https://example.lightbend.com/v1/download/play-scala-rest-api-example)
+Download a pre-packaged bundle with this link: <https://example.lightbend.com/v1/download/play-scala-rest-api-example>.
 
 **Linux/Mac:**
 
@@ -25,14 +25,16 @@ cd play-scala-rest-api-example
 sbt.bat
 ```
 
-## [From Github](https://github.com/playframework/play-scala-rest-api-example/tree/2.6.x):
+## [From GitHub](https://github.com/playframework/play-samples):
 
 ```bash
-git clone https://github.com/playframework/play-scala-rest-api-example.git
-git checkout 2.6.x
+git clone https://github.com/playframework/play-samples.git
+cd play-scala-rest-api-example
 ```
 
-This example is in Scala, but Play also has a [Java API](https://www.playframework.com/documentation/latest/JavaHome) which looks and acts just like the [Scala API](https://www.playframework.com/documentation/latest/ScalaHome), and has a corresponding [play-java-rest-api-example](https://github.com/playframework/play-java-rest-api-example) project.  For instructions on running and using the project, please see the [[appendix]].  This project also comes with an integrated [Gatling](http://gatling.io/) load test -- again, instructions are in the appendix.
+Make sure you're using the right Play version branch.
+
+This example is in Scala, but Play also has a [Java API](https://www.playframework.com/documentation/latest/JavaHome) which looks and acts just like the [Scala API](https://www.playframework.com/documentation/latest/ScalaHome), and has a corresponding play-java-rest-api-example project in the [play-samples](https://github.com/playframework/play-samples) repo.  For instructions on running and using the project, please see the [[appendix]].  This project also comes with an integrated [Gatling](http://gatling.io/) load test -- again, instructions are in the appendix.
 
 Note that there’s more involved in a REST API -- monitoring, representation, and managing access to back end resources -- that we'll cover in subsequent posts.  But first, let's address why Play is so effective as a REST API.
 
@@ -52,11 +54,11 @@ Play provides an easy to use MVC paradigm, including hot-reloading without any J
 
 Play combines this with a **reactive programming API** that lets you write async, non-blocking code in a straightforward fashion without worrying about complex and confusing "callback hell."  In both Java or Scala, Play works on the same principle: leverage the asynchronous computation API that the language provides to you.  In Play, you work with [`java.util.concurrent.CompletionStage`](https://docs.oracle.com/javase/8/docs/technotes/guides/concurrency/changes8.html) or [`scala.concurrent.Future`](http://docs.scala-lang.org/overviews/core/futures.html) API directly, and Play passes that asynchronous computation back through the framework.
 
-Finally, Play is modular and extensible.  Play works with multiple runtime and compile time dependency injection frameworks like [Guice](https://www.playframework.com/documentation/latest/ScalaDependencyInjection), [Macwire](https://di-in-scala.github.io/), [Dagger](https://github.com/playframework/play-java-dagger2-example), and leverages DI principles to integrate authentication and authorization frameworks built on top of Play.
+Finally, Play is modular and extensible.  Play works with multiple runtime and compile time dependency injection frameworks like [Guice](https://www.playframework.com/documentation/latest/ScalaDependencyInjection), [Macwire](https://di-in-scala.github.io/), [Dagger](https://google.github.io/dagger/), and leverages DI principles to integrate authentication and authorization frameworks built on top of Play.
 
 ## Community
 
-To learn more about Play, check out the [Play tutorials](https://playframework.com/documentation/latest/Tutorials) and see more examples and blog posts about Play, including streaming [Server Side Events](https://github.com/playframework/play-streaming-scala) and first class [WebSocket support](https://github.com/playframework/play-websocket-scala).
+To learn more about Play, check out the [Play tutorials](https://playframework.com/documentation/latest/Tutorials) and see more examples and blog posts about Play, including streaming server-side events ("play-scala-streaming-example") and first class WebSocket support ("play-scala-websocket-example") in the [Play Samples](https://github.com/playframework/play-samples).
 
 To get more involved and if you have questions, join the [forums](https://discuss.playframework.com) at  and follow [PlayFramework on Twitter](https://twitter.com/playframework).
 
