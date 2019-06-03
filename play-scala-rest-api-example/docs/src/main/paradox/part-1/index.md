@@ -2,11 +2,14 @@
 
 This guide will walk you through how to make a REST API with JSON using [Play Framework](https://playframework.com).
 
-To see the associated Github project, please go to <https://github.com/playframework/play-scala-rest-api-example> or clone the project:
+To see the associated GitHub project, please go to <https://github.com/playframework/play-samples> or clone the project:
 
 ```bash
-git clone https://github.com/playframework/play-scala-rest-api-example.git
+git clone https://github.com/playframework/play-samples.git
+cd play-scala-rest-api-example
 ```
+
+Make sure you're using the right Play version branch.
 
 We're going to be showing an already working Play project with most of the code available under the `app/v1` directory.  There will be several different versions of the same project as this series expands, so you can compare different versions of the project against each other.
 
@@ -20,7 +23,7 @@ We'll start off with a REST API that displays information for blog posts.  Users
 
 The way to do this in REST is to model the represented state as a resource.  A blog post resource will have a unique id, a URL hyperlink that indicates the canonical location of the resource, the title of the blog post, and the body of the blog post.
 
-This resource is represented as a single case class in the Play application [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostResourceHandler.scala#L13):
+This resource is represented as a single case class in the Play application:
 
 ```scala
 case class PostResource(
@@ -45,13 +48,13 @@ GET    /               controllers.HomeController.index()
 
 This is useful for situations where a front end service is rendering HTML.  However, Play also contains a more powerful routing DSL that we will use for the REST API.
 
-For every HTTP request starting with `/v1/posts`, Play routes it to a dedicated `PostRouter` class to handle the Posts resource, through the [`conf/routes`](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/conf/routes) file:
+For every HTTP request starting with `/v1/posts`, Play routes it to a dedicated `PostRouter` class to handle the Posts resource, through the `conf/routes` file:
 
 ```
 ->     /v1/posts               v1.post.PostRouter
 ```
 
-The `PostRouter` examines the URL and extracts data to pass along to the controller [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostRouter.scala):
+The `PostRouter` examines the URL and extracts data to pass along to the controller:
 
 ```scala
 package v1.post
@@ -101,7 +104,7 @@ SIRD is especially useful in a REST API where there can be many possible query p
 
 ## Using a Controller
 
-The `PostRouter` has a `PostController` injected into it through standard [JSR-330 dependency injection](https://github.com/google/guice/wiki/JSR330) [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostRouter.scala#L12):
+The `PostRouter` has a `PostController` injected into it through standard [JSR-330 dependency injection](https://github.com/google/guice/wiki/JSR330):
 
 ```scala
 class PostRouter @Inject()(controller: PostController) extends SimpleRouter
@@ -143,7 +146,7 @@ In this example, `index1` and `asyncIndex` have exactly the same behavior.  Inte
 
 However, if you're already working with `Future`, async makes it easier to pass that `Future` around. You can read more about this in the [handling asynchronous results](https://www.playframework.com/documentation/latest/ScalaAsync) section of the Play documentation.
 
-The PostController methods dealing with GET requests is [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostController.scala). Let's take a look at the most important parts:
+Let's take a look at the most important parts of the PostController:
 
 ```scala
 package v1.post
@@ -244,7 +247,7 @@ private val form: Form[PostFormInput] = {
 }
 ```
 
-The form binds to the HTTP request using the names in the mapping -- `title` and `body` to the `PostFormInput` case class [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostController.scala#L12).
+The form binds to the HTTP request using the names in the mapping -- `title` and `body` to the `PostFormInput` case class:
 
 ```scala
 case class PostFormInput(title: String, body: String)
@@ -254,7 +257,7 @@ That's all you need to do to handle a basic web application!  As with most thing
 
 ## Using Actions
 
-We saw in the `PostController` that each method is connected to an Action through the `PostAction.async` method [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostController.scala#L33):
+We saw in the `PostController` that each method is connected to an Action through the `PostAction.async` method:
 
 ```scala
 def index: Action[AnyContent] = PostAction.async { implicit request =>
@@ -265,7 +268,7 @@ def index: Action[AnyContent] = PostAction.async { implicit request =>
 }
 ```
 
-The `PostAction.async` is a [custom action builder](https://www.playframework.com/documentation/2.6.x/ScalaActionsComposition#Custom-action-builders) defined [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostActionBuilder.scala#L49-L53) that can handle `PostRequest`s (see definition [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostActionBuilder.scala#L20)):
+The `PostAction.async` is a [custom action builder](https://www.playframework.com/documentation/2.8.x/ScalaActionsComposition#Custom-action-builders) that can handle `PostRequest`s:
 
 `PostAction` is involved in each action in the controller -- it mediates the paperwork involved with processing a request into a response, adding context to the request and enriching the response with headers and cookies.  ActionBuilders are essential for handling authentication, authorization and monitoring functionality.
 
@@ -302,7 +305,7 @@ And `request.foo` will be added automatically.
 
 You can keep composing action builders inside each other, so you don't have to layer all the functionality in one single ActionBuilder, or you can create a custom `ActionBuilder` for each package you work with, according to your taste.  For the purposes of this blog post, we'll keep everything together in a single class.
 
-You can see `PostAction` builder [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostActionBuilder.scala#L49-L78):
+You can see `PostAction` builder:
 
 ```scala
 trait PostRequestHeader extends MessagesRequestHeader with PreferredMessagesProvider
@@ -358,7 +361,7 @@ The `PostResourceHandler` is responsible for converting backend data from a repo
 
 A REST resource has information that a backend repository does not -- it knows about the operations available on the resource, and contains URI information that a single backend may not have.  As such, we want to be able to change the representation that we use internally without changing the resource that we expose publicly.
 
-You can see the `PostResourceHandler` [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostResourceHandler.scala#L35-L66):
+You can see the `PostResourceHandler`:
 
 ```scala
 class PostResourceHandler @Inject()(
@@ -404,7 +407,7 @@ Here, it's a straight conversion in `createPostResource`, with the only hook bei
 
 Play handles the work of converting a `PostResource` through [Play JSON](https://www.playframework.com/documentation/latest/ScalaJson). Play JSON provides a DSL that looks up the conversion for the `PostResource` singleton object, so you don't need to declare it at the use point.
 
-You can see the `PostResource` object [here](https://github.com/playframework/play-scala-rest-api-example/blob/2.6.x/app/v1/post/PostResourceHandler.scala#L15-L30):
+You can see the `PostResource` object:
 
 ```scala
 object PostResource {

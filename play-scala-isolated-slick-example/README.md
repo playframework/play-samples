@@ -1,7 +1,5 @@
 # Play with Slick 3.1
 
-[![Build Status](https://travis-ci.org/playframework/play-scala-isolated-slick-example.svg?branch=2.6.x)](https://travis-ci.org/playframework/play-scala-isolated-slick-example)
-
 This project shows Play working with Slick.
 
 This project is configured to keep all the modules self-contained.

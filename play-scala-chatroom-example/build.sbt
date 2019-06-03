@@ -4,7 +4,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 name := """play-chatroom-scala-example"""
 
-version := "2.7.x"
+version := "2.8.x"
 
 scalaVersion := "2.12.8"
 

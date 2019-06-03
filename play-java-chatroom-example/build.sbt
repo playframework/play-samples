@@ -1,6 +1,6 @@
 name := """play-java-chatroom-example"""
 
-version := "2.6.x"
+version := "2.8.x"
 
 scalaVersion := "2.12.8"
 

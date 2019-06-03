@@ -1,6 +1,6 @@
 name := """play-java-rest-api-example"""
 
-version := "2.7.x"
+version := "2.8.x"
 
 val gatlingVersion = "2.3.1"
 

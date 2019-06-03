@@ -1,7 +1,5 @@
 # play-scala-compile-di-example
 
-[<img src="https://img.shields.io/travis/playframework/play-scala-compile-di-example.svg"/>](https://travis-ci.org/playframework/play-scala-compile-di-example)
-
 This is an example of Play using the Scala API with manually wired compile time dependency injection.
 
 The application loader here is `MyApplicationLoader` which uses `MyComponents` to wire together an injector.

@@ -1,6 +1,6 @@
 name := """play-java-forms-example"""
 
-version := "2.7.x"
+version := "2.8.x"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
