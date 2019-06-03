@@ -11,7 +11,7 @@ You will need to have [git](https://git-scm.com/) installed.
 
 ## Downloading
 
-You can clone the example project from Github:
+You can clone the example project from GitHub:
 
 ```bash
 git clone https://github.com/playframework/play-scala-rest-api-example.git

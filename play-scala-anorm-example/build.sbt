@@ -1,6 +1,6 @@
 name := "play-scala-anorm-example"
 
-version := "2.6.0-SNAPSHOT"
+version := "2.7.x"
 
 scalaVersion := "2.12.8"
 

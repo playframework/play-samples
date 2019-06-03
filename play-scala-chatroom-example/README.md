@@ -1,7 +1,5 @@
 # play-scala-chatroom-example
 
-[<img src="https://img.shields.io/travis/playframework/play-scala-chatroom-example.svg"/>](https://travis-ci.org/playframework/play-scala-chatroom-example)
-
 This is a simple chatroom using Play and Websockets with the Scala API.
 
 This project makes use of [dynamic streams](http://doc.akka.io/docs/akka/current/scala/stream/stream-dynamic.html) from Akka Streams, notably `BroadcastHub` and `MergeHub`.  By [combining MergeHub and BroadcastHub](http://doc.akka.io/docs/akka/current/scala/stream/stream-dynamic.html#Dynamic_fan-in_and_fan-out_with_MergeHub_and_BroadcastHub), you can get publish/subscribe functionality.

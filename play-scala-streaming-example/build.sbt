@@ -1,6 +1,6 @@
 name := "play-scala-streaming-example"
 
-version := "2.6.x"
+version := "2.7.x"
 
 scalaVersion := "2.12.8"
 

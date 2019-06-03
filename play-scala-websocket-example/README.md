@@ -1,7 +1,5 @@
 # play-scala-websocket-example
 
-[<img src="https://img.shields.io/travis/playframework/play-scala-websocket-example.svg"/>](https://travis-ci.org/playframework/play-scala-websocket-example)
-
 This is an example Play application that shows how to use Play's Websocket API in Scala, by showing a series of stock tickers updated using WebSocket.
 
 The Websocket API is built on Akka Streams, and so is async, non-blocking, and backpressure aware.  Using Akka Streams also means that interacting with Akka Actors is simple.

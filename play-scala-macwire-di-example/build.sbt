@@ -1,6 +1,6 @@
 name := """play-scala-macwire-di-example"""
 
-version := "2.6.x"
+version := "2.7.x"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
