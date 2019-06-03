@@ -1,7 +1,5 @@
 # play-streaming-scala
 
-[![Build Status](https://travis-ci.org/playframework/play-scala-streaming-example.svg?branch=2.6.x)](https://travis-ci.org/playframework/play-scala-streaming-example)
-
 This is an example Play template that demonstrates Streaming with Server Sent Events or Comet, using Akka Streams.
 
 Please see the documentation at:
