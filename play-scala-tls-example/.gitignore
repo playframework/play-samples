@@ -1,16 +1,1 @@
-logs
-project/project
-project/target
-target
-tmp
-.history
-dist
-/.idea
-/*.iml
-/out
 /certs
-/.idea_modules
-/.classpath
-.project
-/RUNNING_PID
-.settings
