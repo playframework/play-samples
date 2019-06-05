@@ -1,6 +1,5 @@
 logs
 target
-build
 project/target
 /.idea
 /.idea_modules
@@ -8,4 +7,3 @@ project/target
 /.project
 /.settings
 /RUNNING_PID
-/.gradle
