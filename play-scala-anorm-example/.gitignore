@@ -6,6 +6,7 @@ tmp
 .history
 dist
 /.idea
+/.metals
 /*.iml
 /out
 /.idea_modules

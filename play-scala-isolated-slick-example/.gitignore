@@ -1,4 +1,5 @@
 /.idea
+/.metals
 
 modules/play/logs/
 

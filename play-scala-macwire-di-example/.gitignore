@@ -17,6 +17,9 @@ project/plugins/project/
 .idea/
 .idea_modules/
 
+# Metals / VS Code
+/.metals
+
 # Odd Mac Stuff
 .DS_Store
 
