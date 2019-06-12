@@ -22,6 +22,6 @@ fi
 # Start `sbt` with the JVM_OPTIONS and the ALPN agent
 export AGENT=$(pwd)/$(find target -name 'jetty-alpn-agent-*.jar' | head -1)
 echo "Detected ALPN Agent: $AGENT "
-export SBT_OPTS="$SBT_OPTS -J-javaagent:$AGENT"
+export SBT_OPTS="$SBT_OPTS -javaagent:$AGENT"
 # Run Play
 sbt $JVM_OPTIONS $*;
