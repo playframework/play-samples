@@ -1,4 +1,4 @@
-val akkaVersion = "2.5.22"
+val akkaVersion = "2.5.23"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
