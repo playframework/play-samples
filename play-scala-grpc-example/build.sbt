@@ -55,7 +55,7 @@ libraryDependencies += "com.lightbend.play"      %% "play-grpc-scalatest" % play
 libraryDependencies += "com.lightbend.play"      %% "play-grpc-specs2"    % playGrpcVersion % Test
 libraryDependencies += "com.typesafe.play"       %% "play-test"           % playVersion     % Test
 libraryDependencies += "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
 
 // Test Database
 libraryDependencies += "com.h2database" % "h2" % "1.4.199"
