@@ -10,8 +10,6 @@ lazy val root = (project in file("."))
 
 scalaVersion in ThisBuild := "2.12.8"
 
-crossScalaVersions := Seq("2.13.0", "2.12.8")
-
 libraryDependencies += guice
 libraryDependencies += "org.apache.logging.log4j" % "log4j-slf4j-impl" % "2.11.1"
 libraryDependencies += "org.apache.logging.log4j" % "log4j-api" % "2.11.1"

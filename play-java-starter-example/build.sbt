@@ -14,8 +14,6 @@ javacOptions ++= Seq(
   "-Werror"
 )
 
-crossScalaVersions := Seq("2.13.0", "2.12.8")
-
 libraryDependencies += guice
 
 // Test Database

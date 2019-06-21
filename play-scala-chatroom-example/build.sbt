@@ -8,8 +8,6 @@ version := "2.7.x"
 
 scalaVersion := "2.12.8"
 
-crossScalaVersions := Seq("2.13.0", "2.12.8")
-
 libraryDependencies += guice
 
 libraryDependencies += "org.webjars" %% "webjars-play" % "2.7.3"
