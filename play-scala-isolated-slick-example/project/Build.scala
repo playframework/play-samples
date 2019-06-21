@@ -4,7 +4,7 @@ import sbt.{Resolver, _}
 object Common {
 
   def projectSettings = Seq(
-    scalaVersion := "2.13.0",
+    scalaVersion := "2.12.8",
     javacOptions ++= Seq("-source", "1.8", "-target", "1.8"),
     scalacOptions ++= Seq(
       "-encoding", "UTF-8", // yes, this is 2 args
