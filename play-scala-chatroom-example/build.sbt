@@ -1,4 +1,4 @@
-val akkaVersion = "2.5.22"
+val akkaVersion = "2.5.23"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
@@ -8,11 +8,9 @@ version := "2.7.x"
 
 scalaVersion := "2.12.8"
 
-crossScalaVersions := Seq("2.11.12", "2.12.8")
-
 libraryDependencies += guice
 
-libraryDependencies += "org.webjars" %% "webjars-play" % "2.7.0"
+libraryDependencies += "org.webjars" %% "webjars-play" % "2.7.3"
 libraryDependencies += "org.webjars" % "flot" % "0.8.3-1"
 libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
 
@@ -24,7 +22,7 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % akkaVersion
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
 
 scalacOptions ++= Seq(
     "-feature",

@@ -1,5 +1,5 @@
 // The Play plugin
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.7.2")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.7.3")
 
 // Load testing tool:
 // http://gatling.io/docs/2.2.2/extensions/sbt_plugin.html
