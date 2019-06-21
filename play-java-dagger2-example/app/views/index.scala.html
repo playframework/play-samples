@@ -9,7 +9,7 @@
 
     @helper.form(action = routes.TimeController.indexPost()) {
 
-        @helper.select(field = form("timeZone"), options = helper.options(timeZones))
+        @helper.select(field = form("timeZone"), options = helper.options(timeZones).toSeq)
         <input type="submit" value="submit"/>
     }
 
