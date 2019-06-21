@@ -6,7 +6,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 val akkaVersion = "2.5.22"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.0"
 
 libraryDependencies += guice
 libraryDependencies += ws

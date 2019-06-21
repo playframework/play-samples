@@ -2,7 +2,7 @@ name := """play-java-chatroom-example"""
 
 version := "2.8.x"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.0"
 
 crossScalaVersions := Seq("2.11.12", "2.12.8")
 
