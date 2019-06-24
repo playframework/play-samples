@@ -12,7 +12,6 @@ object Common {
       "-feature",
       "-unchecked",
       "-Xlint",
-      "-Yno-adapted-args",
       "-Ywarn-numeric-widen"
     ),
     resolvers ++= Seq(
