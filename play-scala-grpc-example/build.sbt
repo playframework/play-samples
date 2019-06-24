@@ -43,7 +43,7 @@ lazy val `play-scala-grpc-example` = (project in file("."))
       packageName in Docker := "play-scala-grpc-example",
     )
 
-scalaVersion := "2.13.0"
+scalaVersion := "2.12.8"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 
 libraryDependencies += guice
