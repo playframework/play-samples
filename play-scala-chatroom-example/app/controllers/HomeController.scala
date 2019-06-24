@@ -37,7 +37,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
       .log("source")
       // Let's also do some input sanitization to avoid XSS attacks
       .map(inputSanitizer.sanitize)
-      .recoverWithRetries(-1, { case _: Exception ⇒ Source.empty })
+      .recoverWithRetries(-1, { case _: Exception => Source.empty })
 
     val sink = BroadcastHub.sink[WSMessage]
     source.toMat(sink)(Keep.both).run()
