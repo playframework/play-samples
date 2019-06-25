@@ -26,7 +26,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
     // recoverWithRetries -1 is essentially "recoverWith"
     val source = MergeHub.source[WSMessage]
       .log("source")
-      .recoverWithRetries(-1, { case _: Exception ⇒ Source.empty })
+      .recoverWithRetries(-1, { case _: Exception => Source.empty })
 
     val sink = BroadcastHub.sink[WSMessage]
     source.toMat(sink)(Keep.both).run()

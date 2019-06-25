@@ -3,4 +3,4 @@
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |" 
 echo "+----------------------------+"
-./ssl-play ++$TRAVIS_SCALA_VERSION test docs/paradox
+./ssl-play ++2.12.8 test docs/paradox
