@@ -6,4 +6,4 @@ set -o pipefail
 echo "+----------------------------+"
 echo "| Compiling Gatling tests    |"
 echo "+----------------------------+"
-sbt ++$TRAVIS_SCALA_VERSION gatling:compile
+sbt ++$TRAVIS_SCALA_VERSION ";project gatling;gatling:compile"

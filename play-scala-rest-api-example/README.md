@@ -57,7 +57,7 @@ cd target/universal/stage
 Then you'll start the Gatling load test up (it's already integrated into the project):
 
 ```bash
-sbt gatling:test
+sbt ";project gatling;gatling:test"
 ```
 
 For best results, start the gatling load test up on another machine so you do not have contending resources.  You can edit the [Gatling simulation](http://gatling.io/docs/2.2.2/general/simulation_structure.html#simulation-structure), and change the numbers as appropriate.
