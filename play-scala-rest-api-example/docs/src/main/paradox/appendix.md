@@ -14,7 +14,8 @@ You will need to have [git](https://git-scm.com/) installed.
 You can clone the example project from GitHub:
 
 ```bash
-git clone https://github.com/playframework/play-scala-rest-api-example.git
+git clone https://github.com/playframework/play-samples.git
+cd play-scala-rest-api-example
 ```
 
 ## Running
@@ -77,7 +78,7 @@ For best results, start the gatling load test up on another machine so you do no
 Once the test completes, you'll see an HTML file containing the load test chart:
 
 ```bash
-./rest-api/target/gatling/gatlingspec-1472579540405/index.html
+./play-scala-rest-api-example/target/gatling/gatlingspec-1472579540405/index.html
 ```
 
 That will contain your load test results.
