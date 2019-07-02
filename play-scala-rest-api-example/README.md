@@ -14,11 +14,11 @@ Once you have sbt installed, the following at the command prompt will start up P
 sbt run
 ```
 
-Play will start up on the HTTP port at <http://localhost:9000/>.   You don't need to deploy or reload anything -- changing any source code while the server is running will automatically recompile and hot-reload the application on the next HTTP request. 
+Play will start up on the HTTP port at <http://localhost:9000/>.   You don't need to deploy or reload anything -- changing any source code while the server is running will automatically recompile and hot-reload the application on the next HTTP request.
 
 ### Usage
 
-If you call the same URL from the command line, you’ll see JSON. Using httpie, we can execute the command:
+If you call the same URL from the command line, you’ll see JSON. Using [httpie](https://httpie.org/), we can execute the command:
 
 ```bash
 http --verbose http://localhost:9000/v1/posts
@@ -65,7 +65,7 @@ For best results, start the gatling load test up on another machine so you do no
 Once the test completes, you'll see an HTML file containing the load test chart:
 
 ```bash
- ./rest-api/target/gatling/gatlingspec-1472579540405/index.html
+./play-scala-rest-api-example/target/gatling/gatlingspec-1472579540405/index.html
 ```
 
 That will contain your load test results.
