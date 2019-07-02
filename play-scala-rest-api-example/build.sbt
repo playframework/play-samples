@@ -17,7 +17,7 @@ lazy val root = (project in file("."))
     ),
   )
 
-lazy val gatlingVersion = "3.0.1.1"
+lazy val gatlingVersion = "3.1.3"
 lazy val gatling = (project in file("gatling"))
   .enablePlugins(GatlingPlugin)
   .settings(
