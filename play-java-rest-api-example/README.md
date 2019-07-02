@@ -1,6 +1,6 @@
 # play-java-rest-api-example
 
-A REST API showing Play with a JPA backend.  For the Scala version, please see <https://github.com/playframework/play-java-rest-api-example>.
+A REST API showing Play with a JPA backend.  For the Scala version, please see <https://github.com/playframework/play-samples/tree/2.8.x/play-scala-rest-api-example>.
 
 ## Best Practices for Blocking API
 
@@ -22,7 +22,7 @@ There is more detail in <https://www.playframework.com/documentation/latest/Thre
 
 The best way to see what Play can do is to run a load test.  We've included Gatling in this test project for integrated load testing.
 
-Start Play in production mode, by [staging the application](https://www.playframework.com/documentation/2.5.x/Deploying) and running the play script:s
+Start Play in production mode, by [staging the application](https://www.playframework.com/documentation/latest/Deploying) and running the play script:s
 
 ```bash
 sbt stage
