@@ -1,48 +1,33 @@
-name := """play-java-rest-api-example"""
-
-version := "2.7.x"
-
-val gatlingVersion = "2.3.1"
-
-inThisBuild(
-  List(
-    dependencyOverrides := Seq(
-      "org.codehaus.plexus" % "plexus-utils" % "3.0.18",
-      "com.google.code.findbugs" % "jsr305" % "3.0.1",
-      "com.google.guava" % "guava" % "22.0"
+lazy val root = (project in file("."))
+  .enablePlugins(PlayJava)
+  .settings(
+    name := "play-java-rest-api-example",
+    version := "2.7.x",
+    scalaVersion := "2.13.0",
+    libraryDependencies ++= Seq(
+      guice,
+      javaJpa,
+      "com.h2database" % "h2" % "1.4.199",
+      "org.hibernate" % "hibernate-core" % "5.4.2.Final",
+      "io.dropwizard.metrics" % "metrics-core" % "3.2.6",
+      "com.palominolabs.http" % "url-builder" % "1.1.0",
+      "net.jodah" % "failsafe" % "1.0.5",
     ),
-    scalaVersion := "2.12.8"
+    PlayKeys.externalizeResources := false,
+    testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
+    javacOptions ++= Seq(
+      "-Xlint:unchecked",
+      "-Xlint:deprecation"
+    )
   )
-)
 
-
-lazy val GatlingTest = config("gatling") extend Test
-
-lazy val root = (project in file(".")).enablePlugins(PlayJava, GatlingPlugin).configs(GatlingTest)
+val gatlingVersion = "3.1.3"
+lazy val gatling = (project in file("gatling"))
+  .enablePlugins(GatlingPlugin)
   .settings(
-    inConfig(GatlingTest)(Defaults.testSettings)
+    scalaVersion := "2.12.8",
+    libraryDependencies ++= Seq(
+      "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion % Test,
+      "io.gatling" % "gatling-test-framework" % gatlingVersion % Test
+    )
   )
-  .settings(
-    scalaSource in GatlingTest := baseDirectory.value / "/gatling/simulation"
-  )
-
-libraryDependencies += guice
-libraryDependencies += javaJpa
-libraryDependencies += "com.h2database" % "h2" % "1.4.199"
-
-libraryDependencies += "org.hibernate" % "hibernate-core" % "5.4.2.Final"
-libraryDependencies += "io.dropwizard.metrics" % "metrics-core" % "3.2.6"
-libraryDependencies += "com.palominolabs.http" % "url-builder" % "1.1.0"
-libraryDependencies += "net.jodah" % "failsafe" % "1.0.5"
-
-libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion % Test
-libraryDependencies += "io.gatling" % "gatling-test-framework" % gatlingVersion % Test
-
-PlayKeys.externalizeResources := false
-
-testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
-
-javacOptions ++= Seq(
-  "-Xlint:unchecked",
-  "-Xlint:deprecation"
-)

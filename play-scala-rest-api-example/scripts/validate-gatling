@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-set -o pipefail
-
-echo "+----------------------------+"
-echo "| Compiling Gatling tests    |"
-echo "+----------------------------+"
-sbt ++$TRAVIS_SCALA_VERSION gatling:compile
