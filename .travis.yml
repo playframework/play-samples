@@ -3,8 +3,8 @@ scala: 2.13.0
 script: eval "$SCRIPT"
 
 env:
-  global:
-    - TRAVIS_JDK=adopt@1.8.202-08
+  - TRAVIS_JDK=adopt@1.8.202-08
+  - TRAVIS_JDK=adopt@1.11.0-2
   matrix:
     - SCRIPT="cd play-java-chatroom-example        && scripts/test-sbt"
     - SCRIPT="cd play-java-compile-di-example      && scripts/test-sbt"
@@ -36,37 +36,6 @@ env:
     - SCRIPT="cd play-scala-streaming-example      && scripts/test-sbt"
     - SCRIPT="cd play-scala-tls-example            && scripts/test-sbt"
     - SCRIPT="cd play-scala-websocket-example      && scripts/test-sbt"
-
-    - SCRIPT="cd play-java-chatroom-example        && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-compile-di-example      && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-dagger2-example         && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-ebean-example           && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-fileupload-example      && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-forms-example           && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-grpc-example            && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-hello-world-tutorial    && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-jpa-example             && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-rest-api-example        && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-starter-example         && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-streaming-example       && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-java-websocket-example       && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-anorm-example          && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-chatroom-example       && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-compile-di-example     && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-fileupload-example     && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-forms-example          && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-grpc-example           && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-hello-world-tutorial   && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-isolated-slick-example && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-log4j2-example         && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-macwire-di-example     && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-rest-api-example       && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-secure-session-example && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-slick-example          && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-starter-example        && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-streaming-example      && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-tls-example            && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
-    - SCRIPT="cd play-scala-websocket-example      && scripts/test-sbt" TRAVIS_JDK=adopt@1.11.0-2
 
 matrix:
   fast_finish: true
