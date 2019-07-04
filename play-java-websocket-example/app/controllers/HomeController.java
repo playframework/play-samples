@@ -15,14 +15,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-import static akka.pattern.PatternsCS.ask;
+import static akka.pattern.Patterns.ask;
 
 /**
  * The main web controller that handles returning the index page, setting up a WebSocket, and watching a stock.
@@ -30,7 +29,7 @@ import static akka.pattern.PatternsCS.ask;
 @Singleton
 public class HomeController extends Controller {
 
-    private final Duration t = Duration.of(1, ChronoUnit.SECONDS);
+    private final Duration timeout = Duration.ofSeconds(1);
     private final Logger logger = org.slf4j.LoggerFactory.getLogger("controllers.HomeController");
     private final ActorRef userParentActor;
 
@@ -63,7 +62,7 @@ public class HomeController extends Controller {
         long id = request.asScala().id();
         UserParentActor.Create create = new UserParentActor.Create(Long.toString(id));
 
-        return ask(userParentActor, create, t).thenApply((Object flow) -> {
+        return ask(userParentActor, create, timeout).thenApply((Object flow) -> {
             final Flow<JsonNode, JsonNode, NotUsed> f = (Flow<JsonNode, JsonNode, NotUsed>) flow;
             return f.named("websocket");
         });
