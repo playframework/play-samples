@@ -1,33 +1,27 @@
-val akkaVersion = "2.5.22"
+val akkaVersion = "2.6.0-M3"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
-name := """play-chatroom-scala-example"""
-
-version := "2.8.x"
-
-scalaVersion := "2.12.8"
-
-crossScalaVersions := Seq("2.11.12", "2.12.8")
-
-libraryDependencies += guice
-
-libraryDependencies += "org.webjars" %% "webjars-play" % "2.7.0"
-libraryDependencies += "org.webjars" % "flot" % "0.8.3-1"
-libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
-
-// https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
-libraryDependencies += "net.logstash.logback" % "logstash-logback-encoder" % "5.2"
-
-libraryDependencies += "org.jsoup" % "jsoup" % "1.11.3"
-libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
-libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % akkaVersion
-libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
-libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.2" % Test
-
-scalacOptions ++= Seq(
-    "-feature",
-    "-deprecation",
-    "-Xfatal-warnings"
-)
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
+  .settings(
+    name := """play-chatroom-scala-example""",
+    version := "2.8.x",
+    scalaVersion := "2.13.0",
+    libraryDependencies ++= Seq(
+      guice,
+      "org.webjars" %% "webjars-play" % "2.7.3",
+      "org.webjars" % "flot" % "0.8.3-1",
+      "org.webjars" % "bootstrap" % "3.3.6",
+      "net.logstash.logback" % "logstash-logback-encoder" % "5.2",
+      "org.jsoup" % "jsoup" % "1.11.3",
+      "ch.qos.logback" % "logback-classic" % "1.2.3",
+      "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
+      "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
+      "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-M2" % Test
+    ),
+    scalacOptions ++= Seq(
+      "-feature",
+      "-deprecation",
+      "-Xfatal-warnings"
+    )
+  )

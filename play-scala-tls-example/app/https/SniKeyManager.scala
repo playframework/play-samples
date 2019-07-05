@@ -84,7 +84,7 @@ final class SniKeyManager(val keyManager: X509ExtendedKeyManager, val defaultAli
   }
 
   private def getSNIHostname(session: ExtendedSSLSession): Option[String] = {
-    import scala.collection.JavaConverters._
+    import scala.jdk.CollectionConverters._
     session.getRequestedServerNames.asScala.find { name =>
       name.getType == StandardConstants.SNI_HOST_NAME
     }.map {

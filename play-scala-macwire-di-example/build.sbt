@@ -1,18 +1,16 @@
-name := """play-scala-macwire-di-example"""
-
-version := "2.8.x"
-
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
-scalaVersion := "2.12.8"
-
-crossScalaVersions := Seq("2.11.12", "2.12.8")
-
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.2" % Test
-libraryDependencies += "com.softwaremill.macwire" %% "macros" % "2.3.2" % "provided"
-
-scalacOptions ++= Seq(
-    "-feature",
-    "-deprecation",
-    "-Xfatal-warnings"
-)
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
+  .settings(
+    name := """play-scala-macwire-di-example""",
+    version := "2.8.x",
+    scalaVersion := "2.13.0",
+    libraryDependencies ++= Seq(
+      "com.softwaremill.macwire" %% "macros" % "2.3.3" % "provided",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-M2" % Test
+    ),
+    scalacOptions ++= Seq(
+      "-feature",
+      "-deprecation",
+      "-Xfatal-warnings"
+    )
+  )

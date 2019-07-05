@@ -4,3 +4,6 @@ echo "+----------------------------+"
 echo "| Executing tests using sbt  |" 
 echo "+----------------------------+"
 sbt ++$TRAVIS_SCALA_VERSION test
+
+# At least verifies that Gatling tests are compiling
+sbt ++$TRAVIS_SCALA_VERSION ";project gatling; gatling:compile"

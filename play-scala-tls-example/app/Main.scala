@@ -23,7 +23,7 @@ object Main {
     logger.info(s"body = $body")
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     import scala.concurrent.ExecutionContext.Implicits.global
 
     val config = AhcWSClientConfigFactory.forConfig(ConfigFactory.load("ws.conf"), getClass.getClassLoader)

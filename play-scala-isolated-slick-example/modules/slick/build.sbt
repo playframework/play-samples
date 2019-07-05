@@ -2,10 +2,10 @@ import slick.codegen.SourceCodeGenerator
 import slick.{ model => m }
 
 libraryDependencies ++= Seq(
-  "com.zaxxer" % "HikariCP" % "2.7.9",
-  "com.typesafe.slick" %% "slick" % "3.2.3",
-  "com.typesafe.slick" %% "slick-hikaricp" % "3.2.3",
-  "com.github.tototoshi" %% "slick-joda-mapper" % "2.3.0"
+  "com.zaxxer" % "HikariCP" % "3.3.1",
+  "com.typesafe.slick" %% "slick" % "3.3.2",
+  "com.typesafe.slick" %% "slick-hikaricp" % "3.3.2",
+  "com.github.tototoshi" %% "slick-joda-mapper" % "2.4.1"
 )
 
 lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")

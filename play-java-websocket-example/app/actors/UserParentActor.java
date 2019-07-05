@@ -2,22 +2,21 @@ package actors;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
-import akka.util.Timeout;
 import com.typesafe.config.Config;
 import play.libs.akka.InjectedActorSupport;
 
 import javax.inject.Inject;
+import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
-import java.util.concurrent.TimeUnit;
 
-import static akka.pattern.PatternsCS.ask;
-import static akka.pattern.PatternsCS.pipe;
+import static akka.pattern.Patterns.ask;
+import static akka.pattern.Patterns.pipe;
 
 public class UserParentActor extends AbstractActor implements InjectedActorSupport {
 
-    private final Timeout timeout = new Timeout(2, TimeUnit.SECONDS);
+    private final Duration timeout = Duration.ofSeconds(2);
     private final Set<String> defaultStocks;
 
     public static class Create {

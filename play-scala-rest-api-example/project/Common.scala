@@ -21,7 +21,6 @@ object Common extends AutoPlugin {
       "-deprecation",
       "-feature",
       "-unchecked",
-      "-Yno-adapted-args",
       "-Ywarn-numeric-widen",
       "-Xfatal-warnings"
     ),

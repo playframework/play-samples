@@ -8,7 +8,6 @@ import slick.jdbc.JdbcBackend.Database
 import com.example.user._
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.language.implicitConversions
 
 /**
  * A User DAO implemented with Slick, leveraging Slick code gen.
