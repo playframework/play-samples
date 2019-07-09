@@ -1,4 +1,4 @@
-val akkaVersion = "2.6.0-M3"
+import play.core.PlayVersion.akkaVersion
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
