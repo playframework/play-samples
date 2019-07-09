@@ -13,7 +13,7 @@ lazy val root = (project in file("."))
       "org.webjars" % "bootstrap" % "3.3.7",
       "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
       "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-M2" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-M3" % Test,
       "org.awaitility" % "awaitility" % "3.1.6" % Test,
     ),
     scalacOptions ++= Seq(
