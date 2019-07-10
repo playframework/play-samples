@@ -30,12 +30,12 @@ public class ModelTest extends WithApplication {
         final ComputerRepository computerRepository = app.injector().instanceOf(ComputerRepository.class);
         final CompletionStage<Optional<Computer>> stage = computerRepository.lookup(21L);
 
-        await().atMost(1, SECONDS).until(() ->
-            assertThat(stage.toCompletableFuture()).isCompletedWithValueMatching(computerOptional -> {
-                final Computer macintosh = computerOptional.get();
-                return (macintosh.name.equals("Macintosh") && formatted(macintosh.introduced).equals("1984-01-24"));
-            })
-        );
+        await().atMost(1, SECONDS).until(() -> {
+            final Optional<Computer> macintosh = stage.toCompletableFuture().get();
+            return macintosh
+                .map(mac -> mac.name.equals("Macintosh") && formatted(mac.introduced).equals("1984-01-24"))
+                .orElseGet(() -> false);
+        });
     }
     
     @Test
@@ -44,13 +44,12 @@ public class ModelTest extends WithApplication {
         CompletionStage<PagedList<Computer>> stage = computerRepository.page(1, 20, "name", "ASC", "");
 
         // Test the completed result
-        await().atMost(1, SECONDS).until(() ->
-            assertThat(stage.toCompletableFuture()).isCompletedWithValueMatching(computers ->
-                computers.getTotalCount() == 574 &&
+        await().atMost(1, SECONDS).until(() -> {
+            PagedList<Computer> computers = stage.toCompletableFuture().get();
+            return computers.getTotalCount() == 574 &&
                 computers.getTotalPageCount() == 29 &&
-                computers.getList().size() == 20
-            )
-        );
+                computers.getList().size() == 20;
+        });
     }
     
 }

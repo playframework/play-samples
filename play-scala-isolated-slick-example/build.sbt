@@ -21,7 +21,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       "com.h2database" % "h2" % "1.4.199",
-      "org.flywaydb" % "flyway-core" % "5.1.4",
+      "org.flywaydb" % "flyway-core" % "5.2.4",
       "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-M3" % Test
     ),

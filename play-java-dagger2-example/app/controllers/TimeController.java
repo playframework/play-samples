@@ -37,7 +37,7 @@ public class TimeController extends Controller {
     }
 
     public Result index(Http.Request request) {
-        Optional<String> timezone = request.session().getOptional("timezone");
+        Optional<String> timezone = request.session().get("timezone");
         Form<TimeZoneData> filledForm;
         if (timezone.isPresent()) {
             filledForm = form;
@@ -70,7 +70,7 @@ public class TimeController extends Controller {
     // call out to local URL as if it's a remote REST API, since timeapi is down
     public CompletionStage<Result> ws(Http.Request request) {
         String url = "http://localhost:9000/now";
-        final Optional<String> timezone = request.session().getOptional("timezone");
+        final Optional<String> timezone = request.session().get("timezone");
         return ws.url(url).get().thenApply(result -> {
             final JsonNode jsonNode = result.asJson();
             final String dateString = jsonNode.findValue("dateString").asText();
@@ -83,7 +83,7 @@ public class TimeController extends Controller {
     }
 
     private String renderTime(Http.Request request) {
-        final Optional<String> timezone = request.session().getOptional("timezone");
+        final Optional<String> timezone = request.session().get("timezone");
         final ZoneId zoneId = zoneId(timezone);
         final Instant instant = clock.instant();
         final ZonedDateTime zdt = instant.atZone(zoneId);

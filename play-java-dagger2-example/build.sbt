@@ -1,22 +1,22 @@
-name := """play-java-dagger2-example"""
-
-version := "1.0-SNAPSHOT"
-
-lazy val root = (project in file(".")).enablePlugins(PlayJava)
-
-scalaVersion := "2.13.0"
-
-libraryDependencies += ws
-
-libraryDependencies += "com.google.dagger" % "dagger" % "2.16"
-libraryDependencies += "com.google.dagger" % "dagger-compiler" % "2.16"
-
-javacOptions in Compile := { (managedSourceDirectories in Compile).value.head.mkdirs(); javacOptions.value }
-
-// move the java annotation code into generated directory
-javacOptions in Compile ++= Seq("-s", (managedSourceDirectories in Compile).value.head.getAbsolutePath)
-
-javacOptions ++= Seq(
-  "-Xlint:unchecked",
-  "-Xlint:deprecation"
-)
+lazy val root = (project in file("."))
+  .enablePlugins(PlayJava)
+  .settings(
+    name := """play-java-dagger2-example""",
+    version := "1.0-SNAPSHOT",
+    scalaVersion := "2.13.0",
+    libraryDependencies ++= Seq(
+      ws,
+      "com.google.dagger" % "dagger" % "2.23.2",
+      "com.google.dagger" % "dagger-compiler" % "2.23.2"
+    ),
+    // move the java annotation code into generated directory
+    javacOptions in Compile := { (managedSourceDirectories in Compile).value.head.mkdirs(); javacOptions.value },
+    javacOptions in Compile ++= Seq("-s", (managedSourceDirectories in Compile).value.head.getAbsolutePath),
+    javacOptions ++= Seq(
+      "-Xlint:unchecked",
+      "-Xlint:deprecation",
+      "-Werror"
+    ),
+    // Verbose tests
+    testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
+  )

@@ -25,7 +25,7 @@ public class JPAPostRepository implements PostRepository {
 
     private final JPAApi jpaApi;
     private final PostExecutionContext ec;
-    private final CircuitBreaker circuitBreaker = new CircuitBreaker().withFailureThreshold(1).withSuccessThreshold(3);
+    private final CircuitBreaker<Optional<PostData>> circuitBreaker = new CircuitBreaker<Optional<PostData>>().withFailureThreshold(1).withSuccessThreshold(3);
 
     @Inject
     public JPAPostRepository(JPAApi api, PostExecutionContext ec) {

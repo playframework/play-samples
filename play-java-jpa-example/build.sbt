@@ -1,25 +1,21 @@
-name := """play-java-jpa-example"""
-
-version := "1.0-SNAPSHOT"
-
-lazy val root = (project in file(".")).enablePlugins(PlayJava)
-
-scalaVersion := "2.13.0"
-
-libraryDependencies += guice
-libraryDependencies += javaJpa
-libraryDependencies += "com.h2database" % "h2" % "1.4.199"
-libraryDependencies += "org.hibernate" % "hibernate-core" % "5.4.0.Final"
-
-libraryDependencies += javaWs % "test"
-
-libraryDependencies += "org.awaitility" % "awaitility" % "3.1.5" % "test"
-libraryDependencies += "org.assertj" % "assertj-core" % "3.11.1" % "test"
-libraryDependencies += "org.mockito" % "mockito-core" % "2.23.4" % "test"
-
-Test / testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v")
-
-ThisBuild / scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
-ThisBuild / javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")
-
-PlayKeys.externalizeResourcesExcludes += baseDirectory.value / "conf" / "META-INF" / "persistence.xml"
+lazy val root = (project in file("."))
+  .enablePlugins(PlayJava)
+  .settings(
+    name := """play-java-jpa-example""",
+    version := "1.0-SNAPSHOT",
+    scalaVersion := "2.13.0",
+    libraryDependencies ++= Seq(
+      guice,
+      javaJpa,
+      "com.h2database" % "h2" % "1.4.199",
+      "org.hibernate" % "hibernate-core" % "5.4.3.Final",
+      javaWs % "test",
+      "org.awaitility" % "awaitility" % "3.1.6" % "test",
+      "org.assertj" % "assertj-core" % "3.12.2" % "test",
+      "org.mockito" % "mockito-core" % "3.0.0" % "test",
+    ),
+    Test / testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
+    scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked"),
+    javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror"),
+    PlayKeys.externalizeResourcesExcludes += baseDirectory.value / "conf" / "META-INF" / "persistence.xml"
+  )
