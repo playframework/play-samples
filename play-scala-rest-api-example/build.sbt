@@ -8,11 +8,11 @@ lazy val root = (project in file("."))
     scalaVersion := "2.13.0",
     libraryDependencies ++= Seq(
       guice,
-      "org.joda" % "joda-convert" % "2.1.2",
-      "net.logstash.logback" % "logstash-logback-encoder" % "5.2",
+      "org.joda" % "joda-convert" % "2.2.1",
+      "net.logstash.logback" % "logstash-logback-encoder" % "6.1",
       "io.lemonlabs" %% "scala-uri" % "1.4.10",
       "net.codingwell" %% "scala-guice" % "4.2.5",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-M3" % Test
     ),
   )
 

@@ -4,7 +4,7 @@ import java.util.Properties
 
 import com.google.inject.Inject
 import org.flywaydb.core.Flyway
-import org.flywaydb.core.internal.util.jdbc.DriverDataSource
+import org.flywaydb.core.internal.jdbc.DriverDataSource
 import org.scalatestplus.play.FakeApplicationFactory
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.inject.{Binding, Module}
@@ -34,10 +34,11 @@ class FlywayMigrator @Inject()(env: Environment, configuration: Configuration) {
     val url = configuration.get[String]("myapp.database.url")
     val user = configuration.get[String]("myapp.database.user")
     val password = configuration.get[String]("myapp.database.password")
-    val flyway = new Flyway
-    flyway.setDataSource(new DriverDataSource(env.classLoader, driver, url, user, password, new Properties()))
-    flyway.setLocations("filesystem:modules/flyway/src/main/resources/db/migration")
-    flyway.migrate()
+    Flyway.configure()
+      .dataSource(new DriverDataSource(env.classLoader, driver, url, user, password, new Properties()))
+      .locations("filesystem:modules/flyway/src/main/resources/db/migration")
+      .load()
+      .migrate()
   }
 
   onStart()

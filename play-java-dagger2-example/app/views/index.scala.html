@@ -5,7 +5,7 @@
 
     <h1>@renderedTime</h1>
 
-    @request.flash.getOptional("success").orElse("")
+    @request.flash.get("success").orElse("")
 
     @helper.form(action = routes.TimeController.indexPost()) {
 

@@ -1,3 +1,5 @@
+import play.core.PlayVersion.akkaVersion
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
@@ -8,7 +10,7 @@ lazy val root = (project in file("."))
       ws,
       guice,
       "org.abstractj.kalium" % "kalium" % "0.8.0",
-      "com.typesafe.akka" %% "akka-distributed-data" % "2.6.0-M3",
+      "com.typesafe.akka" %% "akka-distributed-data" % akkaVersion,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-M3" % Test
     ),
     scalacOptions ++= Seq(
