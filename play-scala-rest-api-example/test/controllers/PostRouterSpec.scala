@@ -19,10 +19,15 @@ class PostRouterSpec extends PlaySpec with GuiceOneAppPerTest {
 
       val posts: Seq[PostResource] = Json.fromJson[Seq[PostResource]](contentAsJson(home)).get
       posts.filter(_.id == "1").head mustBe (PostResource("1","/v1/posts/1", "title 1", "blog post 1" ))
-
     }
 
+    "render the list of posts when url ends with a trailing slash" in {
+      val request = FakeRequest(GET, "/v1/posts/").withHeaders(HOST -> "localhost:9000").withCSRFToken
+      val home:Future[Result] = route(app, request).get
 
+      val posts: Seq[PostResource] = Json.fromJson[Seq[PostResource]](contentAsJson(home)).get
+      posts.filter(_.id == "1").head mustBe (PostResource("1","/v1/posts/1", "title 1", "blog post 1" ))
+    }
   }
 
 }

@@ -401,6 +401,7 @@ class PostResourceHandler @Inject()(
 
 }
 ```
+
 Here, it's a straight conversion in `createPostResource`, with the only hook being that the router provides the resource's URL, since it's something that `PostData` does not have itself.
 
 ## Rendering Content as JSON
