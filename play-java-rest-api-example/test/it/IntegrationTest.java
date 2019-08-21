@@ -95,7 +95,7 @@ public class IntegrationTest extends WithApplication {
     @Test
     public void testCircuitBreakerOnShow() {
         PostRepository repository = app.injector().instanceOf(PostRepository.class);
-        repository.create(new PostData("title-testTimeoutOnUpdate", "body-testCircuitBreakerOnShow"));
+        repository.create(new PostData("title-testCircuitBreakerOnShow", "body-testCircuitBreakerOnShow"));
 
         Http.RequestBuilder request = new Http.RequestBuilder()
                 .method(GET)
