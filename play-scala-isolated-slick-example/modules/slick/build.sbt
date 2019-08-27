@@ -16,7 +16,7 @@ slickCodegenSettings
 slickCodegenDatabaseUrl := databaseUrl
 slickCodegenDatabaseUser := databaseUser
 slickCodegenDatabasePassword := databasePassword
-slickCodegenDriver := slick.driver.H2Driver
+slickCodegenDriver := slick.jdbc.H2Profile
 slickCodegenJdbcDriver := "org.h2.Driver"
 slickCodegenOutputPackage := "com.example.user.slick"
 slickCodegenExcludedTables := Seq("schema_version")
