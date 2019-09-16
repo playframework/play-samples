@@ -11,6 +11,7 @@ lazy val root = (project in file("."))
       guice,
       "org.abstractj.kalium" % "kalium" % "0.8.0",
       "com.typesafe.akka" %% "akka-distributed-data" % akkaVersion,
+      "com.typesafe.akka" %% "akka-cluster-typed" % akkaVersion,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-M3" % Test
     ),
     scalacOptions ++= Seq(
