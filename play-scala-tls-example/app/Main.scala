@@ -1,10 +1,10 @@
 import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
+import akka.stream.Materializer
 import play.api.libs.ws._
 import com.typesafe.config.ConfigFactory
-import play.api.libs.ws.ahc.{AhcWSClient, AhcWSClientConfigFactory}
+import play.api.libs.ws.ahc.{ AhcWSClient, AhcWSClientConfigFactory }
 
-import scala.util.{Failure, Success}
+import scala.util.{ Success, Failure }
 
 /**
  * Connects to example.com with a WS client running from Main.
@@ -29,7 +29,7 @@ object Main {
     val config = AhcWSClientConfigFactory.forConfig(ConfigFactory.load("ws.conf"), getClass.getClassLoader)
     val name = "testing"
     val system = ActorSystem(name)
-    implicit val materializer = ActorMaterializer(namePrefix = Some(name))(system)
+    implicit val materializer = Materializer.matFromSystem(system)
 
     val client = AhcWSClient(config)
     val futureResponse = client.url("https://one.example.com:9443").get()
