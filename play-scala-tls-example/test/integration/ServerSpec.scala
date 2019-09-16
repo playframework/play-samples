@@ -1,7 +1,7 @@
 package integration
 
 import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
+import akka.stream.Materializer
 import com.typesafe.config.ConfigFactory
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.concurrent.PatienceConfiguration
@@ -11,7 +11,8 @@ import org.scalatest.time.Seconds
 import org.scalatest.time.Span
 import org.scalatestplus.play._
 import play.api.libs.ws.WSResponse
-import play.api.libs.ws.ahc.{AhcWSClient, AhcWSClientConfigFactory}
+import play.api.libs.ws.ahc.AhcWSClient
+import play.api.libs.ws.ahc.AhcWSClientConfigFactory
 
 import scala.concurrent.Future
 
@@ -22,7 +23,7 @@ class ServerSpec extends PlaySpec with GuiceOneHttpsServerPerTest with ScalaFutu
 
   val name = "testing"
   val system = ActorSystem(name)
-  implicit val materializer = ActorMaterializer(namePrefix = Some(name))(system)
+  implicit val materializer = Materializer.matFromSystem(system)
 
   val config = ConfigFactory.load("ws").withFallback(ConfigFactory.defaultReference())
   val wsConfig = AhcWSClientConfigFactory.forConfig(config)
