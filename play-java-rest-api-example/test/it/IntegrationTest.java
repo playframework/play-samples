@@ -1,7 +1,6 @@
 package it;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.junit.Ignore;
 import org.junit.Test;
 import play.Application;
 import play.inject.guice.GuiceApplicationBuilder;
@@ -19,7 +18,6 @@ import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.StreamSupport;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 import static play.test.Helpers.*;
@@ -42,11 +40,35 @@ public class IntegrationTest extends WithApplication {
 
         Result result = route(app, request);
 
-        assertJsonPayloadHasTitle("title-of-post-123", result) ;
+        assertEquals(200, result.status());
+
+        JsonNode listOfPosts = contentAsJson(result);
+        Optional<PostResource> post = findPostByTitle(listOfPosts, "title-of-post-123");
+        assertTrue(post.isPresent());
+    }
+
+    private Optional<PostResource> findPostByTitle(JsonNode listOfPosts, String postTitle) {
+        Iterator<JsonNode> elements = listOfPosts.elements();
+        // spliterator dance to build a Stream from an Iterator
+        return StreamSupport.stream(
+            Spliterators.spliteratorUnknownSize(
+                elements,
+                Spliterator.ORDERED),
+            false)
+            .map(jsonNode -> Json.fromJson(jsonNode, PostResource.class))
+            .filter(p -> {
+                return p.getTitle().equals(postTitle);
+            })
+            .findFirst();
+    }
+
+    private JsonNode contentAsJson(Result result) {
+        final String responseBody = contentAsString(result);
+        return Json.parse(responseBody);
     }
 
     @Test
-    public void testListWithTrailingSlash() {
+    public void testListWithTrailingSlashIsUnknown() {
         PostRepository repository = app.injector().instanceOf(PostRepository.class);
         repository.create(new PostData("title-of-another-post", "body-456"));
 
@@ -55,25 +77,7 @@ public class IntegrationTest extends WithApplication {
                 .uri("/v1/posts/");
 
         Result result = route(app, request);
-        assertJsonPayloadHasTitle("title-of-another-post", result) ;
-    }
-
-    private void assertJsonPayloadHasTitle(String expectedTitle, Result actual){
-        final String responseBody = contentAsString(actual);
-        assertFalse(responseBody.contains("Action Not Found"));
-        JsonNode listOfPosts = Json.parse(responseBody);
-        Iterator<JsonNode> elements = listOfPosts.elements();
-        // spliterator dance to build a Stream from an Iterator
-        Optional<PostResource> post = StreamSupport.stream(
-            Spliterators.spliteratorUnknownSize(
-                elements,
-                Spliterator.ORDERED),
-            false)
-            .map(jsonNode -> Json.fromJson(jsonNode, PostResource.class))
-            .filter(p -> p.getTitle().equals(expectedTitle))
-            .findFirst();
-
-        assertTrue(post.isPresent());
+        assertEquals(404, result.status());
     }
 
     @Test
