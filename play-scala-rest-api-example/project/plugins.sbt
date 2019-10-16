@@ -1,5 +1,5 @@
 // The Play plugin
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.0-M5")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.0-M6")
 
 // sbt-paradox, used for documentation
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.4.4")
