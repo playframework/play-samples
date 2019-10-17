@@ -47,7 +47,7 @@ Now that you've generated the certificates and added the `example.com` host entr
 
 This application is not run with `sbt` -- you should run it with `./play` instead, as there are a number of system properties required to use it effectively.
 
-The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](http://www.playframework.com/documentation/2.5.x/ConfiguringHttps).
+The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](http://www.playframework.com/documentation/2.6.x/ConfiguringHttps).
 
 ```bash
 ./play run
@@ -57,9 +57,9 @@ The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More deta
 
 If you want to return different certificates for the hostname, you can use the SniKeyManager to return an alias corresponding to the hostname.
 
-For example, going to "https://one.example.com:9443" will return a certificate corresponding to "one.example.com", while "https://two.example.com:9443" will return a certificate corresponding to "two.example.com".
+For example, going to <https://one.example.com:9443> will return a certificate corresponding to "one.example.com", while <https://two.example.com:9443> will return a certificate corresponding to "two.example.com".
 
-If there is no match, then a wildcard certificate will be used, and the main website's index method will redirect to `forHost` with the hostname.  So, if you go to "https://three.example.com:9443" and there is no site for that, the wildcard certificate and the home page will redirect you to "https://three.example.com:9443/for/three".
+If there is no match, then a wildcard certificate will be used, and the main website's index method will redirect to `forHost` with the hostname.  So, if you go to <https://three.example.com:9443> and there is no site for that, the wildcard certificate and the home page will redirect you to <https://three.example.com:9443/for/three>.
 
 ## Checking the list of cipher suites:
 
@@ -253,4 +253,3 @@ failure = java.net.ConnectException: Received fatal alert: bad_certificate to ht
 ## Conclusion
 
 That's it -- you have made Play work (with TLS 1.2 and ECDSA certificates).  Please look through the ./play script and the certificate generation scripts for more details, but that should be enough to get you started.
-

@@ -16,7 +16,7 @@ import static play.test.Helpers.*;
 /**
  * Integration testing that involves starting up an application or a server.
  * <p>
- * https://www.playframework.com/documentation/2.5.x/JavaFunctionalTest
+ * https://www.playframework.com/documentation/2.6.x/JavaFunctionalTest
  */
 public class IntegrationTest extends WithServer {
 

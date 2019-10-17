@@ -1,4 +1,4 @@
-val akkaVersion = "2.5.8"
+val akkaVersion = "2.5.25"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
@@ -6,9 +6,9 @@ name := """play-chatroom-scala-example"""
 
 version := "2.6.x"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.10"
 
-crossScalaVersions := Seq("2.11.12", "2.12.4")
+crossScalaVersions := Seq("2.11.12", "2.12.10")
 
 libraryDependencies += guice
 

@@ -2,9 +2,9 @@ import sbt.Keys._
 
 lazy val GatlingTest = config("gatling") extend Test
 
-scalaVersion in ThisBuild := "2.12.6"
+scalaVersion in ThisBuild := "2.12.10"
 
-crossScalaVersions := Seq("2.11.12", "2.12.6")
+crossScalaVersions := Seq("2.11.12", "2.12.10")
 
 def gatlingVersion(scalaBinVer: String): String = scalaBinVer match {
   case "2.11" => "2.2.5"

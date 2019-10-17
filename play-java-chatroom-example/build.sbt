@@ -2,9 +2,9 @@ name := """play-java-chatroom-example"""
 
 version := "2.6.x"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.10"
 
-crossScalaVersions := Seq("2.11.12", "2.12.4")
+crossScalaVersions := Seq("2.11.12", "2.12.10")
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
