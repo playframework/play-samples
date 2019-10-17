@@ -2,9 +2,9 @@ name := "play-java-ebean-example"
 
 version := "1.0.0-SNAPSHOT"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.10"
 
-crossScalaVersions := Seq("2.11.12", "2.12.6")
+crossScalaVersions := Seq("2.11.12", "2.12.10")
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
 
