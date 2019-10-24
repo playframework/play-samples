@@ -1,7 +1,10 @@
 package services.session
 
-import akka.actor.{ Actor, ActorLogging, ActorRef, Cancellable, Props }
-import akka.event.LoggingReceive
+import akka.actor.Cancellable
+import akka.actor.typed.{ ActorRef, PostStop }
+import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
+import akka.cluster.ddata.typed.scaladsl.ReplicatorMessageAdapter
+import akka.cluster.ddata.LWWMap
 
 import scala.concurrent.duration._
 
@@ -16,14 +19,19 @@ import scala.concurrent.duration._
  *
  * http://doc.akka.io/docs/akka/current/scala/distributed-data.html
  */
-class SessionCache extends Actor with ActorLogging {
+class SessionCache(
+    context: ActorContext[SessionCache.Command],
+    replicator: ReplicatorMessageAdapter[SessionCache.Command, LWWMap[String, Array[Byte]]],
+) {
   //  This is from one of the examples covered in the akka distributed data section:
-  // https://github.com/akka/akka-samples/blob/master/akka-sample-distributed-data-scala/src/main/scala/sample/distributeddata/ReplicatedCache.scala
+  // https://github.com/akka/akka-samples/blob/2.5/akka-sample-distributed-data-scala/src/main/scala/sample/distributeddata/ReplicatedCache.scala
+
   import SessionCache._
   import SessionExpiration._
-  import akka.cluster.Cluster
-  import akka.cluster.ddata.{ DistributedData, LWWMap, LWWMapKey }
-  import akka.cluster.ddata.Replicator._
+  import akka.cluster.ddata.{ LWWMap, LWWMapKey }
+  import akka.cluster.ddata.typed.scaladsl.DistributedData
+  import akka.cluster.ddata.typed.scaladsl.Replicator._
+  import context.log
 
   private val expirationTime: FiniteDuration = {
     val expirationString = context.system.settings.config.getString("session.expirationTime")
@@ -31,48 +39,46 @@ class SessionCache extends Actor with ActorLogging {
   }
 
   private val distributedData: DistributedData = DistributedData(context.system)
-  private[this] val replicator = distributedData.replicator
   private[this] implicit val uniqAddress = distributedData.selfUniqueAddress
-  private[this] implicit val cluster = Cluster(context.system)
 
-  def receive = {
+  def receive: SessionCache.Command => Unit = {
 
     case PutInCache(key, value) =>
       refreshSessionExpiration(key)
-      replicator ! Update(dataKey(key), LWWMap(), WriteLocal)(_ :+ (key -> value))
+      replicator.askUpdate(Update(dataKey(key), emptyMap, WriteLocal, _)(_ :+ (key -> value)), nop)
 
     case Evict(key) =>
       destroySessionExpiration(key)
-      replicator ! Update(dataKey(key), LWWMap(), WriteLocal)(_.remove(uniqAddress, key))
+      replicator.askUpdate(Update(dataKey(key), emptyMap, WriteLocal, _)(_.remove(uniqAddress, key)), nop)
 
-    case GetFromCache(key) =>
-      replicator ! Get(dataKey(key), ReadLocal, Some(Request(key, sender())))
+    case GetFromCache(key, replyTo) =>
+      replicator.askGet(Get(dataKey(key), ReadLocal, _), InternalGetResponse(_, replyTo))
 
-    case g @ GetSuccess(LWWMapKey(_), Some(Request(key, replyTo))) =>
+    case InternalGetResponse(g @ GetSuccess(mk @ LWWMapKey(key)), replyTo) =>
       refreshSessionExpiration(key)
-      g.dataValue match {
-        case data: LWWMap[_, _] => data.asInstanceOf[LWWMap[String, Array[Byte]]].get(key) match {
-          case Some(value) => replyTo ! Cached(key, Some(value))
-          case None => replyTo ! Cached(key, None)
-        }
+      g.get(mk).get(key) match {
+        case Some(value) => replyTo ! Cached(key, Some(value))
+        case None => replyTo ! Cached(key, None)
       }
 
-    case NotFound(_, Some(Request(key, replyTo))) =>
+    case InternalGetResponse(NotFound(LWWMapKey(key)), replyTo) =>
       replyTo ! Cached(key, None)
 
-    case _: UpdateResponse[_] => // ok
+    case _: InternalUpdateResponse[_] => // ok
   }
 
+  private def emptyMap: LWWMap[String, Array[Byte]]                = LWWMap.empty
   private def dataKey(key: String): LWWMapKey[String, Array[Byte]] = LWWMapKey(key)
+  private def nop[A](x: A)                                         = InternalUpdateResponse(x)
 
   private def refreshSessionExpiration(key: String) = {
     context.child(key) match {
       case Some(sessionInstance) =>
         log.info(s"Refreshing session $key")
-        sessionInstance ! RefreshSession
+        sessionInstance.unsafeUpcast[RefreshSession.type] ! RefreshSession // TODO: make this safe
       case None =>
         log.info(s"Creating new session $key")
-        context.actorOf(SessionExpiration.props(key, expirationTime), key)
+        context.spawn(SessionExpiration.create(context.self, key, expirationTime), key)
     }
   }
 
@@ -84,34 +90,57 @@ class SessionCache extends Actor with ActorLogging {
 }
 
 object SessionCache {
-  def props: Props = Props[SessionCache]
+  import akka.cluster.ddata.LWWMap
+  import akka.cluster.ddata.typed.scaladsl.DistributedData
+  import akka.cluster.ddata.typed.scaladsl.Replicator._
 
-  final case class PutInCache(key: String, value: Array[Byte])
+  sealed trait Command
 
-  final case class GetFromCache(key: String)
+  final case class PutInCache(key: String, value: Array[Byte]) extends Command
+
+  final case class GetFromCache(key: String, replyTo: ActorRef[Cached]) extends Command
 
   final case class Cached(key: String, value: Option[Array[Byte]])
 
-  final case class Evict(key: String)
+  final case class Evict(key: String) extends Command
 
-  private final case class Request(key: String, replyTo: ActorRef)
+  private sealed trait InternalCommand extends Command
+
+  private final case class InternalGetResponse(
+      rsp: GetResponse[LWWMap[String, Array[Byte]]],
+      replyTo: ActorRef[Cached],
+  ) extends InternalCommand
+
+  private case class InternalUpdateResponse[A](x: A) extends InternalCommand
+
+  def create() = Behaviors.setup[Command] { context =>
+    DistributedData.withReplicatorMessageAdapter[Command, LWWMap[String, Array[Byte]]] { replicator =>
+      val actor = new SessionCache(context, replicator)
+      Behaviors.receiveMessage[Command] { command => actor.receive(command); Behaviors.same }
+    }
+  }
 }
 
-class SessionExpiration(key: String, expirationTime: FiniteDuration) extends Actor with ActorLogging {
+class SessionExpiration(
+    context: ActorContext[SessionExpiration.RefreshSession.type],
+    parent: ActorRef[SessionCache.Evict],
+    key: String,
+    expirationTime: FiniteDuration,
+) {
   import SessionExpiration._
   import services.session.SessionCache.Evict
 
   private var maybeCancel: Option[Cancellable] = None
 
-  override def preStart(): Unit = {
+  def preStart(): Unit = {
     schedule()
   }
 
-  override def postStop(): Unit = {
+  def postStop(): Unit = {
     cancel()
   }
 
-  override def receive: Receive = LoggingReceive {
+  def receive: RefreshSession.type => Unit = { // TODO: Add back LoggingReceive
     case RefreshSession => reschedule()
   }
 
@@ -126,12 +155,21 @@ class SessionExpiration(key: String, expirationTime: FiniteDuration) extends Act
 
   private def schedule() = {
     val system = context.system
-    maybeCancel = Some(system.scheduler.scheduleOnce(expirationTime, context.parent, Evict(key))(system.dispatcher))
+    maybeCancel = Some(context.scheduleOnce(expirationTime, parent, Evict(key)))
   }
 }
 
 object SessionExpiration {
-  def props(key: String, expirationTime: FiniteDuration) = Props(classOf[SessionExpiration], key, expirationTime)
-
   final case object RefreshSession
+  import SessionCache.Evict
+
+  def create(parent: ActorRef[Evict], key: String, expirationTime: FiniteDuration) = {
+    Behaviors.setup[RefreshSession.type] { context =>
+      val actor = new SessionExpiration(context, parent, key, expirationTime)
+      actor.preStart()
+      Behaviors
+        .receiveMessage[RefreshSession.type] { command => actor.receive(command); Behaviors.same }
+        .receiveSignal { case (_, PostStop) => actor.postStop(); Behaviors.same }
+    }
+  }
 }
