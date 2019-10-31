@@ -1,7 +1,7 @@
 package services.session
 
 import akka.actor.Cancellable
-import akka.actor.typed.{ ActorRef, PostStop }
+import akka.actor.typed.{ ActorRef, Behavior, PostStop }
 import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
 import akka.cluster.ddata.typed.scaladsl.ReplicatorMessageAdapter
 import akka.cluster.ddata.LWWMap
@@ -78,7 +78,7 @@ class SessionCache(
         sessionInstance.unsafeUpcast[RefreshSession.type] ! RefreshSession // TODO: make this safe
       case None =>
         log.info(s"Creating new session $key")
-        context.spawn(SessionExpiration.create(context.self, key, expirationTime), key)
+        context.spawn(SessionExpiration(context.self, key, expirationTime), key)
     }
   }
 
@@ -113,7 +113,7 @@ object SessionCache {
 
   private case class InternalUpdateResponse[A](x: A) extends InternalCommand
 
-  def create() = Behaviors.setup[Command] { context =>
+  def apply() = Behaviors.setup[Command] { context =>
     DistributedData.withReplicatorMessageAdapter[Command, LWWMap[String, Array[Byte]]] { replicator =>
       val actor = new SessionCache(context, replicator)
       Behaviors.receiveMessage[Command] { command => actor.receive(command); Behaviors.same }
@@ -154,7 +154,6 @@ class SessionExpiration(
   }
 
   private def schedule() = {
-    val system = context.system
     maybeCancel = Some(context.scheduleOnce(expirationTime, parent, Evict(key)))
   }
 }
@@ -163,8 +162,8 @@ object SessionExpiration {
   final case object RefreshSession
   import SessionCache.Evict
 
-  def create(parent: ActorRef[Evict], key: String, expirationTime: FiniteDuration) = {
-    Behaviors.setup[RefreshSession.type] { context =>
+  def apply(parent: ActorRef[Evict], key: String, expirationTime: FiniteDuration): Behavior[RefreshSession.type] = {
+    Behaviors.setup { context =>
       val actor = new SessionExpiration(context, parent, key, expirationTime)
       actor.preStart()
       Behaviors
