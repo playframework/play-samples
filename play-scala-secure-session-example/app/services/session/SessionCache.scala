@@ -121,54 +121,25 @@ object SessionCache {
   }
 }
 
-class SessionExpiration(
-    context: ActorContext[SessionExpiration.RefreshSession.type],
-    parent: ActorRef[SessionCache.Evict],
-    key: String,
-    expirationTime: FiniteDuration,
-) {
-  import SessionExpiration._
-  import services.session.SessionCache.Evict
-
-  private var maybeCancel: Option[Cancellable] = None
-
-  def preStart(): Unit = {
-    schedule()
-  }
-
-  def postStop(): Unit = {
-    cancel()
-  }
-
-  def receive: RefreshSession.type => Unit = { // TODO: Add back LoggingReceive
-    case RefreshSession => reschedule()
-  }
-
-  private def cancel() = {
-    maybeCancel.foreach(_.cancel())
-  }
-
-  private def reschedule(): Unit = {
-    cancel()
-    schedule()
-  }
-
-  private def schedule() = {
-    maybeCancel = Some(context.scheduleOnce(expirationTime, parent, Evict(key)))
-  }
-}
-
 object SessionExpiration {
   final case object RefreshSession
   import SessionCache.Evict
 
   def apply(parent: ActorRef[Evict], key: String, expirationTime: FiniteDuration): Behavior[RefreshSession.type] = {
     Behaviors.setup { context =>
-      val actor = new SessionExpiration(context, parent, key, expirationTime)
-      actor.preStart()
-      Behaviors
-        .receiveMessage[RefreshSession.type] { command => actor.receive(command); Behaviors.same }
-        .receiveSignal { case (_, PostStop) => actor.postStop(); Behaviors.same }
+      var maybeCancel: Option[Cancellable] = None
+
+      def schedule()   = { maybeCancel = Some(context.scheduleOnce(expirationTime, parent, Evict(key))) }
+      def cancel()     = { maybeCancel.foreach(_.cancel()) }
+      def reschedule() = { cancel(); schedule() }
+
+      schedule()
+
+      Behaviors.logMessages(
+        Behaviors
+          .receiveMessage[RefreshSession.type] { case RefreshSession => reschedule(); Behaviors.same }
+          .receiveSignal { case (_, PostStop) => cancel(); Behaviors.same }
+      )
     }
   }
 }
