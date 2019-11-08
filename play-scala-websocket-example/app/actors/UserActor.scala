@@ -2,18 +2,20 @@ package actors
 
 import javax.inject._
 
-import akka.actor._
-import akka.event.{LogMarker, MarkerLoggingAdapter}
+import actors.StocksActor.{ GetStocks, Stocks }
+import akka.actor.Actor
+import akka.actor.typed.{ ActorRef, Scheduler }
+import akka.event.{ LogMarker, MarkerLoggingAdapter }
 import akka.stream._
 import akka.stream.scaladsl._
 import akka.util.Timeout
-import akka.{Done, NotUsed}
+import akka.{ Done, NotUsed }
 import com.google.inject.assistedinject.Assisted
 import play.api.libs.json._
 import stocks._
 
 import scala.concurrent.duration._
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 /**
  * Creates a user actor that sets up the websocket stream.  Although it's not required,
@@ -23,8 +25,8 @@ import scala.concurrent.{ExecutionContext, Future}
  * @param stocksActor the actor responsible for stocks and their streams
  * @param ec          implicit CPU bound execution context.
  */
-class UserActor @Inject()(@Assisted id: String, @Named("stocksActor") stocksActor: ActorRef)
-                         (implicit mat: Materializer, ec: ExecutionContext)
+class UserActor @Inject()(@Assisted id: String, stocksActor: ActorRef[GetStocks])
+                         (implicit mat: Materializer, ec: ExecutionContext, scheduler: Scheduler)
   extends Actor {
   import Messages._
 
@@ -84,10 +86,10 @@ class UserActor @Inject()(@Assisted id: String, @Named("stocksActor") stocksActo
    * Adds several stocks to the hub, by asking the stocks actor for stocks.
    */
   private def addStocks(symbols: Set[StockSymbol]): Future[Unit] = {
-    import akka.pattern.ask
+    import akka.actor.typed.scaladsl.AskPattern._
 
     // Ask the stocksActor for a stream containing these stocks.
-    val future = (stocksActor ? WatchStocks(symbols)).mapTo[Stocks]
+    val future = stocksActor.ask(replyTo => GetStocks(symbols, replyTo))
 
     // when we get the response back, we want to turn that into a flow by creating a single
     // source and a single sink, so we merge all of the stock sources together into one by
