@@ -3,14 +3,13 @@ package actors
 import javax.inject._
 
 import actors.StocksActor.{ GetStocks, Stocks }
-import akka.actor.Actor
-import akka.actor.typed.{ ActorRef, Scheduler }
-import akka.event.{ LogMarker, MarkerLoggingAdapter }
+import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
+import akka.actor.typed.{ ActorRef, Behavior, PostStop, Scheduler }
 import akka.stream._
 import akka.stream.scaladsl._
 import akka.util.Timeout
 import akka.{ Done, NotUsed }
-import com.google.inject.assistedinject.Assisted
+import org.slf4j.Logger
 import play.api.libs.json._
 import stocks._
 
@@ -25,14 +24,15 @@ import scala.concurrent.{ ExecutionContext, Future }
  * @param stocksActor the actor responsible for stocks and their streams
  * @param ec          implicit CPU bound execution context.
  */
-class UserActor @Inject()(@Assisted id: String, stocksActor: ActorRef[GetStocks])
-                         (implicit mat: Materializer, ec: ExecutionContext, scheduler: Scheduler)
-  extends Actor {
-  import Messages._
+class UserActor @Inject()(id: String, stocksActor: ActorRef[GetStocks])(implicit
+    mat: Materializer,
+    ec: ExecutionContext,
+    scheduler: Scheduler,
+    context: ActorContext[UserActor.Message],
+) {
+  import UserActor._
 
-  // Useful way to mark out individual actors with websocket request context information...
-  private val marker = LogMarker(name = self.path.name)
-  implicit val log: MarkerLoggingAdapter = akka.event.Logging.withMarker(context.system, this.getClass)
+  val log: Logger = context.log
 
   implicit val timeout = Timeout(50.millis)
 
@@ -48,22 +48,23 @@ class UserActor @Inject()(@Assisted id: String, stocksActor: ActorRef[GetStocks]
     addStocks(Set(symbol))
   }
 
-  // If this actor is killed directly, stop anything that we started running explicitly.
-  override def postStop(): Unit = {
-    log.info(marker, s"Stopping actor $self")
-    unwatchStocks(stocksMap.keySet)
-  }
+  def behavior: Behavior[Message] = {
+    Behaviors.receiveMessage[Message] {
+      case WatchStocks(symbols, replyTo) =>
+        addStocks(symbols)
+        replyTo ! websocketFlow
+        Behaviors.same
 
-  /**
-   * The receive block, useful if other actors want to manipulate the flow.
-   */
-  override def receive: Receive = {
-    case WatchStocks(symbols) =>
-      addStocks(symbols)
-      sender() ! websocketFlow
-
-    case UnwatchStocks(symbols) =>
-      unwatchStocks(symbols)
+      case UnwatchStocks(symbols) =>
+        unwatchStocks(symbols)
+        Behaviors.same
+    }.receiveSignal {
+      case (_, PostStop) =>
+        // If this actor is killed directly, stop anything that we started running explicitly.
+        log.info("Stopping actor {}", context.self)
+        unwatchStocks(stocksMap.keySet)
+        Behaviors.same
+    }
   }
 
   /**
@@ -77,7 +78,7 @@ class UserActor @Inject()(@Assisted id: String, stocksActor: ActorRef[GetStocks]
     // from the browse), using a coupled sink and source.
     Flow.fromSinkAndSourceCoupled(jsonSink, hubSource).watchTermination() { (_, termination) =>
       // When the flow shuts down, make sure this actor also stops.
-      termination.foreach(_ => context.stop(self))
+      termination.foreach((_: Done) => context.stop(context.self)) // XXX: is self a child?
       NotUsed
     }
   }
@@ -98,7 +99,7 @@ class UserActor @Inject()(@Assisted id: String, stocksActor: ActorRef[GetStocks]
     future.map { (newStocks: Stocks) =>
       newStocks.stocks.foreach { stock =>
         if (! stocksMap.contains(stock.symbol)) {
-          log.info(marker, s"Adding stock $stock")
+          log.info("Adding stock {}", stock)
           addStock(stock)
         }
       }
@@ -148,9 +149,28 @@ class UserActor @Inject()(@Assisted id: String, stocksActor: ActorRef[GetStocks]
   }
 }
 
-
 object UserActor {
+  sealed trait Message
+
+  case class WatchStocks(symbols: Set[StockSymbol], replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]]) extends Message {
+    require(symbols.nonEmpty, "Must specify at least one symbol!")
+  }
+
+  case class UnwatchStocks(symbols: Set[StockSymbol]) extends Message {
+    require(symbols.nonEmpty, "Must specify at least one symbol!")
+  }
+
   trait Factory {
-    def apply(id: String): Actor
+    def apply(id: String): Behavior[Message]
+  }
+
+  def apply(id: String, stocksActor: ActorRef[GetStocks])(implicit
+      mat: Materializer,
+      ec: ExecutionContext,
+  ): Behavior[Message] = {
+    Behaviors.setup { implicit context =>
+      implicit val scheduler = context.system.scheduler
+      new UserActor(id, stocksActor).behavior
+    }
   }
 }

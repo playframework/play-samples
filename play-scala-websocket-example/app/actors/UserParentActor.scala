@@ -2,13 +2,11 @@ package actors
 
 import javax.inject.Inject
 
-import akka.actor._
+import akka.actor.typed.{ ActorRef, Scheduler }
+import akka.actor.{ Actor, ActorLogging }
 import akka.event.LoggingReceive
-import akka.stream.scaladsl._
 import akka.util.Timeout
 import play.api.Configuration
-import play.api.libs.concurrent.InjectedActorSupport
-import play.api.libs.json._
 import stocks._
 
 import scala.concurrent.ExecutionContext
@@ -17,14 +15,15 @@ import scala.concurrent.duration._
 /**
  * Provide some DI and configuration sugar for new UserActor instances.
  */
-class UserParentActor @Inject()(childFactory: UserActor.Factory,
-                                configuration: Configuration)
-                               (implicit ec: ExecutionContext)
-  extends Actor with InjectedActorSupport with ActorLogging {
+class UserParentActor @Inject()(childFactory: UserActor.Factory, configuration: Configuration)(
+    implicit ec: ExecutionContext, scheduler: Scheduler)
+  extends Actor with ActorLogging {
 
-  import Messages._
+  import UserActor.WatchStocks
   import UserParentActor._
-  import akka.pattern.{ask, pipe}
+  import akka.pattern.pipe
+  import akka.actor.typed.scaladsl.AskPattern._
+  import akka.actor.typed.scaladsl.adapter._
 
   implicit val timeout = Timeout(2.seconds)
 
@@ -34,8 +33,8 @@ class UserParentActor @Inject()(childFactory: UserActor.Factory,
     case Create(id) =>
       val name = s"userActor-$id"
       log.info(s"Creating user actor $name with default stocks $defaultStocks")
-      val child: ActorRef = injectedChild(childFactory(id), name)
-      val future = (child ? WatchStocks(defaultStocks.toSet)).mapTo[Flow[JsValue, JsValue, _]]
+      val child: ActorRef[UserActor.Message] = context.system.spawn(childFactory(id), name)
+      val future = child.ask(replyTo => WatchStocks(defaultStocks.toSet, replyTo))
       pipe(future) to sender()
   }
 }
