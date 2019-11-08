@@ -11,7 +11,7 @@ import scala.concurrent.ExecutionContext
 class Module extends AbstractModule with AkkaGuiceSupport {
   override def configure(): Unit = {
     bindTypedActor(StocksActor(), "stocksActor")
-    bindActor[UserParentActor]("userParentActor")
+    bindTypedActor(UserParentActor, "userParentActor")
     bind(classOf[UserActor.Factory]).toProvider(classOf[UserActorFactoryProvider])
   }
 }

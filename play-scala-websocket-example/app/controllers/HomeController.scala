@@ -4,8 +4,8 @@ import javax.inject._
 
 import actors._
 import akka.NotUsed
-import akka.actor._
-import akka.pattern.ask
+import akka.actor.typed.{ ActorRef, Scheduler }
+import akka.actor.typed.scaladsl.AskPattern._
 import akka.stream.scaladsl._
 import akka.util.Timeout
 import play.api.Logger
@@ -13,15 +13,15 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import scala.concurrent.duration._
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 /**
  * This class creates the actions and the websocket needed.
  */
 @Singleton
-class HomeController @Inject()(@Named("userParentActor") userParentActor: ActorRef,
+class HomeController @Inject()(userParentActor: ActorRef[UserParentActor.Create],
                                cc: ControllerComponents)
-                              (implicit ec: ExecutionContext)
+                              (implicit ec: ExecutionContext, scheduler: Scheduler)
   extends AbstractController(cc) with SameOriginCheck {
 
   val logger = play.api.Logger(getClass)
@@ -62,9 +62,7 @@ class HomeController @Inject()(@Named("userParentActor") userParentActor: ActorR
   private def wsFutureFlow(request: RequestHeader): Future[Flow[JsValue, JsValue, NotUsed]] = {
     // Use guice assisted injection to instantiate and configure the child actor.
     implicit val timeout = Timeout(1.second) // the first run in dev can take a while :-(
-    val future: Future[Any] = userParentActor ? UserParentActor.Create(request.id.toString)
-    val futureFlow: Future[Flow[JsValue, JsValue, NotUsed]] = future.mapTo[Flow[JsValue, JsValue, NotUsed]]
-    futureFlow
+    userParentActor.ask(replyTo => UserParentActor.Create(request.id.toString, replyTo))
   }
 
 }

@@ -1,12 +1,14 @@
 package actors
 
-import javax.inject.Inject
-
-import akka.actor.typed.{ ActorRef, Scheduler }
-import akka.actor.{ Actor, ActorLogging }
-import akka.event.LoggingReceive
+import akka.NotUsed
+import akka.actor.typed.scaladsl.Behaviors
+import akka.actor.typed.{ ActorRef, Behavior, Scheduler }
+import akka.stream.scaladsl.Flow
 import akka.util.Timeout
+import com.google.inject.Provides
 import play.api.Configuration
+import play.api.libs.concurrent.ActorModule
+import play.api.libs.json.JsValue
 import stocks._
 
 import scala.concurrent.ExecutionContext
@@ -15,30 +17,29 @@ import scala.concurrent.duration._
 /**
  * Provide some DI and configuration sugar for new UserActor instances.
  */
-class UserParentActor @Inject()(childFactory: UserActor.Factory, configuration: Configuration)(
-    implicit ec: ExecutionContext, scheduler: Scheduler)
-  extends Actor with ActorLogging {
+object UserParentActor extends ActorModule {
+  type Message = Create
 
-  import UserActor.WatchStocks
-  import UserParentActor._
-  import akka.pattern.pipe
-  import akka.actor.typed.scaladsl.AskPattern._
-  import akka.actor.typed.scaladsl.adapter._
+  final case class Create(id: String, replyTo: ActorRef[Flow[JsValue, JsValue, NotUsed]])
 
-  implicit val timeout = Timeout(2.seconds)
+  @Provides def apply(childFactory: UserActor.Factory, configuration: Configuration)
+      (implicit ec: ExecutionContext, scheduler: Scheduler): Behavior[Create] = {
 
-  private val defaultStocks = configuration.get[Seq[String]]("default.stocks").map(StockSymbol(_))
+    implicit val timeout = Timeout(2.seconds)
 
-  override def receive: Receive = LoggingReceive {
-    case Create(id) =>
-      val name = s"userActor-$id"
-      log.info(s"Creating user actor $name with default stocks $defaultStocks")
-      val child: ActorRef[UserActor.Message] = context.system.spawn(childFactory(id), name)
-      val future = child.ask(replyTo => WatchStocks(defaultStocks.toSet, replyTo))
-      pipe(future) to sender()
+    val defaultStocks = configuration.get[Seq[String]]("default.stocks").map(StockSymbol(_))
+
+    Behaviors.setup { context =>
+      Behaviors.logMessages {
+        Behaviors.receiveMessage {
+          case Create(id, replyTo) =>
+            val name = s"userActor-$id"
+            context.log.info(s"Creating user actor $name with default stocks $defaultStocks")
+            val child = context.spawn(childFactory(id), name)
+            child ! UserActor.WatchStocks(defaultStocks.toSet, replyTo)
+            Behaviors.same
+        }
+      }
+    }
   }
-}
-
-object UserParentActor {
-  case class Create(id: String)
 }
