@@ -1,7 +1,5 @@
 package actors;
 
-import stocks.Stock;
-
 import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
@@ -34,12 +32,5 @@ public final class Messages {
         }
     }
 
-    public static class Stocks {
-        final Set<Stock> stocks;
-
-        public Stocks(Set<Stock> stocks) {
-            this.stocks = requireNonNull(stocks);
-        }
-    }
 }
 

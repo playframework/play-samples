@@ -1,13 +1,15 @@
 package actors;
 
-import actors.Messages.Stocks;
 import actors.Messages.UnwatchStocks;
 import actors.Messages.WatchStocks;
+import actors.StocksActor.Stocks;
+import actors.StocksActor.GetStocks;
 import akka.Done;
 import akka.NotUsed;
 import akka.actor.AbstractActor;
 import akka.actor.Actor;
-import akka.actor.ActorRef;
+import akka.actor.typed.ActorRef;
+import akka.actor.typed.Scheduler;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.Pair;
@@ -21,7 +23,6 @@ import play.libs.Json;
 import stocks.Stock;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
@@ -30,7 +31,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
 
-import static akka.pattern.Patterns.ask;
+import static akka.actor.typed.javadsl.AskPattern.ask;
 
 /**
  * The broker between the WebSocket and the StockActor(s).  The UserActor holds the connection and sends serialized
@@ -45,19 +46,21 @@ public class UserActor extends AbstractActor {
     private final Map<String, UniqueKillSwitch> stocksMap = new HashMap<>();
 
     private final String id;
-    private final ActorRef stocksActor;
+    private final ActorRef<StocksActor.GetStocks> stocksActor;
     private final Materializer mat;
+    private final Scheduler scheduler;
 
     private final Sink<JsonNode, NotUsed> hubSink;
     private final Flow<JsonNode, JsonNode, NotUsed> websocketFlow;
 
     @Inject
     public UserActor(@Assisted String id,
-                     @Named("stocksActor") ActorRef stocksActor,
-                     Materializer mat) {
+                     ActorRef<GetStocks> stocksActor,
+                     Materializer mat, Scheduler scheduler) {
         this.id = id;
         this.stocksActor = stocksActor;
         this.mat = mat;
+        this.scheduler = scheduler;
 
         Pair<Sink<JsonNode, NotUsed>, Source<JsonNode, NotUsed>> sinkSourcePair =
                 MergeHub.of(JsonNode.class, 16)
@@ -107,7 +110,7 @@ public class UserActor extends AbstractActor {
      */
     private void addStocks(Set<String> symbols) {
         // Ask the stocksActor for a stream containing these stocks.
-        CompletionStage<Stocks> future = ask(stocksActor, new WatchStocks(symbols), timeout).thenApply(Stocks.class::cast);
+        CompletionStage<Stocks> future = ask(stocksActor, replyTo -> new GetStocks(symbols, replyTo), timeout, scheduler);
 
         // when we get the response back, we want to turn that into a flow by creating a single
         // source and a single sink, so we merge all of the stock sources together into one by
