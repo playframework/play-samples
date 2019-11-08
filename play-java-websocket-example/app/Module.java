@@ -1,7 +1,10 @@
 import actors.*;
+import akka.actor.Actor;
 import akka.actor.ActorSystem;
 import akka.actor.typed.ActorRef;
+import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.Adapter;
+import akka.stream.Materializer;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import play.libs.akka.AkkaGuiceSupport;
@@ -18,7 +21,7 @@ public class Module extends AbstractModule implements AkkaGuiceSupport {
             .toProvider(StocksActorProvider.class)
             .asEagerSingleton();
         bindActor(UserParentActor.class, "userParentActor");
-        bindActorFactory(UserActor.class, UserActor.Factory.class);
+        bind(UserActor.Factory.class).toProvider(UserActorFactoryProvider.class);
     }
 
     @Singleton
@@ -36,6 +39,23 @@ public class Module extends AbstractModule implements AkkaGuiceSupport {
                 actorSystem,
                 StocksActor.create(),
                 "stocksActor");
+        }
+    }
+
+    @Singleton
+    public static class UserActorFactoryProvider implements Provider<UserActor.Factory> {
+        private final ActorRef<StocksActor.GetStocks> stocksActor;
+        private final Materializer mat;
+
+        @Inject
+        public UserActorFactoryProvider(ActorRef<StocksActor.GetStocks> stocksActor, Materializer mat) {
+            this.stocksActor = stocksActor;
+            this.mat = mat;
+        }
+
+        @Override
+        public UserActor.Factory get() {
+            return id -> UserActor.create(id, stocksActor, mat);
         }
     }
 }

@@ -1,7 +1,11 @@
 package actors;
 
+import akka.NotUsed;
 import akka.actor.AbstractActor;
-import akka.actor.ActorRef;
+import akka.actor.typed.ActorRef;
+import akka.actor.typed.javadsl.Adapter;
+import akka.stream.javadsl.Flow;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.Config;
 import play.libs.akka.InjectedActorSupport;
 
@@ -9,10 +13,6 @@ import javax.inject.Inject;
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.CompletionStage;
-
-import static akka.pattern.Patterns.ask;
-import static akka.pattern.Patterns.pipe;
 
 public class UserParentActor extends AbstractActor implements InjectedActorSupport {
 
@@ -21,9 +21,11 @@ public class UserParentActor extends AbstractActor implements InjectedActorSuppo
 
     public static class Create {
         final String id;
+        final ActorRef<Flow<JsonNode, JsonNode, NotUsed>> replyTo;
 
-        public Create(String id) {
+        public Create(String id, ActorRef<Flow<JsonNode, JsonNode, NotUsed>> replyTo) {
             this.id = id;
+            this.replyTo = replyTo;
         }
     }
 
@@ -39,9 +41,9 @@ public class UserParentActor extends AbstractActor implements InjectedActorSuppo
     public Receive createReceive() {
         return receiveBuilder()
                 .match(UserParentActor.Create.class, create -> {
-                    ActorRef child = injectedChild(() -> childFactory.create(create.id), "userActor-" + create.id);
-                    CompletionStage<Object> future = ask(child, new Messages.WatchStocks(defaultStocks), timeout);
-                    pipe(future, context().dispatcher()).to(sender());
+                    ActorRef<UserActor.Message> child =
+                        Adapter.spawn(getContext(), childFactory.create(create.id), "userActor-" + create.id);
+                    child.tell(new UserActor.WatchStocks(defaultStocks, create.replyTo));
                 }).build();
     }
 
