@@ -15,7 +15,6 @@ import play.libs.F.Either;
 import play.mvc.*;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 import java.time.Duration;
 import java.util.Arrays;
@@ -32,13 +31,13 @@ public class HomeController extends Controller {
 
     private final Duration timeout = Duration.ofSeconds(1);
     private final Logger logger = org.slf4j.LoggerFactory.getLogger("controllers.HomeController");
-    private final akka.actor.ActorRef userParentActor;
+    private final ActorRef<UserParentActor.Create> userParentActor;
     private final ActorSystem system;
 
     private WebJarsUtil webJarsUtil;
 
     @Inject
-    public HomeController(@Named("userParentActor") akka.actor.ActorRef userParentActor, ActorSystem system, WebJarsUtil webJarsUtil) {
+    public HomeController(ActorRef<UserParentActor.Create> userParentActor, ActorSystem system, WebJarsUtil webJarsUtil) {
         this.userParentActor = userParentActor;
         this.system = system;
         this.webJarsUtil = webJarsUtil;
@@ -63,7 +62,6 @@ public class HomeController extends Controller {
     @SuppressWarnings("unchecked")
     private CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> wsFutureFlow(Http.RequestHeader request) {
         String id = Long.toString(request.asScala().id());
-        ActorRef<UserParentActor.Create> userParentActor = Adapter.toTyped(this.userParentActor);
         Scheduler scheduler = Adapter.toTyped(system.scheduler());
         return AskPattern.<UserParentActor.Create, Flow<JsonNode, JsonNode, NotUsed>>ask(
             userParentActor, replyTo -> new UserParentActor.Create(id, replyTo), timeout, scheduler

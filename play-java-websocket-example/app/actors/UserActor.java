@@ -49,7 +49,7 @@ public class UserActor {
 
         @Override
         public String toString() {
-            return "WatchStocks(" + symbols + "," + replyTo + ")";
+            return "WatchStocks(" + symbols + ", " + replyTo + ")";
         }
     }
 
