@@ -1,27 +1,25 @@
 package actors;
 
-import actors.Messages.Stocks;
-import actors.Messages.UnwatchStocks;
-import actors.Messages.WatchStocks;
+import actors.StocksActor.Stocks;
+import actors.StocksActor.GetStocks;
 import akka.Done;
 import akka.NotUsed;
-import akka.actor.AbstractActor;
-import akka.actor.Actor;
-import akka.actor.ActorRef;
-import akka.event.Logging;
-import akka.event.LoggingAdapter;
+import akka.actor.typed.ActorRef;
+import akka.actor.typed.Behavior;
+import akka.actor.typed.PostStop;
+import akka.actor.typed.Scheduler;
+import akka.actor.typed.javadsl.ActorContext;
+import akka.actor.typed.javadsl.Behaviors;
 import akka.japi.Pair;
 import akka.stream.KillSwitches;
 import akka.stream.Materializer;
 import akka.stream.UniqueKillSwitch;
 import akka.stream.javadsl.*;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.google.inject.assistedinject.Assisted;
 import play.libs.Json;
 import stocks.Stock;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
@@ -30,34 +28,72 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
 
-import static akka.pattern.Patterns.ask;
+import static akka.actor.typed.javadsl.AskPattern.ask;
+import static java.util.Objects.requireNonNull;
 
 /**
  * The broker between the WebSocket and the StockActor(s).  The UserActor holds the connection and sends serialized
  * JSON data to the client.
  */
-public class UserActor extends AbstractActor {
+public class UserActor {
+    public interface Message {}
+
+    public static final class WatchStocks implements Message {
+        final Set<String> symbols;
+        final ActorRef<Flow<JsonNode, JsonNode, NotUsed>> replyTo;
+
+        public WatchStocks(Set<String> symbols, ActorRef<Flow<JsonNode, JsonNode, NotUsed>> replyTo) {
+            this.symbols = requireNonNull(symbols);
+            this.replyTo = requireNonNull(replyTo);
+        }
+
+        @Override
+        public String toString() {
+            return "WatchStocks(" + symbols + ", " + replyTo + ")";
+        }
+    }
+
+    public static final class UnwatchStocks implements Message {
+        final Set<String> symbols;
+
+        public UnwatchStocks(Set<String> symbols) {
+            this.symbols = requireNonNull(symbols);
+        }
+
+        @Override
+        public String toString() {
+            return "UnwatchStocks(" + symbols + ")";
+        }
+    }
 
     private final Duration timeout = Duration.of(5, ChronoUnit.MILLIS);
-
-    private final LoggingAdapter logger = Logging.getLogger(getContext().system(), this);
 
     private final Map<String, UniqueKillSwitch> stocksMap = new HashMap<>();
 
     private final String id;
-    private final ActorRef stocksActor;
+    private final ActorRef<StocksActor.GetStocks> stocksActor;
     private final Materializer mat;
+    private final Scheduler scheduler;
+    private final ActorContext<Message> context;
 
     private final Sink<JsonNode, NotUsed> hubSink;
     private final Flow<JsonNode, JsonNode, NotUsed> websocketFlow;
 
+    public static Behavior<Message> create(String id,
+                                           ActorRef<GetStocks> stocksActor,
+                                           Materializer mat) {
+        return Behaviors.setup(context -> new UserActor(id, stocksActor, mat, context).behavior());
+    }
+
     @Inject
-    public UserActor(@Assisted String id,
-                     @Named("stocksActor") ActorRef stocksActor,
-                     Materializer mat) {
+    public UserActor(String id,
+                     ActorRef<GetStocks> stocksActor,
+                     Materializer mat, ActorContext<Message> context) {
         this.id = id;
         this.stocksActor = stocksActor;
         this.mat = mat;
+        this.scheduler = context.getSystem().scheduler();
+        this.context = context;
 
         Pair<Sink<JsonNode, NotUsed>, Source<JsonNode, NotUsed>> sinkSourcePair =
                 MergeHub.of(JsonNode.class, 16)
@@ -80,26 +116,32 @@ public class UserActor extends AbstractActor {
                 //.log("actorWebsocketFlow", logger)
                 .watchTermination((n, stage) -> {
                     // When the flow shuts down, make sure this actor also stops.
-                    stage.thenAccept(f -> context().stop(self()));
+                    stage.thenAccept(f -> context.stop(context.getSelf())); // XXX: is self a child?
                     return NotUsed.getInstance();
                 });
     }
 
-    /**
-     * The receive block, useful if other actors want to manipulate the flow.
-     */
-    @Override
-    public Receive createReceive() {
-        return receiveBuilder()
-                .match(WatchStocks.class, watchStocks -> {
-                    logger.info("Received message {}", watchStocks);
-                    addStocks(watchStocks.symbols);
-                    sender().tell(websocketFlow, self());
-                })
-                .match(UnwatchStocks.class, unwatchStocks -> {
-                    logger.info("Received message {}", unwatchStocks);
-                    unwatchStocks(unwatchStocks.symbols);
-                }).build();
+    public Behavior<Message> behavior() {
+        return Behaviors
+            .receive(Message.class)
+            .onMessage(WatchStocks.class, watchStocks -> {
+                context.getLog().info("Received message {}", watchStocks);
+                addStocks(watchStocks.symbols);
+                watchStocks.replyTo.tell(websocketFlow);
+                return Behaviors.same();
+            })
+            .onMessage(UnwatchStocks.class, unwatchStocks -> {
+                context.getLog().info("Received message {}", unwatchStocks);
+                unwatchStocks(unwatchStocks.symbols);
+                return Behaviors.same();
+            })
+            .onSignal(PostStop.class, _postStop -> {
+                // If this actor is killed directly, stop anything that we started running explicitly.
+                context.getLog().info("Stopping actor {}", context.getSelf());
+                unwatchStocks(stocksMap.keySet());
+                return Behaviors.same();
+            })
+            .build();
     }
 
     /**
@@ -107,7 +149,7 @@ public class UserActor extends AbstractActor {
      */
     private void addStocks(Set<String> symbols) {
         // Ask the stocksActor for a stream containing these stocks.
-        CompletionStage<Stocks> future = ask(stocksActor, new WatchStocks(symbols), timeout).thenApply(Stocks.class::cast);
+        CompletionStage<Stocks> future = ask(stocksActor, replyTo -> new GetStocks(symbols, replyTo), timeout, scheduler);
 
         // when we get the response back, we want to turn that into a flow by creating a single
         // source and a single sink, so we merge all of the stock sources together into one by
@@ -126,7 +168,7 @@ public class UserActor extends AbstractActor {
      * Adds a single stock to the hub.
      */
     private void addStock(Stock stock) {
-        logger.info("Adding stock {}", stock);
+        context.getLog().info("Adding stock {}", stock);
 
         // We convert everything to JsValue so we get a single stream for the websocket.
         // Make sure the history gets written out before the updates for this stock...
@@ -160,6 +202,6 @@ public class UserActor extends AbstractActor {
     }
 
     public interface Factory {
-        Actor create(String id);
+        Behavior<Message> create(String id);
     }
 }

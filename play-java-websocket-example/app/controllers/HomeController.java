@@ -2,7 +2,11 @@ package controllers;
 
 import actors.UserParentActor;
 import akka.NotUsed;
-import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.typed.ActorRef;
+import akka.actor.typed.Scheduler;
+import akka.actor.typed.javadsl.Adapter;
+import akka.actor.typed.javadsl.AskPattern;
 import akka.stream.javadsl.Flow;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
@@ -10,9 +14,7 @@ import org.webjars.play.WebJarsUtil;
 import play.libs.F.Either;
 import play.mvc.*;
 
-
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 import java.time.Duration;
 import java.util.Arrays;
@@ -20,8 +22,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-
-import static akka.pattern.Patterns.ask;
 
 /**
  * The main web controller that handles returning the index page, setting up a WebSocket, and watching a stock.
@@ -31,13 +31,15 @@ public class HomeController extends Controller {
 
     private final Duration timeout = Duration.ofSeconds(1);
     private final Logger logger = org.slf4j.LoggerFactory.getLogger("controllers.HomeController");
-    private final ActorRef userParentActor;
+    private final ActorRef<UserParentActor.Create> userParentActor;
+    private final ActorSystem system;
 
     private WebJarsUtil webJarsUtil;
 
     @Inject
-    public HomeController(@Named("userParentActor") ActorRef userParentActor, WebJarsUtil webJarsUtil) {
+    public HomeController(ActorRef<UserParentActor.Create> userParentActor, ActorSystem system, WebJarsUtil webJarsUtil) {
         this.userParentActor = userParentActor;
+        this.system = system;
         this.webJarsUtil = webJarsUtil;
     }
 
@@ -59,13 +61,11 @@ public class HomeController extends Controller {
 
     @SuppressWarnings("unchecked")
     private CompletionStage<Flow<JsonNode, JsonNode, NotUsed>> wsFutureFlow(Http.RequestHeader request) {
-        long id = request.asScala().id();
-        UserParentActor.Create create = new UserParentActor.Create(Long.toString(id));
-
-        return ask(userParentActor, create, timeout).thenApply((Object flow) -> {
-            final Flow<JsonNode, JsonNode, NotUsed> f = (Flow<JsonNode, JsonNode, NotUsed>) flow;
-            return f.named("websocket");
-        });
+        String id = Long.toString(request.asScala().id());
+        Scheduler scheduler = Adapter.toTyped(system.scheduler());
+        return AskPattern.<UserParentActor.Create, Flow<JsonNode, JsonNode, NotUsed>>ask(
+            userParentActor, replyTo -> new UserParentActor.Create(id, replyTo), timeout, scheduler
+        ).thenApply(f -> f.named("websocket"));
     }
 
     private CompletionStage<Either<Result, Flow<JsonNode, JsonNode, ?>>> forbiddenResult() {
