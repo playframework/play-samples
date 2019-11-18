@@ -1,7 +1,7 @@
 package actors
 
-import akka.actor.{Actor, ActorLogging}
-import akka.event.LoggingReceive
+import akka.actor.typed.{ ActorRef, Behavior }
+import akka.actor.typed.scaladsl.Behaviors
 import stocks._
 
 import scala.collection.mutable
@@ -10,15 +10,24 @@ import scala.collection.mutable
  * This actor contains a set of stocks internally that may be used by
  * all websocket clients.
  */
-class StocksActor extends Actor with ActorLogging {
-  import Messages._
+object StocksActor {
+  final case class Stocks(stocks: Set[Stock]) {
+    require(stocks.nonEmpty, "Must specify at least one stock!")
+  }
 
-  // May want to remove stocks that aren't viewed by any clients...
-  private val stocksMap: mutable.Map[StockSymbol, Stock] = mutable.HashMap()
+  final case class GetStocks(symbols: Set[StockSymbol], replyTo: ActorRef[Stocks])
 
-  def receive = LoggingReceive {
-    case WatchStocks(symbols) =>
-      val stocks = symbols.map(symbol => stocksMap.getOrElseUpdate(symbol, new Stock(symbol)))
-      sender ! Stocks(stocks)
+  def apply(
+      stocksMap: mutable.Map[StockSymbol, Stock] = mutable.HashMap(),
+  ): Behavior[GetStocks] = {
+    // May want to remove stocks that aren't viewed by any clients...
+    Behaviors.logMessages(
+      Behaviors.receiveMessage {
+        case GetStocks(symbols, replyTo) =>
+          val stocks = symbols.map(symbol => stocksMap.getOrElseUpdate(symbol, new Stock(symbol)))
+          replyTo ! Stocks(stocks)
+          Behaviors.same
+      }
+    )
   }
 }
