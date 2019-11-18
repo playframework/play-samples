@@ -15,6 +15,7 @@ import stocks._
 
 import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContext, Future }
+import scala.util.Try
 
 /**
  * Creates a user actor that sets up the websocket stream.  Although it's not required,
@@ -58,6 +59,9 @@ class UserActor @Inject()(id: String, stocksActor: ActorRef[GetStocks])(implicit
       case UnwatchStocks(symbols) =>
         unwatchStocks(symbols)
         Behaviors.same
+
+      case InternalStop =>
+        Behaviors.stopped
     }.receiveSignal {
       case (_, PostStop) =>
         // If this actor is killed directly, stop anything that we started running explicitly.
@@ -78,7 +82,7 @@ class UserActor @Inject()(id: String, stocksActor: ActorRef[GetStocks])(implicit
     // from the browse), using a coupled sink and source.
     Flow.fromSinkAndSourceCoupled(jsonSink, hubSource).watchTermination() { (_, termination) =>
       // When the flow shuts down, make sure this actor also stops.
-      termination.foreach((_: Done) => context.stop(context.self)) // XXX: is self a child?
+      context.pipeToSelf(termination)((_: Try[Done]) => InternalStop)
       NotUsed
     }
   }
@@ -159,6 +163,8 @@ object UserActor {
   case class UnwatchStocks(symbols: Set[StockSymbol]) extends Message {
     require(symbols.nonEmpty, "Must specify at least one symbol!")
   }
+
+  private case object InternalStop extends Message
 
   trait Factory {
     def apply(id: String): Behavior[Message]

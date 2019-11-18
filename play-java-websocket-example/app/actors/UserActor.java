@@ -66,6 +66,14 @@ public class UserActor {
         }
     }
 
+    private static final class InternalStop implements Message {
+        private static final InternalStop INSTANCE = new InternalStop();
+        public static InternalStop get() {
+            return INSTANCE;
+        }
+        private InternalStop() {}
+    }
+
     private final Duration timeout = Duration.of(5, ChronoUnit.MILLIS);
 
     private final Map<String, UniqueKillSwitch> stocksMap = new HashMap<>();
@@ -116,7 +124,7 @@ public class UserActor {
                 //.log("actorWebsocketFlow", logger)
                 .watchTermination((n, stage) -> {
                     // When the flow shuts down, make sure this actor also stops.
-                    stage.thenAccept(f -> context.stop(context.getSelf())); // XXX: is self a child?
+                    context.pipeToSelf(stage, (Done _done, Throwable _throwable) -> InternalStop.get());
                     return NotUsed.getInstance();
                 });
     }
@@ -135,6 +143,7 @@ public class UserActor {
                 unwatchStocks(unwatchStocks.symbols);
                 return Behaviors.same();
             })
+            .onMessageEquals(InternalStop.get(), Behaviors::stopped)
             .onSignal(PostStop.class, _postStop -> {
                 // If this actor is killed directly, stop anything that we started running explicitly.
                 context.getLog().info("Stopping actor {}", context.getSelf());
