@@ -4,7 +4,7 @@ import javax.inject._
 
 import actors.StocksActor.{ GetStocks, Stocks }
 import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
-import akka.actor.typed.{ ActorRef, Behavior, PostStop, Scheduler }
+import akka.actor.typed.{ ActorRef, ActorSystem, Behavior, PostStop, Scheduler }
 import akka.stream._
 import akka.stream.scaladsl._
 import akka.util.Timeout
@@ -23,19 +23,17 @@ import scala.util.Try
  * with dependency injection through the AkkaGuiceSupport trait.
  *
  * @param stocksActor the actor responsible for stocks and their streams
- * @param ec          implicit CPU bound execution context.
  */
 class UserActor @Inject()(id: String, stocksActor: ActorRef[GetStocks])(implicit
-    mat: Materializer,
-    ec: ExecutionContext,
-    scheduler: Scheduler,
     context: ActorContext[UserActor.Message],
 ) {
   import UserActor._
 
   val log: Logger = context.log
 
-  implicit val timeout = Timeout(50.millis)
+  implicit val timeout: Timeout             = Timeout(50.millis)
+  implicit val system: ActorSystem[Nothing] = context.system
+  import context.executionContext
 
   val (hubSink, hubSource) = MergeHub.source[JsValue](perProducerBufferSize = 16)
     .toMat(BroadcastHub.sink(bufferSize = 256))(Keep.both)

@@ -87,19 +87,17 @@ public class UserActor {
     private final Sink<JsonNode, NotUsed> hubSink;
     private final Flow<JsonNode, JsonNode, NotUsed> websocketFlow;
 
-    public static Behavior<Message> create(String id,
-                                           ActorRef<GetStocks> stocksActor,
-                                           Materializer mat) {
-        return Behaviors.setup(context -> new UserActor(id, stocksActor, mat, context).behavior());
+    public static Behavior<Message> create(String id, ActorRef<GetStocks> stocksActor) {
+        return Behaviors.setup(context -> new UserActor(id, stocksActor, context).behavior());
     }
 
     @Inject
     public UserActor(String id,
                      ActorRef<GetStocks> stocksActor,
-                     Materializer mat, ActorContext<Message> context) {
+                     ActorContext<Message> context) {
         this.id = id;
         this.stocksActor = stocksActor;
-        this.mat = mat;
+        this.mat = Materializer.matFromSystem(context.getSystem());
         this.scheduler = context.getSystem().scheduler();
         this.context = context;
 
