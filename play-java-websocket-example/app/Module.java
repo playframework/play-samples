@@ -71,17 +71,15 @@ public class Module extends AbstractModule implements AkkaGuiceSupport {
     @Singleton
     public static class UserActorFactoryProvider implements Provider<UserActor.Factory> {
         private final ActorRef<StocksActor.GetStocks> stocksActor;
-        private final Materializer mat;
 
         @Inject
         public UserActorFactoryProvider(ActorRef<StocksActor.GetStocks> stocksActor, Materializer mat) {
             this.stocksActor = stocksActor;
-            this.mat = mat;
         }
 
         @Override
         public UserActor.Factory get() {
-            return id -> UserActor.create(id, stocksActor, mat);
+            return id -> UserActor.create(id, stocksActor);
         }
     }
 }

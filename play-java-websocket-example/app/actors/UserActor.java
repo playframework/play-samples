@@ -66,6 +66,14 @@ public class UserActor {
         }
     }
 
+    private static final class InternalStop implements Message {
+        private static final InternalStop INSTANCE = new InternalStop();
+        public static InternalStop get() {
+            return INSTANCE;
+        }
+        private InternalStop() {}
+    }
+
     private final Duration timeout = Duration.of(5, ChronoUnit.MILLIS);
 
     private final Map<String, UniqueKillSwitch> stocksMap = new HashMap<>();
@@ -79,19 +87,17 @@ public class UserActor {
     private final Sink<JsonNode, NotUsed> hubSink;
     private final Flow<JsonNode, JsonNode, NotUsed> websocketFlow;
 
-    public static Behavior<Message> create(String id,
-                                           ActorRef<GetStocks> stocksActor,
-                                           Materializer mat) {
-        return Behaviors.setup(context -> new UserActor(id, stocksActor, mat, context).behavior());
+    public static Behavior<Message> create(String id, ActorRef<GetStocks> stocksActor) {
+        return Behaviors.setup(context -> new UserActor(id, stocksActor, context).behavior());
     }
 
     @Inject
     public UserActor(String id,
                      ActorRef<GetStocks> stocksActor,
-                     Materializer mat, ActorContext<Message> context) {
+                     ActorContext<Message> context) {
         this.id = id;
         this.stocksActor = stocksActor;
-        this.mat = mat;
+        this.mat = Materializer.matFromSystem(context.getSystem());
         this.scheduler = context.getSystem().scheduler();
         this.context = context;
 
@@ -116,7 +122,7 @@ public class UserActor {
                 //.log("actorWebsocketFlow", logger)
                 .watchTermination((n, stage) -> {
                     // When the flow shuts down, make sure this actor also stops.
-                    stage.thenAccept(f -> context.stop(context.getSelf())); // XXX: is self a child?
+                    context.pipeToSelf(stage, (Done _done, Throwable _throwable) -> InternalStop.get());
                     return NotUsed.getInstance();
                 });
     }
@@ -135,6 +141,7 @@ public class UserActor {
                 unwatchStocks(unwatchStocks.symbols);
                 return Behaviors.same();
             })
+            .onMessageEquals(InternalStop.get(), Behaviors::stopped)
             .onSignal(PostStop.class, _postStop -> {
                 // If this actor is killed directly, stop anything that we started running explicitly.
                 context.getLog().info("Stopping actor {}", context.getSelf());
