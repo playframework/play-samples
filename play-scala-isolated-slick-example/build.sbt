@@ -16,7 +16,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-isolated-slick""",
     version := "1.1-SNAPSHOT",
-    scalaVersion := "2.13.0",
+    scalaVersion := "2.13.1",
     TwirlKeys.templateImports += "com.example.user.User",
     libraryDependencies ++= Seq(
       guice,

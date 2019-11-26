@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-compile-di-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.0",
+    scalaVersion := "2.13.1",
     libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-M3" % Test,
     scalacOptions ++= List(
       "-encoding", "utf8",

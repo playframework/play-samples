@@ -2,7 +2,7 @@ name := "play-java-streaming-example"
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "2.13.0"
+scalaVersion := "2.13.1"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 

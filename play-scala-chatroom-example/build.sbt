@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-chatroom-scala-example""",
     version := "2.8.x",
-    scalaVersion := "2.13.0",
+    scalaVersion := "2.13.1",
     libraryDependencies ++= Seq(
       guice,
       "org.webjars" %% "webjars-play" % "2.7.3",
