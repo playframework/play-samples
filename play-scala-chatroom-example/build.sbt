@@ -3,7 +3,7 @@ import play.core.PlayVersion.akkaVersion
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
-    name := """play-chatroom-scala-example""",
+    name := """play-scala-chatroom-example""",
     version := "2.8.x",
     scalaVersion := "2.13.1",
     libraryDependencies ++= Seq(

@@ -19,7 +19,7 @@ lazy val root = (project in file("."))
   .enablePlugins(PlayScala, PlayAkkaHttp2Support)
   .settings(commonSettings)
   .settings(
-    name := """play-tls-example""",
+    name := """play-scala-tls-example""",
     version := "1.0.0",
     fork in run := true,
     
