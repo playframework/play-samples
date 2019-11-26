@@ -8,7 +8,9 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
 libraryDependencies += guice
 
+scalacOptions ++= List("-encoding", "utf8", "-Xfatal-warnings", "-deprecation")
 javacOptions ++= Seq(
   "-Xlint:unchecked",
-  "-Xlint:deprecation"
+  "-Xlint:deprecation",
+  "-Werror"
 )
