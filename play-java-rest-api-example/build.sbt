@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-java-rest-api-example",
     version := "2.8.x",
-    scalaVersion := "2.13.0",
+    scalaVersion := "2.13.1",
     libraryDependencies ++= Seq(
       guice,
       javaJpa,
@@ -17,7 +17,8 @@ lazy val root = (project in file("."))
     testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
     javacOptions ++= Seq(
       "-Xlint:unchecked",
-      "-Xlint:deprecation"
+      "-Xlint:deprecation",
+      "-Werror"
     )
   )
 

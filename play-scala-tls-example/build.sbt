@@ -1,5 +1,5 @@
 val commonSettings = Seq(
-  scalaVersion := "2.13.0",
+  scalaVersion := "2.13.1",
   scalacOptions ++= Seq(
     "-feature",
     "-deprecation",
@@ -19,7 +19,7 @@ lazy val root = (project in file("."))
   .enablePlugins(PlayScala, PlayAkkaHttp2Support)
   .settings(commonSettings)
   .settings(
-    name := """play-tls-example""",
+    name := """play-scala-tls-example""",
     version := "1.0.0",
     fork in run := true,
     

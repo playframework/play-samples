@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-slick-example""",
     version := "2.8.x",
-    scalaVersion := "2.13.0",
+    scalaVersion := "2.13.1",
     libraryDependencies ++= Seq(
       guice,
       "com.typesafe.play" %% "play-slick" % "5.0.0-M4",

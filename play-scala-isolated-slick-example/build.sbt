@@ -14,9 +14,9 @@ lazy val slick = (project in file("modules/slick"))
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
-    name := """play-isolated-slick""",
+    name := """play-scala-isolated-slick-example""",
     version := "1.1-SNAPSHOT",
-    scalaVersion := "2.13.0",
+    scalaVersion := "2.13.1",
     TwirlKeys.templateImports += "com.example.user.User",
     libraryDependencies ++= Seq(
       guice,
