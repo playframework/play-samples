@@ -9,8 +9,8 @@ lazy val root = (project in file("."))
       jdbc,
       evolutions,
       "com.h2database" % "h2" % "1.4.199",
-      "org.playframework.anorm" %% "anorm" % "2.6.2",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test,
+      "org.playframework.anorm" %% "anorm" % "2.6.5",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-RC2" % Test,
     ),
     scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked", "-Xfatal-warnings"),
     javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")
