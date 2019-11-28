@@ -4,7 +4,7 @@ import sbt.{Resolver, _}
 object Common {
 
   def scalaSettings = Seq(
-    scalaVersion := "2.13.0",
+    scalaVersion := "2.13.1",
     scalacOptions ++= Seq(
       "-encoding", "UTF-8", // yes, this is 2 args
       "-deprecation",

@@ -3,6 +3,4 @@
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |"
 echo "+----------------------------+"
-# Forcing 2.12.8 since anorm does not have a release for 2.13.0 yet:
-# https://github.com/playframework/anorm/issues/190
-sbt ++2.12.8 test
+sbt ++$TRAVIS_SCALA_VERSION test
