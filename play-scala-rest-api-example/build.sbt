@@ -38,5 +38,5 @@ lazy val gatling = (project in file("gatling"))
 lazy val docs = (project in file("docs")).enablePlugins(ParadoxPlugin).
   settings(
     scalaVersion := "2.13.1",
-    paradoxProperties += ("download_url" -> "https://example.lightbend.com/v1/download/play-rest-api")
+    paradoxProperties += ("download_url" -> "https://example.lightbend.com/v1/download/play-samples-play-scala-rest-api-example")
   )

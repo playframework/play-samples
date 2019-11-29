@@ -8,3 +8,5 @@ scalaVersion := "2.13.1"
 
 ThisBuild / scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 ThisBuild / javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")
+
+Test / testOptions := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))

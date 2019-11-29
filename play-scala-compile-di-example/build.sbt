@@ -9,6 +9,7 @@ lazy val root = (project in file("."))
       "-encoding", "utf8",
       "-deprecation",
       "-feature",
-      "-unchecked"
+      "-unchecked",
+      "-Xfatal-warnings"
     )
   )

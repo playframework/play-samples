@@ -3,7 +3,7 @@
 To follow the steps in this tutorial, you will need the correct version of Java and sbt. The template requires:
 
 * Java Software Developer's Kit (SE) 1.8 or higher
-* sbt 0.13.15 or higher (we recommend 1.2.3) Note: if you downloaded this project as a zip file from https://developer.lightbend.com, the file includes an sbt distribution for your convenience.
+* sbt 1.3.4 or higher. Note: if you downloaded this project as a zip file from <https://developer.lightbend.com>, the file includes an sbt distribution for your convenience.
 
 To check your Java version, enter the following in a command window:
 
