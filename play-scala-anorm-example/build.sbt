@@ -3,14 +3,14 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-scala-anorm-example",
     version := "2.8.x",
-    scalaVersion := "2.12.8",
+    scalaVersion := "2.13.1",
     libraryDependencies ++= Seq(
       guice,
       jdbc,
       evolutions,
       "com.h2database" % "h2" % "1.4.199",
-      "org.playframework.anorm" %% "anorm" % "2.6.2",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test,
+      "org.playframework.anorm" %% "anorm" % "2.6.5",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-RC2" % Test,
     ),
     scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked", "-Xfatal-warnings"),
     javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")

@@ -6,8 +6,8 @@ lazy val root = (project in file("."))
     scalaVersion := "2.13.1",
     libraryDependencies ++= Seq(
       ws,
-      "com.google.dagger" % "dagger" % "2.23.2",
-      "com.google.dagger" % "dagger-compiler" % "2.23.2"
+      "com.google.dagger" % "dagger" % "2.25.2",
+      "com.google.dagger" % "dagger-compiler" % "2.25.2"
     ),
     // move the java annotation code into generated directory
     javacOptions in Compile := { (managedSourceDirectories in Compile).value.head.mkdirs(); javacOptions.value },

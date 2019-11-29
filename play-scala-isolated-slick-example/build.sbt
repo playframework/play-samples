@@ -7,6 +7,7 @@ lazy val api = (project in file("modules/api"))
   .settings(Common.projectSettings)
 
 lazy val slick = (project in file("modules/slick"))
+  .enablePlugins(CodegenPlugin)
   .settings(Common.projectSettings)
   .aggregate(api)
   .dependsOn(api)
@@ -21,9 +22,9 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       "com.h2database" % "h2" % "1.4.199",
-      "org.flywaydb" % "flyway-core" % "5.2.4",
-      "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-M3" % Test
+      "org.flywaydb" % "flyway-core" % "6.1.0",
+      ws % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-RC2" % Test
     ),
     fork in Test := true
   )
