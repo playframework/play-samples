@@ -67,7 +67,7 @@ class CustomSSLEngineProvider(
     }
   }
 
-  def createSSLContext(applicationProvider: ApplicationProvider): SSLContext = {
+  private def createSSLContext(applicationProvider: ApplicationProvider): SSLContext = {
     val keyManagers = readKeyManagers()
     val trustManagers = readTrustManagers()
 
@@ -77,8 +77,10 @@ class CustomSSLEngineProvider(
     sslContext
   }
 
+  override def sslContext(): SSLContext = createSSLContext(appProvider)
+
   override def createSSLEngine(): SSLEngine = {
-    val sslContext = createSSLContext(appProvider)
+    val sslContext = this.sslContext()
 
     // Start off with a clone of the default SSL parameters...
     val sslParameters = sslContext.getDefaultSSLParameters
