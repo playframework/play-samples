@@ -17,3 +17,4 @@ flywayLocations := Seq("classpath:db/migration")
 flywayUrl := databaseUrl
 flywayUser := databaseUser
 flywayPassword := databasePassword
+flywayBaselineOnMigrate := true

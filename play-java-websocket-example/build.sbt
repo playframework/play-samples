@@ -14,8 +14,8 @@ lazy val root = (project in file("."))
       "org.webjars" % "flot" % "0.8.3",
 
       // Testing libraries for dealing with CompletionStage...
-      "org.assertj" % "assertj-core" % "3.8.0" % Test,
-      "org.awaitility" % "awaitility" % "3.0.0" % Test,
+      "org.assertj" % "assertj-core" % "3.14.0" % Test,
+      "org.awaitility" % "awaitility" % "4.0.1" % Test,
     ),
     LessKeys.compress := true,
     javacOptions ++= Seq(
