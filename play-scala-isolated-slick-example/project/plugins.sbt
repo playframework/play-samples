@@ -16,4 +16,4 @@ addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "1.4.0")
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"
 
 // The Play plugin
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.0-RC2")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.0-RC5")
