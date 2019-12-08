@@ -22,6 +22,6 @@ libraryDependencies += "net.logstash.logback" % "logstash-logback-encoder" % "4.
 libraryDependencies += "com.typesafe.akka" %% "akka-slf4j" % akkaVersion
 libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.3" % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test
 libraryDependencies += "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test

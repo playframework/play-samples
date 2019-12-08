@@ -21,6 +21,6 @@ scalaVersion in ThisBuild := "2.12.10"
 
 crossScalaVersions := Seq("2.11.12", "2.12.10")
 
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2" % Test
+libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.3" % Test
 
 javaOptions += "-Dlog4j.configurationFile=conf/log4j2.xml"
