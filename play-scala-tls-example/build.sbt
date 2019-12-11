@@ -17,6 +17,9 @@ libraryDependencies += ws
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
 
+// workaround for https://github.com/playframework/playframework/issues/9896
+libraryDependencies += "com.typesafe" %% "ssl-config-core" % "0.4.0"
+
 fork in run := true
 
 // Uncomment if you want to run "./play client" explicitly without SNI.
