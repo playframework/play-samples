@@ -24,7 +24,7 @@ lazy val root = (project in file("."))
       "com.h2database" % "h2" % "1.4.199",
       "org.flywaydb" % "flyway-core" % "6.1.0",
       ws % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0-RC2" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
     ),
     fork in Test := true
   )
