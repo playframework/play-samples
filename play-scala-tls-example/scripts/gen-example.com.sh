@@ -3,6 +3,7 @@
 export PW=`cat password`
 
 # Create a server certificate, tied to example.com
+# Uses a 10 year validity to simplify maintenance. Consider what validity is more convenient for your use case
 keytool -genkeypair -v \
   -alias example.com \
   -dname "CN=example.com, OU=Example Org, O=Example Company, L=San Francisco, ST=California, C=US" \
@@ -11,7 +12,7 @@ keytool -genkeypair -v \
   -storepass:env PW \
   -keyalg EC \
   -keysize 256 \
-  -validity 385
+  -validity 3650
 
 # Create a certificate signing request for example.com
 keytool -certreq -v \
