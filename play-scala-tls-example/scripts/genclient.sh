@@ -3,6 +3,7 @@
 export PW=`cat password`
 
 # Create a self signed certificate & private key to create a root certificate authority.
+# Uses a 10 year validity to simplify maintenance. Consider what validity is more convenient for your use case
 keytool -genkeypair -v \
   -alias clientca \
   -keystore client.jks \
@@ -13,7 +14,7 @@ keytool -genkeypair -v \
   -keysize 256 \
   -ext KeyUsage:critical="keyCertSign" \
   -ext BasicConstraints:critical="ca:true" \
-  -validity 365
+  -validity 3650
 
 # Create another key pair that will act as the client.  We want this signed by the client CA.
 keytool -genkeypair -v \
