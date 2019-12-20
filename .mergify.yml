@@ -12,6 +12,18 @@ pull_request_rules:
         method: merge
         strict: smart
 
+
+  - name: backport patches
+    conditions:
+      - merged
+      - label=status:needs-backport
+    actions:
+      backport:
+        branches:
+          - 2.7.x
+      label:
+        remove: [status:needs-backport]
+
   - name: Delete the PR branch after merge
     conditions:
       - merged
