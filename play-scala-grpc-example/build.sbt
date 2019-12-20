@@ -1,5 +1,6 @@
-import akka.grpc.gen.scaladsl.play._
+import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCodeGenerator }
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
+import play.scala.grpc.sample.Dependencies
 
 name := "play-scala-grpc-example"
 version := "1.0-SNAPSHOT"
@@ -42,32 +43,15 @@ lazy val `play-scala-grpc-example` = (project in file("."))
       dockerAliases in Docker += DockerAlias(None, None, "play-scala-grpc-example", None),
       packageName in Docker := "play-scala-grpc-example",
     )
+    .settings(
+      libraryDependencies ++= Dependencies.CompileDeps ++ Dependencies.TestDeps
+    )
 
 scalaVersion := "2.12.8"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 
-libraryDependencies += guice
-
-// Test libraries
-val playVersion = play.core.PlayVersion.current
-val playGrpcVersion = "0.7.0"
-libraryDependencies += "com.lightbend.play"      %% "play-grpc-scalatest" % playGrpcVersion % Test
-libraryDependencies += "com.lightbend.play"      %% "play-grpc-specs2"    % playGrpcVersion % Test
-libraryDependencies += "com.typesafe.play"       %% "play-test"           % playVersion     % Test
-libraryDependencies += "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
-
-// Test Database
-libraryDependencies += "com.h2database" % "h2" % "1.4.199"
-
-// Testing libraries for dealing with CompletionStage...
-libraryDependencies += "org.assertj"    % "assertj-core" % "3.6.2" % Test
-libraryDependencies += "org.awaitility" % "awaitility"   % "2.0.0" % Test
-
 // Make verbose tests
 testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
-
-
 
 // Documentation for this project:
 //    sbt "project docs" "~ paradox"
