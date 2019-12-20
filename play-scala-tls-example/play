@@ -77,7 +77,7 @@ export AGENT=$(pwd)/$(find target -name 'jetty-alpn-agent-*.jar' | head -1)
 echo "Detected ALPN Agent: $AGENT "
 
 # Run Play (this should work for both run and start).
-export SBT_OPTS="$SBT_OPTS -J-javaagent:$AGENT"
+export SBT_OPTS="$SBT_OPTS -javaagent:$AGENT"
 
 ## Ucomment the following to debug SSL issues.
 #export SBT_OPTS="$SBT_OPTS -Djavax.net.debug=all"

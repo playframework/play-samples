@@ -6,7 +6,8 @@ export PW=`cat password`
 keytool -genkeypair -v \
   -alias exampleca \
   -dname "CN=exampleCA, OU=Example Org, O=Example Company, L=San Francisco, ST=California, C=US" \
-  -keystore exampleca.jks \
+  -keystore exampleca.p12 \
+  -storetype PKCS12 \
   -keypass:env PW \
   -storepass:env PW \
   -keyalg EC \
@@ -21,5 +22,6 @@ keytool -export -v \
   -file exampleca.crt \
   -keypass:env PW \
   -storepass:env PW \
-  -keystore exampleca.jks \
+  -keystore exampleca.p12 \
+  -storetype PKCS12 \
   -rfc

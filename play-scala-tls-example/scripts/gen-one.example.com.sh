@@ -7,7 +7,7 @@ export PW=`cat password`
 keytool -genkeypair -v \
   -alias one.example.com \
   -dname "CN=one.example.com, OU=Example Org, O=Example Company, L=San Francisco, ST=California, C=US" \
-  -keystore example.com.jks \
+  -keystore example.com.p12 \
   -keypass:env PW \
   -storepass:env PW \
   -keyalg EC \
@@ -19,7 +19,7 @@ keytool -certreq -v \
   -alias one.example.com \
   -keypass:env PW \
   -storepass:env PW \
-  -keystore example.com.jks \
+  -keystore example.com.p12 \
   -file one.example.com.csr
 
 # Tell exampleCA to sign the example.com certificate.
@@ -28,7 +28,7 @@ keytool -gencert -v \
   -alias exampleca \
   -keypass:env PW \
   -storepass:env PW \
-  -keystore exampleca.jks \
+  -keystore exampleca.p12 \
   -infile one.example.com.csr \
   -outfile one.example.com.crt \
   -ext KeyUsage:critical="digitalSignature,keyEncipherment" \
@@ -36,16 +36,16 @@ keytool -gencert -v \
   -ext SAN="DNS:one.example.com" \
   -rfc
 
-# Import the signed certificate back into example.com.jks
+# Import the signed certificate back into example.com.p12
 keytool -import -v \
   -alias one.example.com \
   -file one.example.com.crt \
-  -keystore example.com.jks \
-  -storetype JKS \
+  -keystore example.com.p12 \
+  -storetype PKCS12 \
   -storepass:env PW
 
-# List out the contents of example.com.jks just to confirm it.
+# List out the contents of example.com.p12 just to confirm it.
 # If you are using Play as a TLS termination point, this is the key store you should use.
 #keytool -list -v \
-#  -keystore example.com.jks \
+#  -keystore example.com.p12 \
 #  -storepass:env PW

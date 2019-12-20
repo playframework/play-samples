@@ -206,13 +206,13 @@ ws.ssl {
   keyManager = {
     stores = [
       // Note: app must be run from ./play, which loads the KEY_PASSWORD environment variable.
-      { type: "JKS", path: "certs/client.jks", password: ${?KEY_PASSWORD} },
+      { type: "PKCS12", path: "certs/client.p12", password: ${?KEY_PASSWORD} },
     ]
   }
 
   trustManager = {
     stores = [
-      { type = "JKS", path = "certs/exampletrust.jks" }
+      { type = "PKCS12", path = "certs/exampletrust.p12" }
     ]
   }
 }
