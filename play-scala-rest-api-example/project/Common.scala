@@ -3,7 +3,7 @@ import sbt._
 import sbt.plugins.JvmPlugin
 
 /**
-  * Settings that are comment to all the SBT projects
+  * Settings that are common to all the SBT projects
   */
 object Common extends AutoPlugin {
   override def trigger = allRequirements
