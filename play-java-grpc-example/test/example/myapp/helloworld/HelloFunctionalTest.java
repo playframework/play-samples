@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 import static play.inject.Bindings.*;
+import com.typesafe.config.ConfigFactory;
 
 public final class HelloFunctionalTest extends WithApplication {
 
@@ -32,6 +33,7 @@ public final class HelloFunctionalTest extends WithApplication {
   public Application provideApplication() {
     return new GuiceApplicationBuilder()
         .overrides(bind(Router.class).to(HelloWorldRouter.class))
+        .configure(ConfigFactory.parseString("play.filters.hosts.allowed += 0.0.0.0").resolve())
         .build();
   }
 
@@ -55,8 +57,12 @@ public final class HelloFunctionalTest extends WithApplication {
   }
 
   private GreeterServiceClient newGreeterServiceClient() {
+    
     final GrpcClientSettings grpcClientSettings =
-        JavaAkkaGrpcClientHelpers.grpcClientSettings(runningServer);
+        JavaAkkaGrpcClientHelpers
+          .grpcClientSettings(runningServer)
+          .withOverrideAuthority("localhost");
+
     return GreeterServiceClient.create(
         grpcClientSettings, app.asScala().materializer(), app.asScala().actorSystem().dispatcher());
   }
