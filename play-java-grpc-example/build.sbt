@@ -1,6 +1,6 @@
 import play.grpc.gen.javadsl.{ PlayJavaClientCodeGenerator, PlayJavaServerCodeGenerator }
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
-import play.java.grpc.sample.Dependencies
+import play.java.grpc.sample.BuildInfo
 
 name := "play-java-grpc-example"
 version := "1.0-SNAPSHOT"
@@ -44,13 +44,27 @@ lazy val `play-java-grpc-example` = (project in file("."))
     packageName in Docker := "play-java-grpc-example",
   )
   .settings(
-    libraryDependencies ++= Dependencies.CompileDeps ++ Dependencies.TestDeps
+    libraryDependencies ++= CompileDeps ++ TestDeps
   )
   
 scalaVersion := "2.12.8"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
 
+val CompileDeps = Seq(
+  guice,
+  javaWs,
+  "com.lightbend.play"      %% "play-grpc-runtime"   % BuildInfo.playGrpcVersion, 
+  "com.typesafe.akka"       %% "akka-discovery"      % "2.6.1", 
+  "com.typesafe.akka"       %% "akka-http"           % "10.1.11",
+  // Test Database
+  "com.h2database" % "h2" % "1.4.199"
+)
+
+val TestDeps = Seq(
+  // used in tests
+  "com.lightbend.play" %% "play-grpc-testkit" % BuildInfo.playGrpcVersion % Test
+)
 
 // Make verbose tests
 testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))

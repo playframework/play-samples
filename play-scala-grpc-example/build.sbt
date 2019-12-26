@@ -1,9 +1,10 @@
 import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCodeGenerator }
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
-import play.scala.grpc.sample.Dependencies
+import play.scala.grpc.sample.BuildInfo
 
 name := "play-scala-grpc-example"
 version := "1.0-SNAPSHOT"
+
 
 // #grpc_play_plugins
 // build.sbt
@@ -44,8 +45,26 @@ lazy val `play-scala-grpc-example` = (project in file("."))
       packageName in Docker := "play-scala-grpc-example",
     )
     .settings(
-      libraryDependencies ++= Dependencies.CompileDeps ++ Dependencies.TestDeps
+      libraryDependencies ++= CompileDeps ++ TestDeps
     )
+
+val CompileDeps = Seq(
+  guice,
+  "com.lightbend.play"      %% "play-grpc-runtime"   % BuildInfo.playGrpcVersion, 
+  "com.typesafe.akka"       %% "akka-discovery"      % "2.6.1", 
+  "com.typesafe.akka"       %% "akka-http"           % "10.1.11",
+  // Test Database
+  "com.h2database" % "h2" % "1.4.199"
+)
+
+val playVersion = play.core.PlayVersion.current
+val TestDeps = Seq(
+  "com.lightbend.play"      %% "play-grpc-scalatest" % BuildInfo.playGrpcVersion % Test, 
+  "com.lightbend.play"      %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test, 
+  "com.typesafe.play"       %% "play-test"           % playVersion     % Test, 
+  "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test, 
+  "org.scalatestplus.play"  %% "scalatestplus-play"  % "5.0.0" % Test, 
+)
 
 scalaVersion := "2.12.8"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
