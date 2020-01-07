@@ -12,7 +12,7 @@ This application uses a WebSocket to push data to the browser in real-time.  To 
 GET /ws controllers.HomeController.ws
 ```
 
-The `ws` method in the HomeController.java controller handles the request and does the protocol upgrade to the WebSocket connection.  The `UserActor` stores the input and output streams to the WebSocket connection, and can manipulate the streams in response to messages.
+The `ws` method in the HomeController.scala controller handles the request and does the protocol upgrade to the WebSocket connection.  The `UserActor` stores the input and output streams to the WebSocket connection, and can manipulate the streams in response to messages.
 
 Once the `UserActor` is created, the default stocks (defined in `application.conf`) are added to the user's list of watched stocks.  The flow of stock quotes is managed using MergeHub and BroadcastHub as a publish/subscribe method to dynamically add and remove streams to the Websocket.  The `StockHistory` and `StockQuote` presentation objects are converted using Play-JSON using the implicit `Reads` and `Writes` defined on the companion objects.
 
