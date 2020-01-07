@@ -23,12 +23,12 @@ class CustomSSLEngineProvider(
   }
 
   def readKeyInputStream(): java.io.InputStream = {
-    val keyPath = FileSystems.getDefault.getPath(certificateDirectory, "example.com.jks")
+    val keyPath = FileSystems.getDefault.getPath(certificateDirectory, "example.com.p12")
     Files.newInputStream(keyPath)
   }
 
   def readTrustInputStream(): java.io.InputStream = {
-    val keyPath = FileSystems.getDefault.getPath(certificateDirectory, "clientca.jks")
+    val keyPath = FileSystems.getDefault.getPath(certificateDirectory, "clientca.p12")
     Files.newInputStream(keyPath)
   }
 
