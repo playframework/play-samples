@@ -50,7 +50,7 @@ GET     /               controllers.HomeController.index</code></pre>
       The template is defined in the <code>app/views/index.scala.html</code> file and compiled as a Scala function.
     </p>
 
-    <pre><code>@@(message: String)
+    <pre><code>@@(message: String)(implicit assetsFinder: AssetsFinder)
 
 @@main("Welcome to Play") {
 
