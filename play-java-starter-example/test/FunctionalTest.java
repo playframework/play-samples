@@ -1,3 +1,4 @@
+import controllers.AssetsFinder;
 import org.junit.Test;
 import play.test.WithApplication;
 import play.twirl.api.Content;
@@ -17,7 +18,9 @@ public class FunctionalTest extends WithApplication {
         // because it makes use of assets metadata that is configured from
         // the application.
 
-        Content html = views.html.index.render("Your new application is ready.");
+        AssetsFinder assetsFinder = provideApplication().injector().instanceOf(AssetsFinder.class);
+
+        Content html = views.html.index.render("Your new application is ready.", assetsFinder);
         assertThat("text/html").isEqualTo(html.contentType());
         assertThat(html.body()).contains("Your new application is ready.");
     }
