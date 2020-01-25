@@ -1,4 +1,4 @@
-# Play with Slick 3.1
+# Play with Slick 3.3
 
 This project shows Play working with Slick.
 
