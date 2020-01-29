@@ -14,7 +14,7 @@ java -version
 To check your sbt version, enter the following in a command window:
 
 ```bash
-sbt sbt-version
+sbt sbtVersion
 ```
 
 If you do not have the required versions, follow these links to obtain them:
