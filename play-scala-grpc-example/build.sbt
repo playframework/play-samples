@@ -1,3 +1,4 @@
+import play.core.PlayVersion.akkaVersion
 import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCodeGenerator }
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.scala.grpc.sample.BuildInfo
@@ -51,7 +52,7 @@ lazy val `play-scala-grpc-example` = (project in file("."))
 val CompileDeps = Seq(
   guice,
   "com.lightbend.play"      %% "play-grpc-runtime"   % BuildInfo.playGrpcVersion, 
-  "com.typesafe.akka"       %% "akka-discovery"      % "2.6.1", 
+  "com.typesafe.akka"       %% "akka-discovery"      % akkaVersion,
   "com.typesafe.akka"       %% "akka-http"           % "10.1.11",
   // Test Database
   "com.h2database" % "h2" % "1.4.199"
