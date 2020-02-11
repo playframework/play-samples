@@ -9,10 +9,8 @@ lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "")
 
 version in ThisBuild := "1.1-SNAPSHOT"
 
-resolvers in ThisBuild ++= Seq(
-  "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases",
-  Resolver.sonatypeRepo("releases"),
-  Resolver.sonatypeRepo("snapshots"))
+resolvers in ThisBuild += Resolver.sonatypeRepo("releases")
+resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
 
 libraryDependencies in ThisBuild ++= Seq(
   "javax.inject" % "javax.inject" % "1",

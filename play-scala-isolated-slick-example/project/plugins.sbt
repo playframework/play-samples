@@ -1,10 +1,5 @@
-resolvers += "Typesafe repository" at "https://repo.typesafe.com/typesafe/releases/"
-
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
-resolvers += "Flyway" at "https://flywaydb.org/repo"
-
-resolvers += "Flyway SBT" at "https://davidmweber.github.io/flyway-sbt.repo"
 
 // Database migration
 addSbtPlugin("io.github.davidmweber" % "flyway-sbt" % "6.0.7")
