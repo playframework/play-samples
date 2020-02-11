@@ -7,6 +7,8 @@ lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")
 lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "")
 
+val FlywayVersion = "6.2.2"
+
 version in ThisBuild := "1.1-SNAPSHOT"
 
 resolvers in ThisBuild += Resolver.sonatypeRepo("releases")
@@ -33,7 +35,7 @@ javacOptions in ThisBuild ++= Seq("-source", "1.8", "-target", "1.8")
 lazy val flyway = (project in file("modules/flyway"))
   .enablePlugins(FlywayPlugin)
   .settings(
-    libraryDependencies += "org.flywaydb" % "flyway-core" % "6.1.0",
+    libraryDependencies += "org.flywaydb" % "flyway-core" % FlywayVersion,
     flywayLocations := Seq("classpath:db/migration"),
     flywayUrl := databaseUrl,
     flywayUser := databaseUser,
@@ -48,7 +50,7 @@ lazy val slick = (project in file("modules/slick"))
   .enablePlugins(CodegenPlugin)
   .settings(
     libraryDependencies ++= Seq(
-      "com.zaxxer" % "HikariCP" % "3.3.1",
+      "com.zaxxer" % "HikariCP" % "3.4.2",
       "com.typesafe.slick" %% "slick" % "3.3.2",
       "com.typesafe.slick" %% "slick-hikaricp" % "3.3.2",
       "com.github.tototoshi" %% "slick-joda-mapper" % "2.4.1"
@@ -92,7 +94,7 @@ lazy val root = (project in file("."))
       guice,
       "com.h2database" % "h2" % "1.4.199",
       ws % Test,
-      "org.flywaydb" % "flyway-core" % "6.1.0" % Test,
+      "org.flywaydb" % "flyway-core" % FlywayVersion % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
     ),
     fork in Test := true
