@@ -44,7 +44,8 @@ keytool -gencert -v \
   -infile client.csr \
   -outfile client.crt \
   -ext EKU="clientAuth" \
-  -rfc
+  -rfc \
+  -validity 3650
 
 # Export the client-ca certificate from the keystore.  This goes to nginx under "ssl_client_certificate"
 # and is presented in the CertificateRequest.

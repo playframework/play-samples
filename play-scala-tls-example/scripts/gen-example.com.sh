@@ -35,7 +35,9 @@ keytool -gencert -v \
   -ext KeyUsage:critical="digitalSignature,keyEncipherment" \
   -ext EKU="serverAuth" \
   -ext SAN="DNS:example.com" \
-  -rfc
+  -rfc \
+  -validity 3650
+
 
 # Tell example.com.p12 it can trust exampleca as a signer.
 keytool -import -v \
