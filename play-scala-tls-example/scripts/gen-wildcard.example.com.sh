@@ -34,7 +34,8 @@ keytool -gencert -v \
   -outfile wildcard.example.com.crt \
   -ext KeyUsage:critical="digitalSignature,keyEncipherment" \
   -ext EKU="serverAuth" \
-  -rfc
+  -rfc \
+  -validity 3650
 
 # Import the signed certificate back into example.com.p12 
 keytool -import -v \
