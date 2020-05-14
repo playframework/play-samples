@@ -14,6 +14,7 @@ keytool -genkeypair -v \
   -keysize 256 \
   -ext KeyUsage:critical="keyCertSign" \
   -ext BasicConstraints:critical="ca:true" \
+  -ext SubjectAlternativeName="DNS:exampleCA,DNS:ca-server.example.com" \
   -validity 9999
 
 # Export the exampleCA public certificate so that it can be used in trust stores..

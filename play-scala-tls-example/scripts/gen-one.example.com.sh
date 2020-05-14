@@ -33,7 +33,7 @@ keytool -gencert -v \
   -outfile one.example.com.crt \
   -ext KeyUsage:critical="digitalSignature,keyEncipherment" \
   -ext EKU="serverAuth" \
-  -ext SAN="DNS:one.example.com" \
+  -ext SAN="DNS:one.example.com,DNS:number-one.example.com,DNS:example.com" \
   -rfc \
   -validity 3650
 

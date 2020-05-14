@@ -35,7 +35,9 @@ lazy val root = (project in file("."))
       ws,
       guice,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test,
-    )
+      "org.mortbay.jetty.alpn" % "jetty-alpn-agent" % "2.0.10"
+    ),
+    javaAgents += "org.mortbay.jetty.alpn"     % "jetty-alpn-agent"         % "2.0.10" % "compile;test"
   )
   .aggregate(one, two)
   .dependsOn(one, two)
