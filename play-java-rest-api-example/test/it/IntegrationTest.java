@@ -93,7 +93,7 @@ public class IntegrationTest extends WithApplication {
                 .uri("/v1/posts/1");
 
         Result result = route(app, request);
-        assertThat(result.status(), equalTo(GATEWAY_TIMEOUT));
+        org.hamcrest.MatcherAssert.assertThat(result.status(), equalTo(GATEWAY_TIMEOUT));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class IntegrationTest extends WithApplication {
                 .uri("/v1/posts/1");
 
         Result result = route(app, request);
-        assertThat(result.status(), equalTo(SERVICE_UNAVAILABLE));
+        org.hamcrest.MatcherAssert.assertThat(result.status(), equalTo(SERVICE_UNAVAILABLE));
     }
 
 
