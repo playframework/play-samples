@@ -53,7 +53,7 @@ val CompileDeps = Seq(
   guice,
   "com.lightbend.play"      %% "play-grpc-runtime"   % BuildInfo.playGrpcVersion, 
   "com.typesafe.akka"       %% "akka-discovery"      % akkaVersion,
-  "com.typesafe.akka"       %% "akka-http"           % "10.1.11",
+  "com.typesafe.akka"       %% "akka-http"           % "10.1.12",
   // Test Database
   "com.h2database" % "h2" % "1.4.199"
 )
