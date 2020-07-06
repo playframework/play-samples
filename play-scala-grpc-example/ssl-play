@@ -8,7 +8,7 @@
 JVM_OPTIONS="$JVM_OPTIONS -Dhttp.port=disabled"
 JVM_OPTIONS="$JVM_OPTIONS -Dhttps.port=9443"
 
-# ssl-play requires an ALPN Agent. This is downdloaded and stored in the target folder.
+# ssl-play requires an ALPN Agent. This is downloaded and stored in the target folder.
 # This snippet detects when the ALPN agent hasn't been downloaded yet and runs
 # `sbt stage` to obtain it.
 [ -d target ] || mkdir target
