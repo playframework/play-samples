@@ -1,11 +1,19 @@
 package controllers;
 
 import akka.actor.typed.ActorRef;
+import akka.actor.ActorSystem;
 import akka.actor.typed.Scheduler;
+import akka.actor.typed.javadsl.Adapter;
 import akka.actor.typed.javadsl.AskPattern;
+import akka.cluster.typed.Cluster;
+import akka.cluster.typed.ClusterSingleton;
+import akka.cluster.typed.SingletonActor;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.CounterActor;
+import services.CounterActor.Command;
+import services.CounterActor.GetValue;
+import services.CounterActor.Increment;
 
 import javax.inject.Inject;
 import java.time.Duration;
@@ -18,7 +26,7 @@ import java.util.concurrent.CompletionStage;
 public class HomeController extends Controller {
 
 
-    private ActorRef<CounterActor.Command> counterActor;
+    private ActorRef<Command> counterActor;
     private Scheduler scheduler;
 
     private Duration askTimeout = Duration.ofSeconds(3L);
@@ -31,18 +39,20 @@ public class HomeController extends Controller {
 
 
     public CompletionStage<Result> index() {
-        return AskPattern.<CounterActor.Command, Integer>ask(
+        // https://www.playframework.com/documentation/2.8.x/AkkaTyped#Using-the-AskPattern-&-Typed-Scheduler
+        return AskPattern.<Command, Integer>ask(
                 counterActor,
-                CounterActor.GetValue::new,
+                GetValue::new,
                 askTimeout,
                 scheduler)
                 .thenApply(this::renderIndex);
     }
 
     public CompletionStage<Result> increment() {
-        return AskPattern.<CounterActor.Command, Integer>ask(
+        // https://www.playframework.com/documentation/2.8.x/AkkaTyped#Using-the-AskPattern-&-Typed-Scheduler
+        return AskPattern.<Command, Integer>ask(
                 counterActor,
-                CounterActor.Increment::new,
+                Increment::new,
                 askTimeout,
                 scheduler)
                 .thenApply(this::renderIndex);
