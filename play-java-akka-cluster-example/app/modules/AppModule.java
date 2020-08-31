@@ -1,9 +1,12 @@
 package modules;
 
-import akka.actor.typed.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.typed.ActorRef;
 import akka.actor.typed.javadsl.Adapter;
-import akka.cluster.typed.*;
+import akka.cluster.typed.Cluster;
+import akka.cluster.typed.ClusterSingleton;
+import akka.cluster.typed.Join;
+import akka.cluster.typed.SingletonActor;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import play.Environment;
@@ -20,7 +23,8 @@ public class AppModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(new TypeLiteral<ActorRef<Command>>() {})
+        bind(new TypeLiteral<ActorRef<Command>>() {
+        })
                 .toProvider(HelloActorProvider.class)
                 .asEagerSingleton();
     }
@@ -40,18 +44,20 @@ public class AppModule extends AbstractModule {
 
             Cluster cluster = Cluster.get(actorSystem);
 
-            if(environment.isDev()){
-                // in Dev Mode, we want a single-node cluster so we join ourself.
+            if (!environment.isProd()) {
+                // in Dev Mode and Test Mode we want a single-node cluster so we join ourself.
                 cluster.manager().tell(new Join(cluster.selfMember().address()));
-            }else{
-                // TODO: use Akka Cluster Bootstrap or some of the other methods to
-                // form a cluster (see https://doc.akka.io/docs/akka/current/typed/cluster.html#joining)
+            } else {
+                // In Prod mode, there's no need to do anything since
+                // the default behavior will be to read the seed node list
+                // from the configuration.
+                // If you prefer use Akka Cluster Management, then set it up here.
             }
 
             // Initialize the ClusterSingleton Akka extension
             ClusterSingleton clusterSingleton = ClusterSingleton.get(actorSystem);
 
-            SingletonActor<Command> singletonActor = SingletonActor.of(CounterActor.create(), "counter-actor" );
+            SingletonActor<Command> singletonActor = SingletonActor.of(CounterActor.create(), "counter-actor");
             // Use the Cluster Singleton extension to get an ActorRef to
             // the Counter Actor
             return clusterSingleton.init(singletonActor);
