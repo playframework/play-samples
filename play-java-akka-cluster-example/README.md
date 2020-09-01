@@ -41,15 +41,23 @@ To run this sample in `Dev Mode` use the regular
 
 and open the URL http://localhost:9000/.
 
-## Running this sample in Proc Mode
+## Running this sample in Production Mode
 
-To run this sample in `Prod Mode` you need 
+You can run this sample in `Production Mode` on your local machine. This section will guide you on starting 3 different nodes in your local machine
+ and forming a cluster between them. The following steps will package the application and prepare folder with necessary artifacts for the execution: 
  
-1. package the application using `sbt dist`
-2. locate the file `target/universal/play-java-akka-cluster-example-1.0-SNAPSHOT.zip` and `unzip` it.
+1. open a terminal and change directory to the `play-java-akka-cluster-example` folder.
+2. package the application using `sbt dist` from the 
+3. locate the file `play-java-akka-cluster-example/target/universal/play-java-akka-cluster-example-1.0-SNAPSHOT.zip`, copy it to a folder of your
+ choice and `unzip` it.
 
-Then open three separate terminals on the folder where you unzipped the file and run the following commands (one on each terminal):
+> NOTE: This sample application ships with extra config files that make it very easy to run multiple nodes on a single machine. If you want to
+> deploy a Play application with Akka Cluster you should refer to the Akka and Play documentation for extra considerations regarding port biding
+>, secret management, [cluster bootstrapping[(https://doc.akka.io/docs/akka/current/typed/cluster.html#joining-automatically-to-seed-nodes-with
+>-cluster-bootstrap), etc...
 
+
+Open three separate terminals on the folder where you unzipped the file and run the following commands (one on each terminal):
  
 `bin/play-java-akka-cluster-example  -Dconfig.file=local1.conf`
 
@@ -57,5 +65,27 @@ Then open three separate terminals on the folder where you unzipped the file and
 
 `bin/play-java-akka-cluster-example  -Dconfig.file=local3.conf`
 
-Finally, open the URLs http://localhost:9000/, http://localhost:9001/, and http://localhost:9001/ (each points to a different Play instance).
+In the terminals you should see activity like:
+
+
+```
+2020-09-01 11:40:45 DEBUG akka.io.TcpListener akka://application/system/IO-TCP/selectors/$a/0 New connection accepted
+2020-09-01 11:40:45 DEBUG akka.remote.artery.Decoder Decoder(akka://application) Decoded message but unable to record hits for compression as no remoteAddress known. No association yet?
+2020-09-01 11:40:45 DEBUG akka.cluster.Cluster Cluster(akka://application) Cluster Node [akka://application@127.0.0.1:25521] - Couldn't join other seed nodes, will join myself. seed-nodes=[akka://application@127.0.0.1:25521, akka://application@127.0.0.1:25522]
+2020-09-01 11:40:45 INFO  akka.cluster.Cluster Cluster(akka://application) Cluster Node [akka://application@127.0.0.1:25521] - Node [akka://application@127.0.0.1:25521] is JOINING itself (with roles [dc-default]) and forming new cluster
+2020-09-01 11:40:45 INFO  akka.cluster.Cluster Cluster(akka://application) Cluster Node [akka://application@127.0.0.1:25521] - is the new leader among reachable nodes (more leaders may exist)
+2020-09-01 11:40:45 INFO  akka.cluster.Cluster Cluster(akka://application) Cluster Node [akka://application@127.0.0.1:25521] - Leader is moving node [akka://application@127.0.0.1:25521] to [Up]
+2020-09-01 11:40:45 DEBUG akka.cluster.sbr.SplitBrainResolver akka://application/system/cluster/core/daemon/downingProvider SBR add Up [Member(address = akka://application@127.0.0.1:25521, status = Up)]
+2020-09-01 11:40:45 DEBUG a.c.singleton.ClusterSingletonProxy akka://application@127.0.0.1:25521/system/singletonProxycounter-actor-no-dc Creating singleton identification timer...
+2020-09-01 11:40:45 DEBUG akka.cluster.sbr.SplitBrainResolver akka://application/system/cluster/core/daemon/downingProvider SBR reset stable deadline when members/unreachable changed
+2020-09-01 11:40:45 DEBUG a.c.singleton.ClusterSingletonProxy akka://application@127.0.0.1:25521/system/singletonProxycounter-actor-no-dc Trying to identify singleton at [akka://application@127.0.0.1:25521/system/singletonManagercounter-actor/counter-actor]
+```
+
+The logs above indicate node 1 (identified as `akka://application@127.0.0.1:25521`) and node 2 (identified as `akka://application@127.0.0.1:25522
+`) have seen each other and established a connection, then `akka://application@127.0.0.1:25521` became the leader and that leader decided to mark
+ `akka://application@127.0.0.1:25521`'s status as `Up`. Finally, the singleton `counter-actor` that we use on this sample app is available. You
+  should also see, in the logs, how the node 3 (identified as `akka://application@127.0.0.1:25523`) also joins the cluster.
+
+Finally, open three browser tabs to the URLs http://localhost:9001/, http://localhost:9002/, and http://localhost:9003/ (each points to a different
+ Play instance) and interact with the UI. Note how all three increment a single counter in the singleton.
 
