@@ -6,10 +6,13 @@ import akka.actor.typed.javadsl.AbstractBehavior;
 import akka.actor.typed.javadsl.ActorContext;
 import akka.actor.typed.javadsl.Behaviors;
 import akka.actor.typed.javadsl.Receive;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
  * Counter actor based on https://doc.akka.io/docs/akka/current/typed/cluster-singleton.html#example
- * Modifications: `Increment` includes a replyTo and responds with the current value.
+ * Modifications:
+ *  - added `replyTo` field to `Increment` message so we can respond with the current counter value.
+ *  - removed unused message from the protocol (and corresponding handler).
  *
  * NOTE: This example application uses a transient counter. Every time the Cluster Singleton were this counter
  * reside moves from a node to another (when the cluster members change singletons may be relocated) the in-memory
@@ -25,6 +28,7 @@ public class CounterActor extends AbstractBehavior<CounterActor.Command> {
     public static class Increment implements Command {
         private final ActorRef<Integer> replyTo;
 
+        @JsonCreator
         public Increment(ActorRef<Integer> replyTo) {
             this.replyTo = replyTo;
         }
@@ -33,14 +37,12 @@ public class CounterActor extends AbstractBehavior<CounterActor.Command> {
     public static class GetValue implements Command {
         private final ActorRef<Integer> replyTo;
 
+        @JsonCreator
         public GetValue(ActorRef<Integer> replyTo) {
             this.replyTo = replyTo;
         }
     }
 
-    public enum GoodByeCounter implements Command {
-        INSTANCE
-    }
 
     public static Behavior<Command> create() {
         return Behaviors.setup(CounterActor::new);
@@ -57,7 +59,6 @@ public class CounterActor extends AbstractBehavior<CounterActor.Command> {
         return newReceiveBuilder()
                 .onMessage(Increment.class, this::onIncrement)
                 .onMessage(GetValue.class, this::onGetValue)
-                .onMessage(GoodByeCounter.class, msg -> onGoodByCounter())
                 .build();
     }
 
@@ -72,8 +73,4 @@ public class CounterActor extends AbstractBehavior<CounterActor.Command> {
         return this;
     }
 
-    private Behavior<Command> onGoodByCounter() {
-        // Possible async action then stop
-        return this;
-    }
 }
