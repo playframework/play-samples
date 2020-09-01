@@ -19,6 +19,7 @@ env:
     - SCRIPT="cd play-java-starter-example         && scripts/test-sbt"
     - SCRIPT="cd play-java-streaming-example       && scripts/test-sbt"
     - SCRIPT="cd play-java-websocket-example       && scripts/test-sbt"
+    - SCRIPT="cd play-java-cluster-example         && scripts/test-sbt"
     - SCRIPT="cd play-scala-anorm-example          && scripts/test-sbt"
     - SCRIPT="cd play-scala-chatroom-example       && scripts/test-sbt"
     - SCRIPT="cd play-scala-compile-di-example     && scripts/test-sbt"
@@ -49,6 +50,7 @@ env:
     - SCRIPT="cd play-java-starter-example         && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-java-streaming-example       && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-java-websocket-example       && scripts/test-sbt" TRAVIS_JDK=11
+    - SCRIPT="cd play-java-cluster-example         && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-scala-anorm-example          && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-scala-chatroom-example       && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-scala-compile-di-example     && scripts/test-sbt" TRAVIS_JDK=11
