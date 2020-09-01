@@ -12,20 +12,23 @@ scalaVersion := "2.13.3"
 libraryDependencies += guice
 
 // In order to use Akka Cluster SBR-OSS for the cluster we need to override the Akka version
-// and use, at least, Akka 2.6.6
-//val akkaVersion =  PlayVersion.akkaVersion
+// and use, at least, Akka 2.6.6. So, instead of using the Akka artifacts transitively provided
+// by Play we override them.
+// val akkaVersion =  PlayVersion.akkaVersion
 val akkaVersion =  "2.6.6"
 
+// Some Akka overrides to align versions of artifacts
+libraryDependencies ++= Seq(
+  "com.typesafe.akka" %% "akka-stream" % akkaVersion,
+  "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+)
+
+// this dependency is required to form the Akka Cluster
 libraryDependencies += "com.typesafe.akka" %% "akka-cluster-typed" % akkaVersion
 
-// Sending messages from a node to another in the Akka Cluster requires serializing the message. This
-// example application uses the default Akka Jackson serializer with the CBOR serialization format.
+// Sending messages from a node to another in the Akka Cluster requires serializing. This
+// example application uses the default Akka Jackson serializer with the CBOR format.
 // See also `conf/serialization.conf` and `services.CborSerializable` for more info.
 libraryDependencies += "com.typesafe.akka" %% "akka-serialization-jackson" % akkaVersion
 
 
-// Some Akka overrides to align versions of artifacts
-libraryDependencies ++= Seq(
-  "com.typesafe.akka" %% "akka-stream" % "2.6.5",
-  "com.typesafe.akka" %% "akka-actor" % "2.6.5",
-)
