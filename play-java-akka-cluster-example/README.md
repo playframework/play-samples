@@ -69,16 +69,9 @@ In the terminals you should see activity like:
 
 
 ```
-2020-09-01 11:40:45 DEBUG akka.io.TcpListener akka://application/system/IO-TCP/selectors/$a/0 New connection accepted
-2020-09-01 11:40:45 DEBUG akka.remote.artery.Decoder Decoder(akka://application) Decoded message but unable to record hits for compression as no remoteAddress known. No association yet?
-2020-09-01 11:40:45 DEBUG akka.cluster.Cluster Cluster(akka://application) Cluster Node [akka://application@127.0.0.1:25521] - Couldn't join other seed nodes, will join myself. seed-nodes=[akka://application@127.0.0.1:25521, akka://application@127.0.0.1:25522]
 2020-09-01 11:40:45 INFO  akka.cluster.Cluster Cluster(akka://application) Cluster Node [akka://application@127.0.0.1:25521] - Node [akka://application@127.0.0.1:25521] is JOINING itself (with roles [dc-default]) and forming new cluster
 2020-09-01 11:40:45 INFO  akka.cluster.Cluster Cluster(akka://application) Cluster Node [akka://application@127.0.0.1:25521] - is the new leader among reachable nodes (more leaders may exist)
 2020-09-01 11:40:45 INFO  akka.cluster.Cluster Cluster(akka://application) Cluster Node [akka://application@127.0.0.1:25521] - Leader is moving node [akka://application@127.0.0.1:25521] to [Up]
-2020-09-01 11:40:45 DEBUG akka.cluster.sbr.SplitBrainResolver akka://application/system/cluster/core/daemon/downingProvider SBR add Up [Member(address = akka://application@127.0.0.1:25521, status = Up)]
-2020-09-01 11:40:45 DEBUG a.c.singleton.ClusterSingletonProxy akka://application@127.0.0.1:25521/system/singletonProxycounter-actor-no-dc Creating singleton identification timer...
-2020-09-01 11:40:45 DEBUG akka.cluster.sbr.SplitBrainResolver akka://application/system/cluster/core/daemon/downingProvider SBR reset stable deadline when members/unreachable changed
-2020-09-01 11:40:45 DEBUG a.c.singleton.ClusterSingletonProxy akka://application@127.0.0.1:25521/system/singletonProxycounter-actor-no-dc Trying to identify singleton at [akka://application@127.0.0.1:25521/system/singletonManagercounter-actor/counter-actor]
 ```
 
 The logs above indicate node 1 (identified as `akka://application@127.0.0.1:25521`) and node 2 (identified as `akka://application@127.0.0.1:25522

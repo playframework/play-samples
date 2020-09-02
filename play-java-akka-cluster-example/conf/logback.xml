@@ -34,6 +34,8 @@
   <logger name="play" level="INFO" />
   <logger name="application" level="DEBUG" />
 
+  <logger name="akka" level="INFO" />
+
   <root level="DEBUG">
     <appender-ref ref="ASYNCFILE" />
     <appender-ref ref="ASYNCSTDOUT" />
