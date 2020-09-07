@@ -1,3 +1,4 @@
+import akka.grpc.sbt.AkkaGrpcPlugin
 import play.core.PlayVersion.akkaVersion
 import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCodeGenerator }
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
@@ -18,11 +19,11 @@ lazy val `play-scala-grpc-example` = (project in file("."))
       akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Scala),
       // #grpc_client_generators
       // build.sbt
-      akkaGrpcExtraGenerators += PlayScalaClientCodeGenerator,
+      akkaGrpcGenerators in Compile += AkkaGrpcPlugin.jvmGenerator(PlayScalaClientCodeGenerator).value,
       // #grpc_client_generators
       // #grpc_server_generators
       // build.sbt
-      akkaGrpcExtraGenerators += PlayScalaServerCodeGenerator,
+      akkaGrpcGenerators in Compile += AkkaGrpcPlugin.jvmGenerator(PlayScalaServerCodeGenerator).value,
       // #grpc_server_generators
       PlayKeys.devSettings ++= Seq(
         "play.server.http.port" -> "disabled",

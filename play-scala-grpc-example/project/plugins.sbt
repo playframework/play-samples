@@ -8,6 +8,6 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.2")
 
 // #grpc_sbt_plugin
 // project/plugins.sbt
-addSbtPlugin("com.lightbend.akka.grpc" %% "sbt-akka-grpc" % "1.0.0")
+addSbtPlugin("com.lightbend.akka.grpc" %% "sbt-akka-grpc" % "1.0.1-22-905288dd")
 libraryDependencies += "com.lightbend.play" %% "play-grpc-generators" % playGrpcV
 // #grpc_sbt_plugin
