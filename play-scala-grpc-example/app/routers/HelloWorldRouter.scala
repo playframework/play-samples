@@ -9,7 +9,7 @@ import javax.inject.Inject
 import scala.concurrent.Future
 
 class HelloWorldRouter @Inject()(mat: Materializer, system: ActorSystem)
-    extends AbstractGreeterServiceRouter(mat, system) {
+    extends AbstractGreeterServiceRouter(system) {
 
   // We need to inject a Materializer since it is required by the abstract
   // router. It can also be used to access the ExecutionContext if you need
