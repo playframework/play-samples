@@ -23,7 +23,7 @@ class ScalaCommentControllerSpec extends PlaySpec
             result.header.status mustEqual(OK)
           }
         case None =>
-          fail
+          fail()
       }
     }
   }
