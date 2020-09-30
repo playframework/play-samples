@@ -64,7 +64,7 @@ public final class HelloFunctionalTest extends WithApplication {
           .withOverrideAuthority("localhost");
 
     return GreeterServiceClient.create(
-        grpcClientSettings, app.asScala().materializer(), app.asScala().actorSystem().dispatcher());
+        grpcClientSettings, app.asScala().actorSystem());
   }
 
   @Test public void returns404OnNonGrpcRequest() throws Exception {
