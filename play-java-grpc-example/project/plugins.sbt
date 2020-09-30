@@ -10,3 +10,5 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.2")
 addSbtPlugin("com.lightbend.akka.grpc" %% "sbt-akka-grpc" % "1.0.2")
 libraryDependencies += "com.lightbend.play" %% "play-grpc-generators" % playGrpcV
 // #grpc_sbt_plugin
+
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.10.0-RC1")
