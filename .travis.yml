@@ -43,6 +43,7 @@ env:
     - SCRIPT="cd play-java-ebean-example           && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-java-fileupload-example      && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-java-forms-example           && scripts/test-sbt" TRAVIS_JDK=11
+    - SCRIPT="cd play-java-grpc-example            && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-java-hello-world-tutorial    && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-java-jpa-example             && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-java-rest-api-example        && scripts/test-sbt" TRAVIS_JDK=11
@@ -54,6 +55,7 @@ env:
     - SCRIPT="cd play-scala-compile-di-example     && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-scala-fileupload-example     && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-scala-forms-example          && scripts/test-sbt" TRAVIS_JDK=11
+    - SCRIPT="cd play-scala-grpc-example           && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-scala-hello-world-tutorial   && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-scala-isolated-slick-example && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-scala-log4j2-example         && scripts/test-sbt" TRAVIS_JDK=11
@@ -65,18 +67,6 @@ env:
     - SCRIPT="cd play-scala-streaming-example      && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-scala-tls-example            && scripts/test-sbt" TRAVIS_JDK=11
     - SCRIPT="cd play-scala-websocket-example      && scripts/test-sbt" TRAVIS_JDK=11
-
-
-matrix:
-  fast_finish: true
-  allow_failures:
-    # The gRPC samples fail on 2.8.x because of a non-evicted dependency of akka-http causing 
-    # cross-version checks in Akka HTTP to fail.
-    - env: SCRIPT="cd play-java-grpc-example            && scripts/test-sbt"
-    - env: SCRIPT="cd play-scala-grpc-example           && scripts/test-sbt"
-    - env: SCRIPT="cd play-java-grpc-example            && scripts/test-sbt" TRAVIS_JDK=11
-    - env: SCRIPT="cd play-scala-grpc-example           && scripts/test-sbt" TRAVIS_JDK=11
-
 
 before_install:
   - sudo add-apt-repository -y ppa:ondrej/php && sudo apt-get -qq update && sudo apt-get install -y libsodium-dev # for secure session examples
