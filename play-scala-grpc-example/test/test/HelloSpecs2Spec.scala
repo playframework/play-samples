@@ -33,11 +33,15 @@ class HelloSpecs2Spec extends ForServer with ServerGrpcClient with PlaySpecifica
       result.status must ===(404)
     }
     "give an Ok header when routing a non-existent gRPC method" >> { implicit rs: RunningServer =>
-      val result = await(wsUrl(s"/${GreeterService.name}/FooBar").get)
+      val result = await(wsUrl(s"/${GreeterService.name}/FooBar")
+        .addHttpHeaders("Content-Type" -> "application/grpc")
+        .get)
       result.status must ===(200)
     }
     "give a 200 when routing an empty request to a gRPC method" >> { implicit rs: RunningServer =>
-      val result = await(wsUrl(s"/${GreeterService.name}/SayHello").get)
+      val result = await(wsUrl(s"/${GreeterService.name}/SayHello")
+        .addHttpHeaders("Content-Type" -> "application/grpc")
+        .get)
       result.status must ===(200)
     }
     "work with a gRPC client" >> { implicit rs: RunningServer =>

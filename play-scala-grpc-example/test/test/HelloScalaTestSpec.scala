@@ -26,12 +26,16 @@ class HelloScalaTestSpec extends PlaySpec with GuiceOneServerPerTest with Server
       result.status must be(404) // Maybe should be a 426, see #396
     }
     "give an Ok header (and hopefully a not implemented trailer) when routing a non-existent gRPC method" in {
-      val result = wsUrl(s"/${GreeterService.name}/FooBar").get.futureValue
+      val result = wsUrl(s"/${GreeterService.name}/FooBar")
+        .addHttpHeaders("Content-Type" -> "application/grpc")
+        .get.futureValue
       result.status must be(200) // Maybe should be a 426, see #396
       // TODO: Test that trailer has a not implemented status
     }
     "give a 200 when routing an empty request to a gRPC method" in {
-      val result = wsUrl(s"/${GreeterService.name}/SayHello").get.futureValue
+      val result = wsUrl(s"/${GreeterService.name}/SayHello")
+        .addHttpHeaders("Content-Type" -> "application/grpc")
+        .get.futureValue
       result.status must be(200) // Maybe should be a 426, see #396
     }
     "work with a gRPC client" in withGrpcClient[GreeterServiceClient] { client: GreeterServiceClient =>

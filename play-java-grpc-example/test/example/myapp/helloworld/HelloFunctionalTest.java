@@ -53,7 +53,8 @@ public final class HelloFunctionalTest extends WithApplication {
   private WSResponse wsGet(final String path) throws Exception {
     final WSClient wsClient = app.injector().instanceOf(WSClient.class);
     final String url = runningServer.endpoints().httpEndpoint().get().pathUrl(path);
-    return wsClient.url(url).get().toCompletableFuture().get(30, TimeUnit.SECONDS);
+    return wsClient.url(url).setContentType("application/grpc").get()
+            .toCompletableFuture().get(30, TimeUnit.SECONDS);
   }
 
   private GreeterServiceClient newGreeterServiceClient() {
