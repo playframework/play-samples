@@ -53,7 +53,8 @@ public final class HelloFunctionalTest extends WithApplication {
   private WSResponse wsGet(final String path) throws Exception {
     final WSClient wsClient = app.injector().instanceOf(WSClient.class);
     final String url = runningServer.endpoints().httpEndpoint().get().pathUrl(path);
-    return wsClient.url(url).get().toCompletableFuture().get(30, TimeUnit.SECONDS);
+    return wsClient.url(url).setContentType("application/grpc").get()
+            .toCompletableFuture().get(30, TimeUnit.SECONDS);
   }
 
   private GreeterServiceClient newGreeterServiceClient() {
@@ -64,7 +65,7 @@ public final class HelloFunctionalTest extends WithApplication {
           .withOverrideAuthority("localhost");
 
     return GreeterServiceClient.create(
-        grpcClientSettings, app.asScala().materializer(), app.asScala().actorSystem().dispatcher());
+        grpcClientSettings, app.asScala().actorSystem());
   }
 
   @Test public void returns404OnNonGrpcRequest() throws Exception {
