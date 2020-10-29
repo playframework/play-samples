@@ -1,4 +1,4 @@
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.7.5")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.7.6")
 
 // #grpc_sbt_plugin
 // project/plugins.sbt
