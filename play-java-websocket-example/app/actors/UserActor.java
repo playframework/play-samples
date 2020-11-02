@@ -175,8 +175,6 @@ public class UserActor {
      * Adds a single stock to the hub.
      */
     private void addStock(Stock stock) {
-        context.getLog().info("Adding stock {}", stock);
-
         // We convert everything to JsValue so we get a single stream for the websocket.
         // Make sure the history gets written out before the updates for this stock...
         final Source<JsonNode, NotUsed> historySource = stock.history(50).map(Json::toJson);
