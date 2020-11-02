@@ -26,7 +26,7 @@ public final class UserParentActor {
 
     public static Behavior<Create> create(UserActor.Factory childFactory, Config config) {
         return Behaviors.setup(context -> {
-            Set<String>defaultStocks = new HashSet<>(config.getStringList("default.stocks"));
+            Set<String> defaultStocks = new HashSet<>(config.getStringList("default.stocks"));
             Behavior<Create> behavior = Behaviors.receive(Create.class)
                 .onMessage(Create.class, create -> {
                     ActorRef<UserActor.Message> child = context.spawn(childFactory.create(create.id), "userActor-" + create.id);
