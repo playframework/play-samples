@@ -4,7 +4,7 @@ buildInfoKeys := Seq[BuildInfoKey]("playGrpcVersion" -> playGrpcV)
 buildInfoPackage := "play.scala.grpc.sample"
 
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.3")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.4")
 
 // #grpc_sbt_plugin
 // project/plugins.sbt
