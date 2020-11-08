@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="sbt: commons-net:commons-net:3.6:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-net/commons-net/3.6/commons-net-3.6.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-net/commons-net/3.6/commons-net-3.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.cache/coursier/v1/https/repo1.maven.org/maven2/commons-net/commons-net/3.6/commons-net-3.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

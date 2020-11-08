@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="sbt: com.typesafe.akka:akka-parsing_2.13:10.1.12:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.13/10.1.12/akka-parsing_2.13-10.1.12.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.13/10.1.12/akka-parsing_2.13-10.1.12-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.cache/coursier/v1/https/repo1.maven.org/maven2/com/typesafe/akka/akka-parsing_2.13/10.1.12/akka-parsing_2.13-10.1.12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

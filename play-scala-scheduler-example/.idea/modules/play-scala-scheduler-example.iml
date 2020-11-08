@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="root [file:/home/sachin/data/play-scala-scheduler-example/]" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_14">
+    <output url="file://$MODULE_DIR$/../../target/scala-2.13/classes" />
+    <output-test url="file://$MODULE_DIR$/../../target/scala-2.13/test-classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../..">
+      <sourceFolder url="file://$MODULE_DIR$/../../app" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../conf" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../public" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.13/routes/main" isTestSource="false" generated="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../../target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="sbt: aopalliance:aopalliance:1.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: ch.qos.logback:logback-classic:1.2.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: ch.qos.logback:logback-core:1.2.3:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.codeborne:phantomjsdriver:1.4.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-annotations:2.10.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-core:2.10.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.core:jackson-databind:2.10.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.10.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.module:jackson-module-parameter-names:2.10.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.module:jackson-module-paranamer:2.10.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.fasterxml.jackson.module:jackson-module-scala_2.13:2.10.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.code.findbugs:jsr305:3.0.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.errorprone:error_prone_annotations:2.3.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.guava:failureaccess:1.0.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.guava:guava:28.2-jre:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.inject.extensions:guice-assistedinject:4.2.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.inject:guice:4.2.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.google.j2objc:j2objc-annotations:1.3:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.novocode:junit-interface:0.11:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.squareup.okhttp3:okhttp:3.11.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.squareup.okio:okio:1.14.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.thoughtworks.paranamer:paranamer:2.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-actor-typed_2.13:2.6.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-actor_2.13:2.6.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-http-core_2.13:10.1.12:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-parsing_2.13:10.1.12:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-protobuf-v3_2.13:2.6.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-serialization-jackson_2.13:2.6.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-slf4j_2.13:2.6.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.akka:akka-stream_2.13:2.6.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:build-link:2.8.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:cachecontrol_2.13:2.0.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:filters-helpers_2.13:2.8.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:play-ahc-ws-standalone_2.13:2.1.2:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:play-ahc-ws_2.13:2.8.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-akka-http-server_2.13:2.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-exceptions:2.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-functional_2.13:2.8.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-guice_2.13:2.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-json_2.13:2.8.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-logback_2.13:2.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-server_2.13:2.8.4:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play-streams_2.13:2.8.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:play-test_2.13:2.8.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:play-ws-standalone-json_2.13:2.1.2:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:play-ws-standalone-xml_2.13:2.1.2:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:play-ws-standalone_2.13:2.1.2:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:play-ws_2.13:2.8.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:play_2.13:2.8.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:shaded-asynchttpclient:2.1.2:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: com.typesafe.play:shaded-oauth:2.1.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe.play:twirl-api_2.13:1.5.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe:config:1.4.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: com.typesafe:ssl-config-core_2.13:0.4.2:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: commons-codec:commons-codec:1.11:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: commons-io:commons-io:2.6:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: commons-logging:commons-logging:1.2:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: commons-net:commons-net:3.6:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.jsonwebtoken:jjwt:0.9.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: jakarta.activation:jakarta.activation-api:1.2.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: jakarta.transaction:jakarta.transaction-api:1.3.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: jakarta.xml.bind:jakarta.xml.bind-api:2.3.3:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: javax.cache:cache-api:1.1.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: javax.inject:javax.inject:1:jar" level="project" />
+    <orderEntry type="library" name="sbt: joda-time:joda-time:2.10.5:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: junit:junit:4.13:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: net.bytebuddy:byte-buddy:1.8.15:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: net.sourceforge.htmlunit:htmlunit-core-js:2.36.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: net.sourceforge.htmlunit:htmlunit-cssparser:1.5.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: net.sourceforge.htmlunit:htmlunit:2.36.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: net.sourceforge.htmlunit:neko-htmlunit:2.36.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.apache.commons:commons-exec:1.3:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.apache.commons:commons-lang3:3.9:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.apache.commons:commons-text:1.7:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.apache.httpcomponents:httpclient:4.5.9:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.apache.httpcomponents:httpcore:4.4.11:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.apache.httpcomponents:httpmime:4.5.9:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.atteo.classindex:classindex:3.4:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.brotli:dec:0.1.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.checkerframework:checker-qual:2.10.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.eclipse.jetty.websocket:websocket-api:9.4.20.v20190813:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.eclipse.jetty.websocket:websocket-client:9.4.20.v20190813:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.eclipse.jetty.websocket:websocket-common:9.4.20.v20190813:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.eclipse.jetty:jetty-client:9.4.20.v20190813:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.eclipse.jetty:jetty-http:9.4.20.v20190813:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.eclipse.jetty:jetty-io:9.4.20.v20190813:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.eclipse.jetty:jetty-util:9.4.20.v20190813:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.eclipse.jetty:jetty-xml:9.4.20.v20190813:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.fluentlenium:fluentlenium-core:3.7.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.hamcrest:hamcrest-core:1.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.lz4:lz4-java:1.7.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.reactivestreams:reactive-streams:1.0.3:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-java8-compat_2.13:0.9.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-parser-combinators_2.13:1.1.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang.modules:scala-xml_2.13:1.2.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.13.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-reflect:2.13.1:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scala-sbt:test-interface:1.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalactic:scalactic_2.13:3.0.8:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatest:scalatest_2.13:3.0.8:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.scalatestplus.play:scalatestplus-play_2.13:5.0.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:htmlunit-driver:2.36.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:selenium-api:3.141.59:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:selenium-chrome-driver:3.141.59:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:selenium-edge-driver:3.141.59:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:selenium-firefox-driver:3.141.59:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:selenium-ie-driver:3.141.59:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:selenium-java:3.141.59:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:selenium-opera-driver:3.141.59:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:selenium-remote-driver:3.141.59:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:selenium-safari-driver:3.141.59:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: org.seleniumhq.selenium:selenium-support:3.141.59:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.slf4j:jcl-over-slf4j:1.7.30:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.slf4j:jul-to-slf4j:1.7.30:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.slf4j:slf4j-api:1.7.30:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: xalan:serializer:2.7.2:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: xalan:xalan:2.7.2:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: xerces:xercesImpl:2.12.0:jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="sbt: xml-apis:xml-apis:1.4.01:jar" level="project" />
+  </component>
+</module>

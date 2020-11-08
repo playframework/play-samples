@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/play-scala-scheduler-example.iml" filepath="$PROJECT_DIR$/.idea/modules/play-scala-scheduler-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/play-scala-scheduler-example-build.iml" filepath="$PROJECT_DIR$/.idea/modules/play-scala-scheduler-example-build.iml" />
+    </modules>
+  </component>
+</project>
