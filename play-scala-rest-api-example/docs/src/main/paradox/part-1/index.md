@@ -97,7 +97,7 @@ Play’s [routing DSL](https://www.playframework.com/documentation/latest/ScalaS
 Then you can extract the "sort" and "count" parameters in a single line:
 
 ```scala
-GET("/" ? q_?"sort=$sort" & q_?”count=${ int(count) }")
+GET("/" ? q_?"sort=$sort" & q_?"count=${ int(count) }")
 ```
 
 SIRD is especially useful in a REST API where there can be many possible query parameters. Cake Solutions covers SIRD in more depth in a [fantastic blog post](http://www.cakesolutions.net/teamblogs/all-you-need-to-know-about-plays-routing-dsl).
