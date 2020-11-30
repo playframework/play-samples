@@ -58,7 +58,7 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
       Redirect(routes.WidgetController.listWidgets()).flashing("info" -> "Widget added!")
     }
 
-    val formValidationResult = form.bindFromRequest
+    val formValidationResult = form.bindFromRequest()
     formValidationResult.fold(errorFunction, successFunction)
   }
 }
