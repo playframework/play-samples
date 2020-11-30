@@ -81,7 +81,7 @@ class HomeController @Inject()(computerService: ComputerRepository,
     * @param id Id of the computer to edit
     */
   def update(id: Long) = Action.async { implicit request =>
-    computerForm.bindFromRequest.fold(
+    computerForm.bindFromRequest().fold(
       formWithErrors => {
         logger.warn(s"form error: $formWithErrors")
         companyService.options.map { options =>
@@ -109,7 +109,7 @@ class HomeController @Inject()(computerService: ComputerRepository,
     * Handle the 'new computer form' submission.
     */
   def save = Action.async { implicit request =>
-    computerForm.bindFromRequest.fold(
+    computerForm.bindFromRequest().fold(
       formWithErrors => companyService.options.map { options =>
         BadRequest(html.createForm(formWithErrors, options))
       },
