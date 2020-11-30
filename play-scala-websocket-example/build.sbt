@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-scala-websocket-example",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.1",
+    scalaVersion := "2.13.4",
     libraryDependencies ++= Seq(
       guice,
       ws,

@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-starter-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.1",
+    scalaVersion := "2.13.4",
     libraryDependencies ++= Seq(
       guice,
       "com.h2database" % "h2" % "1.4.199",
