@@ -14,7 +14,7 @@ class ServerSpec extends PlaySpec
 
   "Server query should" should {
     "work" in {
-      whenReady(play.api.test.WsTestClient.wsUrl("/").get) { response =>
+      whenReady(play.api.test.WsTestClient.wsUrl("/").get()) { response =>
         response.status mustBe play.api.http.Status.OK
       }
     }
