@@ -1,4 +1,5 @@
 import play.core.PlayVersion.akkaVersion
+import play.core.PlayVersion.akkaHttpVersion
 import play.grpc.gen.javadsl.{ PlayJavaClientCodeGenerator, PlayJavaServerCodeGenerator }
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.java.grpc.sample.BuildInfo
@@ -55,9 +56,10 @@ javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
 val CompileDeps = Seq(
   guice,
   javaWs,
-  "com.lightbend.play"      %% "play-grpc-runtime"   % BuildInfo.playGrpcVersion, 
-  "com.typesafe.akka"       %% "akka-discovery"      % akkaVersion,
-  "com.typesafe.akka"       %% "akka-http"           % "10.1.11",
+  "com.lightbend.play"      %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
+  "com.typesafe.akka"       %% "akka-discovery"       % akkaVersion,
+  "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
+  "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
   // Test Database
   "com.h2database" % "h2" % "1.4.199"
 )
