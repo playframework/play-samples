@@ -13,6 +13,7 @@ import play.api.test._
  * This is useful for testing forms and constraints.
  */
 class UnitSpec extends PlaySpec {
+  import play.api.data.FormBinding.Implicits._
 
   "WidgetForm" must {
 
