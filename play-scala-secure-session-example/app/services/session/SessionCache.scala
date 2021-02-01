@@ -67,12 +67,6 @@ class SessionCache(
       behavior(children - key)
 
     case _: InternalGetResponse =>
-      // upgrading to scala 2.13.4 required adding this case to prevent the compiler error due
-      // because the match was not exhaustive
-      // [error] ./play-scala-secure-session-example/app/services/session/SessionCache.scala:48:51: match may not be exhaustive.
-      // [error] It would fail on the following inputs: InternalGetResponse(GetDataDeleted(_, _), _), InternalGetResponse(GetFailure(_, _), _), InternalGetResponse(GetSuccess(_, _), _), InternalGetResponse(NotFound(_, _), _)
-      // [error]   ): Behavior[Command] = Behaviors.receiveMessage {
-      // [error]                                                   ^
       Behaviors.same
 
     case _: InternalUpdateResponse[_] =>
