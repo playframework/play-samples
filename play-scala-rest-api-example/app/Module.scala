@@ -15,6 +15,6 @@ class Module(environment: Environment, configuration: Configuration)
     with ScalaModule {
 
   override def configure() = {
-    bind[PostRepository].to[PostRepositoryImpl].in[Singleton]
+    bind[PostRepository].to[PostRepositoryImpl].in[Singleton]()
   }
 }

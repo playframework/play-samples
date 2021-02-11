@@ -54,7 +54,7 @@ class BrowserSpec extends PlaySpec
 
         click on id("searchbox")
         enter("Apple")
-        submit
+        submit()
         
         click on linkText("Apple II")
         click on $("input.danger")

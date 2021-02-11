@@ -44,7 +44,7 @@ trait StockQuoteGenerator {
 }
 
 class FakeStockQuoteGenerator(symbol: StockSymbol) extends StockQuoteGenerator {
-  private def random: Double = scala.util.Random.nextDouble
+  private def random: Double = scala.util.Random.nextDouble()
 
   def seed: StockQuote = {
     StockQuote(symbol, StockPrice(random * 800))

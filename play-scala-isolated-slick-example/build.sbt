@@ -21,7 +21,7 @@ libraryDependencies in ThisBuild ++= Seq(
   "com.google.inject" % "guice" % "4.2.2"
 )
 
-scalaVersion in ThisBuild := "2.13.1"
+scalaVersion in ThisBuild := "2.13.4"
 scalacOptions in ThisBuild ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
   "-deprecation",

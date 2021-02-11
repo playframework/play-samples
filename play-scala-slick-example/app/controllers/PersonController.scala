@@ -41,7 +41,7 @@ class PersonController @Inject()(repo: PersonRepository,
    */
   def addPerson = Action.async { implicit request =>
     // Bind the form first, then fold the result, passing a function to handle errors, and a function to handle succes.
-    personForm.bindFromRequest.fold(
+    personForm.bindFromRequest().fold(
       // The error function. We return the index page with the error form, which will render the errors.
       // We also wrap the result in a successful future, since this action is synchronous, but we're required to return
       // a future because the person creation function returns a future.
@@ -52,7 +52,7 @@ class PersonController @Inject()(repo: PersonRepository,
       person => {
         repo.create(person.name, person.age).map { _ =>
           // If successful, we simply redirect to the index page.
-          Redirect(routes.PersonController.index).flashing("success" -> "user.created")
+          Redirect(routes.PersonController.index()).flashing("success" -> "user.created")
         }
       }
     )

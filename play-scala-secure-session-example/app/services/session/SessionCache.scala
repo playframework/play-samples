@@ -66,6 +66,9 @@ class SessionCache(
     case InternalSessionActorTerminated(key) =>
       behavior(children - key)
 
+    case _: InternalGetResponse =>
+      Behaviors.same
+
     case _: InternalUpdateResponse[_] =>
       Behaviors.same
   }

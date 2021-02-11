@@ -60,7 +60,7 @@ class StockSentiment @Inject()(ws: WSClient,
   private def getTweets(symbol:String): Future[WSResponse] = {
     logger.info(s"getTweets: symbol = $symbol")
 
-    ws.url(tweetUrl.format(symbol)).get.withFilter { response =>
+    ws.url(tweetUrl.format(symbol)).get().withFilter { response =>
       response.status == OK
     }
   }
