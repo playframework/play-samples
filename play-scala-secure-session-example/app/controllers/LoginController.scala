@@ -20,7 +20,7 @@ class LoginController @Inject() (
       sessionGenerator.createSession(userInfo).map {
         case (sessionId, encryptedCookie) =>
           val session = request.session + (SESSION_ID -> sessionId)
-          Redirect(routes.HomeController.index())
+          Redirect(routes.HomeController.index)
             .withSession(session)
             .withCookies(encryptedCookie)
       }

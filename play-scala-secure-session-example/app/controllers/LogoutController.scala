@@ -19,7 +19,7 @@ class LogoutController @Inject() (
     }
 
     discardingSession {
-      Redirect(routes.HomeController.index())
+      Redirect(routes.HomeController.index)
     }
   }
 

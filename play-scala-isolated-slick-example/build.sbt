@@ -18,10 +18,10 @@ libraryDependencies in ThisBuild ++= Seq(
   "javax.inject" % "javax.inject" % "1",
   "joda-time" % "joda-time" % "2.10.2",
   "org.joda" % "joda-convert" % "2.2.1",
-  "com.google.inject" % "guice" % "4.2.2"
+  "com.google.inject" % "guice" % "4.2.3"
 )
 
-scalaVersion in ThisBuild := "2.13.4"
+scalaVersion in ThisBuild := "2.13.5"
 scalacOptions in ThisBuild ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
   "-deprecation",

@@ -19,7 +19,7 @@ class UnitSpec extends PlaySpec {
 
     "apply successfully from request" in {
       // The easiest way to test a form is by passing it a fake request.
-      val call = controllers.routes.WidgetController.createWidget()
+      val call = controllers.routes.WidgetController.createWidget
       implicit val request: Request[_] = FakeRequest(call).withFormUrlEncodedBody("name" -> "foo", "price" -> "100")
       // A successful binding using an implicit request will give you a form with a value.
       val boundForm = WidgetForm.form.bindFromRequest()
