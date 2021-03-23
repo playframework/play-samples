@@ -15,7 +15,7 @@ You can clone the example project from GitHub:
 
 ```bash
 git clone https://github.com/playframework/play-samples.git
-cd play-scala-rest-api-example
+cd play-samples/play-scala-rest-api-example
 ```
 
 ## Running
