@@ -1,5 +1,5 @@
 // The Play plugin
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.7")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.8-RC1")
 
 addSbtPlugin("com.lightbend.cinnamon" % "sbt-cinnamon" % "2.12.4")
 

@@ -17,7 +17,7 @@ class BrowserSpec extends PlaySpec with GuiceOneServerPerSuite with OneBrowserPe
 
   "The browser should" must {
     "successfully process a form" in {
-      val listWidgetsURL = controllers.routes.WidgetController.listWidgets().absoluteURL(false, s"localhost:$port")
+      val listWidgetsURL = controllers.routes.WidgetController.listWidgets.absoluteURL(false, s"localhost:$port")
 
       go to listWidgetsURL
 

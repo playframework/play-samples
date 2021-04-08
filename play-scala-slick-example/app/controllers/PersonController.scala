@@ -52,7 +52,7 @@ class PersonController @Inject()(repo: PersonRepository,
       person => {
         repo.create(person.name, person.age).map { _ =>
           // If successful, we simply redirect to the index page.
-          Redirect(routes.PersonController.index()).flashing("success" -> "user.created")
+          Redirect(routes.PersonController.index).flashing("success" -> "user.created")
         }
       }
     )
