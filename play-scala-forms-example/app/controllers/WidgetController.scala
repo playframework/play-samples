@@ -31,7 +31,7 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
   // The URL to the widget.  You can call this directly from the template, but it
   // can be more convenient to leave the template completely stateless i.e. all
   // of the "WidgetController" references are inside the .scala file.
-  private val postUrl = routes.WidgetController.createWidget
+  private val postUrl = routes.WidgetController.createWidget()
 
   def index = Action {
     Ok(views.html.index())
@@ -55,7 +55,7 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
       // This is the good case, where the form was successfully parsed as a Data object.
       val widget = Widget(name = data.name, price = data.price)
       widgets += widget
-      Redirect(routes.WidgetController.listWidgets).flashing("info" -> "Widget added!")
+      Redirect(routes.WidgetController.listWidgets()).flashing("info" -> "Widget added!")
     }
 
     val formValidationResult = form.bindFromRequest()
