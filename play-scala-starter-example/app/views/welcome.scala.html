@@ -72,7 +72,7 @@ GET     /               controllers.HomeController.index</code></pre>
     Now that you've seen how Play renders a page, take a look at <code>AsyncController.scala</code>, which shows how to do asynchronous programming when handling a request.  The code is almost exactly the same as <code>HomeController.scala</code>, but instead of returning <code>Result</code>, the action returns <code>Future[String]</code> to Play.  When the execution completes, Play can use a thread to render the result without blocking the thread in the mean time.
 
     <p>
-        <a href="@routes.AsyncController.message()">Click here for the AsyncController action!</a>
+        <a href="@routes.AsyncController.message">Click here for the AsyncController action!</a>
     </p>
 
     <p>
@@ -86,7 +86,7 @@ GET     /               controllers.HomeController.index</code></pre>
     </p>
 
     <p>
-        <a href="@routes.CountController.count()">Click here for the CountController action!</a>
+        <a href="@routes.CountController.count">Click here for the CountController action!</a>
     </p>
 
     <p>

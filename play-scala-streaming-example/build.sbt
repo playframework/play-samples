@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-scala-streaming-example",
     version := "2.8.x",
-    scalaVersion := "2.13.3",
+    scalaVersion := "2.13.5",
     libraryDependencies ++= Seq(
       guice,
       ws % Test,

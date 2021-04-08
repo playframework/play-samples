@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-scala-anorm-example",
     version := "2.8.x",
-    scalaVersion := "2.13.4",
+    scalaVersion := "2.13.5",
     libraryDependencies ++= Seq(
       guice,
       jdbc,
