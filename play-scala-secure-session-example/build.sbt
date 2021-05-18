@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-secure-session-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.5",
+    scalaVersion := "2.13.6",
     libraryDependencies ++= Seq(
       ws,
       guice,

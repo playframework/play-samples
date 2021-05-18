@@ -1,5 +1,5 @@
 language: scala
-scala: 2.13.5
+scala: 2.13.6
 script: eval "$SCRIPT"
 
 env:

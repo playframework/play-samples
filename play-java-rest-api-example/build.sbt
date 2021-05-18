@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-java-rest-api-example",
     version := "2.8.x",
-    scalaVersion := "2.13.5",
+    scalaVersion := "2.13.6",
     libraryDependencies ++= Seq(
       guice,
       javaJpa,
