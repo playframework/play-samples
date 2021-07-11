@@ -10,7 +10,7 @@ class ServerSpec extends PlaySpec
   with ScalaFutures
   with IntegrationPatience {
 
-  private implicit val implicitPort = port
+  private implicit val implicitPort: Int = port
 
   "Server query should" should {
     "work" in {

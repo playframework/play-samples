@@ -4,7 +4,7 @@ import java.net.URI
 import javax.inject._
 
 import akka.actor.ActorSystem
-import akka.event.Logging
+import akka.event.{Logging, LoggingAdapter}
 import akka.stream.Materializer
 import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Source}
 import play.api.Logger
@@ -27,7 +27,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
 
   private val logger = Logger(getClass)
 
-  private implicit val logging = Logging(actorSystem.eventStream, logger.underlyingLogger.getName)
+  private implicit val logging: LoggingAdapter = Logging(actorSystem.eventStream, logger.underlyingLogger.getName)
 
   // chat room many clients -> merge hub -> broadcasthub -> many clients
   private val (chatSink, chatSource) = {

@@ -3,7 +3,7 @@ package controllers
 import javax.inject._
 
 import play.api.{Configuration, Logger}
-import play.api.libs.json.{JsObject, JsString, JsValue, Json}
+import play.api.libs.json.{JsObject, JsString, JsValue, Json, Reads}
 import play.api.libs.ws._
 import play.api.mvc._
 
@@ -24,7 +24,7 @@ class StockSentiment @Inject()(ws: WSClient,
 
   case class Tweet(text: String)
   
-  private implicit val tweetReads = Json.reads[Tweet]
+  private implicit val tweetReads: Reads[Tweet] = Json.reads[Tweet]
 
   def get(symbol: String): Action[AnyContent] = Action.async {
     logger.info(s"getting stock sentiment for $symbol")
