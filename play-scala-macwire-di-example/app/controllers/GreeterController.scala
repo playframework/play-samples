@@ -25,6 +25,7 @@ class GreeterController(greetingService: GreetingService,
   }
 
   def index = Action {
+    throw(new RuntimeException("Breaks!!!"))
     Ok(Html("<h1>Welcome</h1><p>Your new application is ready.</p>"))
   }
 

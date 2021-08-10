@@ -1,5 +1,5 @@
 lazy val root = (project in file("."))
-  .enablePlugins(PlayScala)
+  .enablePlugins(PlayScala, LagomPlay)
   .settings(
     name := """play-scala-macwire-di-example""",
     version := "2.8.x",
