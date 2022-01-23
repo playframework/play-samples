@@ -1,0 +1,4 @@
+
+object SlickExamplePlaceholder extends App {
+
+}
