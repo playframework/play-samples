@@ -40,12 +40,12 @@ class Application @Inject() (
   }
 
   def insertCat = Action.async { implicit request =>
-    val cat: Cat = catForm.bindFromRequest.get
+    val cat: Cat = catForm.bindFromRequest().get
     catDao.insert(cat).map(_ => Redirect(routes.Application.index))
   }
 
   def insertDog = Action.async { implicit request =>
-    val dog: Dog = dogForm.bindFromRequest.get
+    val dog: Dog = dogForm.bindFromRequest().get
     dogDao.insert(dog).map(_ => Redirect(routes.Application.index))
   }
 }
