@@ -1,17 +1,8 @@
 lazy val root = (project in file("."))
   .settings(
-    name := """play-scala-slick-example""",
-    version := "2.8.x",
-    scalaVersion := "2.13.6",
-    scalacOptions ++= Seq(
-      "-feature",
-      "-deprecation",
-      "-Xfatal-warnings"
-    )
+    name := "play-scala-slick-examples",
+    version := "2.8.x"
   )
-
-lazy val samples = project
-  .in(file("samples"))
   .aggregate(
     basicSample,
     computerDatabaseSample,
@@ -22,6 +13,12 @@ def sampleProject(name: String) =
   Project(s"$name-sample", file("samples") / name)
     .enablePlugins(PlayScala)
     .settings(
+      scalaVersion := "2.13.8",
+      scalacOptions ++= Seq(
+        "-feature",
+        "-deprecation",
+        "-Xfatal-warnings"
+      ),
       libraryDependencies ++= Seq(
         guice,
         "com.typesafe.play" %% "play-slick" % "5.0.0",
