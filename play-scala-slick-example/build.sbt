@@ -29,6 +29,8 @@ def sampleProject(name: String) =
       concurrentRestrictions in Global += Tags.limit(Tags.Test, 1)
     )
     .settings(javaOptions in Test += "-Dslick.dbs.default.connectionTimeout=30 seconds")
+    // We use a slightly different database URL for running the slick applications and testing the slick applications.
+    .settings(javaOptions in Test ++= Seq("-Dconfig.file=conf/test.conf"))
 
 lazy val computerDatabaseSample = sampleProject("computer-database")
 
