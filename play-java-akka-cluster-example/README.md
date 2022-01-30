@@ -1,7 +1,6 @@
 # Play Java Akka Cluster Example
 
-This example demonstrates how to setup the Play-provided `ActorSystem` to build a [cluster](https://doc.akka.io/docs/akka/current/typed/cluster
-.html).
+This example demonstrates how to setup the Play-provided `ActorSystem` to build a [cluster](https://doc.akka.io/docs/akka/current/typed/cluster.html).
 
 The example is a very simple Play application with a counter in an [actor](app/services/CounterActor.java).
 
