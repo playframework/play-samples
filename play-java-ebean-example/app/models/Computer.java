@@ -26,6 +26,13 @@ public class Computer extends BaseModel {
     
     @ManyToOne
     public Company company;
-    
+
+    public void update(Computer newComputerData) {
+        name = newComputerData.name;
+        company = newComputerData.company;
+        discontinued = newComputerData.discontinued;
+        introduced = newComputerData.introduced;
+        update();
+    }
 }
 
