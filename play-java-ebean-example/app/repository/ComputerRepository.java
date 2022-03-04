@@ -72,7 +72,7 @@ public class ComputerRepository {
             try {
                 Optional<Computer> computerOptional = DB.find(Computer.class).setId(id).findOneOrEmpty();
                 computerOptional.ifPresent(Model::delete);
-                return computerOptional.map(c -> c.id);
+                return computerOptional.map(c -> c.getId());
             } catch (Exception e) {
                 return Optional.empty();
             }
@@ -82,7 +82,7 @@ public class ComputerRepository {
     public CompletionStage<Long> insert(Computer computer) {
         return supplyAsync(() -> {
              DB.insert(computer);
-             return computer.id;
+             return computer.getId();
         }, executionContext);
     }
 }

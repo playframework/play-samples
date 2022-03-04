@@ -28,7 +28,7 @@ public class CompanyRepository {
                 .thenApply(list -> {
                     HashMap<String, String> options = new LinkedHashMap<String, String>();
                     for (Company c : list) {
-                        options.put(c.id.toString(), c.name);
+                        options.put(c.getId().toString(), c.getName());
                     }
                     return options;
                 });

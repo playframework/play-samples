@@ -109,7 +109,7 @@ public class HomeController extends Controller {
             return computerRepository.update(id, newComputerData).thenApplyAsync(data -> {
                 // This is the HTTP rendering thread context
                 return GO_HOME
-                    .flashing("success", "Computer " + newComputerData.name + " has been updated");
+                    .flashing("success", "Computer " + newComputerData.getName() + " has been updated");
             }, httpExecutionContext.current());
         }
     }
@@ -144,7 +144,7 @@ public class HomeController extends Controller {
         return computerRepository.insert(computer).thenApplyAsync(data -> {
             // This is the HTTP rendering thread context
             return GO_HOME
-                .flashing("success", "Computer " + computer.name + " has been created");
+                .flashing("success", "Computer " + computer.getName() + " has been created");
         }, httpExecutionContext.current());
     }
 
