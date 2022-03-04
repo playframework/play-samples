@@ -33,7 +33,7 @@ public class ModelTest extends WithApplication {
         await().atMost(1, SECONDS).until(() -> {
             final Optional<Computer> macintosh = stage.toCompletableFuture().get();
             return macintosh
-                .map(mac -> mac.name.equals("Macintosh") && formatted(mac.introduced).equals("1984-01-24"))
+                .map(mac -> mac.getName().equals("Macintosh") && formatted(mac.getIntroduced()).equals("1984-01-24"))
                 .orElseGet(() -> false);
         });
     }

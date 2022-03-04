@@ -96,26 +96,26 @@
 
       @for(computer <- currentPage.getList.asScala) {
         <tr>
-          <td><a href="@routes.HomeController.edit(computer.id)">@computer.name</a></td>
+          <td><a href="@routes.HomeController.edit(computer.getId())">@computer.getName()</a></td>
           <td>
-          @if(computer.introduced == null) {
+          @if(computer.getIntroduced() == null) {
             <em>-</em>
           } else {
-            @computer.introduced.format("dd MMM yyyy")
+            @computer.getIntroduced().format("dd MMM yyyy")
           }
           </td>
           <td>
-          @if(computer.discontinued == null) {
+          @if(computer.getDiscontinued() == null) {
             <em>-</em>
           } else {
-            @computer.discontinued.format("dd MMM yyyy")
+            @computer.getDiscontinued().format("dd MMM yyyy")
           }
           </td>
           <td>
-          @if(computer.company == null) {
+          @if(computer.getCompany() == null) {
             <em>-</em>
           } else {
-            @computer.company.name
+            @computer.getCompany().getName()
           }
           </td>
         </tr>
