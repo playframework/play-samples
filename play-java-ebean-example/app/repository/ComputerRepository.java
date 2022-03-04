@@ -81,6 +81,7 @@ public class ComputerRepository {
 
     public CompletionStage<Long> insert(Computer computer) {
         return supplyAsync(() -> {
+             computer.setId(System.currentTimeMillis()); // not ideal, but it works
              DB.insert(computer);
              return computer.getId();
         }, executionContext);
