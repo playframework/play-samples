@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       "org.awaitility" % "awaitility" % "3.1.6" % Test
     ),
     // Needed to make JUnit report the tests being run
-    testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
+    (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
     javacOptions ++= Seq(
       "-Xlint:unchecked",
       "-Xlint:deprecation"

@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       "net.jodah" % "failsafe" % "2.3.1",
     ),
     PlayKeys.externalizeResources := false,
-    testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
+    (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
     javacOptions ++= Seq(
       "-Xlint:unchecked",
       "-Xlint:deprecation",

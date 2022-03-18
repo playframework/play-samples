@@ -16,6 +16,6 @@ lazy val root = (project in file("."))
       "javax.activation" % "activation" % "1.1.1",
       "org.glassfish.jaxb" % "jaxb-runtime" % "2.3.2",
     ),
-    testOptions in Test += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
+    (Test / testOptions) += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
     javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")
   )

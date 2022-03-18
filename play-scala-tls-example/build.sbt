@@ -21,15 +21,15 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-tls-example""",
     version := "1.0.0",
-    fork in run := true,
+    (run / fork) := true,
     
     // Uncomment if you want to run "./play client" explicitly without SNI.
     //javaOptions in run += "-Djsse.enableSNIExtension=false"
-    javaOptions in run += "-Djavax.net.debug=ssl:handshake",
+    (run / javaOptions) += "-Djavax.net.debug=ssl:handshake",
 
     // Must not run tests in fork because the `play` script sets
     // some JVM properties (-D) which tests need.
-    fork in Test := false,
+    (Test / fork) := false,
 
     libraryDependencies ++= Seq(
       ws,

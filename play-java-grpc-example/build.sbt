@@ -42,8 +42,8 @@ lazy val `play-java-grpc-example` = (project in file("."))
           ExecCmd("RUN", "apk", "add", "--no-cache", "bash")
         ) ++
         dockerCommands.value.tail ,
-    dockerAliases in Docker += DockerAlias(None, None, "play-java-grpc-example", None),
-    packageName in Docker := "play-java-grpc-example",
+    (Docker / dockerAliases) += DockerAlias(None, None, "play-java-grpc-example", None),
+    (Docker / packageName) := "play-java-grpc-example",
   )
   .settings(
     libraryDependencies ++= CompileDeps ++ TestDeps
@@ -70,7 +70,7 @@ val TestDeps = Seq(
 )
 
 // Make verbose tests
-testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
+(Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
 
 // Documentation for this project:
 //    sbt "project docs" "~ paradox"
