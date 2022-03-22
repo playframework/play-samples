@@ -43,8 +43,8 @@ lazy val `play-scala-grpc-example` = (project in file("."))
           ExecCmd("RUN", "apk", "add", "--no-cache", "bash")
         ) ++
         dockerCommands.value.tail ,
-      dockerAliases in Docker += DockerAlias(None, None, "play-scala-grpc-example", None),
-      packageName in Docker := "play-scala-grpc-example",
+      (Docker / dockerAliases) += DockerAlias(None, None, "play-scala-grpc-example", None),
+      (Docker / packageName) := "play-scala-grpc-example",
     )
     .settings(
       libraryDependencies ++= CompileDeps ++ TestDeps
@@ -73,7 +73,7 @@ scalaVersion := "2.12.13"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 
 // Make verbose tests
-testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
+(Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
 
 // Documentation for this project:
 //    sbt "project docs" "~ paradox"

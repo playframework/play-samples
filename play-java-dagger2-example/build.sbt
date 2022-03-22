@@ -10,13 +10,13 @@ lazy val root = (project in file("."))
       "com.google.dagger" % "dagger-compiler" % "2.25.2"
     ),
     // move the java annotation code into generated directory
-    javacOptions in Compile := { (managedSourceDirectories in Compile).value.head.mkdirs(); javacOptions.value },
-    javacOptions in Compile ++= Seq("-s", (managedSourceDirectories in Compile).value.head.getAbsolutePath),
+    (Compile / javacOptions) := { (Compile / managedSourceDirectories).value.head.mkdirs(); javacOptions.value },
+    (Compile / javacOptions) ++= Seq("-s", (Compile / managedSourceDirectories).value.head.getAbsolutePath),
     javacOptions ++= Seq(
       "-Xlint:unchecked",
       "-Xlint:deprecation",
       "-Werror"
     ),
     // Verbose tests
-    testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
+    (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
   )

@@ -21,7 +21,7 @@ lazy val root = (project in file("."))
       "-Werror"
     ),
     // Make verbose tests
-    testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
+    (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
   ).settings(
     libraryDependencies ++= Seq(
       Cinnamon.library.cinnamonCHMetrics, // only needed to use the Console reporter

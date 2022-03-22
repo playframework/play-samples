@@ -9,20 +9,20 @@ lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "")
 
 val FlywayVersion = "6.2.2"
 
-version in ThisBuild := "1.1-SNAPSHOT"
+(ThisBuild / version) := "1.1-SNAPSHOT"
 
-resolvers in ThisBuild += Resolver.sonatypeRepo("releases")
-resolvers in ThisBuild += Resolver.sonatypeRepo("snapshots")
+(ThisBuild / resolvers) += Resolver.sonatypeRepo("releases")
+(ThisBuild / resolvers) += Resolver.sonatypeRepo("snapshots")
 
-libraryDependencies in ThisBuild ++= Seq(
+(ThisBuild / libraryDependencies) ++= Seq(
   "javax.inject" % "javax.inject" % "1",
   "joda-time" % "joda-time" % "2.10.2",
   "org.joda" % "joda-convert" % "2.2.1",
   "com.google.inject" % "guice" % "4.2.3"
 )
 
-scalaVersion in ThisBuild := "2.13.6"
-scalacOptions in ThisBuild ++= Seq(
+(ThisBuild / scalaVersion) := "2.13.6"
+(ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
   "-deprecation",
   "-feature",
@@ -30,7 +30,7 @@ scalacOptions in ThisBuild ++= Seq(
   "-Xlint",
   "-Ywarn-numeric-widen"
 )
-javacOptions in ThisBuild ++= Seq("-source", "1.8", "-target", "1.8")
+(ThisBuild / javacOptions) ++= Seq("-source", "1.8", "-target", "1.8")
 
 lazy val flyway = (project in file("modules/flyway"))
   .enablePlugins(FlywayPlugin)
@@ -80,7 +80,7 @@ lazy val slick = (project in file("modules/slick"))
         }
       }
     },
-    sourceGenerators in Compile += slickCodegen.taskValue
+    (Compile / sourceGenerators) += slickCodegen.taskValue
   )
   .aggregate(api)
   .dependsOn(api)
@@ -97,7 +97,7 @@ lazy val root = (project in file("."))
       "org.flywaydb" % "flyway-core" % FlywayVersion % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
     ),
-    fork in Test := true
+    (Test / fork) := true
   )
   .aggregate(slick)
   .dependsOn(slick)
