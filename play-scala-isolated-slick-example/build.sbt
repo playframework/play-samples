@@ -21,7 +21,7 @@ val FlywayVersion = "6.2.2"
   "com.google.inject" % "guice" % "4.2.3"
 )
 
-(ThisBuild / scalaVersion) := "2.13.6"
+(ThisBuild / scalaVersion) := "2.13.8"
 (ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
   "-deprecation",

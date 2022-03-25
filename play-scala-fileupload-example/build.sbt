@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-fileupload-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.6",
+    scalaVersion := "2.13.8",
     libraryDependencies ++= Seq(
       ws,
       guice,
