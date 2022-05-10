@@ -6,7 +6,7 @@ set -o pipefail
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |" 
 echo "+----------------------------+"
-sbt ++$TRAVIS_SCALA_VERSION test
+sbt ++$MATRIX_SCALA test
 
 # At least verifies that Gatling tests are compiling
-sbt ++$TRAVIS_SCALA_VERSION ";project gatling; gatling:compile"
+sbt ++$MATRIX_SCALA ";project gatling; gatling:compile"

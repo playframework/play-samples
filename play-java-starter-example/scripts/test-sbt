@@ -6,4 +6,4 @@ set -o pipefail
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |" 
 echo "+----------------------------+"
-sbt ++$TRAVIS_SCALA_VERSION test
+sbt ++$MATRIX_SCALA test
