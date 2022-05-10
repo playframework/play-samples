@@ -26,10 +26,10 @@ pushd play-scala-log4j2-example         && scripts/test-sbt && popd
 pushd play-scala-macwire-di-example     && scripts/test-sbt && popd
 pushd play-scala-rest-api-example       && scripts/test-sbt && popd
 # Uses libsodium
-# pushd play-scala-secure-session-example && scripts/test-sbt && popd
+pushd play-scala-secure-session-example && scripts/test-sbt && popd
 pushd play-scala-slick-example          && scripts/test-sbt && popd
 pushd play-scala-starter-example        && scripts/test-sbt && popd
 pushd play-scala-streaming-example      && scripts/test-sbt && popd
 # uses vanilla sbt
-# pushd play-scala-tls-example            && scripts/test-sbt && popd
+pushd play-scala-tls-example            && scripts/test-sbt && popd
 pushd play-scala-websocket-example      && scripts/test-sbt && popd
