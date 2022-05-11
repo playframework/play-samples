@@ -1,9 +1,10 @@
 package actors
 
-import javax.inject._
 
+import javax.inject._
 import akka.actor._
 import akka.event.{LogMarker, MarkerLoggingAdapter}
+import akka.pattern.pipe
 import akka.stream._
 import akka.stream.scaladsl._
 import akka.util.Timeout
@@ -62,6 +63,9 @@ class UserActor @Inject()(@Assisted id: String, @Named("stocksActor") stocksActo
 
     case UnwatchStocks(symbols) =>
       unwatchStocks(symbols)
+
+    case Done =>
+      context.stop(self)
   }
 
   /**
@@ -75,7 +79,7 @@ class UserActor @Inject()(@Assisted id: String, @Named("stocksActor") stocksActo
     // from the browse), using a coupled sink and source.
     Flow.fromSinkAndSourceCoupled(jsonSink, hubSource).watchTermination() { (_, termination) =>
       // When the flow shuts down, make sure this actor also stops.
-      termination.foreach(_ => context.stop(self))
+      termination.pipeTo(self)
       NotUsed
     }
   }

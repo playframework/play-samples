@@ -11,6 +11,7 @@ import akka.actor.ActorRef;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.Pair;
+import akka.pattern.Patterns;
 import akka.stream.KillSwitches;
 import akka.stream.Materializer;
 import akka.stream.UniqueKillSwitch;
@@ -31,6 +32,7 @@ import java.util.Set;
 import java.util.concurrent.CompletionStage;
 
 import static akka.pattern.PatternsCS.ask;
+import static akka.pattern.PatternsCS.pipe;
 
 /**
  * The broker between the WebSocket and the StockActor(s).  The UserActor holds the connection and sends serialized
@@ -80,7 +82,7 @@ public class UserActor extends AbstractActor {
                 //.log("actorWebsocketFlow", logger)
                 .watchTermination((n, stage) -> {
                     // When the flow shuts down, make sure this actor also stops.
-                    stage.thenAccept(f -> context().stop(self()));
+                    Patterns.pipe(stage, getContext().dispatcher()).to(self());
                     return NotUsed.getInstance();
                 });
     }
@@ -99,6 +101,8 @@ public class UserActor extends AbstractActor {
                 .match(UnwatchStocks.class, unwatchStocks -> {
                     logger.info("Received message {}", unwatchStocks);
                     unwatchStocks(unwatchStocks.symbols);
+                }).match(Done.class, done -> {
+                    context().stop(self());
                 }).build();
     }
 
