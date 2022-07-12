@@ -69,7 +69,7 @@ val TestDeps = Seq(
   "org.scalatestplus.play"  %% "scalatestplus-play"  % "5.0.0" % Test, 
 )
 
-scalaVersion := "2.12.15"
+scalaVersion := "2.12.16"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 
 // Make verbose tests
