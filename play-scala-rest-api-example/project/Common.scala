@@ -13,11 +13,12 @@ object Common extends AutoPlugin {
     organization := "com.lightbend.restapi",
     version := "1.0-SNAPSHOT",
     resolvers += Resolver.typesafeRepo("releases"),
-    javacOptions ++= Seq("-source", "1.8", "-target", "1.8"),
+    javacOptions ++= Seq("--release", "11"),
     scalacOptions ++= Seq(
       "-encoding",
       "UTF-8", // yes, this is 2 args
-      "-target:jvm-1.8",
+      "-release",
+      "11", // yes, this is 2 args (could also be done as -release:11 however)
       "-deprecation",
       "-feature",
       "-unchecked",

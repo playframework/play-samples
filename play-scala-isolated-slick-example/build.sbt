@@ -30,7 +30,7 @@ val FlywayVersion = "6.2.2"
   "-Xlint",
   "-Ywarn-numeric-widen"
 )
-(ThisBuild / javacOptions) ++= Seq("-source", "1.8", "-target", "1.8")
+(ThisBuild / javacOptions) ++= Seq("--release", "11")
 
 lazy val flyway = (project in file("modules/flyway"))
   .enablePlugins(FlywayPlugin)
