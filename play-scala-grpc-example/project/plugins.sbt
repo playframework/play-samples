@@ -1,10 +1,14 @@
+lazy val plugins = (project in file(".")).settings(
+  scalaVersion := "2.12.17", // TODO: remove when upgraded to sbt 1.8.0 (maybe even 1.7.2), see https://github.com/sbt/sbt/pull/7021
+)
+
 enablePlugins(BuildInfoPlugin)
 val playGrpcV = "0.9.1"
 buildInfoKeys := Seq[BuildInfoKey]("playGrpcVersion" -> playGrpcV)
 buildInfoPackage := "play.scala.grpc.sample"
 
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.16")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.0-M2")
 
 // #grpc_sbt_plugin
 // project/plugins.sbt

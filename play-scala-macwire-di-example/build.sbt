@@ -1,3 +1,5 @@
+val playVersion = play.core.PlayVersion.current
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
@@ -6,11 +8,14 @@ lazy val root = (project in file("."))
     scalaVersion := "2.13.8",
     libraryDependencies ++= Seq(
       "com.softwaremill.macwire" %% "macros" % "2.3.3" % "provided",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
+      "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
       "-deprecation",
       "-Xfatal-warnings"
-    )
+    ),
+    // Needed for ssl-config to create self signed certificated under Java 17
+    Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAMED"),
   )

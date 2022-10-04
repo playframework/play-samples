@@ -9,8 +9,9 @@ import play.api.routing.Router
 import play.api.test._
 import play.grpc.specs2.ServerGrpcClient
 import routers.HelloWorldRouter
-import play.api.Configuration
+import play.api.{ Application, Configuration }
 import com.typesafe.config.ConfigFactory
+import play.core.server.ServerConfig
 
 class HelloSpecs2Spec extends ForServer with ServerGrpcClient with PlaySpecification with ApplicationFactories {
 
@@ -21,6 +22,12 @@ class HelloSpecs2Spec extends ForServer with ServerGrpcClient with PlaySpecifica
       .configure(new Configuration(ConfigFactory.parseString("play.filters.hosts.allowed += 0.0.0.0").resolve()))
     )
 
+  override protected def testServerFactory: TestServerFactory = new DefaultTestServerFactory() {
+    // See https://github.com/playframework/playframework/pull/11173
+    // Alternative would be to run the suite "sequential"
+    override protected def serverConfig(app: Application): ServerConfig = super.serverConfig(app).copy(port = Some(0))
+  }
+
   def wsUrl(path: String)(implicit running: RunningServer): WSRequest = {
     val ws = running.app.injector.instanceOf[WSClient]
     val url = running.endpoints.httpEndpoint.get.pathUrl(path)
@@ -29,19 +36,19 @@ class HelloSpecs2Spec extends ForServer with ServerGrpcClient with PlaySpecifica
 
   "A Play server bound to a gRPC router" should {
     "give a 404 when routing a non-gRPC request" >> { implicit rs: RunningServer =>
-      val result = await(wsUrl("/").get)
+      val result = await(wsUrl("/").get())
       result.status must ===(404)
     }
     "give an Ok header when routing a non-existent gRPC method" >> { implicit rs: RunningServer =>
       val result = await(wsUrl(s"/${GreeterService.name}/FooBar")
         .addHttpHeaders("Content-Type" -> "application/grpc")
-        .get)
+        .get())
       result.status must ===(200)
     }
     "give a 200 when routing an empty request to a gRPC method" >> { implicit rs: RunningServer =>
       val result = await(wsUrl(s"/${GreeterService.name}/SayHello")
         .addHttpHeaders("Content-Type" -> "application/grpc")
-        .get)
+        .get())
       result.status must ===(200)
     }
     "work with a gRPC client" >> { implicit rs: RunningServer =>

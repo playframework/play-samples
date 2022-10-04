@@ -66,11 +66,14 @@ val TestDeps = Seq(
   "com.lightbend.play"      %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test, 
   "com.typesafe.play"       %% "play-test"           % playVersion     % Test, 
   "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test, 
-  "org.scalatestplus.play"  %% "scalatestplus-play"  % "5.0.0" % Test, 
+  "org.scalatestplus.play"  %% "scalatestplus-play"  % "5.1.0" % Test, 
+  "com.typesafe.play"       %% "play-ahc-ws"         % playVersion % Test,
 )
 
-scalaVersion := "2.12.16"
+scalaVersion := "2.13.8"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
+// Needed for ssl-config to create self signed certificated under Java 17
+Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAMED")
 
 // Make verbose tests
 (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))

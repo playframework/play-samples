@@ -49,9 +49,11 @@ lazy val `play-java-grpc-example` = (project in file("."))
     libraryDependencies ++= CompileDeps ++ TestDeps
   )
   
-scalaVersion := "2.12.16"
+scalaVersion := "2.13.8"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
+// Needed for ssl-config to create self signed certificated under Java 17
+Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAMED")
 
 val CompileDeps = Seq(
   guice,

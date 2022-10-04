@@ -27,7 +27,7 @@ class MyMultipartFormDataBodyParser extends BodyParser.DelegatingMultipartFormDa
 
     @Inject
     public MyMultipartFormDataBodyParser(Materializer materializer, play.api.http.HttpConfiguration config, HttpErrorHandler errorHandler) {
-        super(materializer, config.parser().maxMemoryBuffer(), config.parser().maxDiskBuffer(), errorHandler);
+        super(materializer, config.parser().maxMemoryBuffer(), config.parser().maxDiskBuffer(), false, errorHandler);
     }
 
     /**
