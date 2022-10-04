@@ -1,3 +1,5 @@
+val playVersion = play.core.PlayVersion.current
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
@@ -5,6 +7,7 @@ lazy val root = (project in file("."))
     version := "1.0-SNAPSHOT",
     scalaVersion := "2.13.8",
     libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test,
+    libraryDependencies += "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test,
     scalacOptions ++= List(
       "-encoding", "utf8",
       "-deprecation",

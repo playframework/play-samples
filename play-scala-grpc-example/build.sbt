@@ -67,6 +67,7 @@ val TestDeps = Seq(
   "com.typesafe.play"       %% "play-test"           % playVersion     % Test, 
   "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test, 
   "org.scalatestplus.play"  %% "scalatestplus-play"  % "5.1.0" % Test, 
+  "com.typesafe.play"       %% "play-ahc-ws"         % playVersion % Test,
 )
 
 scalaVersion := "2.13.8"
