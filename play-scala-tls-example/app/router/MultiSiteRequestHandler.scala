@@ -21,7 +21,7 @@ class MultiSiteRequestHandler @Inject() (webCommands: WebCommands,
   extends DefaultHttpRequestHandler(
     webCommands,
     optDevContext.devContext,
-    defaultRouter,
+    () => defaultRouter,
     errorHandler,
     configuration,
     filters.filters) {
