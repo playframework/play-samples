@@ -3,4 +3,4 @@
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |" 
 echo "+----------------------------+"
-sbt ++2.12.16 test docs/paradox
+sbt ++$MATRIX_SCALA test docs/paradox
