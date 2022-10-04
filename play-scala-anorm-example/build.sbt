@@ -13,5 +13,7 @@ lazy val root = (project in file("."))
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test,
     ),
     scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked", "-Xfatal-warnings"),
-    javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")
+    javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror"),
+    // Needed for ssl-config to create self signed certificated under Java 17
+    Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAMED"),
   )
