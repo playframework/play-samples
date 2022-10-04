@@ -1,7 +1,5 @@
 import play.core.PlayVersion.akkaVersion
 
-val playVersion = play.core.PlayVersion.current
-
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
@@ -19,7 +17,6 @@ lazy val root = (project in file("."))
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
       "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
       "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
-      "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M1" % Test
     ),
     scalacOptions ++= Seq(

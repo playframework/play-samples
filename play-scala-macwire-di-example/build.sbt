@@ -1,5 +1,3 @@
-val playVersion = play.core.PlayVersion.current
-
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
@@ -8,7 +6,6 @@ lazy val root = (project in file("."))
     scalaVersion := "2.13.10",
     libraryDependencies ++= Seq(
       "com.softwaremill.macwire" %% "macros" % "2.3.3" % "provided",
-      "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M1" % Test
     ),
     scalacOptions ++= Seq(
