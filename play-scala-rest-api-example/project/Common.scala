@@ -17,7 +17,7 @@ object Common extends AutoPlugin {
     scalacOptions ++= Seq(
       "-encoding",
       "UTF-8", // yes, this is 2 args
-      "-target:jvm-1.8",
+      "-release:8",
       "-deprecation",
       "-feature",
       "-unchecked",
