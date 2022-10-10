@@ -4,7 +4,7 @@ version := "2.8.x"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-scalaVersion := "2.13.8"
+scalaVersion := "2.13.10"
 
 (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
 
