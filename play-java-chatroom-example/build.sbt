@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
     version := "2.8.x",
     scalaVersion := "2.13.10",
     libraryDependencies ++= Seq(
-      "org.webjars" %% "webjars-play" % "2.8.0",
+      "org.webjars" %% "webjars-play" % "2.9.0",
       "org.webjars" % "flot" % "0.8.3",
       "org.webjars" % "bootstrap" % "3.4.1",
       guice,
