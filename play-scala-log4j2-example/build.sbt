@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-log4j2-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.8",
+    scalaVersion := "2.13.10",
     libraryDependencies ++= Seq(
       guice,
       "org.apache.logging.log4j" % "log4j-slf4j-impl" % log4jVersion,

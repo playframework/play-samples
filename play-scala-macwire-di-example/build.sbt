@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-macwire-di-example""",
     version := "2.8.x",
-    scalaVersion := "2.13.8",
+    scalaVersion := "2.13.10",
     libraryDependencies ++= Seq(
       "com.softwaremill.macwire" %% "macros" % "2.3.3" % "provided",
       "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test,
