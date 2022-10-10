@@ -5,7 +5,7 @@ This appendix covers how to download, run, use and load test Play.
 
 ## Requirements
 
-You will need a JDK 1.8 that is more recent than b20.  You can download the JDK from [here](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+You will need JDK 11 which can download from [here](https://adoptopenjdk.net/).
 
 You will need to have [git](https://git-scm.com/) installed.
 

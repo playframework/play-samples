@@ -51,7 +51,7 @@ public class HomeController extends Controller {
 
 ## Prerequisites
 
-You will need [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and [sbt](http://www.scala-sbt.org/) installed.
+You will need [JDK 11](https://adoptopenjdk.net/) and [sbt](http://www.scala-sbt.org/) installed.
 
 ## Running
 
