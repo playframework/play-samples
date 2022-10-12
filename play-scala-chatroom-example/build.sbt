@@ -20,7 +20,7 @@ lazy val root = (project in file("."))
       "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
       "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
       "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M1" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
