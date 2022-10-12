@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
     name := """play-scala-compile-di-example""",
     version := "1.0-SNAPSHOT",
     scalaVersion := "2.13.10",
-    libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test,
+    libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M1" % Test,
     libraryDependencies += "com.typesafe.play" %% "play-ahc-ws" % playVersion % Test,
     scalacOptions ++= List(
       "-encoding", "utf8",
