@@ -1,31 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- https://www.playframework.com/documentation/latest/SettingsLogger -->
+
+<!DOCTYPE configuration>
+
 <configuration>
+  <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
+  <import class="ch.qos.logback.core.FileAppender"/>
+  <import class="ch.qos.logback.core.ConsoleAppender"/>
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>logs/application.log</file>
-        <encoder>
-            <pattern>%date [%level] from %logger in %thread - %message%n%xException</pattern>
-        </encoder>
-    </appender>
+  <appender name="FILE" class="FileAppender">
+    <file>logs/application.log</file>
+    <encoder class="PatternLayoutEncoder">
+      <pattern>%date [%level] from %logger in %thread - %message%n%xException</pattern>
+    </encoder>
+  </appender>
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%highlight(%-5level) %logger{15} - [%X{akkaSource}] %message%n%xException{10}</pattern>
-        </encoder>
-    </appender>
+  <appender name="STDOUT" class="ConsoleAppender">
+    <encoder class="PatternLayoutEncoder">
+      <pattern>%highlight(%-5level) %logger{15} - [%X{akkaSource}] %message%n%xException{10}</pattern>
+    </encoder>
+  </appender>
 
-    <logger name="play" level="INFO"/>
+  <logger name="play" level="INFO"/>
 
-    <!-- actors logging -->
-    <logger name="akka" level="DEBUG"/>
+  <!-- actors logging -->
+  <logger name="akka" level="DEBUG"/>
+  <logger name="actors" level="DEBUG"/>
 
-    <logger name="actors" level="DEBUG"/>
+  <!-- controllers -->
+  <logger name="controllers" level="DEBUG"/>
 
-    <!-- controllers -->
-    <logger name="controllers" level="DEBUG"/>
-
-    <root level="INFO">
-        <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
-    </root>
+  <root level="INFO">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="FILE"/>
+  </root>
 
 </configuration>

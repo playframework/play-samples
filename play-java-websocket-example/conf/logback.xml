@@ -1,14 +1,23 @@
-<configuration>
+<?xml version="1.0" encoding="UTF-8" ?>
 
-  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+<!-- https://www.playframework.com/documentation/latest/SettingsLogger -->
+
+<!DOCTYPE configuration>
+
+<configuration>
+  <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
+  <import class="ch.qos.logback.core.FileAppender"/>
+  <import class="ch.qos.logback.core.ConsoleAppender"/>
+
+  <appender name="FILE" class="FileAppender">
     <file>logs/application.log</file>
-    <encoder>
+    <encoder class="PatternLayoutEncoder">
       <pattern>%date [%level] from %logger in %thread - %message%n%xException</pattern>
     </encoder>
   </appender>
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
+  <appender name="STDOUT" class="ConsoleAppender">
+    <encoder class="PatternLayoutEncoder">
       <pattern>%highlight(%-5level) %logger{15} - [%X{akkaSource}] %message%n%xException{10}</pattern>
     </encoder>
   </appender>
