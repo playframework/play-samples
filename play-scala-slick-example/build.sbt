@@ -1,7 +1,8 @@
 lazy val root = (project in file("."))
   .settings(
     name := "play-scala-slick-examples",
-    version := "2.8.x"
+    version := "2.8.x",
+    scalaVersion := "2.13.10",
   )
   .aggregate(
     basicSample,
