@@ -14,7 +14,8 @@ lazy val root = (project in file("."))
     (Compile / javacOptions) ++= Seq("-s", (Compile / managedSourceDirectories).value.head.getAbsolutePath),
     javacOptions ++= Seq(
       "-Xlint:unchecked",
-      "-Werror",
+      "-Xlint:deprecation",
+      "-Werror"
     ),
     // Verbose tests
     (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
