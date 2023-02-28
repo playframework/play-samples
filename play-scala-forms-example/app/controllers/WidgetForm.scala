@@ -21,6 +21,6 @@ object WidgetForm {
     mapping(
       "name" -> nonEmptyText,
       "price" -> number(min = 0)
-    )(Data.apply)(Data.unapply)
+    )(Data.apply)(t => Some((t.name, t.price)))
   )
 }
