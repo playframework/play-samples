@@ -8,7 +8,7 @@ lazy val root = (project in file("."))
     scalaVersion := "2.13.10",
     libraryDependencies ++= Seq(
       guice,
-      "org.webjars" %% "webjars-play" % "2.8.0",
+      "org.webjars" %% "webjars-play" % "2.8.18",
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7",
       "net.logstash.logback" % "logstash-logback-encoder" % "6.2",
