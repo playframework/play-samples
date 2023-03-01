@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
       "org.hibernate" % "hibernate-core" % "5.4.9.Final",
       "io.dropwizard.metrics" % "metrics-core" % "4.1.1",
       "com.palominolabs.http" % "url-builder" % "1.1.0",
-      "net.jodah" % "failsafe" % "2.3.1",
+      "net.jodah" % "failsafe" % "2.3.5",
     ),
     PlayKeys.externalizeResources := false,
     (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
