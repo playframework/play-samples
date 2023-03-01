@@ -16,7 +16,7 @@ val FlywayVersion = "6.2.4"
 
 (ThisBuild / libraryDependencies) ++= Seq(
   "javax.inject" % "javax.inject" % "1",
-  "joda-time" % "joda-time" % "2.10.2",
+  "joda-time" % "joda-time" % "2.10.14",
   "org.joda" % "joda-convert" % "2.2.3",
   "com.google.inject" % "guice" % "4.2.3"
 )
