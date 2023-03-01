@@ -10,7 +10,7 @@ lazy val root = (project in file("."))
       // Test Database
       "com.h2database" % "h2" % "1.4.199",
       // Testing libraries for dealing with CompletionStage...
-      "org.assertj" % "assertj-core" % "3.14.0" % Test,
+      "org.assertj" % "assertj-core" % "3.24.2" % Test,
       "org.awaitility" % "awaitility" % "4.0.3" % Test,
     ),
     javacOptions ++= Seq(
