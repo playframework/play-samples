@@ -9,4 +9,4 @@ addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.8.0")
 addSbtPlugin("io.gatling" % "gatling-sbt" % "3.2.2")
 
 // Scala formatting: "sbt scalafmt"
-addSbtPlugin("com.lucidchart" % "sbt-scalafmt" % "1.15")
+addSbtPlugin("com.lucidchart" % "sbt-scalafmt" % "1.16")
