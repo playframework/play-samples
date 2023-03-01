@@ -50,7 +50,7 @@ lazy val slick = (project in file("modules/slick"))
   .enablePlugins(CodegenPlugin)
   .settings(
     libraryDependencies ++= Seq(
-      "com.zaxxer" % "HikariCP" % "3.4.2",
+      "com.zaxxer" % "HikariCP" % "3.4.5",
       "com.typesafe.slick" %% "slick" % "3.3.2",
       "com.typesafe.slick" %% "slick-hikaricp" % "3.3.2",
       "com.github.tototoshi" %% "slick-joda-mapper" % "2.4.1"
