@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       javaWs % "test",
       "org.awaitility" % "awaitility" % "4.0.1" % "test",
       "org.assertj" % "assertj-core" % "3.14.0" % "test",
-      "org.mockito" % "mockito-core" % "3.1.0" % "test",
+      "org.mockito" % "mockito-core" % "3.12.4" % "test",
     ),
     Test / testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
     scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked"),
