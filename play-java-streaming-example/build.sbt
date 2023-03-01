@@ -2,13 +2,13 @@ name := "play-java-streaming-example"
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "2.13.10"
+scalaVersion := "3.3.0-RC3"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
 libraryDependencies += guice
 
-scalacOptions ++= List("-encoding", "utf8", "-Xfatal-warnings", "-deprecation")
+scalacOptions ++= List("utf8")
 javacOptions ++= Seq(
   "-Xlint:unchecked",
   "-Xlint:deprecation",
