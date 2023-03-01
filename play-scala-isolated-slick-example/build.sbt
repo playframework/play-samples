@@ -18,7 +18,7 @@ val FlywayVersion = "6.2.2"
   "javax.inject" % "javax.inject" % "1",
   "joda-time" % "joda-time" % "2.10.2",
   "org.joda" % "joda-convert" % "2.2.1",
-  "com.google.inject" % "guice" % "4.2.3"
+  "com.google.inject" % "guice" % "5.1.0"
 )
 
 (ThisBuild / scalaVersion) := "2.13.10"
