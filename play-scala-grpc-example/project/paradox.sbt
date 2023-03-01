@@ -1,1 +1,1 @@
-addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.8.0") 
+addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.9.2")
