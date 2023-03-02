@@ -92,7 +92,7 @@ lazy val root = (project in file("."))
     TwirlKeys.templateImports += "com.example.user.User",
     libraryDependencies ++= Seq(
       guice,
-      "com.h2database" % "h2" % "1.4.199",
+      "com.h2database" % "h2" % "1.4.200",
       ws % Test,
       "org.flywaydb" % "flyway-core" % FlywayVersion % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test

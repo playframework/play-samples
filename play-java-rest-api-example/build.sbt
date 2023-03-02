@@ -7,7 +7,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       javaJpa,
-      "com.h2database" % "h2" % "1.4.199",
+      "com.h2database" % "h2" % "1.4.200",
       "org.hibernate" % "hibernate-core" % "5.6.15.Final",
       "io.dropwizard.metrics" % "metrics-core" % "4.1.36",
       "com.palominolabs.http" % "url-builder" % "1.1.5",
