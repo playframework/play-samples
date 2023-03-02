@@ -11,6 +11,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import play.api.test.Helpers._
 import play.api.test._
+import play.api.libs.ws.DefaultBodyReadables.readableAsString
 
 class HomeControllerSpec extends PlaySpec with GuiceOneServerPerSuite with Injecting {
 

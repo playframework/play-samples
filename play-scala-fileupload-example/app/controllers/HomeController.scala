@@ -32,13 +32,13 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
   val form = Form(
     mapping(
       "name" -> text
-    )(FormData.apply)(FormData.unapply)
+    )(FormData.apply)(t => Some(t.name))
   )
 
   /**
    * Renders a start page.
    */
-  def index = Action { implicit request =>
+  def index: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.index(form))
   }
 
@@ -79,9 +79,9 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
    *
    * @return
    */
-  def upload = Action(parse.multipartFormData(handleFilePartAsFile)) { implicit request =>
+  def upload: Action[MultipartFormData[File]] = Action(parse.multipartFormData(handleFilePartAsFile)) { implicit request =>
     val fileOption = request.body.file("name").map {
-      case FilePart(key, filename, contentType, file, fileSize, dispositionType) =>
+      case FilePart(key, filename, contentType, file, fileSize, dispositionType, f) =>
         logger.info(s"key = $key, filename = $filename, contentType = $contentType, file = $file, fileSize = $fileSize, dispositionType = $dispositionType")
         val data = operateOnTempFile(file)
         data
