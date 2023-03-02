@@ -10,7 +10,7 @@ lazy val root = (project in file("."))
       "com.h2database" % "h2" % "1.4.199",
       "org.hibernate" % "hibernate-core" % "5.4.33",
       javaWs % "test",
-      "org.awaitility" % "awaitility" % "4.0.3" % "test",
+      "org.awaitility" % "awaitility" % "4.2.0" % "test",
       "org.assertj" % "assertj-core" % "3.24.2" % "test",
       "org.mockito" % "mockito-core" % "3.12.4" % "test",
     ),
