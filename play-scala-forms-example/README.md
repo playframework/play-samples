@@ -1,6 +1,6 @@
 # play-scala-forms-example
 
-This example shows form processing and form helper handling under Play 2.8.x.
+This example shows form processing and form helper handling under Play.
 
 ## How to run
 

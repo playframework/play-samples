@@ -19,4 +19,4 @@ run
 
 To see an example of a Play application using Slick outside the play application lifecycle, please see:
 
-https://github.com/playframework/play-samples/tree/2.8.x/play-scala-isolated-slick-example
+`play-scala-isolated-slick-example` in https://github.com/playframework/play-samples/

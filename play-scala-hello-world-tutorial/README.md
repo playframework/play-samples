@@ -1,9 +1,9 @@
 # Play Hello World Web Tutorial for Scala
 
-To follow the steps in this tutorial, you will need the correct version of Java and sbt. The template requires:
+To follow the steps in this tutorial, you will need the correct version of Java and sbt. The tutorial requires:
 
 * Java Software Developer's Kit (SE) 1.8 or higher
-* sbt 1.3.4 or higher. Note: if you downloaded this project as a zip file from <https://developer.lightbend.com>, the file includes an sbt distribution for your convenience.
+* sbt 0.13.18 or higher (we recommend 1.7.2). Note: if you downloaded this project as a zip file from https://developer.lightbend.com, the file includes an sbt distribution for your convenience.
 
 To check your Java version, enter the following in a command window:
 
@@ -28,7 +28,7 @@ This example Play project was created from a seed template. It includes all Play
 
 To build and run the project:
 
-1. Use a command window to change into the example project directory, for example: `cd play-scala-hello-world-web`
+1. Use a command window to change into the example project directory, for example: `cd play-scala-hello-world-tutorial`
 
 2. Build the project. Enter: `sbt run`. The project builds and starts the embedded HTTP server. Since this downloads libraries and dependencies, the amount of time required depends partly on your connection's speed.
 
