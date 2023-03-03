@@ -10,7 +10,7 @@ The only server side state is a mapping of session ids to secret keys.  When the
 
 ## Prerequisites
 
-As with all Play projects, you must have JDK 1.8 and [sbt](http://www.scala-sbt.org/) installed.
+As with all Play projects, you must have JDK 11 and [sbt](http://www.scala-sbt.org/) installed.
 
 However, you must install libsodium before using this application, which is a non-Java binary install.
 
