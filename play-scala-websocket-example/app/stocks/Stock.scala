@@ -92,7 +92,7 @@ object StockPrice {
 }
 
 // Used for automatic JSON conversion
-// https://www.playframework.com/documentation/2.8.x/ScalaJson
+// https://www.playframework.com/documentation/latest/ScalaJson
 
 // JSON presentation class for stock history
 case class StockHistory(symbol: StockSymbol, prices: Seq[StockPrice])

@@ -16,7 +16,7 @@ import scala.collection._
  * which provides implicits that create a Messages instance from a request
  * using implicit conversion.
  *
- * See https://www.playframework.com/documentation/2.8.x/ScalaForms#passing-messagesprovider-to-form-helpers
+ * See https://www.playframework.com/documentation/latest/ScalaForms#Passing-MessagesProvider-to-Form-Helpers
  * for details.
  */
 class WidgetController @Inject()(cc: MessagesControllerComponents) extends MessagesAbstractController(cc) {

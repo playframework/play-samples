@@ -18,7 +18,7 @@ To use the `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` cipher suite, you must have
 
 ## Generate Certificates
 
-To use HTTPS, you must have X.509 certificates.  Generating certificates can be painful, so all the scripts needed to generate the certificates needed are included in the `scripts` directory.  For more detail, you can see the [Certificate Generation](http://www.playframework.com/documentation/2.3.x/CertificateGeneration) section in Play WS SSL.
+To use HTTPS, you must have X.509 certificates.  Generating certificates can be painful, so all the scripts needed to generate the certificates needed are included in the `scripts` directory.  For more detail, you can see the [Certificate Generation](http://www.playframework.com/documentation/latest/CertificateGeneration) section in Play WS SSL.
 
 To generate certificates, run:
 
@@ -47,7 +47,7 @@ Now that you've generated the certificates and added the `example.com` host entr
 
 This application is not run with `sbt` -- you should run it with `./play` instead, as there are a number of system properties required to use it effectively.
 
-The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](http://www.playframework.com/documentation/2.5.x/ConfiguringHttps).
+The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](http://www.playframework.com/documentation/latest/ConfiguringHttps).
 
 ```bash
 ./play run
@@ -184,7 +184,7 @@ Now that the server requires client authentication, a client must now provide a 
 
 ## Connecting to the server with Play WS
 
-Fortunately, we happen to have [Play WS](http://www.playframework.com/documentation/2.3.x/ScalaWS), an HTTP client library that can use [TLS client authentication](http://www.playframework.com/documentation/2.3.x/WsSSL).
+Fortunately, we happen to have [Play WS](http://www.playframework.com/documentation/latest/ScalaWS), an HTTP client library that can use [TLS client authentication](http://www.playframework.com/documentation/latest/WsSSL).
 
 The `ws.conf` script looks like this:
 
@@ -220,7 +220,7 @@ ws.ssl {
 
 `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` is a strong cipher suite in the [Suite B Profile for Transport Layer Security](http://tools.ietf.org/html/rfc5430).  (Bruce Schneier believes that the [ECC constants have been manipulated](https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html#c1675929) by the NSA, but other options are limited at this point.)  Note that you need the JCE Unlimited Policy files in order to use this cipher suite -- see the Requirements section above if you haven't already installed it.
 
-Normally you would use [Play WS](http://www.playframework.com/documentation/2.3.x/ScalaWS) in the context of a Play application, but it can also be run directly from `Main`.
+Normally you would use [Play WS](http://www.playframework.com/documentation/latest/ScalaWS) in the context of a Play application, but it can also be run directly from `Main`.
 
 Open up a new shell, and type:
 

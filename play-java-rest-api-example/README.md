@@ -1,6 +1,6 @@
 # play-java-rest-api-example
 
-A REST API showing Play with a JPA backend.  For the Scala version, please see <https://github.com/playframework/play-samples/tree/2.8.x/play-scala-rest-api-example>.
+A REST API showing Play with a JPA backend.  For the Scala version, please see `play-scala-rest-api-example` in https://github.com/playframework/play-samples/.
 
 ## Best Practices for Blocking API
 

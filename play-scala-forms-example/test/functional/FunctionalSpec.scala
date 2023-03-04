@@ -16,12 +16,12 @@ import scala.concurrent.Future
  *
  * This is good for testing filter functionality, such as CSRF token and template checks.
  *
- * See https://www.playframework.com/documentation/2.8.x/ScalaFunctionalTestingWithScalaTest for more details.
+ * See https://www.playframework.com/documentation/latest/ScalaFunctionalTestingWithScalaTest for more details.
  */
 class FunctionalSpec extends PlaySpec with GuiceOneAppPerSuite with Injecting with ScalaFutures {
 
   // CSRF token helper adds "withCSRFToken" to FakeRequest:
-  // https://www.playframework.com/documentation/2.8.x/ScalaCsrf#Testing-CSRF
+  // https://www.playframework.com/documentation/latest/ScalaCsrf#Testing-CSRF
   import CSRFTokenHelper._
 
   "WidgetController" must {
