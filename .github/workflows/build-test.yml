@@ -15,7 +15,7 @@ concurrency:
 jobs:
 #  check-code-style:
 #    name: Code Style
-#    uses: playframework/.github/.github/workflows/cmd.yml@v2
+#    uses: playframework/.github/.github/workflows/cmd.yml@v3
 #    with:
 #      cmd: sbt validateCode
 
@@ -23,7 +23,7 @@ jobs:
     name: Tests
 #    needs:
 #      - "check-code-style"
-    uses: playframework/.github/.github/workflows/cmd.yml@v2
+    uses: playframework/.github/.github/workflows/cmd.yml@v3
     with:
       java: 11, 8
       scala: 2.13.x
@@ -36,4 +36,4 @@ jobs:
     if: github.event_name == 'pull_request'
     needs: # Should be last
       - "tests"
-    uses: playframework/.github/.github/workflows/rtm.yml@v2
+    uses: playframework/.github/.github/workflows/rtm.yml@v3
