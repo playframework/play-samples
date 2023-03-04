@@ -16,7 +16,7 @@ Go to http://localhost:9000/ws to see the WS client pull the time from a remote 
 
 [Dagger 2](https://google.github.io/dagger/) is a compile time dependency injection system. This means that [dependencies are still declared](https://google.github.io/dagger/users-guide.html#declaring-dependencies) with `@Inject`, but the compiler is responsible for resolving the graph.
 
-Play Java supports [Compile Time Dependency Injection](https://www.playframework.com/documentation/2.8.x/JavaCompileTimeDependencyInjection) so the work here is to provide an application loader that hooks into Dagger, rather than using constructor based DI.
+Play Java supports [Compile Time Dependency Injection](https://www.playframework.com/documentation/latest/JavaCompileTimeDependencyInjection) so the work here is to provide an application loader that hooks into Dagger, rather than using constructor based DI.
 
 The `dagger.MyApplicationLoader` class provides the core, by calling out to the `DaggerApplicationComponent`:
 

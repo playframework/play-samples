@@ -268,7 +268,7 @@ def index: Action[AnyContent] = PostAction.async { implicit request =>
 }
 ```
 
-The `PostAction.async` is a [custom action builder](https://www.playframework.com/documentation/2.8.x/ScalaActionsComposition#Custom-action-builders) that can handle `PostRequest`s:
+The `PostAction.async` is a [custom action builder](https://www.playframework.com/documentation/latest/ScalaActionsComposition#Custom-action-builders) that can handle `PostRequest`s:
 
 `PostAction` is involved in each action in the controller -- it mediates the paperwork involved with processing a request into a response, adding context to the request and enriching the response with headers and cookies.  ActionBuilders are essential for handling authentication, authorization and monitoring functionality.
 
