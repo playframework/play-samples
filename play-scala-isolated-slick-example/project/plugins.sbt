@@ -1,5 +1,3 @@
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"
 
 // Database migration
