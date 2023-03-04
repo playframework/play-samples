@@ -46,7 +46,7 @@ POST /v1/posts HTTP/1.1
 
 The best way to see what Play can do is to run a load test.  We've included Gatling in this test project for integrated load testing.
 
-Start Play in production mode, by [staging the application](https://www.playframework.com/documentation/2.5.x/Deploying) and running the play scripts:
+Start Play in production mode, by [staging the application](https://www.playframework.com/documentation/latest/Deploying) and running the play scripts:
 
 ```bash
 sbt stage
