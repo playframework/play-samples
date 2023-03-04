@@ -51,8 +51,8 @@ lazy val slick = (project in file("modules/slick"))
   .settings(
     libraryDependencies ++= Seq(
       "com.zaxxer" % "HikariCP" % "3.4.5",
-      "com.typesafe.slick" %% "slick" % "3.3.3",
-      "com.typesafe.slick" %% "slick-hikaricp" % "3.3.3",
+      "com.typesafe.slick" %% "slick" % "3.4.1",
+      "com.typesafe.slick" %% "slick-hikaricp" % "3.4.1",
       "com.github.tototoshi" %% "slick-joda-mapper" % "2.4.2"
     ),
 
