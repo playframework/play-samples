@@ -60,7 +60,7 @@ Finally, Play is modular and extensible.  Play works with multiple runtime and c
 
 To learn more about Play, check out the [Play tutorials](https://playframework.com/documentation/latest/Tutorials) and see more examples and blog posts about Play, including streaming server-side events ("play-scala-streaming-example") and first class WebSocket support ("play-scala-websocket-example") in the [Play Samples](https://github.com/playframework/play-samples).
 
-To get more involved and if you have questions, join the [forums](https://discuss.playframework.com) at  and follow [PlayFramework on Twitter](https://twitter.com/playframework).
+To get more involved and if you have questions, join the [forums](https://github.com/playframework/playframework/discussions) at  and follow [PlayFramework on Twitter](https://twitter.com/playframework).
 
 ## Microservices vs REST APIs
 
