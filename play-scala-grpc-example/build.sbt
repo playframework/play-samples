@@ -57,7 +57,7 @@ val CompileDeps = Seq(
   "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
   "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
   // Test Database
-  "com.h2database" % "h2" % "1.4.199"
+  "com.h2database" % "h2" % "1.4.200"
 )
 
 val playVersion = play.core.PlayVersion.current

@@ -8,7 +8,7 @@ lazy val root = (project in file("."))
       guice,
       jdbc,
       evolutions,
-      "com.h2database" % "h2" % "1.4.199",
+      "com.h2database" % "h2" % "1.4.200",
       "org.playframework.anorm" %% "anorm" % "2.7.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test,
     ),
