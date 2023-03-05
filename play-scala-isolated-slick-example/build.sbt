@@ -1,5 +1,4 @@
 import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.{slickCodegenDatabasePassword, slickCodegenDatabaseUrl, slickCodegenJdbcDriver}
-import play.core.PlayVersion.{current => playVersion}
 import _root_.slick.codegen.SourceCodeGenerator
 import _root_.slick.{model => m}
 
@@ -7,12 +6,9 @@ lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")
 lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "")
 
-val FlywayVersion = "6.5.7"
+val FlywayVersion = "8.5.13"
 
 (ThisBuild / version) := "1.1-SNAPSHOT"
-
-(ThisBuild / resolvers) += Resolver.sonatypeRepo("releases")
-(ThisBuild / resolvers) += Resolver.sonatypeRepo("snapshots")
 
 (ThisBuild / libraryDependencies) ++= Seq(
   "javax.inject" % "javax.inject" % "1",
@@ -95,7 +91,7 @@ lazy val root = (project in file("."))
       "com.h2database" % "h2" % "1.4.200",
       ws % Test,
       "org.flywaydb" % "flyway-core" % FlywayVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
     ),
     (Test / fork) := true
   )
