@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+MATRIX_SCALA="3.3.0-RC3"
 if [ -z "$MATRIX_SCALA" ]; then
     echo "Error: the environment variable MATRIX_SCALA is not set"
     exit 1
