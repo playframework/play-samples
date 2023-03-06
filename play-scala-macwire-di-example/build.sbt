@@ -5,8 +5,8 @@ lazy val root = (project in file("."))
     version := "1.0-SNAPSHOT",
     scalaVersion := "2.13.10",
     libraryDependencies ++= Seq(
-      "com.softwaremill.macwire" %% "macros" % "2.3.7" % "provided",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M1" % Test
+      "com.softwaremill.macwire" %% "macros" % "2.5.8" % "provided",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

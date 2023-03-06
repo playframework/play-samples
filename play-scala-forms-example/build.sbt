@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
     scalaVersion := "2.13.10",
     libraryDependencies ++= Seq(
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M1" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2" % Test,
     ),
     scalacOptions ++= Seq(
       "-feature",

@@ -57,7 +57,7 @@ val CompileDeps = Seq(
   "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
   "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
   // Test Database
-  "com.h2database" % "h2" % "1.4.199"
+  "com.h2database" % "h2" % "2.1.214"
 )
 
 val playVersion = play.core.PlayVersion.current
@@ -66,7 +66,7 @@ val TestDeps = Seq(
   "com.lightbend.play"      %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test, 
   "com.typesafe.play"       %% "play-test"           % playVersion     % Test, 
   "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test, 
-  "org.scalatestplus.play"  %% "scalatestplus-play"  % "6.0.0-M1" % Test, 
+  "org.scalatestplus.play"  %% "scalatestplus-play"  % "6.0.0-M2" % Test, 
 )
 
 scalaVersion := "2.13.10"
