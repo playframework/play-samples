@@ -7,10 +7,10 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       javaJpa,
-      "com.h2database" % "h2" % "1.4.199",
-      "org.hibernate" % "hibernate-core" % "5.4.33",
+      "com.h2database" % "h2" % "2.1.214",
+      "org.hibernate" % "hibernate-core" % "5.6.15.Final",
       javaWs % "test",
-      "org.awaitility" % "awaitility" % "4.0.3" % "test",
+      "org.awaitility" % "awaitility" % "4.2.0" % "test",
       "org.assertj" % "assertj-core" % "3.24.2" % "test",
       "org.mockito" % "mockito-core" % "5.1.1" % "test",
     ),

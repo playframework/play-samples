@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       "org.abstractj.kalium" % "kalium" % "0.8.0",
       "com.typesafe.akka" %% "akka-distributed-data" % akkaVersion,
       "com.typesafe.akka" %% "akka-cluster-typed" % akkaVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
