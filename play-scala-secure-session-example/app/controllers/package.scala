@@ -34,7 +34,7 @@ package object controllers {
   val form = Form(
     mapping(
       "username" -> text
-    )(UserInfo.apply)(UserInfo.unapply)
+    )(UserInfo.apply)(t => Some(t.toString()))
   )
 
   def discardingSession(result: Result): Result = {
