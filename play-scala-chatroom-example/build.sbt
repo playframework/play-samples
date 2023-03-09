@@ -29,12 +29,6 @@ lazy val root = (project in file("."))
     libraryDependencies ~= { libs =>
       libs.map { dep =>
         dep.excludeAll(
-          ExclusionRule("org.scala-lang.modules", "scala-parser-combinators_2.13"),
-          ExclusionRule("com.typesafe.play", "play-functional_2.13"),
-          ExclusionRule("com.typesafe.play", "play-configuration_2.13"),
-          ExclusionRule("com.typesafe.play", "play-streams_2.13"),
-          ExclusionRule("com.typesafe.play", "play-json_2.13"),
-          ExclusionRule("com.typesafe.play", "play_2.13"),
           ExclusionRule("org.scala-lang.modules", "scala-xml_2.13"),
           ExclusionRule("com.typesafe.play", "twirl-api_2.13"),
           ExclusionRule("com.typesafe", "ssl-config-core_2.13"),
