@@ -14,18 +14,24 @@ object Common extends AutoPlugin {
     version := "1.0-SNAPSHOT",
     resolvers += Resolver.typesafeRepo("releases"),
     javacOptions ++= Seq("--release", "11"),
-    scalacOptions ++= Seq(
-      "-encoding",
-      "UTF-8", // yes, this is 2 args
-      "-release",
-      "11", // yes, this is 2 args (could also be done as -release:11 however)
-      "-deprecation",
-      "-feature",
-      "-unchecked",
-      "-Ywarn-numeric-widen",
-      "-Xfatal-warnings"
-    ),
-    scalacOptions in Test ++= Seq("-Yrangepos"),
+    scalacOptions ++= {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, _)) =>
+          Seq(
+            "-Ywarn-numeric-widen",
+            "-Xsource:3",
+            "-encoding",
+            "UTF-8", // yes, this is 2 args
+            "-release",
+            "11", // yes, this is 2 args (could also be done as -release:11 however)
+            "-deprecation",
+            "-feature",
+            "-unchecked",
+            "-Xfatal-warnings",
+          )
+        case _ => Nil
+      }
+    },
     autoAPIMappings := true
   )
 }

@@ -27,7 +27,7 @@ class PostController @Inject()(cc: PostControllerComponents)(
       mapping(
         "title" -> nonEmptyText,
         "body" -> text
-      )(PostFormInput.apply)(PostFormInput.unapply)
+      )(PostFormInput.apply)(t => Some(t.title, t.body))
     )
   }
 
