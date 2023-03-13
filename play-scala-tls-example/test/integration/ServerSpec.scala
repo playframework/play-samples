@@ -13,6 +13,7 @@ import org.scalatestplus.play._
 import play.api.libs.ws.WSResponse
 import play.api.libs.ws.ahc.AhcWSClient
 import play.api.libs.ws.ahc.AhcWSClientConfigFactory
+import play.api.libs.ws.WSBodyReadables.readableAsString
 
 import scala.concurrent.Future
 
@@ -23,7 +24,7 @@ class ServerSpec extends PlaySpec with GuiceOneHttpsServerPerTest with ScalaFutu
 
   val name = "testing"
   val system = ActorSystem(name)
-  implicit val materializer = Materializer.matFromSystem(system)
+  implicit val materializer: Materializer = Materializer.matFromSystem(system)
 
   val config = ConfigFactory.load("ws").withFallback(ConfigFactory.defaultReference())
   val wsConfig = AhcWSClientConfigFactory.forConfig(config)

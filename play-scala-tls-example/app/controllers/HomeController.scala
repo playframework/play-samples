@@ -7,11 +7,11 @@ import play.api.mvc._
 
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-  def index = Action { implicit request =>
+  def index: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.index(subdomain)).withHeaders("Cache-Control" -> "no-store")
   }
 
-  private def subdomain(implicit r: Request[_]): String = {
+  private def subdomain(implicit r: RequestHeader): String = {
     // pull out the host part of the request URI
     val s = r.host.split(":")(0).replace(".example.com", "")
 

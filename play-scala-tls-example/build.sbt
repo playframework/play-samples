@@ -1,10 +1,21 @@
+lazy val scala213 = "2.13.10"
+lazy val scala3 = "3.3.0-RC3"
+
 val commonSettings = Seq(
-  scalaVersion := "2.13.10",
-  scalacOptions ++= Seq(
-    "-feature",
-    "-deprecation",
-    "-Xfatal-warnings"
-  )
+  scalaVersion := scala213,
+  crossScalaVersions := Seq(scala213, scala3),
+  scalacOptions ++= {
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, _)) =>
+        Seq(
+          "-feature",
+          "-deprecation",
+          "-Xfatal-warnings",
+          "-Xsource:3",
+        )
+      case _ => Nil
+    }
+  }
 )
 
 lazy val one = (project in file("modules/one"))
@@ -34,8 +45,20 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       ws,
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2" % Test,
-    )
+    ),
+    libraryDependencies ++= {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, _)) =>
+          Seq(
+            "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2" % Test,
+          )
+        case Some((3, _)) =>
+          Seq(
+            "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2+0-d4697b31+20230227-1631-SNAPSHOT" % Test,
+          )
+        case _ => Nil
+      }
+    }
   )
   .aggregate(one, two)
   .dependsOn(one, two)
