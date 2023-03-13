@@ -1,9 +1,22 @@
+lazy val scala213 = "2.13.10"
+lazy val scala3 = "3.3.0-RC3"
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
   .settings(
     name := """play-java-chatroom-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.10",
+    scalaVersion := scala213,
+    crossScalaVersions := Seq(scala213, scala3),
+    scalacOptions ++= {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, _)) =>
+          Seq(
+            "-Xsource:3",
+          )
+        case _ => Nil
+      }
+    },
     libraryDependencies ++= Seq(
       "org.webjars" %% "webjars-play" % "2.8.18",
       "org.webjars" % "flot" % "0.8.3",
@@ -13,6 +26,16 @@ lazy val root = (project in file("."))
       "org.assertj" % "assertj-core" % "3.12.2" % Test,
       "org.awaitility" % "awaitility" % "3.1.6" % Test
     ),
+    excludeDependencies ++= {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((3, _)) =>
+          Seq(
+            ExclusionRule("org.scala-lang", "scala-xml_2.13"),
+            ExclusionRule("com.typesafe.play", "twirl-api_2.13"),
+          )
+        case _ => Nil
+      }
+    },
     // Needed to make JUnit report the tests being run
     (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
     javacOptions ++= Seq(
