@@ -1,10 +1,8 @@
-resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-
 libraryDependencies += "com.h2database" % "h2" % "1.4.196"
 
 // Database migration
 // https://github.com/flyway/flyway-sbt
-addSbtPlugin("io.github.davidmweber" % "flyway-sbt" % "6.2.3")
+addSbtPlugin("io.github.davidmweber" % "flyway-sbt" % "7.4.0")
 
 // Slick code generation
 // https://github.com/tototoshi/sbt-slick-codegen

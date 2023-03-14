@@ -11,8 +11,8 @@ lazy val root = (project in file("."))
     crossScalaVersions := supportedScalaVersion,
     libraryDependencies ++= Seq(
       ws,
-      "com.google.dagger" % "dagger" % "2.25.4",
-      "com.google.dagger" % "dagger-compiler" % "2.25.4"
+      "com.google.dagger" % "dagger" % "2.45",
+      "com.google.dagger" % "dagger-compiler" % "2.45"
     ),
     (Compile / scalacOptions ++= {
       CrossVersion.partialVersion(scalaVersion.value) match {
