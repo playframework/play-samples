@@ -25,7 +25,7 @@ object UserParentActor extends ActorModule {
   @Provides def apply(childFactory: UserActor.Factory, configuration: Configuration)
       (implicit ec: ExecutionContext, scheduler: Scheduler): Behavior[Create] = {
 
-    implicit val timeout = Timeout(2.seconds)
+    implicit val timeout = Timeout(new DurationInt(2).seconds)
 
     val defaultStocks = configuration.get[Seq[String]]("default.stocks").map(StockSymbol(_))
 
