@@ -17,6 +17,7 @@ class ComputersDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProv
   class Computers(tag: Tag) extends Table[Computer](tag, "COMPUTER") {
 
     implicit val dateColumnType: ComputersDAO.this.profile.BaseColumnType[java.util.Date] = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
+    //implicit val dateColumnType: profile.BaseColumnType[Date] = MappedColumnType.base[Date, Long](d => d.getTime, d => new Date(d))
 
     def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
     def name = column[String]("NAME")
@@ -24,7 +25,7 @@ class ComputersDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProv
     def discontinued = column[Option[Date]]("DISCONTINUED")
     def companyId = column[Option[Long]]("COMPANY_ID")
 
-    def * = (id.?, name, introduced, discontinued, companyId) <> (Computer.tupled, Computer.unapply _)
+    def * = (id.?, name, introduced, discontinued, companyId) <> ((Computer.apply).tupled, Computer.unapply _)
   }
 
   private val computers = TableQuery[Computers]

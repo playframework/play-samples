@@ -23,6 +23,6 @@ class DogDAO @Inject() (@NamedDatabase("mydb") protected val dbConfigProvider: D
     def name = column[String]("NAME", O.PrimaryKey)
     def color = column[String]("COLOR")
 
-    def * = (name, color) <> (Dog.tupled, Dog.unapply)
+    def * = (name, color) <> ((Dog.apply _).tupled, Dog.unapply)
   }
 }
