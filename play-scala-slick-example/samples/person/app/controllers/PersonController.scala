@@ -24,13 +24,13 @@ class PersonController @Inject()(repo: PersonRepository,
     mapping(
       "name" -> nonEmptyText,
       "age" -> number.verifying(min(0), max(140))
-    )(CreatePersonForm.apply)(CreatePersonForm.unapply)
+    )(CreatePersonForm.apply)(cpf => Some(cpf.name, cpf.age))
   }
 
   /**
    * The index action.
    */
-  def index = Action { implicit request =>
+  def index: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.index(personForm))
   }
 

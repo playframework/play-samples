@@ -22,6 +22,6 @@ class CatDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(
     def name = column[String]("NAME", O.PrimaryKey)
     def color = column[String]("COLOR")
 
-    def * = (name, color) <> (Cat.tupled, Cat.unapply)
+    def * = (name, color) <> ((Cat.apply _).tupled, Cat.unapply)
   }
 }

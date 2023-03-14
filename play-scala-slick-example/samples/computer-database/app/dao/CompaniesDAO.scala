@@ -13,7 +13,7 @@ trait CompaniesComponent { self: HasDatabaseConfigProvider[JdbcProfile] =>
   class Companies(tag: Tag) extends Table[Company](tag, "COMPANY") {
     def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
     def name = column[String]("NAME")
-    def * = (id.?, name) <> (Company.tupled, Company.unapply _)
+    def * = (id.?, name) <> ((Company.apply _).tupled, Company.unapply _)
   }
 }
 
