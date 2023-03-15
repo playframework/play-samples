@@ -1,9 +1,14 @@
+lazy val scala213 = "2.13.10"
+lazy val scala33 = "3.3.0-RC3"
+lazy val supportedScalaVersion = List(scala213, scala33)
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
   .settings(
     name := """play-java-starter-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "3.3.0-RC3",
+    scalaVersion := scala33,
+    crossScalaVersions := supportedScalaVersion,
     libraryDependencies ++= Seq(
       guice,
       // Test Database
@@ -12,6 +17,12 @@ lazy val root = (project in file("."))
       "org.assertj" % "assertj-core" % "3.24.2" % Test,
       "org.awaitility" % "awaitility" % "4.2.0" % Test,
     ),
+    scalacOptions ++= {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((3, n))   =>  Seq("-source:3.0-migration")
+        case _              =>  Nil
+      }
+    },
     javacOptions ++= Seq(
       "-encoding", "UTF-8",
       "-parameters",

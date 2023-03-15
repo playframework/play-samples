@@ -2,13 +2,24 @@ name := "play-java-streaming-example"
 
 version := "1.0-SNAPSHOT"
 
-scalaVersion := "3.3.0-RC3"
+lazy val scala213 = "2.13.10"
+lazy val scala33 = "3.3.0-RC3"
+lazy val supportedScalaVersion = List(scala213, scala33)
 
-lazy val root = (project in file(".")).enablePlugins(PlayJava)
+scalaVersion := scala33
+
+lazy val root = (project in file(".")).enablePlugins(PlayJava).settings(
+  crossScalaVersions := supportedScalaVersion
+)
 
 libraryDependencies += guice
 
-scalacOptions ++= List("utf8")
+scalacOptions ++= {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((3, n))   =>  Seq("utf8", "-source:3.0-migration")
+    case _              =>  Seq("utf8")
+  }
+}
 javacOptions ++= Seq(
   "-Xlint:unchecked",
   "-Xlint:deprecation",
