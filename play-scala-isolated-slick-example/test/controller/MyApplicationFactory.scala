@@ -35,7 +35,7 @@ class FlywayMigrator @Inject()(env: Environment, configuration: Configuration) {
     val user = configuration.get[String]("myapp.database.user")
     val password = configuration.get[String]("myapp.database.password")
     Flyway.configure()
-      .dataSource(new DriverDataSource(env.classLoader, driver, url, user, password, new Properties()))
+      .dataSource(new DriverDataSource(env.classLoader, driver, url, user, password))
       .locations("filesystem:modules/flyway/src/main/resources/db/migration")
       .load()
       .migrate()

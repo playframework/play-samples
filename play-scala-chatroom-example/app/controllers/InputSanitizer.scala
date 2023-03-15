@@ -1,7 +1,7 @@
 package controllers
 
 import org.jsoup.Jsoup
-import org.jsoup.safety.Whitelist
+import org.jsoup.safety.Safelist
 import play.api.inject._
 
 /**
@@ -13,7 +13,7 @@ trait InputSanitizer {
 
 class JSoupInputSanitizer extends InputSanitizer {
   override def sanitize(input: String): String = {
-    Jsoup.clean(input, Whitelist.basic())
+    Jsoup.clean(input, Safelist.basic())
   }
 }
 
