@@ -1,6 +1,14 @@
 lazy val scala213 = "2.13.10"
 lazy val scala3 = "3.3.0-RC3"
 
+lazy val core = Seq(
+  "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2" % Test,
+)
+
+lazy val scala3Deps = Seq(
+  "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2+0-d4697b31+20230227-1631-SNAPSHOT" % Test,
+)
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
@@ -14,15 +22,8 @@ lazy val root = (project in file("."))
     ),
     libraryDependencies ++= {
       CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((2, _)) =>
-          Seq(
-            "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2" % Test
-          )
-        case Some((3, _)) =>
-          Seq(
-            "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2+0-d4697b31+20230227-1631-SNAPSHOT" % Test
-          )
-        case _ => Nil
+        case Some((3, _)) => scala3Deps
+        case _ => core
       }
     },
     scalacOptions ++= {
