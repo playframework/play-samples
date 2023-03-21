@@ -46,10 +46,17 @@ lazy val slick = (project in file("modules/slick"))
   .enablePlugins(CodegenPlugin)
   .settings(
     libraryDependencies ++= Seq(
+<<<<<<< HEAD
       "com.zaxxer" % "HikariCP" % "5.0.1",
       "com.typesafe.slick" %% "slick" % "3.4.1",
       "com.typesafe.slick" %% "slick-hikaricp" % "3.4.1",
       "com.github.tototoshi" %% "slick-joda-mapper" % "2.4.2"
+=======
+      "com.zaxxer" % "HikariCP" % "3.4.5",
+      "com.typesafe.slick" %% "slick" % "3.3.3",
+      "com.typesafe.slick" %% "slick-hikaricp" % "3.3.3",
+      "com.github.tototoshi" %% "slick-joda-mapper" % "2.6.0"
+>>>>>>> 622ed087 (Update slick-joda-mapper to 2.6.0)
     ),
 
     slickCodegenDatabaseUrl := databaseUrl,
@@ -62,13 +69,13 @@ lazy val slick = (project in file("modules/slick"))
 
     slickCodegenCodeGenerator := { (model: m.Model) =>
       new SourceCodeGenerator(model) {
-        override def code =
-          "import com.github.tototoshi.slick.H2JodaSupport._\n" + "import org.joda.time.DateTime\n" + super.code
-
         override def Table = new Table(_) {
+          override def TableClass = new TableClass {
+            override def parents = Seq("com.example.user.slick.JodaSupport")
+          }
           override def Column = new Column(_) {
             override def rawType = model.tpe match {
-              case "java.sql.Timestamp" => "DateTime" // kill j.s.Timestamp
+              case "java.sql.Timestamp" => "org.joda.time.DateTime" // kill j.s.Timestamp
               case _ =>
                 super.rawType
             }
