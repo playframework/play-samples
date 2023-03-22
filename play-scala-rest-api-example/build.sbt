@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
       "org.joda" % "joda-convert" % "2.2.3",
       "net.logstash.logback" % "logstash-logback-encoder" % "6.3",
       "io.lemonlabs" %% "scala-uri" % "4.0.3",
-      "net.codingwell" %% "scala-guice" % "4.2.11",
+      "net.codingwell" %% "scala-guice" % "5.1.1",
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
     ),
     scalacOptions ++= Seq(
