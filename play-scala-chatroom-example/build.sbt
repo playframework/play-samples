@@ -11,7 +11,7 @@ lazy val commonDeps = Seq(
   "org.webjars" % "bootstrap" % "3.3.7-1",
   "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
   "org.jsoup" % "jsoup" % "1.15.4",
-  "ch.qos.logback" % "logback-classic" % "1.4.5",
+  "ch.qos.logback" % "logback-classic" % "1.4.6",
 )
 
 lazy val scala3AkkaDeps = Seq(

@@ -49,7 +49,7 @@ lazy val slick = (project in file("modules/slick"))
       "com.zaxxer" % "HikariCP" % "5.0.1",
       "com.typesafe.slick" %% "slick" % "3.4.1",
       "com.typesafe.slick" %% "slick-hikaricp" % "3.4.1",
-      "com.github.tototoshi" %% "slick-joda-mapper" % "2.4.2"
+      "com.github.tototoshi" %% "slick-joda-mapper" % "2.6.0"
     ),
 
     slickCodegenDatabaseUrl := databaseUrl,
@@ -62,13 +62,13 @@ lazy val slick = (project in file("modules/slick"))
 
     slickCodegenCodeGenerator := { (model: m.Model) =>
       new SourceCodeGenerator(model) {
-        override def code =
-          "import com.github.tototoshi.slick.H2JodaSupport._\n" + "import org.joda.time.DateTime\n" + super.code
-
         override def Table = new Table(_) {
+          override def TableClass = new TableClass {
+            override def parents = Seq("com.example.user.slick.JodaSupport")
+          }
           override def Column = new Column(_) {
             override def rawType = model.tpe match {
-              case "java.sql.Timestamp" => "DateTime" // kill j.s.Timestamp
+              case "java.sql.Timestamp" => "org.joda.time.DateTime" // kill j.s.Timestamp
               case _ =>
                 super.rawType
             }
