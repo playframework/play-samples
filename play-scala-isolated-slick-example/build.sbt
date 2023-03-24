@@ -12,8 +12,6 @@ val FlywayVersion = "8.5.13"
 
 (ThisBuild / libraryDependencies) ++= Seq(
   "javax.inject" % "javax.inject" % "1",
-  "joda-time" % "joda-time" % "2.12.2",
-  "org.joda" % "joda-convert" % "2.2.3",
   "com.google.inject" % "guice" % "4.2.3"
 )
 
@@ -48,8 +46,7 @@ lazy val slick = (project in file("modules/slick"))
     libraryDependencies ++= Seq(
       "com.zaxxer" % "HikariCP" % "3.4.5",
       "com.typesafe.slick" %% "slick" % "3.3.3",
-      "com.typesafe.slick" %% "slick-hikaricp" % "3.3.3",
-      "com.github.tototoshi" %% "slick-joda-mapper" % "2.6.0"
+      "com.typesafe.slick" %% "slick-hikaricp" % "3.3.3"
     ),
 
     slickCodegenDatabaseUrl := databaseUrl,
@@ -63,12 +60,9 @@ lazy val slick = (project in file("modules/slick"))
     slickCodegenCodeGenerator := { (model: m.Model) =>
       new SourceCodeGenerator(model) {
         override def Table = new Table(_) {
-          override def TableClass = new TableClass {
-            override def parents = Seq("com.example.user.slick.JodaSupport")
-          }
           override def Column = new Column(_) {
             override def rawType = model.tpe match {
-              case "java.sql.Timestamp" => "org.joda.time.DateTime" // kill j.s.Timestamp
+              case "java.sql.Timestamp" => "java.time.Instant" // kill j.s.Timestamp
               case _ =>
                 super.rawType
             }
@@ -88,7 +82,7 @@ lazy val root = (project in file("."))
     TwirlKeys.templateImports += "com.example.user.User",
     libraryDependencies ++= Seq(
       guice,
-      "com.h2database" % "h2" % "1.4.200",
+      "com.h2database" % "h2" % "1.4.197", // Same version as slick
       ws % Test,
       "org.flywaydb" % "flyway-core" % FlywayVersion % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
