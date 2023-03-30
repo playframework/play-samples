@@ -22,7 +22,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       ws,
-      "org.webjars" %% "webjars-play" % "2.8.18",
+      "org.webjars" %% "webjars-play" % "2.9.0-M3-SNAPSHOT",
       "org.webjars" % "bootstrap" % "2.3.2",
       "org.webjars" % "flot" % "0.8.3",
 
@@ -30,16 +30,6 @@ lazy val root = (project in file("."))
       "org.assertj" % "assertj-core" % "3.24.2" % Test,
       "org.awaitility" % "awaitility" % "4.2.0" % Test,
     ),
-    excludeDependencies ++= {
-      CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((3, _)) =>
-          Seq(
-            ExclusionRule("org.scala-lang", "scala-xml_2.13"),
-            ExclusionRule("com.typesafe.play", "twirl-api_2.13"),
-          )
-        case _ => Nil
-      }
-    },
     LessKeys.compress := true,
     javacOptions ++= Seq(
       "-Xlint:unchecked",
