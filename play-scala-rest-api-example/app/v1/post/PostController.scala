@@ -10,7 +10,6 @@ import play.api.mvc._
 import scala.concurrent.{ExecutionContext, Future}
 
 case class PostFormInput(title: String, body: String)
-
 object PostFormInput {
   def unapply(postFormInput: PostFormInput): Option[(String, String)] = {
     Some((postFormInput.title, postFormInput.body))
