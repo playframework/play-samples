@@ -12,7 +12,7 @@ import play.i18n.Lang;
 import play.i18n.Messages;
 import play.i18n.MessagesApi;
 import play.libs.Json;
-import play.libs.concurrent.HttpExecutionContext;
+import play.libs.concurrent.ClassLoaderExecutionContext;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.test.Helpers;
@@ -47,7 +47,7 @@ public class UnitTest {
 
         PersonRepository repository = mock(PersonRepository.class);
         FormFactory formFactory = mock(FormFactory.class);
-        HttpExecutionContext ec = new HttpExecutionContext(ForkJoinPool.commonPool());
+        ClassLoaderExecutionContext ec = new ClassLoaderExecutionContext(ForkJoinPool.commonPool());
         final PersonController controller = new PersonController(formFactory, repository, ec);
         final Result result = controller.index(request.build());
 
@@ -87,7 +87,7 @@ public class UnitTest {
         FormFactory formFactory = new FormFactory(messagesApi, new Formatters(messagesApi), validatorFactory, config);
 
         // It is okay to use commonPool here since this is just a test.
-        HttpExecutionContext ec = new HttpExecutionContext(ForkJoinPool.commonPool());
+        ClassLoaderExecutionContext ec = new ClassLoaderExecutionContext(ForkJoinPool.commonPool());
 
         // Create controller and call method under test:
         final PersonController controller = new PersonController(formFactory, repository, ec);

@@ -1,7 +1,7 @@
 package v1.post;
 
 import com.palominolabs.http.url.UrlBuilder;
-import play.libs.concurrent.HttpExecutionContext;
+import play.libs.concurrent.ClassLoaderExecutionContext;
 import play.mvc.Http;
 
 import javax.inject.Inject;
@@ -16,10 +16,10 @@ import java.util.stream.Stream;
 public class PostResourceHandler {
 
     private final PostRepository repository;
-    private final HttpExecutionContext ec;
+    private final ClassLoaderExecutionContext ec;
 
     @Inject
-    public PostResourceHandler(PostRepository repository, HttpExecutionContext ec) {
+    public PostResourceHandler(PostRepository repository, ClassLoaderExecutionContext ec) {
         this.repository = repository;
         this.ec = ec;
     }
