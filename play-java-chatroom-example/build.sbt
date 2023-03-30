@@ -18,7 +18,7 @@ lazy val root = (project in file("."))
       }
     },
     libraryDependencies ++= Seq(
-      "org.webjars" %% "webjars-play" % "2.8.18",
+      "org.webjars" %% "webjars-play" % "2.9.0-M3-SNAPSHOT",
       "org.webjars" % "flot" % "0.8.3",
       "org.webjars" % "bootstrap" % "3.4.1",
       guice,
@@ -26,16 +26,6 @@ lazy val root = (project in file("."))
       "org.assertj" % "assertj-core" % "3.12.2" % Test,
       "org.awaitility" % "awaitility" % "3.1.6" % Test
     ),
-    excludeDependencies ++= {
-      CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((3, _)) =>
-          Seq(
-            ExclusionRule("org.scala-lang", "scala-xml_2.13"),
-            ExclusionRule("com.typesafe.play", "twirl-api_2.13"),
-          )
-        case _ => Nil
-      }
-    },
     // Needed to make JUnit report the tests being run
     (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
     javacOptions ++= Seq(
