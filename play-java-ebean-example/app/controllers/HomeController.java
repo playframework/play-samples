@@ -4,7 +4,7 @@ import models.Computer;
 import play.data.Form;
 import play.data.FormFactory;
 import play.i18n.MessagesApi;
-import play.libs.concurrent.HttpExecutionContext;
+import play.libs.concurrent.ClassLoaderExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -25,19 +25,19 @@ public class HomeController extends Controller {
     private final ComputerRepository computerRepository;
     private final CompanyRepository companyRepository;
     private final FormFactory formFactory;
-    private final HttpExecutionContext httpExecutionContext;
+    private final ClassLoaderExecutionContext classLoaderExecutionContext;
     private final MessagesApi messagesApi;
 
     @Inject
     public HomeController(FormFactory formFactory,
                           ComputerRepository computerRepository,
                           CompanyRepository companyRepository,
-                          HttpExecutionContext httpExecutionContext,
+                          ClassLoaderExecutionContext classLoaderExecutionContext,
                           MessagesApi messagesApi) {
         this.computerRepository = computerRepository;
         this.formFactory = formFactory;
         this.companyRepository = companyRepository;
-        this.httpExecutionContext = httpExecutionContext;
+        this.classLoaderExecutionContext = classLoaderExecutionContext;
         this.messagesApi = messagesApi;
     }
 
@@ -68,7 +68,7 @@ public class HomeController extends Controller {
         return computerRepository.page(page, 10, sortBy, order, filter).thenApplyAsync(list -> {
             // This is the HTTP rendering thread context
             return ok(views.html.list.render(list, sortBy, order, filter, request, messagesApi.preferred(request)));
-        }, httpExecutionContext.current());
+        }, classLoaderExecutionContext.current());
     }
 
     /**
@@ -87,7 +87,7 @@ public class HomeController extends Controller {
             Computer c = computerOptional.get();
             Form<Computer> computerForm = formFactory.form(Computer.class).fill(c);
             return ok(views.html.editForm.render(id, computerForm, companies, request, messagesApi.preferred(request)));
-        }, httpExecutionContext.current());
+        }, classLoaderExecutionContext.current());
     }
 
     /**
@@ -102,7 +102,7 @@ public class HomeController extends Controller {
             return companyRepository.options().thenApplyAsync(companies -> {
                 // This is the HTTP rendering thread context
                 return badRequest(views.html.editForm.render(id, computerForm, companies, request, messagesApi.preferred(request)));
-            }, httpExecutionContext.current());
+            }, classLoaderExecutionContext.current());
         } else {
             Computer newComputerData = computerForm.get();
             // Run update operation and then flash and then redirect
@@ -110,7 +110,7 @@ public class HomeController extends Controller {
                 // This is the HTTP rendering thread context
                 return GO_HOME
                     .flashing("success", "Computer " + newComputerData.getName() + " has been updated");
-            }, httpExecutionContext.current());
+            }, classLoaderExecutionContext.current());
         }
     }
 
@@ -123,7 +123,7 @@ public class HomeController extends Controller {
         return companyRepository.options().thenApplyAsync((Map<String, String> companies) -> {
             // This is the HTTP rendering thread context
             return ok(views.html.createForm.render(computerForm, companies, request, messagesApi.preferred(request)));
-        }, httpExecutionContext.current());
+        }, classLoaderExecutionContext.current());
     }
 
     /**
@@ -136,7 +136,7 @@ public class HomeController extends Controller {
             return companyRepository.options().thenApplyAsync(companies -> {
                 // This is the HTTP rendering thread context
                 return badRequest(views.html.createForm.render(computerForm, companies, request, messagesApi.preferred(request)));
-            }, httpExecutionContext.current());
+            }, classLoaderExecutionContext.current());
         }
 
         Computer computer = computerForm.get();
@@ -145,7 +145,7 @@ public class HomeController extends Controller {
             // This is the HTTP rendering thread context
             return GO_HOME
                 .flashing("success", "Computer " + computer.getName() + " has been created");
-        }, httpExecutionContext.current());
+        }, classLoaderExecutionContext.current());
     }
 
     /**
@@ -157,7 +157,7 @@ public class HomeController extends Controller {
             // This is the HTTP rendering thread context
             return GO_HOME
                 .flashing("success", "Computer has been deleted");
-        }, httpExecutionContext.current());
+        }, classLoaderExecutionContext.current());
     }
 
 }
