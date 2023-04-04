@@ -9,18 +9,10 @@ lazy val root = (project in file("."))
     version := "1.0-SNAPSHOT",
     scalaVersion := scala33,
     crossScalaVersions := supportedScalaVersion,
-    libraryDependencies ++= {
-      CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((3, n))   =>  Seq(
-          "com.softwaremill.macwire" %% "macros" % "2.5.8" % "provided",
-          "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2+0-d4697b31+20230227-1643-SNAPSHOT" % Test
-        )
-        case _              =>  Seq(
-          "com.softwaremill.macwire" %% "macros" % "2.5.8" % "provided",
-          "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2" % Test
-        )
-      }
-    },
+    libraryDependencies ++= Seq(
+      "com.softwaremill.macwire" %% "macros" % "2.5.8" % "provided",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M3-SNAPSHOT" % Test
+    ),
     scalacOptions ++= {
       CrossVersion.partialVersion(scalaVersion.value) match {
         case Some((3, n))   =>  List(
