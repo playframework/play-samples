@@ -4,7 +4,7 @@ import views.html.tags.forms.field_constructor
 
 object FormHelper {
   import views.html.helper.FieldConstructor
-  implicit val inlineBootstrapConstructor = FieldConstructor(field_constructor.f)
+  implicit val inlineBootstrapConstructor: FieldConstructor = FieldConstructor(field_constructor.f)
 
   val classRegex = "(?s)(<(?:input|textarea|select)[^>]*\\sclass=[\"'])".r
   val noClassRegex = "(?s)(<(?:input|textarea|select))((?:(?!\\sclass=\").+)>)".r
