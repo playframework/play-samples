@@ -6,7 +6,7 @@ lazy val supportedScalaVersion = List(scala213, scala3)
 
 lazy val commonDeps = Seq(
   guice,
-  "org.webjars" %% "webjars-play" % "2.9.0-M3-SNAPSHOT",
+  "org.webjars" %% "webjars-play" % "2.9.0-M3",
   "org.webjars" % "flot" % "0.8.3-1",
   "org.webjars" % "bootstrap" % "3.3.7-1",
   "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
