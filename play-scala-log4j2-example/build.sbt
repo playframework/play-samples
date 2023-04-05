@@ -1,4 +1,5 @@
-val log4jVersion = "2.17.2"
+
+val log4jVersion = "2.20.0"
 lazy val scala213 = "2.13.10"
 lazy val scala3 = "3.3.0-RC3"
 lazy val supportedScalaVersion = List(scala213, scala3)
