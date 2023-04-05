@@ -1,8 +1,4 @@
-
 val log4jVersion = "2.20.0"
-lazy val scala213 = "2.13.10"
-lazy val scala3 = "3.3.0-RC3"
-lazy val supportedScalaVersion = List(scala213, scala3)
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
@@ -10,31 +6,19 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-log4j2-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := scala3,
-    crossScalaVersions := supportedScalaVersion,
+    crossScalaVersions := Seq("2.13.10", "3.3.0-RC3"),
+    scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
       "org.apache.logging.log4j" % "log4j-slf4j-impl" % log4jVersion,
       "org.apache.logging.log4j" % "log4j-api" % log4jVersion,
       "org.apache.logging.log4j" % "log4j-core" % log4jVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M3-SNAPSHOT" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M3" % Test
     ),
-    scalacOptions ++= {
-      CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((3, n))   =>  List(
-                                  "-feature",
-                                  "-Xfatal-warnings",
-                                  "-source:3.0-migration",
-                                  "-explain"
-                                )
-        case _              =>  List(
-                                  "-deprecation",
-                                  "-feature",
-                                  "-unchecked",
-                                  "-Xfatal-warnings"
-                                )
-      }
-    },
+    scalacOptions ++= Seq(
+      "-feature",
+      "-Werror"
+    ),
     // Needed for ssl-config to create self signed certificated under Java 17
     Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAMED"),
   )

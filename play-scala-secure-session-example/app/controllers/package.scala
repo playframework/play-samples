@@ -29,12 +29,13 @@ package object controllers {
   object UserInfo {
     // Use a JSON format to automatically convert between case class and JsObject
     implicit val format: Format[UserInfo] = Json.format[UserInfo]
+    def unapply(userInfo: UserInfo): Option[(String)] = Some(userInfo.username)
   }
 
   val form = Form(
     mapping(
       "username" -> text
-    )(UserInfo.apply)(t => Some(t.toString()))
+    )(UserInfo.apply)(UserInfo.unapply)
   )
 
   def discardingSession(result: Result): Result = {
