@@ -18,6 +18,11 @@ import play.core.parsers.Multipart.FileInfo
 import scala.concurrent.{ExecutionContext, Future}
 
 case class FormData(name: String)
+object FormData {
+  def unapply(formData: FormData): Option[(String)] = {
+    Some(formData.name)
+  }
+}
 
 /**
  * This controller handles a file upload.
@@ -32,7 +37,7 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
   val form = Form(
     mapping(
       "name" -> text
-    )(FormData.apply)(t => Some(t.name))
+    )(FormData.apply)(FormData.unapply)
   )
 
   /**
