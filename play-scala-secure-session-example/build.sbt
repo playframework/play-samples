@@ -1,8 +1,8 @@
 import play.core.PlayVersion.akkaVersion
  
 lazy val scala213 = "2.13.10"
-lazy val scala33 = "3.3.0-RC3"
-lazy val supportedScalaVersion = List(scala213, scala33)
+lazy val scala3 = "3.3.0-RC3"
+lazy val supportedScalaVersion = List(scala213, scala3)
 
 lazy val commonDeps = Seq(
   guice,
@@ -18,7 +18,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-secure-session-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := scala33,
+    scalaVersion := scala3,
     crossScalaVersions := supportedScalaVersion,
 
     libraryDependencies ++= commonDeps,
