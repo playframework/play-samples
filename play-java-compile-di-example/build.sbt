@@ -3,14 +3,14 @@ name := """play-java-compile-di-example"""
 version := "1.0-SNAPSHOT"
 
 lazy val scala213 = "2.13.10"
-lazy val scala33 = "3.3.0-RC3"
-lazy val supportedScalaVersion = List(scala213, scala33)
+lazy val scala3 = "3.3.0-RC3"
+lazy val supportedScalaVersion = List(scala213, scala3)
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava).settings(
     crossScalaVersions := supportedScalaVersion
   )
 
-scalaVersion := scala33
+scalaVersion := scala3
 
 ThisBuild / scalacOptions ++= {
       CrossVersion.partialVersion(scalaVersion.value) match {
