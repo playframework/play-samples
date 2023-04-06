@@ -61,7 +61,7 @@ class HomeController @Inject()(userParentActor: ActorRef[UserParentActor.Create]
    */
   private def wsFutureFlow(request: RequestHeader): Future[Flow[JsValue, JsValue, NotUsed]] = {
     // Use guice assisted injection to instantiate and configure the child actor.
-    implicit val timeout = Timeout(new DurationInt(2).seconds) // the first run in dev can take a while :-(
+    implicit val timeout: Timeout = Timeout(1.second) // the first run in dev can take a while :-(
     userParentActor.ask(replyTo => UserParentActor.Create(request.id.toString, replyTo))
   }
 
