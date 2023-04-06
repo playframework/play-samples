@@ -15,17 +15,22 @@ object Common extends AutoPlugin {
     resolvers += Resolver.typesafeRepo("releases"),
     javacOptions ++= Seq("--release", "11"),
     scalacOptions ++= Seq(
-      "-encoding",
-      "UTF-8", // yes, this is 2 args
       "-release",
       "11", // yes, this is 2 args (could also be done as -release:11 however)
-      "-deprecation",
-      "-feature",
-      "-unchecked",
-      "-Ywarn-numeric-widen",
-      "-Xfatal-warnings"
-    ),
-    scalacOptions in Test ++= Seq("-Yrangepos"),
+    ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, _)) =>
+        Seq(
+          "-Ywarn-numeric-widen",
+        )
+      case _ => Seq.empty
+    }),
+    scalacOptions in Test ++= (CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, _)) =>
+        Seq(
+          "-Yrangepos",
+        )
+      case _ => Seq.empty
+    }),
     autoAPIMappings := true
   )
 }

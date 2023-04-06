@@ -9,6 +9,8 @@ RUNNING_PID
 # metals
 project/metals.sbt
 .metals
+*/project/metals.sbt
+*/.metals
 
 # vs code
 .vscode
@@ -18,6 +20,7 @@ project/metals.sbt
 
 # sbt
 project/project/
+*/project/project/
 project/target/
 target/
 

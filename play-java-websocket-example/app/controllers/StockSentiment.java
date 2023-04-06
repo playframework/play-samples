@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.Config;
 import play.libs.Json;
 import play.libs.concurrent.Futures;
-import play.libs.concurrent.HttpExecutionContext;
+import play.libs.concurrent.ClassLoaderExecutionContext;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
@@ -29,10 +29,10 @@ public class StockSentiment extends Controller {
     private final String sentimentUrl;
     private final String tweetUrl;
     private final WSClient wsClient;
-    private final HttpExecutionContext ec;
+    private final ClassLoaderExecutionContext ec;
 
     @Inject
-    public StockSentiment(WSClient wsClient, Config configuration, HttpExecutionContext ec) {
+    public StockSentiment(WSClient wsClient, Config configuration, ClassLoaderExecutionContext ec) {
         this.wsClient = wsClient;
         this.ec = ec;
         this.sentimentUrl = configuration.getString("sentiment.url");

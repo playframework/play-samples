@@ -3,7 +3,7 @@ package controllers;
 import models.Person;
 import models.PersonRepository;
 import play.data.FormFactory;
-import play.libs.concurrent.HttpExecutionContext;
+import play.libs.concurrent.ClassLoaderExecutionContext;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -16,17 +16,17 @@ import static play.libs.Json.toJson;
 
 /**
  * The controller keeps all database operations behind the repository, and uses
- * {@link play.libs.concurrent.HttpExecutionContext} to provide access to the
+ * {@link play.libs.concurrent.ClassLoaderExecutionContext} to provide access to the
  * {@link play.mvc.Http.Context} methods like {@code request()} and {@code flash()}.
  */
 public class PersonController extends Controller {
 
     private final FormFactory formFactory;
     private final PersonRepository personRepository;
-    private final HttpExecutionContext ec;
+    private final ClassLoaderExecutionContext ec;
 
     @Inject
-    public PersonController(FormFactory formFactory, PersonRepository personRepository, HttpExecutionContext ec) {
+    public PersonController(FormFactory formFactory, PersonRepository personRepository, ClassLoaderExecutionContext ec) {
         this.formFactory = formFactory;
         this.personRepository = personRepository;
         this.ec = ec;

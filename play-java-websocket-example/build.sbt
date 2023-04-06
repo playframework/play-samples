@@ -3,13 +3,14 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-java-websocket-example",
     version := "1.0",
-    scalaVersion := "2.13.10",
+    crossScalaVersions := Seq("2.13.10", "3.3.0-RC3"),
+    scalaVersion := crossScalaVersions.value.head,
     // https://github.com/sbt/junit-interface
     testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
     libraryDependencies ++= Seq(
       guice,
       ws,
-      "org.webjars" %% "webjars-play" % "2.8.18",
+      "org.webjars" %% "webjars-play" % "2.9.0-M3",
       "org.webjars" % "bootstrap" % "2.3.2",
       "org.webjars" % "flot" % "0.8.3",
 

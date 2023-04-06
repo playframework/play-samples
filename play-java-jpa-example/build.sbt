@@ -3,7 +3,8 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-java-jpa-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.10",
+    crossScalaVersions := Seq("2.13.10", "3.3.0-RC3"),
+    scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
       javaJpa,
@@ -15,7 +16,7 @@ lazy val root = (project in file("."))
       "org.mockito" % "mockito-core" % "5.2.0" % "test",
     ),
     Test / testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
-    scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked"),
+    scalacOptions ++= List("-feature", "-Werror"),
     javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror"),
     PlayKeys.externalizeResourcesExcludes += baseDirectory.value / "conf" / "META-INF" / "persistence.xml"
   )

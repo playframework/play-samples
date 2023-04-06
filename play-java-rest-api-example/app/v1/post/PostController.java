@@ -2,7 +2,7 @@ package v1.post;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
-import play.libs.concurrent.HttpExecutionContext;
+import play.libs.concurrent.ClassLoaderExecutionContext;
 import play.mvc.*;
 
 import javax.inject.Inject;
@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 @With(PostAction.class)
 public class PostController extends Controller {
 
-    private HttpExecutionContext ec;
+    private ClassLoaderExecutionContext ec;
     private PostResourceHandler handler;
 
     @Inject
-    public PostController(HttpExecutionContext ec, PostResourceHandler handler) {
+    public PostController(ClassLoaderExecutionContext ec, PostResourceHandler handler) {
         this.ec = ec;
         this.handler = handler;
     }

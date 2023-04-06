@@ -1,9 +1,13 @@
+lazy val scala213 = "2.13.10"
+lazy val scala3 = "3.3.0-RC3"
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
   .settings(
     name := "play-java-rest-api-example",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.10",
+    scalaVersion := scala213,
+    crossScalaVersions := Seq(scala213, scala3),
     libraryDependencies ++= Seq(
       guice,
       javaJpa,
@@ -22,11 +26,12 @@ lazy val root = (project in file("."))
     )
   )
 
-val gatlingVersion = "3.3.1"
+val gatlingVersion = "3.9.2"
 lazy val gatling = (project in file("gatling"))
   .enablePlugins(GatlingPlugin)
   .settings(
-    scalaVersion := "2.13.10",
+    scalaVersion := scala213,
+    crossScalaVersions := Seq(scala213, scala3),
     libraryDependencies ++= Seq(
       "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion % Test,
       "io.gatling" % "gatling-test-framework" % gatlingVersion % Test

@@ -7,7 +7,7 @@ import net.jodah.failsafe.FailsafeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.libs.concurrent.Futures;
-import play.libs.concurrent.HttpExecutionContext;
+import play.libs.concurrent.ClassLoaderExecutionContext;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Results;
@@ -27,12 +27,12 @@ public class PostAction extends play.mvc.Action.Simple {
 
     private final Meter requestsMeter;
     private final Timer responsesTimer;
-    private final HttpExecutionContext ec;
+    private final ClassLoaderExecutionContext ec;
     private final Futures futures;
 
     @Singleton
     @Inject
-    public PostAction(MetricRegistry metrics, HttpExecutionContext ec, Futures futures) {
+    public PostAction(MetricRegistry metrics, ClassLoaderExecutionContext ec, Futures futures) {
         this.ec = ec;
         this.futures = futures;
         this.requestsMeter = metrics.meter("requestsMeter");
