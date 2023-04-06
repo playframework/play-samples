@@ -2,7 +2,7 @@ libraryDependencies += "com.h2database" % "h2" % "1.4.200" // Can't use latest h
 
 // Database migration
 // https://github.com/flyway/flyway-sbt
-addSbtPlugin("io.github.davidmweber" % "flyway-sbt" % "9.15.2")
+addSbtPlugin("io.github.davidmweber" % "flyway-sbt" % "7.4.0")
 
 // Slick code generation
 // https://github.com/tototoshi/sbt-slick-codegen
