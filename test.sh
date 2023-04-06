@@ -41,9 +41,7 @@ pushd play-scala-macwire-di-example     && scripts/test-sbt && popd
 pushd play-scala-rest-api-example       && scripts/test-sbt && popd
 # Uses libsodium
 pushd play-scala-secure-session-example && scripts/test-sbt && popd
-if [ "$MATRIX_SCALA" != "3.x" ]; then
-  pushd play-scala-slick-example          && scripts/test-sbt && popd
-fi
+pushd play-scala-slick-example          && scripts/test-sbt && popd
 pushd play-scala-starter-example        && scripts/test-sbt && popd
 pushd play-scala-streaming-example      && scripts/test-sbt && popd
 # uses vanilla sbt
