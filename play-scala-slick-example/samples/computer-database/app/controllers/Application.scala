@@ -30,7 +30,7 @@ class Application @Inject() (
       "introduced" -> optional(date("yyyy-MM-dd")),
       "discontinued" -> optional(date("yyyy-MM-dd")),
       "company" -> optional(longNumber)
-    )(Computer.apply)(c => Some(c.id, c.name, c.introduced, c.discontinued, c.companyId))
+    )(Computer.apply)(Computer.unapply)
   )
 
   // -- Actions

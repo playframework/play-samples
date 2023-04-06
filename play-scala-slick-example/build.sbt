@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
   .aggregate(
     basicSample,
     computerDatabaseSample,
-    personSample,
+    personSample
   )
 
 def sampleProject(name: String) =
@@ -25,19 +25,6 @@ def sampleProject(name: String) =
         "-feature",
         "-Werror"
       ),
-      scalacOptions ++= {
-        CrossVersion.partialVersion(scalaVersion.value) match {
-          case Some((2, _)) =>
-            Seq(
-              "-Xsource:3",
-            )
-          case Some((3, _)) =>
-            Seq(
-              "-explain",
-            )
-          case _ => Nil
-        }
-      },
       libraryDependencies ++= Seq(
         guice,
         "org.playframework" %% "play-slick" % "6.1.0-RC1",
@@ -45,16 +32,6 @@ def sampleProject(name: String) =
         "com.h2database" % "h2" % "2.2.224",
         specs2 % Test,
       ),
-      excludeDependencies ++= {
-        CrossVersion.partialVersion(scalaVersion.value) match {
-          case Some((3, _)) =>
-            Seq(
-              ExclusionRule("com.typesafe.play", "ssl-config-core_2.13"),
-              ExclusionRule("com.typesafe.play", "play_2.13"),
-            )
-          case _ => Nil
-        }
-      },
       (Global / concurrentRestrictions) += Tags.limit(Tags.Test, 1)
     )
     .settings((Test / javaOptions) += "-Dslick.dbs.default.connectionTimeout=30 seconds")
