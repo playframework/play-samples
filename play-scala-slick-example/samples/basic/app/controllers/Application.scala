@@ -23,14 +23,14 @@ class Application @Inject() (
     mapping(
       "name" -> text(),
       "color" -> text()
-    )(Cat.apply)(c => Some(c.name, c.color))
+    )(Cat.apply)(Cat.unapply)
   )
 
   val dogForm: Form[Dog] = Form(
     mapping(
       "name" -> text(),
       "color" -> text()
-    )(Dog.apply)(d => Some(d.name, d.color))
+    )(Dog.apply)(Dog.unapply)
   )
 
   def index = Action.async { implicit request =>

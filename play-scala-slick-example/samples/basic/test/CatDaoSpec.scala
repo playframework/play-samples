@@ -26,8 +26,8 @@ class CatDAOSpec extends Specification {
         Cat("creme puff", "grey")
       )
 
-      Await.result(Future.sequence(testKitties.map(dao.insert)), 1 seconds)
-      val storedCats = Await.result(dao.all(), 1 seconds)
+      Await.result(Future.sequence(testKitties.map(dao.insert)), 1.seconds)
+      val storedCats = Await.result(dao.all(), 1.seconds)
 
       storedCats.toSet must equalTo(testKitties)
     }
