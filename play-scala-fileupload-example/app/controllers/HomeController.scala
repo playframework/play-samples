@@ -18,6 +18,11 @@ import play.core.parsers.Multipart.FileInfo
 import scala.concurrent.{ExecutionContext, Future}
 
 case class FormData(name: String)
+object FormData {
+  def unapply(formData: FormData): Option[(String)] = {
+    Some(formData.name)
+  }
+}
 
 /**
  * This controller handles a file upload.
@@ -38,7 +43,7 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
   /**
    * Renders a start page.
    */
-  def index = Action { implicit request =>
+  def index: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.index(form))
   }
 
@@ -79,9 +84,9 @@ class HomeController @Inject() (cc:MessagesControllerComponents)
    *
    * @return
    */
-  def upload = Action(parse.multipartFormData(handleFilePartAsFile)) { implicit request =>
+  def upload: Action[MultipartFormData[File]] = Action(parse.multipartFormData(handleFilePartAsFile)) { implicit request =>
     val fileOption = request.body.file("name").map {
-      case FilePart(key, filename, contentType, file, fileSize, dispositionType) =>
+      case FilePart(key, filename, contentType, file, fileSize, dispositionType, _) =>
         logger.info(s"key = $key, filename = $filename, contentType = $contentType, file = $file, fileSize = $fileSize, dispositionType = $dispositionType")
         val data = operateOnTempFile(file)
         data

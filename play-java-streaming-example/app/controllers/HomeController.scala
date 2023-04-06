@@ -14,7 +14,7 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
     Ok(views.html.index())
   }
 
-  def javascriptRoutes = Action { implicit request =>
+  def javascriptRoutes: Action[AnyContent] = Action { implicit request =>
     Ok(
       JavaScriptReverseRouter("jsRoutes")(
         routes.javascript.JavaEventSourceController.streamClock

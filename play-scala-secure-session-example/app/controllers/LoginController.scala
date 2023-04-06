@@ -16,7 +16,7 @@ class LoginController @Inject() (
     extends AbstractController(cc) {
 
   def login = userAction.async { implicit request: UserRequest[AnyContent] =>
-    val successFunc = { userInfo: UserInfo =>
+    val successFunc = { (userInfo: UserInfo) =>
       sessionGenerator.createSession(userInfo).map {
         case (sessionId, encryptedCookie) =>
           val session = request.session + (SESSION_ID -> sessionId)
@@ -26,7 +26,7 @@ class LoginController @Inject() (
       }
     }
 
-    val errorFunc = { badForm: Form[UserInfo] =>
+    val errorFunc = { (badForm: Form[UserInfo]) =>
       Future.successful {
         BadRequest(views.html.index(badForm)).flashing(FLASH_ERROR -> "Could not login!")
       }

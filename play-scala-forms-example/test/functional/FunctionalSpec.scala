@@ -34,7 +34,7 @@ class FunctionalSpec extends PlaySpec with GuiceOneAppPerSuite with Injecting wi
       val request = FakeRequest(routes.WidgetController.createWidget)
         .withFormUrlEncodedBody("name" -> "foo", "price" -> "100")
         .withCSRFToken
-      val futureResult: Future[Result] = controller.createWidget().apply(request)
+      val futureResult: Future[Result] = controller.createWidget.apply(request)
 
       // And we can get the results out using Scalatest's "Futures" trait, which gives us whenReady
       whenReady(futureResult) { result =>
@@ -49,7 +49,7 @@ class FunctionalSpec extends PlaySpec with GuiceOneAppPerSuite with Injecting wi
       val request = FakeRequest(routes.WidgetController.createWidget)
         .withFormUrlEncodedBody("name" -> "foo", "price" -> "-100")
         .withCSRFToken
-      val futureResult: Future[Result] = controller.createWidget().apply(request)
+      val futureResult: Future[Result] = controller.createWidget.apply(request)
 
       status(futureResult) must be(Status.BAD_REQUEST)
     }

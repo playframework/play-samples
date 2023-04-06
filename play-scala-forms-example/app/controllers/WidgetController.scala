@@ -44,14 +44,14 @@ class WidgetController @Inject()(cc: MessagesControllerComponents) extends Messa
 
   // This will be the action that handles our form post
   def createWidget = Action { implicit request: MessagesRequest[AnyContent] =>
-    val errorFunction = { formWithErrors: Form[Data] =>
+    val errorFunction = { (formWithErrors: Form[Data]) =>
       // This is the bad case, where the form had validation errors.
       // Let's show the user the form again, with the errors highlighted.
       // Note how we pass the form with errors to the template.
       BadRequest(views.html.listWidgets(widgets.toSeq, formWithErrors, postUrl))
     }
 
-    val successFunction = { data: Data =>
+    val successFunction = { (data: Data) =>
       // This is the good case, where the form was successfully parsed as a Data object.
       val widget = Widget(name = data.name, price = data.price)
       widgets += widget

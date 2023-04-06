@@ -29,6 +29,7 @@ package object controllers {
   object UserInfo {
     // Use a JSON format to automatically convert between case class and JsObject
     implicit val format: Format[UserInfo] = Json.format[UserInfo]
+    def unapply(userInfo: UserInfo): Option[(String)] = Some(userInfo.username)
   }
 
   val form = Form(

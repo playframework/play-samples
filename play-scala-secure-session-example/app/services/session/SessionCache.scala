@@ -7,6 +7,7 @@ import akka.cluster.ddata.typed.scaladsl.ReplicatorMessageAdapter
 import akka.cluster.ddata.LWWMap
 
 import scala.concurrent.duration._
+import akka.cluster.ddata.SelfUniqueAddress
 
 /**
  * A replicated key-store map using akka distributed data. The advantage of
@@ -39,7 +40,7 @@ class SessionCache(
   }
 
   private val distributedData: DistributedData = DistributedData(context.system)
-  private[this] implicit val uniqAddress = distributedData.selfUniqueAddress
+  private[this] implicit val uniqAddress: SelfUniqueAddress = distributedData.selfUniqueAddress
 
   def behavior(children: Map[String, ActorRef[RefreshSession.type]]): Behavior[Command] = Behaviors.receiveMessage {
     case PutInCache(key, value) =>
@@ -132,7 +133,7 @@ object SessionCache {
 }
 
 object SessionExpiration {
-  final case object RefreshSession
+  case object RefreshSession
   import SessionCache.Evict
 
   def apply(parent: ActorRef[Evict], key: String, expirationTime: FiniteDuration): Behavior[RefreshSession.type] = {

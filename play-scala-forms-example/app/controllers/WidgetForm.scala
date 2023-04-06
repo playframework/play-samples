@@ -11,6 +11,11 @@ object WidgetForm {
    * of a parameter tampering attack and makes code clearer.
    */
   case class Data(name: String, price: Int)
+  object Data {
+    def unapply(data: Data): Option[(String, Int)] = {
+      Some((data.name, data.price))
+    }
+  }
 
   /**
    * The form definition for the "create a widget" form.

@@ -5,18 +5,18 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-secure-session-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.10",
+    crossScalaVersions := Seq("2.13.10", "3.3.0-RC3"),
+    scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       ws,
       guice,
       "org.abstractj.kalium" % "kalium" % "0.8.0",
-      "com.typesafe.akka" %% "akka-distributed-data" % akkaVersion,
-      "com.typesafe.akka" %% "akka-cluster-typed" % akkaVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M2" % Test
+      ("com.typesafe.akka" %% "akka-distributed-data" % akkaVersion).cross(CrossVersion.for3Use2_13),
+      ("com.typesafe.akka" %% "akka-cluster-typed" % akkaVersion).cross(CrossVersion.for3Use2_13),
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M3" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
-      "-deprecation",
-      "-Xfatal-warnings"
+      "-Werror"
     )
   )
