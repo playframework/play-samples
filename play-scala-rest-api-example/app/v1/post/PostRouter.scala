@@ -13,8 +13,8 @@ class PostRouter @Inject()(controller: PostController) extends SimpleRouter {
   val prefix = "/v1/posts"
 
   def link(id: PostId): String = {
-    import io.lemonlabs.uri.Url
-    val url = s"${prefix}/${id.toString}"
+    import io.lemonlabs.uri.typesafe.dsl._
+    val url = prefix / id.toString
     url.toString()
   }
 

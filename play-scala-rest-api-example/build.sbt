@@ -20,8 +20,7 @@ lazy val root = (project in file("."))
     ),
     scalacOptions ++= Seq(
       "-feature",
-//      "-deprecation",
-      "-Xfatal-warnings"
+      "-Werror"
     )
   )
 

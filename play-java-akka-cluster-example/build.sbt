@@ -1,8 +1,5 @@
 import play.core.PlayVersion
 
-lazy val scala213 = "2.13.10"
-lazy val scala3 = "3.3.0-RC3"
-
 name := """play-java-akka-cluster-example"""
 organization := "com.example"
 
@@ -10,8 +7,9 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-scalaVersion := scala213
-crossScalaVersions := Seq(scala213, scala3)
+crossScalaVersions := Seq("2.13.10", "3.3.0-RC3")
+
+scalaVersion := crossScalaVersions.value.head
 
 libraryDependencies += guice
 

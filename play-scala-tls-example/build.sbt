@@ -1,21 +1,10 @@
-lazy val scala213 = "2.13.10"
-lazy val scala3 = "3.3.0-RC3"
-
 val commonSettings = Seq(
-  scalaVersion := scala213,
-  crossScalaVersions := Seq(scala213, scala3),
-  scalacOptions ++= {
-    CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, _)) =>
-        Seq(
-          "-feature",
-          "-deprecation",
-          "-Xfatal-warnings",
-          "-Xsource:3",
-        )
-      case _ => Nil
-    }
-  }
+  crossScalaVersions := Seq("2.13.10", "3.3.0-RC3"),
+  scalaVersion := crossScalaVersions.value.head,
+  scalacOptions ++= Seq(
+    "-feature",
+    "-Werror"
+  )
 )
 
 lazy val one = (project in file("modules/one"))

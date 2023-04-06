@@ -17,20 +17,12 @@ lazy val root = (project in file("."))
       "com.palominolabs.http" % "url-builder" % "1.1.5",
       "net.jodah" % "failsafe" % "2.4.4",
     ),
-    scalacOptions ++= {
-      CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((2, _)) =>
-          Seq(
-            "-Xsource:3"
-          )
-        case _ => Nil
-      }
-    },
     PlayKeys.externalizeResources := false,
     (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
     javacOptions ++= Seq(
       "-Xlint:unchecked",
       "-Xlint:deprecation",
+      "-Werror"
     )
   )
 
