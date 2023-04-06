@@ -92,7 +92,7 @@ class UserActor @Inject()(id: String, stocksActor: ActorRef[GetStocks])(implicit
     import akka.actor.typed.scaladsl.AskPattern._
 
     // Ask the stocksActor for a stream containing these stocks.
-    val future = stocksActor.ask(replyTo => GetStocks(symbols, replyTo))
+    val future: Future[Stocks] = stocksActor.ask(replyTo => GetStocks(symbols, replyTo))
 
     // when we get the response back, we want to turn that into a flow by creating a single
     // source and a single sink, so we merge all of the stock sources together into one by
