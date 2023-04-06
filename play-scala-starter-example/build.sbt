@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       "com.h2database" % "h2" % "2.1.214",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M3-SNAPSHOT" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M3" % Test,
     ),
     scalacOptions ++= {
       CrossVersion.partialVersion(scalaVersion.value) match {

@@ -18,7 +18,7 @@ lazy val root = (project in file("."))
       }
     },
     libraryDependencies ++= Seq(
-      "org.webjars" %% "webjars-play" % "2.9.0-M3-SNAPSHOT",
+      "org.webjars" %% "webjars-play" % "2.9.0-M3",
       "org.webjars" % "flot" % "0.8.3",
       "org.webjars" % "bootstrap" % "3.4.1",
       guice,
