@@ -18,6 +18,7 @@ case class Computer(id: Option[Long] = None,
 object Computer {
   implicit def toParameters: ToParameterList[Computer] =
     Macro.toParameters[Computer]
+  def unapply(c: Computer): Option[(Option[Long], String, Option[Date], Option[Date], Option[Long])] = Some((c.id, c.name, c.introduced, c.discontinued, c.companyId))
 }
 
 /**
