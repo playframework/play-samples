@@ -4,7 +4,8 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-java-telemetry-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.10",
+    crossScalaVersions := Seq("2.13.10", "3.3.0-RC3"),
+    scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
       // Test Database
@@ -14,7 +15,6 @@ lazy val root = (project in file("."))
       "org.awaitility" % "awaitility" % "4.2.0" % Test,
     ),
     javacOptions ++= Seq(
-      "-encoding", "UTF-8",
       "-parameters",
       "-Xlint:unchecked",
       "-Xlint:deprecation",
