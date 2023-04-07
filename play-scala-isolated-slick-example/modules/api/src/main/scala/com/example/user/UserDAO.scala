@@ -1,8 +1,7 @@
 package com.example.user
 
-import org.joda.time.DateTime
-
 import scala.concurrent.Future
+import java.time.Instant
 
 /**
  * An implementation dependent DAO.  This could be implemented by Slick, Cassandra, or a REST API.
@@ -25,4 +24,4 @@ trait UserDAO {
 /**
  * Implementation independent aggregate root.
  */
-case class User(id: String, email: String, createdAt: DateTime, updatedAt: Option[DateTime])
+case class User(id: String, email: String, createdAt: Instant, updatedAt: Option[Instant])
