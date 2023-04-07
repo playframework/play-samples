@@ -2,7 +2,7 @@ package com.example.user.slick
 
 import javax.inject.{Inject, Singleton}
 
-import org.joda.time.DateTime
+import java.time.Instant
 import slick.jdbc.JdbcProfile
 import slick.jdbc.JdbcBackend.Database
 import com.example.user._
@@ -48,7 +48,7 @@ class SlickUserDAO @Inject()(db: Database)(implicit ec: ExecutionContext) extend
 
   def create(user: User): Future[Int] = {
     db.run(
-      Users += userToUsersRow(user.copy(createdAt = DateTime.now()))
+      Users += userToUsersRow(user.copy(createdAt = Instant.now()))
     )
   }
 

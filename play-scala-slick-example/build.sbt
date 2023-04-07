@@ -18,7 +18,7 @@ def sampleProject(name: String) =
       scalacOptions ++= Seq(
         "-feature",
         "-deprecation",
-        "-Xfatal-warnings"
+        "-Werror"
       ),
       libraryDependencies ++= Seq(
         guice,
