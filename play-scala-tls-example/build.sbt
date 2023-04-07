@@ -35,7 +35,7 @@ lazy val root = (project in file("."))
       ws,
       guice,
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M3" % Test,
-    ),
+    )
   )
   .aggregate(one, two)
   .dependsOn(one, two)

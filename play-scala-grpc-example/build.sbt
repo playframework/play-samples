@@ -66,7 +66,7 @@ val TestDeps = Seq(
   "com.lightbend.play"      %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test, 
   "com.typesafe.play"       %% "play-test"           % playVersion     % Test, 
   "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test, 
-  "org.scalatestplus.play"  %% "scalatestplus-play"  % "6.0.0-M2" % Test, 
+  "org.scalatestplus.play"  %% "scalatestplus-play"  % "6.0.0-M3" % Test,
 )
 
 scalaVersion := "2.13.10"
