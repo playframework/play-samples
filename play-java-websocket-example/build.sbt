@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-java-websocket-example",
     version := "1.0",
-    crossScalaVersions := Seq("2.13.10", "3.3.0-RC3"),
+    crossScalaVersions := Seq("2.13.10", "3.3.0-RC5"),
     scalaVersion := crossScalaVersions.value.head,
     // https://github.com/sbt/junit-interface
     testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
