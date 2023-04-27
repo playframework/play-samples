@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-java-jpa-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.10", "3.3.0-RC3"),
+    crossScalaVersions := Seq("2.13.10", "3.3.0-RC5"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
@@ -13,7 +13,7 @@ lazy val root = (project in file("."))
       javaWs % "test",
       "org.awaitility" % "awaitility" % "4.2.0" % "test",
       "org.assertj" % "assertj-core" % "3.24.2" % "test",
-      "org.mockito" % "mockito-core" % "5.2.0" % "test",
+      "org.mockito" % "mockito-core" % "5.3.1" % "test",
     ),
     Test / testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
     scalacOptions ++= List("-feature", "-Werror"),

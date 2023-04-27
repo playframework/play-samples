@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-starter-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.10", "3.3.0-RC3"),
+    crossScalaVersions := Seq("2.13.10", "3.3.0-RC5"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,

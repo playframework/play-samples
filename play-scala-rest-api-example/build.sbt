@@ -2,7 +2,7 @@ import sbt.Keys._
 import play.sbt.PlaySettings
 
 lazy val scala213 = "2.13.10"
-lazy val scala3 = "3.3.0-RC3"
+lazy val scala3 = "3.3.0-RC5"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayService, PlayLayoutPlugin, Common)

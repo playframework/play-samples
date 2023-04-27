@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-java-ebean-example",
     version := "1.0.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.10", "3.3.0-RC3"),
+    crossScalaVersions := Seq("2.13.10", "3.3.0-RC5"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
       "com.h2database" % "h2" % "2.1.214",
       "org.awaitility" % "awaitility" % "3.1.6" % Test,
       "org.assertj" % "assertj-core" % "3.12.2" % Test,
-      "org.mockito" % "mockito-core" % "3.0.0" % Test,
+      "org.mockito" % "mockito-core" % "5.3.1" % Test,
     ),
     (Test / testOptions) += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
     javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")

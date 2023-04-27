@@ -7,7 +7,7 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-crossScalaVersions := Seq("2.13.10", "3.3.0-RC3")
+crossScalaVersions := Seq("2.13.10", "3.3.0-RC5")
 
 scalaVersion := crossScalaVersions.value.head
 
