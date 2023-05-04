@@ -13,7 +13,7 @@ import repository.CompanyRepository;
 import repository.ComputerRepository;
 
 import javax.inject.Inject;
-import javax.persistence.PersistenceException;
+import jakarta.persistence.PersistenceException;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
 
