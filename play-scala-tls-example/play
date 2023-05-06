@@ -22,40 +22,34 @@ JVM_OPTIONS="$JVM_OPTIONS -Dplay.http.sslengineprovider=https.CustomSSLEnginePro
 #JVM_OPTIONS="$JVM_OPTIONS -Dplay.ssl.needClientAuth=true"
 
 # Enable the handshake parameter to be extended for better protection.
-# http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#customizing_dh_keys
+# https://docs.oracle.com/en/java/javase/11/security/java-secure-socket-extension-jsse-reference-guide.html#GUID-D9B216E8-3EFC-4882-B76E-17A87D8F2F9D
 # Only relevant for "DHE_RSA", "DHE_DSS", "DH_ANON" algorithms, in ServerHandshaker.java.
 JVM_OPTIONS="$JVM_OPTIONS -Djdk.tls.ephemeralDHKeySize=2048"
 
 # Don't allow client to dictate terms - this can also be used for DoS attacks.
-# Undocumented, defined in sun.security.ssl.Handshaker.java:205
+# Undocumented, defined in https://github.com/openjdk/jdk11u/blob/jdk-11.0.20%2B1/src/java.base/share/classes/sun/security/ssl/ServerHandshakeContext.java#L35-L43
 JVM_OPTIONS="$JVM_OPTIONS -Djdk.tls.rejectClientInitiatedRenegotiation=true"
 
 # Add more details to the disabled algorithms list
-# http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#DisabledAlgorithms
-# and http://bugs.java.com/bugdatabase/view_bug.do?bug_id=7133344
+# https://docs.oracle.com/en/java/javase/11/security/java-secure-socket-extension-jsse-reference-guide.html#GUID-0A438179-32A7-4900-A81C-29E3073E1E90
+# and https://bugs.java.com/bugdatabase/view_bug.do?bug_id=7133344
 JVM_OPTIONS="$JVM_OPTIONS -Djava.security.properties=disabledAlgorithms.properties"
 
 # Fix a version number problem in SSLv3 and TLS version 1.0.
-# http://docs.oracle.com/javase/7/docs/technotes/guides/security/SunProviders.html
+# https://docs.oracle.com/en/java/javase/11/security/oracle-providers.html
 JVM_OPTIONS="$JVM_OPTIONS -Dcom.sun.net.ssl.rsaPreMasterSecretFix=true"
 
-# Tighten the TLS negotiation issue.
-# http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#descPhase2
-# Defined in JDK 1.8 sun.security.ssl.Handshaker.java:194
-JVM_OPTIONS="$JVM_OPTIONS -Dsun.security.ssl.allowUnsafeRenegotiation=false"
-JVM_OPTIONS="$JVM_OPTIONS -Dsun.security.ssl.allowLegacyHelloMessages=false"
-
 # Enable this if you need to use OCSP or CRL
-# http://docs.oracle.com/javase/8/docs/technotes/guides/security/certpath/CertPathProgGuide.html#AppC
+# https://docs.oracle.com/en/java/javase/11/security/java-pki-programmers-guide.html#GUID-E6E737DB-4000-4005-969E-BCD0238B1566
 #JVM_OPTIONS="$JVM_OPTIONS -Dcom.sun.security.enableCRLDP=true"
 #JVM_OPTIONS="$JVM_OPTIONS -Dcom.sun.net.ssl.checkRevocation=true"
 
 # Enable this if you need TLS debugging
-# http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#Debug
+# https://docs.oracle.com/en/java/javase/11/security/java-secure-socket-extension-jsse-reference-guide.html#GUID-31B7E142-B874-46E9-8DD0-4E18EC0EB2CF
 #JVM_OPTIONS="$JVM_OPTIONS -Djavax.net.debug=ssl:handshake"
 
 # Change this if you need X.509 certificate debugging
-# http://docs.oracle.com/javase/8/docs/technotes/guides/security/troubleshooting-security.html
+# https://docs.oracle.com/en/java/javase/11/security/troubleshooting-security.html
 #JVM_OPTIONS="$JVM_OPTIONS -Djava.security.debug=certpath:x509:ocsp"
 
 JVM_OPTIONS="$JVM_OPTIONS -Dkey.password=$KEY_PASSWORD"
