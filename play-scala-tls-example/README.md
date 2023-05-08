@@ -4,21 +4,13 @@ This application shows how to use Play with SSL/TLS, using the Java Secure Socke
 
 ## Requirements
 
-You must have JDK 1.8 installed on your machine to run this, to take advantage of the new [security enhancements in JSSE](http://blog.ivanristic.com/2014/03/ssl-tls-improvements-in-java-8.html).
+You must have JDK 11 installed on your machine to run this, to take advantage of the new [security enhancements in JSSE](https://blog.ivanristic.com/2014/03/ssl-tls-improvements-in-java-8.html).
 
-* Go to the [Java downloads](http://www.oracle.com/technetwork/java/javase/downloads/index.html) page.
-* Search for "Java Platform (JDK) 8u5" and download the files.
-* Follow the [installation instructions](http://docs.oracle.com/javase/8/docs/technotes/guides/install/install_overview.html) for your platform.
-
-To use the `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` cipher suite, you must have the Unlimited Strength policy files installed:
-
-* Go to the [Java downloads](http://www.oracle.com/technetwork/java/javase/downloads/index.html) page.
-* Search for "Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files for JDK/JRE 8"
-* Install the policy files in `${java.home}/lib/security/`.
+* [Adoptium OpenJDK](https://adoptium.net/)
 
 ## Generate Certificates
 
-To use HTTPS, you must have X.509 certificates.  Generating certificates can be painful, so all the scripts needed to generate the certificates needed are included in the `scripts` directory.  For more detail, you can see the [Certificate Generation](http://www.playframework.com/documentation/latest/CertificateGeneration) section in Play WS SSL.
+To use HTTPS, you must have X.509 certificates.  Generating certificates can be painful, so all the scripts needed to generate the certificates needed are included in the `scripts` directory.  For more detail, you can see the [Certificate Generation](https://www.playframework.com/documentation/latest/CertificateGeneration) section in Play WS SSL.
 
 To generate certificates, run:
 
@@ -47,7 +39,7 @@ Now that you've generated the certificates and added the `example.com` host entr
 
 This application is not run with `sbt` -- you should run it with `./play` instead, as there are a number of system properties required to use it effectively.
 
-The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](http://www.playframework.com/documentation/latest/ConfiguringHttps).
+The `CustomSSLEngineProvider` is responsible for Play's HTTPS server.  More details can be found in [Configuring HTTPS](https://www.playframework.com/documentation/latest/ConfiguringHttps).
 
 ```bash
 ./play run
@@ -184,7 +176,7 @@ Now that the server requires client authentication, a client must now provide a 
 
 ## Connecting to the server with Play WS
 
-Fortunately, we happen to have [Play WS](http://www.playframework.com/documentation/latest/ScalaWS), an HTTP client library that can use [TLS client authentication](http://www.playframework.com/documentation/latest/WsSSL).
+Fortunately, we happen to have [Play WS](https://www.playframework.com/documentation/latest/ScalaWS), an HTTP client library that can use [TLS client authentication](https://www.playframework.com/documentation/latest/WsSSL).
 
 The `ws.conf` script looks like this:
 
@@ -218,9 +210,9 @@ ws.ssl {
 }
 ```
 
-`TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` is a strong cipher suite in the [Suite B Profile for Transport Layer Security](http://tools.ietf.org/html/rfc5430).  (Bruce Schneier believes that the [ECC constants have been manipulated](https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html#c1675929) by the NSA, but other options are limited at this point.)  Note that you need the JCE Unlimited Policy files in order to use this cipher suite -- see the Requirements section above if you haven't already installed it.
+`TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384` is a strong cipher suite in the [Suite B Profile for Transport Layer Security](https://tools.ietf.org/html/rfc5430).  (Bruce Schneier believes that the [ECC constants have been manipulated](https://www.schneier.com/blog/archives/2013/09/the_nsa_is_brea.html#c1675929) by the NSA, but other options are limited at this point.)
 
-Normally you would use [Play WS](http://www.playframework.com/documentation/latest/ScalaWS) in the context of a Play application, but it can also be run directly from `Main`.
+Normally you would use [Play WS](https://www.playframework.com/documentation/latest/ScalaWS) in the context of a Play application, but it can also be run directly from `Main`.
 
 Open up a new shell, and type:
 

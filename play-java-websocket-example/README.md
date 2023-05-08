@@ -79,5 +79,5 @@ The client-side of Reactive Requests and Reactive Composition is no different th
 For more information, please see the documentation for Websockets and Akka Streams:
 
 * <https://www.playframework.com/documentation/latest/JavaWebSockets>
-* <http://doc.akka.io/docs/akka/current/java/stream/stream-flows-and-basics.html#stream-materialization>
-* <http://doc.akka.io/docs/akka/current/java/stream/stream-integrations.html#integrating-with-actors>
+* <http://doc.akka.io/docs/akka/2.6/java/stream/stream-flows-and-basics.html#stream-materialization>
+* <http://doc.akka.io/docs/akka/2.6/java/stream/stream-integrations.html#integrating-with-actors>

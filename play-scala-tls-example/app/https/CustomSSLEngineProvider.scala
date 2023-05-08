@@ -86,10 +86,10 @@ class CustomSSLEngineProvider(
     val sslParameters = sslContext.getDefaultSSLParameters
 
     // Tells the server to ignore client's cipher suite preference.
-    // http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#cipher_suite_preference
+    // https://docs.oracle.com/en/java/javase/11/security/java-secure-socket-extension-jsse-reference-guide.html#GUID-EFC2FACC-680C-42CE-A3A9-E9A6673EA813
     sslParameters.setUseCipherSuitesOrder(true)
 
-    // http://docs.oracle.com/javase/8/docs/technotes/guides/security/jsse/JSSERefGuide.html#SSLParameters
+    // https://docs.oracle.com/en/java/javase/11/security/java-secure-socket-extension-jsse-reference-guide.html#GUID-BC9AD59B-05B6-4ACA-9CDD-D18ACEA3840D
     val needClientAuth = java.lang.System.getProperty("play.ssl.needClientAuth")
     sslParameters.setNeedClientAuth(java.lang.Boolean.parseBoolean(needClientAuth))
 
