@@ -73,5 +73,5 @@ The client-side of Reactive Requests and Reactive Composition is no different th
 The Reactive Stocks example combines Reactive Push, Reactive Requests, Reactive Composition, and a Reactive UI to create a Resilient, Interactive, Scalable, and Event-Driven application.  For more information, please see the documentation for Websockets and Akka Streams:
 
 * <https://www.playframework.com/documentation/latest/ScalaWebSockets>
-* <http://doc.akka.io/docs/akka/current/scala/stream/stream-flows-and-basics.html#stream-materialization>
-* <http://doc.akka.io/docs/akka/current/scala/stream/stream-integrations.html#integrating-with-actors>
+* <http://doc.akka.io/docs/akka/2.6/scala/stream/stream-flows-and-basics.html#stream-materialization>
+* <http://doc.akka.io/docs/akka/2.6/scala/stream/stream-integrations.html#integrating-with-actors>

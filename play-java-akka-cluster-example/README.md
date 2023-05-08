@@ -1,6 +1,6 @@
 # Play Java Akka Cluster Example
 
-This example demonstrates how to setup the Play-provided `ActorSystem` to build a [cluster](https://doc.akka.io/docs/akka/current/typed/cluster.html).
+This example demonstrates how to setup the Play-provided `ActorSystem` to build a [cluster](https://doc.akka.io/docs/akka/2.6/typed/cluster.html).
 
 The example is a very simple Play application with a counter in an [actor](app/services/CounterActor.java).
 
@@ -9,13 +9,13 @@ When creating a counter in a system with multiple nodes running we have two opti
 1. Keep the count on a database and block on each concurrent access
 2. Keep the count in memory with eventual copies on the database and have that memory copy be a persistent singleton across our cluster.
 
-This application demonstrates how to use an [Akka Cluster Singleton](https://doc.akka.io/docs/akka/current/typed/cluster-singleton.html#example) in
+This application demonstrates how to use an [Akka Cluster Singleton](https://doc.akka.io/docs/akka/2.6/typed/cluster-singleton.html#example) in
  Play to implement the counter.
  
 To turn a non-clustered Play application to a clustered one you need to do the following:
 
 1. include the dependency to `"com.typesafe.akka" %% "akka-cluster-typed" % PlayVersion.akkaVersion` (see [build.sbt](build.sbt)).
-2. use one of the available methods to form a cluster [provided by Akka Cluster](https://doc.akka.io/docs/akka/current/typed/cluster.html#joining).
+2. use one of the available methods to form a cluster [provided by Akka Cluster](https://doc.akka.io/docs/akka/2.6/typed/cluster.html#joining).
 
 ### Considerations for a clustered Play application in Dev Mode
 
@@ -27,10 +27,10 @@ But when you try to run a clustered Play application in Dev Mode there is a prob
 See the source code in [`modules/AppModule.java`](modules/AppModule.java) for the logic controlling how the `ActorSystem` of anode participates on
  the cluster formation. This example application demonstrates:
  
-1. the [Akka Cluster API](https://doc.akka.io/docs/akka/current/typed/cluster.html#joining-programmatically-to-seed-nodes) for self-joining in Dev Mode, and 
-2. the setup of [`seed-node` in configuration](https://doc.akka.io/docs/akka/current/typed/cluster.html#joining-configured-seed-nodes) for Prod Mode
+1. the [Akka Cluster API](https://doc.akka.io/docs/akka/2.6/typed/cluster.html#joining-programmatically-to-seed-nodes) for self-joining in Dev Mode, and 
+2. the setup of [`seed-node` in configuration](https://doc.akka.io/docs/akka/2.6/typed/cluster.html#joining-configured-seed-nodes) for Prod Mode
  
-but it doesn't demonstrate the [`Akka Cluster Bootstrap`](https://doc.akka.io/docs/akka/current/typed/cluster.html#joining-automatically-to-seed-nodes-with-cluster-bootstrap)
+but it doesn't demonstrate the [`Akka Cluster Bootstrap`](https://doc.akka.io/docs/akka/2.6/typed/cluster.html#joining-automatically-to-seed-nodes-with-cluster-bootstrap)
 
 ## Running this sample in Dev Mode
 
@@ -52,8 +52,7 @@ You can run this sample in `Production Mode` on your local machine. This section
 
 > NOTE: This sample application ships with extra config files that make it very easy to run multiple nodes on a single machine. If you want to
 > deploy a Play application with Akka Cluster you should refer to the Akka and Play documentation for extra considerations regarding port biding
->, secret management, [cluster bootstrapping[(https://doc.akka.io/docs/akka/current/typed/cluster.html#joining-automatically-to-seed-nodes-with
->-cluster-bootstrap), etc...
+>, secret management, [cluster bootstrapping[(https://doc.akka.io/docs/akka/2.6/typed/cluster.html#joining-automatically-to-seed-nodes-with-cluster-bootstrap), etc...
 
 
 Open three separate terminals on the folder where you unzipped the file and run the following commands (one on each terminal):
