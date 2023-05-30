@@ -9,9 +9,8 @@ import play.api.routing.Router
 import play.api.test._
 import play.grpc.specs2.ServerGrpcClient
 import routers.HelloWorldRouter
-import play.api.{ Application, Configuration }
+import play.api.Configuration
 import com.typesafe.config.ConfigFactory
-import play.core.server.ServerConfig
 
 class HelloSpecs2Spec extends ForServer with ServerGrpcClient with PlaySpecification with ApplicationFactories {
 
@@ -21,12 +20,6 @@ class HelloSpecs2Spec extends ForServer with ServerGrpcClient with PlaySpecifica
       .overrides(bind[Router].to[HelloWorldRouter])
       .configure(new Configuration(ConfigFactory.parseString("play.filters.hosts.allowed += 0.0.0.0").resolve()))
     )
-
-  override protected def testServerFactory: TestServerFactory = new DefaultTestServerFactory() {
-    // See https://github.com/playframework/playframework/pull/11173
-    // Alternative would be to run the suite "sequential"
-    override protected def serverConfig(app: Application): ServerConfig = super.serverConfig(app).copy(port = Some(0))
-  }
 
   def wsUrl(path: String)(implicit running: RunningServer): WSRequest = {
     val ws = running.app.injector.instanceOf[WSClient]
