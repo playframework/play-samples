@@ -61,7 +61,7 @@ lazy val slick = (project in file("modules/slick"))
       new SourceCodeGenerator(model) {
         override def Table = new Table(_) {
           override def Column = new Column(_) {
-            override def rawType = model.tpe match {
+            override def rawType = this.model.tpe match {
               case "java.sql.Timestamp" => "java.time.Instant" // kill j.s.Timestamp
               case _ =>
                 super.rawType
