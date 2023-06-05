@@ -1,6 +1,6 @@
 package test
 
-import org.fluentlenium.core.filter.FilterConstructor.withText
+import io.fluentlenium.core.filter.FilterConstructor.withText
 import org.specs2.mutable.Specification
 
 import play.api.test.Helpers.HTMLUNIT

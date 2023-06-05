@@ -1,4 +1,4 @@
-import static org.fluentlenium.core.filter.FilterConstructor.withText;
+import static io.fluentlenium.core.filter.FilterConstructor.withText;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
