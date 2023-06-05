@@ -23,6 +23,7 @@ lazy val `play-java-grpc-example` = (project in file("."))
     // #grpc_server_generators
     // build.sbt
     akkaGrpcExtraGenerators += PlayJavaServerCodeGenerator,
+    Test / javaOptions += "-Dtestserver.httpsport=9443",
     // #grpc_server_generators
     PlayKeys.devSettings ++= Seq(
       "play.server.http.port" -> "disabled",
@@ -49,7 +50,7 @@ lazy val `play-java-grpc-example` = (project in file("."))
     libraryDependencies ++= CompileDeps ++ TestDeps
   )
   
-scalaVersion := "2.13.10"
+scalaVersion := "2.13.11"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
 // Needed for ssl-config to create self signed certificated under Java 17
@@ -77,5 +78,5 @@ val TestDeps = Seq(
 // Documentation for this project:
 //    sbt "project docs" "~ paradox"
 //    open docs/target/paradox/site/main/index.html
-lazy val docs = (project in file("docs"))
-  .enablePlugins(ParadoxPlugin)
+//lazy val docs = (project in file("docs"))
+//  .enablePlugins(ParadoxPlugin)

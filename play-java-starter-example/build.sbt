@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-java-starter-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.10", "3.3.0-RC5"),
+    crossScalaVersions := Seq("2.13.11", "3.3.0"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
@@ -20,6 +20,7 @@ lazy val root = (project in file("."))
       "-Xlint:deprecation",
       "-Werror"
     ),
+    (Test / javaOptions) += "-Dtestserver.port=19001",
     // Make verbose tests
     (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
   )

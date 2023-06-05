@@ -1,5 +1,5 @@
-lazy val scala213 = "2.13.10"
-lazy val scala3 = "3.3.0-RC5"
+lazy val scala213 = "2.13.11"
+lazy val scala3 = "3.3.0"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       guice,
       javaJpa,
       "com.h2database" % "h2" % "2.1.214",
-      "org.hibernate" % "hibernate-core" % "5.6.15.Final",
+      "org.hibernate" % "hibernate-core" % "6.2.4.Final",
       "io.dropwizard.metrics" % "metrics-core" % "4.2.18",
       "com.palominolabs.http" % "url-builder" % "1.1.5",
       "net.jodah" % "failsafe" % "2.4.4",

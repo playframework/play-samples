@@ -2,7 +2,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-scala-slick-examples",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.10",
+    scalaVersion := "2.13.11",
   )
   .aggregate(
     basicSample,
@@ -14,7 +14,7 @@ def sampleProject(name: String) =
   Project(s"$name-sample", file("samples") / name)
     .enablePlugins(PlayScala)
     .settings(
-      scalaVersion := "2.13.10",
+      scalaVersion := "2.13.11",
       scalacOptions ++= Seq(
         "-feature",
         "-deprecation",

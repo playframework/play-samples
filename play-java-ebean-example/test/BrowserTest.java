@@ -1,4 +1,4 @@
-import static org.fluentlenium.core.filter.FilterConstructor.withText;
+import static io.fluentlenium.core.filter.FilterConstructor.withText;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -10,7 +10,7 @@ public class BrowserTest extends WithBrowser {
 
   @Test
   public void testBrowser() {
-    browser.goTo("http://localhost:" + Helpers.testServerPort());
+    browser.goTo("http://localhost:" + port);
 
     assertThat(browser.$(".navbar-brand").first().text(), equalTo("Play sample application — Computer database"));
     assertThat(browser.$("#page-title").first().text(), equalTo("574 computers found"));

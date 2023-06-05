@@ -54,6 +54,7 @@ JVM_OPTIONS="$JVM_OPTIONS -Dcom.sun.net.ssl.rsaPreMasterSecretFix=true"
 
 JVM_OPTIONS="$JVM_OPTIONS -Dkey.password=$KEY_PASSWORD"
 JVM_OPTIONS="$JVM_OPTIONS -DcertificateDirectory=$DIR/scripts"
+JVM_OPTIONS="$JVM_OPTIONS -Dtestserver.httpsport=19001"
 
 ## Ucomment the following to debug SSL issues.
 #export SBT_OPTS="$SBT_OPTS -Djavax.net.debug=all"

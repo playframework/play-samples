@@ -12,10 +12,10 @@ val FlywayVersion = "9.17.0"
 
 (ThisBuild / libraryDependencies) ++= Seq(
   "javax.inject" % "javax.inject" % "1",
-  "com.google.inject" % "guice" % "5.1.0"
+  "com.google.inject" % "guice" % "6.0.0"
 )
 
-(ThisBuild / scalaVersion) := "2.13.10"
+(ThisBuild / scalaVersion) := "2.13.11"
 (ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
   "-deprecation",
@@ -61,7 +61,7 @@ lazy val slick = (project in file("modules/slick"))
       new SourceCodeGenerator(model) {
         override def Table = new Table(_) {
           override def Column = new Column(_) {
-            override def rawType = model.tpe match {
+            override def rawType = this.model.tpe match {
               case "java.sql.Timestamp" => "java.time.Instant" // kill j.s.Timestamp
               case _ =>
                 super.rawType
@@ -85,7 +85,7 @@ lazy val root = (project in file("."))
       "com.h2database" % "h2" % "2.1.214",
       ws % Test,
       "org.flywaydb" % "flyway-core" % FlywayVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M3" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M6" % Test
     ),
     (Test / fork) := true
   )

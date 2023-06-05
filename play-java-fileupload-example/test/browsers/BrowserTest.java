@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.fluentlenium.core.domain.FluentWebElement;
+import io.fluentlenium.core.domain.FluentWebElement;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import play.test.WithBrowser;

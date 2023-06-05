@@ -1,8 +1,8 @@
 import sbt.Keys._
 import play.sbt.PlaySettings
 
-lazy val scala213 = "2.13.10"
-lazy val scala3 = "3.3.0-RC5"
+lazy val scala213 = "2.13.11"
+lazy val scala3 = "3.3.0"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayService, PlayLayoutPlugin, Common)
@@ -15,8 +15,8 @@ lazy val root = (project in file("."))
       "org.joda" % "joda-convert" % "2.2.3",
       "net.logstash.logback" % "logstash-logback-encoder" % "6.6",
       "io.lemonlabs" %% "scala-uri" % "4.0.3",
-      "net.codingwell" %% "scala-guice" % "5.1.1",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M3" % Test
+      "net.codingwell" %% "scala-guice" % "6.0.0",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M6" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
@@ -39,9 +39,9 @@ lazy val gatling = (project in file("gatling"))
 // Documentation for this project:
 //    sbt "project docs" "~ paradox"
 //    open docs/target/paradox/site/index.html
-lazy val docs = (project in file("docs")).enablePlugins(ParadoxPlugin).
-  settings(
-    scalaVersion := scala213,
-    crossScalaVersions := Seq(scala213, scala3),
-    paradoxProperties += ("download_url" -> "https://example.lightbend.com/v1/download/play-samples-play-scala-rest-api-example")
-  )
+//lazy val docs = (project in file("docs")).enablePlugins(ParadoxPlugin).
+//  settings(
+//    scalaVersion := scala213,
+//    crossScalaVersions := Seq(scala213, scala3),
+//    paradoxProperties += ("download_url" -> "https://example.lightbend.com/v1/download/play-samples-play-scala-rest-api-example")
+//  )

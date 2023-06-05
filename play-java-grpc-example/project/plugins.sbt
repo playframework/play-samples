@@ -3,7 +3,7 @@ val playGrpcV = "0.9.1"
 buildInfoKeys := Seq[BuildInfoKey]("playGrpcVersion" -> playGrpcV)
 buildInfoPackage := "play.java.grpc.sample"
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.0-M4")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.0-M6")
 
 // #grpc_sbt_plugin
 // project/plugins.sbt

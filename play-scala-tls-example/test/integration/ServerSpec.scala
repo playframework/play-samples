@@ -34,9 +34,10 @@ class ServerSpec extends PlaySpec with GuiceOneHttpsServerPerTest with ScalaFutu
     "work fine over https" in {
       val eventualResponse: Future[WSResponse] =
         client
-          .url(s"https://localhost:$port/")
+          .url(s"https://localhost:$httpsPort/")
           .withVirtualHost("example.com")
           .get()
+      httpsPort mustEqual(19001)
       val timeout: PatienceConfiguration.Timeout = Timeout(Span(30, Seconds))
       whenReady(eventualResponse, timeout) { result =>
         result.body must include("This is the page")
