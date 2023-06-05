@@ -1,6 +1,6 @@
 package models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Person {

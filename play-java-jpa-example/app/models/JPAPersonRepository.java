@@ -3,7 +3,7 @@ package models;
 import play.db.jpa.JPAApi;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;

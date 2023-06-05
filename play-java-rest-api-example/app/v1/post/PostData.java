@@ -1,6 +1,6 @@
 package v1.post;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 /**
  * Data returned from the database
