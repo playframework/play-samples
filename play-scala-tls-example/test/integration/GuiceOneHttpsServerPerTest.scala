@@ -5,8 +5,6 @@ import play.api.test.{Helpers, TestServer}
 import play.api.{Application, Mode}
 import org.scalatest._
 import org.scalatestplus.play.guice.GuiceFakeApplicationFactory
-import play.core.server
-import play.core.server.AkkaHttpServer.Context
 import play.core.server.{AkkaHttpServer, ServerConfig, ServerProvider}
 
 /**
@@ -31,9 +29,9 @@ trait GuiceOneHttpsServerPerTest extends TestSuiteMixin with ServerProvider with
    * The port used by the `TestServer`.  By default this will be set to the result returned from
    * `Helpers.testServerPort`. You can override this to provide a different port number.
    */
-  lazy val port: Int = Helpers.testServerPort
+  lazy val httpsPort: Int = Helpers.testServerHttpsPort.getOrElse(throw new IllegalArgumentException("Please set the Java property -Dtestserver.httpsport=19001" ))
 
-  implicit val portNumber: PortNumber = PortNumber(port)
+  implicit val httpsPortNumber: PortNumber = PortNumber(httpsPort)
 
   /**
    * Creates new `Application` and running `TestServer` instances before executing each test, and
@@ -47,7 +45,7 @@ trait GuiceOneHttpsServerPerTest extends TestSuiteMixin with ServerProvider with
     synchronized { privateApp = newAppForTest(test) }
 
     val testServer = new TestServer(
-      ServerConfig(port = None, sslPort = Some(port), mode = Mode.Test, rootDir = app.path),
+      ServerConfig(port = Some(0), sslPort = Some(httpsPort), mode = Mode.Test, rootDir = app.path),
       app,
       None
     )

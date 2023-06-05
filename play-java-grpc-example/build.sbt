@@ -23,6 +23,7 @@ lazy val `play-java-grpc-example` = (project in file("."))
     // #grpc_server_generators
     // build.sbt
     akkaGrpcExtraGenerators += PlayJavaServerCodeGenerator,
+    Test / javaOptions += "-Dtestserver.httpsport=9443",
     // #grpc_server_generators
     PlayKeys.devSettings ++= Seq(
       "play.server.http.port" -> "disabled",
