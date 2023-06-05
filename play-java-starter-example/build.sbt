@@ -20,6 +20,7 @@ lazy val root = (project in file("."))
       "-Xlint:deprecation",
       "-Werror"
     ),
+    (Test / javaOptions) += "-Dtestserver.port=19001",
     // Make verbose tests
     (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
   )

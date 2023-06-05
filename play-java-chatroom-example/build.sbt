@@ -14,6 +14,7 @@ lazy val root = (project in file("."))
       "org.assertj" % "assertj-core" % "3.12.2" % Test,
       "org.awaitility" % "awaitility" % "3.1.6" % Test
     ),
+    (Test / javaOptions) += "-Dtestserver.port=19001",
     // Needed to make JUnit report the tests being run
     (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
     javacOptions ++= Seq(

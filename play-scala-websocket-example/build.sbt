@@ -15,6 +15,7 @@ lazy val root = (project in file("."))
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M6" % Test,
       "org.awaitility" % "awaitility" % "4.2.0" % Test,
     ),
+    (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(
       "-feature",
       "-Werror"

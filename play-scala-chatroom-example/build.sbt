@@ -20,6 +20,7 @@ lazy val root = (project in file("."))
       "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-M6" % Test
     ),
+    (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(
       "-feature",
       //"-deprecation", // gets set by Play automatically

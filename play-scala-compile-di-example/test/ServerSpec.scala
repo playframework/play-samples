@@ -2,7 +2,7 @@ import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatestplus.play._
 
 /**
- * Runs a play server on the default test port (Helpers.testServerPort == 19001).
+ * Runs a play server on a random port (Helpers.testServerPort == 0).
  */
 class ServerSpec extends PlaySpec
   with BaseOneServerPerSuite
