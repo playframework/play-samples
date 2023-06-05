@@ -39,9 +39,9 @@ lazy val gatling = (project in file("gatling"))
 // Documentation for this project:
 //    sbt "project docs" "~ paradox"
 //    open docs/target/paradox/site/index.html
-//lazy val docs = (project in file("docs")).enablePlugins(ParadoxPlugin).
-//  settings(
-//    scalaVersion := scala213,
-//    crossScalaVersions := Seq(scala213, scala3),
-//    paradoxProperties += ("download_url" -> "https://example.lightbend.com/v1/download/play-samples-play-scala-rest-api-example")
-//  )
+lazy val docs = (project in file("docs")).enablePlugins(ParadoxPlugin).
+  settings(
+    scalaVersion := scala213,
+    crossScalaVersions := Seq(scala213, scala3),
+    paradoxProperties += ("download_url" -> "https://example.lightbend.com/v1/download/play-samples-play-scala-rest-api-example")
+  )
