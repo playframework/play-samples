@@ -3,7 +3,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-java-dagger2-example""",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.10",
+    scalaVersion := "2.13.11",
     libraryDependencies ++= Seq(
       ws,
       "com.google.dagger" % "dagger" % "2.46.1",

@@ -29,6 +29,7 @@ class SessionCache(
   import SessionCache._
   import SessionExpiration._
   import akka.cluster.ddata.{ LWWMap, LWWMapKey }
+  import akka.cluster.ddata.SelfUniqueAddress
   import akka.cluster.ddata.typed.scaladsl.DistributedData
   import akka.cluster.ddata.typed.scaladsl.Replicator.{ Command => _, _ }
   import context.log
@@ -39,7 +40,7 @@ class SessionCache(
   }
 
   private val distributedData: DistributedData = DistributedData(context.system)
-  private[this] implicit val uniqAddress = distributedData.selfUniqueAddress
+  private[this] implicit val uniqAddress: SelfUniqueAddress = distributedData.selfUniqueAddress
 
   def behavior(children: Map[String, ActorRef[RefreshSession.type]]): Behavior[Command] = Behaviors.receiveMessage {
     case PutInCache(key, value) =>
