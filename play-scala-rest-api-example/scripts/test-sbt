@@ -6,5 +6,5 @@ set -o pipefail
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |"
 echo "+----------------------------+"
-sbt ++$MATRIX_SCALA test
+sbt ++$MATRIX_SCALA test docs/paradox
 sbt ++$MATRIX_SCALA ";project gatling;gatling:compile"
