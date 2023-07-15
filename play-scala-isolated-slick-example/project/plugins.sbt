@@ -1,4 +1,4 @@
-libraryDependencies += "com.h2database" % "h2" % "1.4.196"
+libraryDependencies += "com.h2database" % "h2" % "2.2.220"
 
 // Database migration
 // https://github.com/flyway/flyway-sbt
