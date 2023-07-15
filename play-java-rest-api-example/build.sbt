@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       javaJpa,
-      "com.h2database" % "h2" % "2.1.214",
+      "com.h2database" % "h2" % "2.2.220",
       "org.hibernate" % "hibernate-core" % "6.2.6.Final",
       "io.dropwizard.metrics" % "metrics-core" % "4.2.19",
       "com.palominolabs.http" % "url-builder" % "1.1.5",
@@ -26,7 +26,7 @@ lazy val root = (project in file("."))
     )
   )
 
-val gatlingVersion = "3.9.2"
+val gatlingVersion = "3.9.5"
 lazy val gatling = (project in file("gatling"))
   .enablePlugins(GatlingPlugin)
   .settings(
