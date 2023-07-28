@@ -3,4 +3,4 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.8.20")
 
 // Load testing tool:
 // http://gatling.io/docs/2.2.2/extensions/sbt_plugin.html
-addSbtPlugin("io.gatling" % "gatling-sbt" % "4.3.3")
+addSbtPlugin("io.gatling" % "gatling-sbt" % "4.4.0")
