@@ -1,5 +1,5 @@
 lazy val scala213 = "2.13.11"
-lazy val scala3 = "3.3.0"
+lazy val scala3 = "3.3.1"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
