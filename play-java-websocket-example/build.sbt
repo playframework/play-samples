@@ -10,7 +10,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       ws,
-      "org.webjars" %% "webjars-play" % "2.9.0-M7",
+      "org.webjars" %% "webjars-play" % "2.9.0-M6",
       "org.webjars" % "bootstrap" % "2.3.2",
       "org.webjars" % "flot" % "0.8.3",
 
