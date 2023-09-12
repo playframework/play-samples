@@ -6,7 +6,7 @@ lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")
 lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "")
 
-val FlywayVersion = "8.5.13"
+val FlywayVersion = "9.22.1"
 
 (ThisBuild / version) := "1.1-SNAPSHOT"
 
