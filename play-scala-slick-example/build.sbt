@@ -13,7 +13,7 @@ def sampleProject(name: String) =
   Project(s"$name-sample", file("samples") / name)
     .enablePlugins(PlayScala)
     .settings(
-      scalaVersion := "2.13.11",
+      scalaVersion := "2.13.12",
       scalacOptions ++= Seq(
         "-feature",
         "-deprecation",
