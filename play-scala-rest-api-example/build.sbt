@@ -5,7 +5,7 @@ lazy val root = (project in file("."))
   .enablePlugins(PlayService, PlayLayoutPlugin, Common)
   .settings(
     name := "play-scala-rest-api-example",
-    scalaVersion := "2.13.11",
+    scalaVersion := "2.13.12",
     libraryDependencies ++= Seq(
       guice,
       "org.joda" % "joda-convert" % "2.2.3",
@@ -37,6 +37,6 @@ lazy val gatling = (project in file("gatling"))
 //    open docs/target/paradox/site/index.html
 lazy val docs = (project in file("docs")).enablePlugins(ParadoxPlugin).
   settings(
-    scalaVersion := "2.13.11",
+    scalaVersion := "2.13.12",
     paradoxProperties += ("download_url" -> "https://example.lightbend.com/v1/download/play-samples-play-scala-rest-api-example")
   )
