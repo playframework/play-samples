@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       ws,
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-RC1" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-RC2" % Test,
       "org.awaitility" % "awaitility" % "4.2.0" % Test,
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
