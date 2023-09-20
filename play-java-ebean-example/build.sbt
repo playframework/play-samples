@@ -8,7 +8,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       jdbc,
-      "com.h2database" % "h2" % "2.2.222",
+      "com.h2database" % "h2" % "2.2.224",
       "org.awaitility" % "awaitility" % "3.1.6" % Test,
       "org.assertj" % "assertj-core" % "3.12.2" % Test,
       "org.mockito" % "mockito-core" % "5.5.0" % Test,
