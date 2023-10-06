@@ -1,10 +1,10 @@
 package actors
 
-import akka.NotUsed
-import akka.actor.typed.scaladsl.Behaviors
-import akka.actor.typed.{ ActorRef, Behavior, Scheduler }
-import akka.stream.scaladsl.Flow
-import akka.util.Timeout
+import org.apache.pekko.NotUsed
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.{ ActorRef, Behavior, Scheduler }
+import org.apache.pekko.stream.scaladsl.Flow
+import org.apache.pekko.util.Timeout
 import com.google.inject.Provides
 import play.api.Configuration
 import play.api.libs.concurrent.ActorModule

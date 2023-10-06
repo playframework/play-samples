@@ -1,9 +1,9 @@
 package controllers;
 
-import akka.actor.ActorSystem;
+import org.apache.pekko.actor.ActorSystem;
 import javax.inject.*;
 
-import akka.actor.Scheduler;
+import org.apache.pekko.actor.Scheduler;
 import play.*;
 import play.mvc.*;
 import java.util.concurrent.Executor;

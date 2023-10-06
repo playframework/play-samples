@@ -1,6 +1,6 @@
 package example.myapp.helloworld;
 
-import akka.grpc.GrpcClientSettings;
+import org.apache.pekko.grpc.GrpcClientSettings;
 import play.api.test.DefaultTestServerFactory;
 import play.api.test.RunningServer;
 import play.api.test.TestServerFactory;

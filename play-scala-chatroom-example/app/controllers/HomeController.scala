@@ -3,10 +3,10 @@ package controllers
 import java.net.URI
 import javax.inject._
 
-import akka.actor.ActorSystem
-import akka.event.{Logging, LoggingAdapter}
-import akka.stream.Materializer
-import akka.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Source}
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.event.{Logging, LoggingAdapter}
+import org.apache.pekko.stream.Materializer
+import org.apache.pekko.stream.scaladsl.{BroadcastHub, Flow, Keep, MergeHub, Source}
 import play.api.Logger
 import play.api.mvc._
 

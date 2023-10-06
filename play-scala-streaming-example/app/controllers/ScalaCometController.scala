@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 
-import akka.stream.Materializer
+import org.apache.pekko.stream.Materializer
 import play.api.http.ContentTypes
 import play.api.libs.Comet
 import play.api.mvc._

@@ -1,13 +1,13 @@
 package controllers;
 
-import akka.actor.typed.ActorRef;
-import akka.actor.ActorSystem;
-import akka.actor.typed.Scheduler;
-import akka.actor.typed.javadsl.Adapter;
-import akka.actor.typed.javadsl.AskPattern;
-import akka.cluster.typed.Cluster;
-import akka.cluster.typed.ClusterSingleton;
-import akka.cluster.typed.SingletonActor;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.ActorSystem;
+import org.apache.pekko.actor.typed.Scheduler;
+import org.apache.pekko.actor.typed.javadsl.Adapter;
+import org.apache.pekko.actor.typed.javadsl.AskPattern;
+import org.apache.pekko.cluster.typed.Cluster;
+import org.apache.pekko.cluster.typed.ClusterSingleton;
+import org.apache.pekko.cluster.typed.SingletonActor;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.CounterActor;

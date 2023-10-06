@@ -1,10 +1,10 @@
 package actors;
 
-import akka.NotUsed;
-import akka.actor.typed.ActorRef;
-import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.Behaviors;
-import akka.stream.javadsl.Flow;
+import org.apache.pekko.NotUsed;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.stream.javadsl.Flow;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.Config;
 

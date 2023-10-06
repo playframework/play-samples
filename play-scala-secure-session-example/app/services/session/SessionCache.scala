@@ -1,13 +1,13 @@
 package services.session
 
-import akka.actor.Cancellable
-import akka.actor.typed.{ ActorRef, Behavior, PostStop }
-import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
-import akka.cluster.ddata.typed.scaladsl.ReplicatorMessageAdapter
-import akka.cluster.ddata.LWWMap
+import org.apache.pekko.actor.Cancellable
+import org.apache.pekko.actor.typed.{ ActorRef, Behavior, PostStop }
+import org.apache.pekko.actor.typed.scaladsl.{ ActorContext, Behaviors }
+import org.apache.pekko.cluster.ddata.typed.scaladsl.ReplicatorMessageAdapter
+import org.apache.pekko.cluster.ddata.LWWMap
 
 import scala.concurrent.duration._
-import akka.cluster.ddata.SelfUniqueAddress
+import org.apache.pekko.cluster.ddata.SelfUniqueAddress
 
 /**
  * A replicated key-store map using akka distributed data. The advantage of
@@ -29,9 +29,9 @@ class SessionCache(
 
   import SessionCache._
   import SessionExpiration._
-  import akka.cluster.ddata.{ LWWMap, LWWMapKey }
-  import akka.cluster.ddata.typed.scaladsl.DistributedData
-  import akka.cluster.ddata.typed.scaladsl.Replicator.{ Command => _, _ }
+  import org.apache.pekko.cluster.ddata.{ LWWMap, LWWMapKey }
+  import org.apache.pekko.cluster.ddata.typed.scaladsl.DistributedData
+  import org.apache.pekko.cluster.ddata.typed.scaladsl.Replicator.{ Command => _, _ }
   import context.log
 
   private val expirationTime: FiniteDuration = {
@@ -100,9 +100,9 @@ class SessionCache(
 }
 
 object SessionCache {
-  import akka.cluster.ddata.LWWMap
-  import akka.cluster.ddata.typed.scaladsl.DistributedData
-  import akka.cluster.ddata.typed.scaladsl.Replicator._
+  import org.apache.pekko.cluster.ddata.LWWMap
+  import org.apache.pekko.cluster.ddata.typed.scaladsl.DistributedData
+  import org.apache.pekko.cluster.ddata.typed.scaladsl.Replicator._
 
   sealed trait Command
 

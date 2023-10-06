@@ -12,7 +12,7 @@ The flow is defined once in the controller, and used everywhere from the `chat` 
 import javax.inject._
 import play.api.mvc._
 
-import akka.stream.scaladsl._
+import org.apache.pekko.stream.scaladsl._
 import scala.concurrent._
 
 class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {

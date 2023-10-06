@@ -1,6 +1,6 @@
 package repository;
 
-import akka.actor.ActorSystem;
+import org.apache.pekko.actor.ActorSystem;
 import play.libs.concurrent.CustomExecutionContext;
 
 import javax.inject.Inject;

@@ -1,7 +1,7 @@
 package actors
 
-import akka.actor.typed.{ ActorRef, Behavior }
-import akka.actor.typed.scaladsl.Behaviors
+import org.apache.pekko.actor.typed.{ ActorRef, Behavior }
+import org.apache.pekko.actor.typed.scaladsl.Behaviors
 import stocks._
 
 import scala.collection.mutable

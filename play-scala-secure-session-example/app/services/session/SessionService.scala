@@ -2,9 +2,9 @@ package services.session
 
 import javax.inject.{ Inject, Singleton }
 
-import akka.actor.typed.{ ActorRef, Scheduler }
-import akka.actor.typed.scaladsl.AskPattern._
-import akka.util.Timeout
+import org.apache.pekko.actor.typed.{ ActorRef, Scheduler }
+import org.apache.pekko.actor.typed.scaladsl.AskPattern._
+import org.apache.pekko.util.Timeout
 import services.session.SessionCache._
 
 import scala.concurrent.duration._

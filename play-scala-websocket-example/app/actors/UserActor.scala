@@ -3,12 +3,12 @@ package actors
 import javax.inject._
 
 import actors.StocksActor.{ GetStocks, Stocks }
-import akka.actor.typed.scaladsl.{ ActorContext, Behaviors }
-import akka.actor.typed.{ ActorRef, ActorSystem, Behavior, PostStop, Scheduler }
-import akka.stream._
-import akka.stream.scaladsl._
-import akka.util.Timeout
-import akka.{ Done, NotUsed }
+import org.apache.pekko.actor.typed.scaladsl.{ ActorContext, Behaviors }
+import org.apache.pekko.actor.typed.{ ActorRef, ActorSystem, Behavior, PostStop, Scheduler }
+import org.apache.pekko.stream._
+import org.apache.pekko.stream.scaladsl._
+import org.apache.pekko.util.Timeout
+import org.apache.pekko.{ Done, NotUsed }
 import org.slf4j.Logger
 import play.api.libs.json._
 import stocks._
@@ -89,7 +89,7 @@ class UserActor @Inject()(id: String, stocksActor: ActorRef[GetStocks])(implicit
    * Adds several stocks to the hub, by asking the stocks actor for stocks.
    */
   private def addStocks(symbols: Set[StockSymbol]): Future[Unit] = {
-    import akka.actor.typed.scaladsl.AskPattern._
+    import org.apache.pekko.actor.typed.scaladsl.AskPattern._
 
     // Ask the stocksActor for a stream containing these stocks.
     val future: Future[Stocks] = stocksActor.ask(replyTo => GetStocks(symbols, replyTo))

@@ -1,6 +1,6 @@
 package controllers;
 
-import akka.stream.javadsl.Source;
+import org.apache.pekko.stream.javadsl.Source;
 import play.libs.EventSource;
 import play.mvc.Controller;
 import play.mvc.Http;
