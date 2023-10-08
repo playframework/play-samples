@@ -1,4 +1,4 @@
-import play.core.PlayVersion.akkaVersion
+import play.core.PlayVersion.pekkoVersion
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)

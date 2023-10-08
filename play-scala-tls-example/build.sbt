@@ -16,7 +16,7 @@ lazy val two = (project in file("modules/two"))
   .settings(commonSettings)
 
 lazy val root = (project in file("."))
-  .enablePlugins(PlayScala, PlayAkkaHttp2Support)
+  .enablePlugins(PlayScala, PlayPekkoHttp2Support)
   .settings(commonSettings)
   .settings(
     name := """play-scala-tls-example""",

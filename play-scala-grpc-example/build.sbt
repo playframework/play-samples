@@ -1,5 +1,5 @@
-import play.core.PlayVersion.akkaVersion
-import play.core.PlayVersion.akkaHttpVersion
+import play.core.PlayVersion.pekkoVersion
+import play.core.PlayVersion.pekkoHttpVersion
 import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCodeGenerator }
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.scala.grpc.sample.BuildInfo
@@ -13,7 +13,7 @@ version := "1.0-SNAPSHOT"
 lazy val `play-scala-grpc-example` = (project in file("."))
   .enablePlugins(PlayScala)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
-  .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
+  .enablePlugins(PlayPekkoHttp2Support) // enables serving HTTP/2 and gRPC
 // #grpc_play_plugins
     .settings(
       akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Scala),

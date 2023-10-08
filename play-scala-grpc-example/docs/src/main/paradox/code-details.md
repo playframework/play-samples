@@ -15,7 +15,7 @@ and enable it on your project (in `build.sbt`):
 The `AkkaGrpcPlugin` locates the gRPC `.proto` files and generates source code from it. Remember to enable the plugin
 in all the projects of your build that want to use it.
 
-Note how the `PlayAkkaHttp2Support` is also enabled. gRPC requires HTTP/2 transport and Play supports it only as an opt-in plugin.
+Note how the `PlayPekkoHttp2Support` is also enabled. gRPC requires HTTP/2 transport and Play supports it only as an opt-in plugin.
 
 
 ### 2.a Serving (Akka) gRPC Services
