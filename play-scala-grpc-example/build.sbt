@@ -54,9 +54,9 @@ lazy val `play-scala-grpc-example` = (project in file("."))
 val CompileDeps = Seq(
   guice,
   "com.lightbend.play"      %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
-  "com.typesafe.akka"       %% "akka-discovery"       % akkaVersion,
-  "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
-  "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
+  "org.apache.pekko"       %% "pekko-discovery"       % pekkoVersion,
+  "org.apache.pekko"       %% "pekko-http"            % pekkoHttpVersion,
+  "org.apache.pekko"       %% "pekko-http-spray-json" % pekkoHttpVersion,
   // Test Database
   "com.h2database" % "h2" % "2.2.224"
 )

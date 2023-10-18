@@ -2,9 +2,9 @@
 
 This is an example Play application that shows how to use Play's Websocket API in Java, by showing a series of stock tickers updated using WebSocket.
 
-The Websocket API is built on Akka Streams, and so is async, non-blocking, and backpressure aware.  Using Akka Streams also means that interacting with Akka Actors is simple.
+The Websocket API is built on Pekko Streams, and so is async, non-blocking, and backpressure aware.  Using Pekko Streams also means that interacting with Pekko Actors is simple.
 
-There are also tests showing how Junit and Akka Testkit are used to test actors and flows.
+There are also tests showing how Junit and Pekko Testkit are used to test actors and flows.
 
 ## Reactive Push
 
@@ -76,8 +76,8 @@ The client-side of Reactive Requests and Reactive Composition is no different th
 
 ## Further Learning
 
-For more information, please see the documentation for Websockets and Akka Streams:
+For more information, please see the documentation for Websockets and Pekko Streams:
 
 * <https://www.playframework.com/documentation/latest/JavaWebSockets>
-* <http://doc.akka.io/docs/akka/2.6/java/stream/stream-flows-and-basics.html#stream-materialization>
-* <http://doc.akka.io/docs/akka/2.6/java/stream/stream-integrations.html#integrating-with-actors>
+* <https://pekko.apache.org/docs/pekko/current/java/stream/stream-flows-and-basics.html#stream-materialization>
+* <https://pekko.apache.org/docs/pekko/current/java/stream/stream-integrations.html#integrating-with-actors>

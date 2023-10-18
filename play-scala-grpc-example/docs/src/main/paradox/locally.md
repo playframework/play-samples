@@ -8,7 +8,7 @@ setups are supported to run Play and only the following can be used at the momen
 1. you may use `sbt run` to run Play in DEV mode within `sbt`.
 
 In both execution modes above, `sbt` will also generate the server and client sources based on the `app/protobuf/*.proto` 
-files. The code generation happens thanks to the Akka gRPC plugin being enabled. See 
+files. The code generation happens thanks to the Pekko gRPC plugin being enabled. See 
 @ref[understanding the code](code-details.md) for more details. 
 
 Finally, for your convenience, a self-signed certificate for `CN='localhost'` is provided in this 

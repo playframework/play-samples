@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
 
-import static akka.actor.typed.javadsl.AskPattern.ask;
+import static org.apache.pekko.actor.typed.javadsl.AskPattern.ask;
 import static java.util.Objects.requireNonNull;
 
 /**

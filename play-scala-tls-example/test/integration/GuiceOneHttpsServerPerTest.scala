@@ -5,7 +5,7 @@ import play.api.test.{Helpers, TestServer}
 import play.api.{Application, Mode}
 import org.scalatest._
 import org.scalatestplus.play.guice.GuiceFakeApplicationFactory
-import play.core.server.{AkkaHttpServer, ServerConfig, ServerProvider}
+import play.core.server.{PekkoHttpServer, ServerConfig, ServerProvider}
 
 /**
  * Runs a server test using the SSL port as the default
@@ -56,6 +56,6 @@ trait GuiceOneHttpsServerPerTest extends TestSuiteMixin with ServerProvider with
   }
 
   def createServer(context: ServerProvider.Context) =
-    new AkkaHttpServer(AkkaHttpServer.Context.fromServerProviderContext(context))
+    new PekkoHttpServer(PekkoHttpServer.Context.fromServerProviderContext(context))
 
 }

@@ -34,8 +34,8 @@
   <logger name="play" level="INFO"/>
   <logger name="application" level="DEBUG"/>
 
-  <logger name="akka" level="INFO"/>
-  <logger name="akka" level="INFO"/>
+  <logger name="org.apache.pekko" level="INFO"/>
+  <logger name="org.apache.pekko" level="INFO"/>
 
 
   <root level="WARN">

@@ -11,11 +11,11 @@ import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContext, Future }
 
 /**
- * A session service that ties session id to secret key using akka CRDTs
+ * A session service that ties session id to secret key using pekko CRDTs
  */
 @Singleton
 class SessionService @Inject() (cacheActor: ActorRef[Command])(implicit ec: ExecutionContext, scheduler: Scheduler) {
-  implicit private val timeout: Timeout = akka.util.Timeout(300.milliseconds)
+  implicit private val timeout: Timeout = org.apache.pekko.util.Timeout(300.milliseconds)
 
   def create(secretKey: Array[Byte]): Future[String] = {
     val sessionId = newSessionId()

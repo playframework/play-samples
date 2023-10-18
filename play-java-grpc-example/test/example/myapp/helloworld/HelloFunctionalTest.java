@@ -4,7 +4,7 @@ import org.apache.pekko.grpc.GrpcClientSettings;
 import play.api.test.DefaultTestServerFactory;
 import play.api.test.RunningServer;
 import play.api.test.TestServerFactory;
-import play.grpc.testkit.JavaAkkaGrpcClientHelpers;
+import play.grpc.testkit.JavaPekkoGrpcClientHelpers;
 
 import play.test.WithApplication;
 import routers.HelloWorldRouter;
@@ -60,7 +60,7 @@ public final class HelloFunctionalTest extends WithApplication {
   private GreeterServiceClient newGreeterServiceClient() {
     
     final GrpcClientSettings grpcClientSettings =
-        JavaAkkaGrpcClientHelpers
+        JavaPekkoGrpcClientHelpers
           .grpcClientSettings(runningServer)
           .withOverrideAuthority("localhost");
 

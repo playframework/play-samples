@@ -2,7 +2,7 @@
 
 This is a simple chatroom using Play and Websockets with the Java API.
 
-This project makes use of [dynamic streams](http://doc.akka.io/docs/akka/2.6/java/stream/stream-dynamic.html) from Akka Streams, notably `BroadcastHub` and `MergeHub`.  By [combining MergeHub and BroadcastHub](https://doc.akka.io/docs/akka/2.6/stream/stream-dynamic.html?language=java#dynamic-fan-in-and-fan-out-with-mergehub-broadcasthub-and-partitionhub), you can get publish/subscribe functionality.
+This project makes use of [dynamic streams](https://pekko.apache.org/docs/pekko/current/java/stream/stream-dynamic.html) from Pekko Streams, notably `BroadcastHub` and `MergeHub`.  By [combining MergeHub and BroadcastHub](https://pekko.apache.org/docs/pekko/current/stream/stream-dynamic.html?language=java#dynamic-fan-in-and-fan-out-with-mergehub-broadcasthub-and-partitionhub), you can get publish/subscribe functionality.
 
 ## The good bit
 

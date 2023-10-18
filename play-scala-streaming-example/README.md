@@ -1,6 +1,6 @@
 # play-streaming-scala
 
-This is an example Play template that demonstrates Streaming with Server Sent Events or Comet, using Akka Streams.
+This is an example Play template that demonstrates Streaming with Server Sent Events or Comet, using Pekko Streams.
 
 Please see the documentation at:
 

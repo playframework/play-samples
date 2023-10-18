@@ -15,9 +15,9 @@ lazy val root = (project in file("."))
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
       "org.jsoup" % "jsoup" % "1.16.1",
       "ch.qos.logback" % "logback-classic" % "1.4.11",
-      "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-      "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
-      "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
+      "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-testkit" % pekkoVersion % Test,
+      "org.apache.pekko" %% "pekko-stream-testkit" % pekkoVersion % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-RC2" % Test
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",

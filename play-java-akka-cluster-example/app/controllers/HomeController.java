@@ -39,7 +39,7 @@ public class HomeController extends Controller {
 
 
     public CompletionStage<Result> index() {
-        // https://www.playframework.com/documentation/latest/AkkaTyped#Using-the-AskPattern-&-Typed-Scheduler
+        // https://www.playframework.com/documentation/latest/PekkoTyped#Using-the-AskPattern-&-Typed-Scheduler
         return AskPattern.<Command, Integer>ask(
                 counterActor,
                 GetValue::new,
@@ -49,7 +49,7 @@ public class HomeController extends Controller {
     }
 
     public CompletionStage<Result> increment() {
-        // https://www.playframework.com/documentation/latest/AkkaTyped#Using-the-AskPattern-&-Typed-Scheduler
+        // https://www.playframework.com/documentation/latest/PekkoTyped#Using-the-AskPattern-&-Typed-Scheduler
         return AskPattern.<Command, Integer>ask(
                 counterActor,
                 Increment::new,

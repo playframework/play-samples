@@ -5,7 +5,7 @@ import dagger.SimpleInjector;
 import play.ApplicationLoader;
 import play.BuiltInComponentsFromContext;
 import play.api.routing.Router;
-import play.components.AkkaComponents;
+import play.components.PekkoComponents;
 import play.components.BodyParserComponents;
 import play.controllers.AssetsComponents;
 import play.core.j.DefaultJavaHandlerComponents;

@@ -11,8 +11,8 @@ lazy val root = (project in file("."))
       ws,
       guice,
       "org.abstractj.kalium" % "kalium" % "0.8.0",
-      ("com.typesafe.akka" %% "akka-distributed-data" % akkaVersion).cross(CrossVersion.for3Use2_13),
-      ("com.typesafe.akka" %% "akka-cluster-typed" % akkaVersion).cross(CrossVersion.for3Use2_13),
+      ("org.apache.pekko" %% "pekko-distributed-data" % pekkoVersion).cross(CrossVersion.for3Use2_13),
+      ("org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion).cross(CrossVersion.for3Use2_13),
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-RC2" % Test
     ),
     scalacOptions ++= Seq(

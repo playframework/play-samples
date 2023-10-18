@@ -7,14 +7,14 @@ import org.apache.pekko.stream.Materializer;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.typesafe.config.Config;
-import play.libs.akka.AkkaGuiceSupport;
+import play.libs.pekko.PekkoGuiceSupport;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
 @SuppressWarnings("unused")
-public class Module extends AbstractModule implements AkkaGuiceSupport {
+public class Module extends AbstractModule implements PekkoGuiceSupport {
     @Override
     protected void configure() {
         bind(new TypeLiteral<ActorRef<StocksActor.GetStocks>>() {})

@@ -1,6 +1,6 @@
 import play.core.PlayVersion
 
-name := """play-java-akka-cluster-example"""
+name := """play-java-pekko-cluster-example"""
 organization := "com.example"
 
 version := "1.0-SNAPSHOT"
@@ -13,11 +13,11 @@ scalaVersion := crossScalaVersions.value.head
 
 libraryDependencies += guice
 
-val akkaVersion =  PlayVersion.akkaVersion
+val pekkoVersion =  PlayVersion.pekkoVersion
 
-// this dependency is required to form the Akka Cluster
-libraryDependencies += ("com.typesafe.akka" %% "akka-cluster-typed" % akkaVersion).cross(CrossVersion.for3Use2_13)
+// this dependency is required to form the Pekko Cluster
+libraryDependencies += ("org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion).cross(CrossVersion.for3Use2_13)
 
-// Sending messages from a node to another in the Akka Cluster requires serializing. This
-// example application uses the default Akka Jackson serializer with the CBOR format.
+// Sending messages from a node to another in the Pekko Cluster requires serializing. This
+// example application uses the default Pekko Jackson serializer with the CBOR format.
 // See also `conf/serialization.conf` and `services.CborSerializable` for more info.

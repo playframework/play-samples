@@ -20,7 +20,7 @@ import scala.util.Try
 /**
  * Creates a user actor that sets up the websocket stream.  Although it's not required,
  * having an actor manage the stream helps with lifecycle and monitoring, and also helps
- * with dependency injection through the AkkaGuiceSupport trait.
+ * with dependency injection through the PekkoGuiceSupport trait.
  *
  * @param stocksActor the actor responsible for stocks and their streams
  */

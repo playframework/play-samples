@@ -30,7 +30,7 @@ public class AppModule extends AbstractModule {
     }
 
     public static class HelloActorProvider implements Provider<ActorRef<Command>> {
-        private final akka.actor.typed.ActorSystem<Void> actorSystem;
+        private final org.apache.pekko.actor.typed.ActorSystem<Void> actorSystem;
         private Environment environment;
 
         @Inject
@@ -51,10 +51,10 @@ public class AppModule extends AbstractModule {
                 // In Prod mode, there's no need to do anything since
                 // the default behavior will be to read the seed node list
                 // from the configuration.
-                // If you prefer use Akka Cluster Management, then set it up here.
+                // If you prefer use Pekko Cluster Management, then set it up here.
             }
 
-            // Initialize the ClusterSingleton Akka extension
+            // Initialize the ClusterSingleton Pekko extension
             ClusterSingleton clusterSingleton = ClusterSingleton.get(actorSystem);
 
             SingletonActor<Command> singletonActor = SingletonActor.of(CounterActor.create(), "counter-actor");
