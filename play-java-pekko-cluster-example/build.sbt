@@ -16,7 +16,7 @@ libraryDependencies += guice
 val pekkoVersion =  PlayVersion.pekkoVersion
 
 // this dependency is required to form the Pekko Cluster
-libraryDependencies += ("org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion).cross(CrossVersion.for3Use2_13)
+libraryDependencies += "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion
 
 // Sending messages from a node to another in the Pekko Cluster requires serializing. This
 // example application uses the default Pekko Jackson serializer with the CBOR format.
