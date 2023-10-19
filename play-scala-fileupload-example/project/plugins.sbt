@@ -1,5 +1,3 @@
-resolvers += Resolver.typesafeRepo("snapshots")
-
 resolvers += Resolver.jcenterRepo
 
 // The Play plugin

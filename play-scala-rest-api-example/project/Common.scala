@@ -10,9 +10,8 @@ object Common extends AutoPlugin {
   override def requires: sbt.Plugins = JvmPlugin
 
   override def projectSettings = Seq(
-    organization := "com.lightbend.restapi",
+    organization := "com.example",
     version := "1.0-SNAPSHOT",
-    resolvers += Resolver.typesafeRepo("releases"),
     javacOptions ++= Seq("--release", "11"),
     scalacOptions ++= Seq(
       "-release",
