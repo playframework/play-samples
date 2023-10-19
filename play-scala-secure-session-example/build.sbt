@@ -13,7 +13,7 @@ lazy val root = (project in file("."))
       "org.abstractj.kalium" % "kalium" % "0.8.0",
       "org.apache.pekko" %% "pekko-distributed-data" % pekkoVersion,
       "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-RC2" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0-M1" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
