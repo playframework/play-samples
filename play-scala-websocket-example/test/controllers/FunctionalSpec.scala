@@ -13,7 +13,7 @@ import play.api.test.{Helpers, TestServer, WsTestClient}
 import org.awaitility.Awaitility._
 import play.api.libs.json._
 
-import scala.compat.java8.FutureConverters
+import scala.jdk.javaapi.FutureConverters
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
@@ -39,7 +39,7 @@ class FunctionalSpec extends PlaySpec with ScalaFutures {
           }
           val listener = new WebSocketClient.LoggingListener(consumer)
           val completionStage = webSocketClient.call(serverURL, origin, listener)
-          val f = FutureConverters.toScala(completionStage)
+          val f = FutureConverters.asScala(completionStage)
           Await.result(f, atMost = 1000.millis)
           listener.getThrowable.printStackTrace()
           listener.getThrowable mustBe a[IOException]
@@ -70,7 +70,7 @@ class FunctionalSpec extends PlaySpec with ScalaFutures {
         }
         val listener = new WebSocketClient.LoggingListener(consumer)
         val completionStage = webSocketClient.call(serverURL, origin, listener)
-        val f = FutureConverters.toScala(completionStage)
+        val f = FutureConverters.asScala(completionStage)
 
         // Test we can get good output from the websocket
         whenReady(f, timeout = Timeout(1.second)) { webSocket =>
