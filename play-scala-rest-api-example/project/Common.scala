@@ -12,7 +12,6 @@ object Common extends AutoPlugin {
   override def projectSettings = Seq(
     organization := "com.example",
     version := "1.0-SNAPSHOT",
-    resolvers += Resolver.typesafeRepo("releases"),
     javacOptions ++= Seq("--release", "11"),
     scalacOptions ++= Seq(
       "-release",
