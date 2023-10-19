@@ -83,7 +83,7 @@ class MyMultipartFormDataBodyParser extends DelegatingMultipartFormDataBodyParse
 }
 ```
 
-The core Accumulator is generated from an `akka.streams.FileIO` sink which writes out bytes to the filesystem, and exposes a CompletionStage when the write operation has been completed.
+The core Accumulator is generated from an `org.apache.pekko.streams.FileIO` sink which writes out bytes to the filesystem, and exposes a CompletionStage when the write operation has been completed.
 
 Because this code delegates to the Scala API implementation, the underlying `DelegatingMultipartFormDataBodyParser<A>` exposes an abstract method:
 

@@ -68,9 +68,9 @@ This example uses `services.session.SessionService` to provide a `Future` based 
 
 ### Distributed Data Session Store
 
-The example internally uses [Akka Distributed Data](https://pekko.apache.org/docs/pekko/current/scala/distributed-data.html) to share the map throughout all the Play instances through [Akka Clustering](https://pekko.apache.org/docs/pekko/current/scala/cluster-usage.html).  Per the Pekko docs, this is a good solution for up to 100,000 concurrent sessions.
+The example internally uses [Pekko Distributed Data](https://pekko.apache.org/docs/pekko/current/scala/distributed-data.html) to share the map throughout all the Play instances through [Pekko Clustering](https://pekko.apache.org/docs/pekko/current/scala/cluster-usage.html).  Per the Pekko docs, this is a good solution for up to 100,000 concurrent sessions.
 
-The basic structure of the cache is taken from [Akka's ReplicatedCache example](https://github.com/akka/akka-samples/blob/HEAD/akka-sample-distributed-data-scala/src/main/scala/sample/distributeddata/ReplicatedCache.scala), but here an expiration time is added to ensure that an idle session will be reaped after reaching TTL, even if there is no explicit logout.  This does result in an individual actor per session, but the ActorCell only becomes active when there is a change in session state, so this is very low overhead.
+The basic structure of the cache is taken from [Pekko's ReplicatedCache example](https://github.com/apache/incubator-pekko-samples/blob/HEAD/pekko-sample-distributed-data-scala/src/main/scala/sample/distributeddata/ReplicatedCache.scala), but here an expiration time is added to ensure that an idle session will be reaped after reaching TTL, even if there is no explicit logout.  This does result in an individual actor per session, but the ActorCell only becomes active when there is a change in session state, so this is very low overhead.
 
 Since this is an example, rather than having to run several Play instances, a ClusterSystem that runs two Pekko Cluster nodes in the background is used, and are configured as the seed nodes for the cluster, so you can see the cluster messages in the logs.  In production, each Play instance should be part of the cluster and they will take care of themselves.
 

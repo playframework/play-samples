@@ -20,7 +20,7 @@ Once the `UserActor` is created, the default stocks (defined in `application.con
 
 Each stock symbol has its own `StockActor` defined in StockActor.java.  This actor holds the last 50 prices for the stock.  Using a `FetchHistory` message the whole history can be retrieved.  A `FetchLatest` message will generate a new price.  Every `StockActor` sends itself a `FetchLatest` message every 75 milliseconds.  Once a new price is generated it is added to the history and then a message is sent to each `UserActor` that is watching the stock.  The `UserActor` then serializes the data as JSON and pushes it to the client using the WebSocket.
 
-Underneath the covers, resources (threads) are only allocated to the Actors and WebSockets when they are needed.  This is why Reactive Push is scalable with Play and Akka.
+Underneath the covers, resources (threads) are only allocated to the Actors and WebSockets when they are needed.  This is why Reactive Push is scalable with Play and Pekko.
 
 ## Reactive UI - Real-time Chart
 

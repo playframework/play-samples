@@ -25,7 +25,7 @@ class SessionCache(
     replicator: ReplicatorMessageAdapter[SessionCache.Command, LWWMap[String, Array[Byte]]],
 ) {
   //  This is from one of the examples covered in the pekko distributed data section:
-  // https://github.com/akka/akka-samples/blob/2.5/akka-sample-distributed-data-scala/src/main/scala/sample/distributeddata/ReplicatedCache.scala
+  // https://github.com/apache/incubator-pekko-samples/blob/HEAD/pekko-sample-distributed-data-scala/src/main/scala/sample/distributeddata/ReplicatedCache.scala
 
   import SessionCache._
   import SessionExpiration._
