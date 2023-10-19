@@ -10,7 +10,7 @@ import play.api.test._
 import play.shaded.ahc.org.asynchttpclient.AsyncHttpClient
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocket
 
-import scala.compat.java8.FutureConverters
+import scala.jdk.javaapi.FutureConverters
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -35,7 +35,7 @@ class HomeControllerSpec extends PlaySpec with ScalaFutures with IntegrationPati
           val origin = "ws://example.com/ws/chat"
           val listener = new WebSocketClient.LoggingListener
           val completionStage = webSocketClient.call(serverURL, origin, listener)
-          val f = FutureConverters.toScala(completionStage)
+          val f = FutureConverters.asScala(completionStage)
           Await.result(f, atMost = 1000 millis)
           listener.getThrowable mustBe a[IOException]
         } catch {
@@ -63,7 +63,7 @@ class HomeControllerSpec extends PlaySpec with ScalaFutures with IntegrationPati
         val origin = serverURL
         val listener = new WebSocketClient.LoggingListener
         val completionStage = webSocketClient.call(serverURL, origin, listener)
-        val f = FutureConverters.toScala(completionStage)
+        val f = FutureConverters.asScala(completionStage)
 
         whenReady(f, timeout = Timeout(1 second)) { webSocket =>
           webSocket mustBe a [WebSocket]
