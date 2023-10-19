@@ -1,14 +1,14 @@
 import javax.inject.{ Inject, Provider, Singleton }
 
 import actors._
-import akka.actor.typed.{ ActorRef, Behavior }
-import akka.stream.Materializer
+import org.apache.pekko.actor.typed.{ ActorRef, Behavior }
+import org.apache.pekko.stream.Materializer
 import com.google.inject.AbstractModule
-import play.api.libs.concurrent.AkkaGuiceSupport
+import play.api.libs.concurrent.PekkoGuiceSupport
 
 import scala.concurrent.ExecutionContext
 
-class Module extends AbstractModule with AkkaGuiceSupport {
+class Module extends AbstractModule with PekkoGuiceSupport {
   override def configure(): Unit = {
     bindTypedActor(StocksActor(), "stocksActor")
     bindTypedActor(UserParentActor, "userParentActor")

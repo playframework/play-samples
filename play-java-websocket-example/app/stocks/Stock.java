@@ -1,10 +1,10 @@
 package stocks;
 
-import akka.NotUsed;
-import akka.japi.Pair;
-import akka.japi.function.Function;
-import akka.stream.ThrottleMode;
-import akka.stream.javadsl.Source;
+import org.apache.pekko.NotUsed;
+import org.apache.pekko.japi.Pair;
+import org.apache.pekko.japi.function.Function;
+import org.apache.pekko.stream.ThrottleMode;
+import org.apache.pekko.stream.javadsl.Source;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;

@@ -22,8 +22,8 @@ def sampleProject(name: String) =
       ),
       libraryDependencies ++= Seq(
         guice,
-        "com.typesafe.play" %% "play-slick" % "5.1.0",
-        "com.typesafe.play" %% "play-slick-evolutions" % "5.1.0",
+        "org.playframework" %% "play-slick" % "6.0.0-M1",
+        "org.playframework" %% "play-slick-evolutions" % "6.0.0-M1",
         "com.h2database" % "h2" % "2.2.224",
         specs2 % Test,
       ),

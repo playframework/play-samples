@@ -1,5 +1,5 @@
-import play.core.PlayVersion.akkaVersion
-import play.core.PlayVersion.akkaHttpVersion
+import play.core.PlayVersion.pekkoVersion
+import play.core.PlayVersion.pekkoHttpVersion
 import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCodeGenerator }
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.scala.grpc.sample.BuildInfo
@@ -13,7 +13,7 @@ version := "1.0-SNAPSHOT"
 lazy val `play-scala-grpc-example` = (project in file("."))
   .enablePlugins(PlayScala)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
-  .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
+  .enablePlugins(PlayPekkoHttp2Support) // enables serving HTTP/2 and gRPC
 // #grpc_play_plugins
     .settings(
       akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Scala),
@@ -54,9 +54,9 @@ lazy val `play-scala-grpc-example` = (project in file("."))
 val CompileDeps = Seq(
   guice,
   "com.lightbend.play"      %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
-  "com.typesafe.akka"       %% "akka-discovery"       % akkaVersion,
-  "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
-  "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
+  "org.apache.pekko"       %% "pekko-discovery"       % pekkoVersion,
+  "org.apache.pekko"       %% "pekko-http"            % pekkoHttpVersion,
+  "org.apache.pekko"       %% "pekko-http-spray-json" % pekkoHttpVersion,
   // Test Database
   "com.h2database" % "h2" % "2.2.224"
 )
@@ -65,8 +65,8 @@ val playVersion = play.core.PlayVersion.current
 val TestDeps = Seq(
   "com.lightbend.play"      %% "play-grpc-scalatest" % BuildInfo.playGrpcVersion % Test, 
   "com.lightbend.play"      %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test, 
-  "com.typesafe.play"       %% "play-test"           % playVersion     % Test, 
-  "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test, 
+  "org.playframework"       %% "play-test"           % playVersion     % Test,
+  "org.playframework"       %% "play-specs2"         % playVersion     % Test,
   "org.scalatestplus.play"  %% "scalatestplus-play"  % "6.0.0-RC2" % Test,
 )
 

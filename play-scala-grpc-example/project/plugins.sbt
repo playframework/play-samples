@@ -4,7 +4,7 @@ buildInfoKeys := Seq[BuildInfoKey]("playGrpcVersion" -> playGrpcV)
 buildInfoPackage := "play.scala.grpc.sample"
 
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.0-RC2")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.0-M3")
 
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.5")
 

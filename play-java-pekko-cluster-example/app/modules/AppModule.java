@@ -1,12 +1,12 @@
 package modules;
 
-import akka.actor.ActorSystem;
-import akka.actor.typed.ActorRef;
-import akka.actor.typed.javadsl.Adapter;
-import akka.cluster.typed.Cluster;
-import akka.cluster.typed.ClusterSingleton;
-import akka.cluster.typed.Join;
-import akka.cluster.typed.SingletonActor;
+import org.apache.pekko.actor.ActorSystem;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.typed.javadsl.Adapter;
+import org.apache.pekko.cluster.typed.Cluster;
+import org.apache.pekko.cluster.typed.ClusterSingleton;
+import org.apache.pekko.cluster.typed.Join;
+import org.apache.pekko.cluster.typed.SingletonActor;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import play.Environment;
@@ -30,7 +30,7 @@ public class AppModule extends AbstractModule {
     }
 
     public static class HelloActorProvider implements Provider<ActorRef<Command>> {
-        private final akka.actor.typed.ActorSystem<Void> actorSystem;
+        private final org.apache.pekko.actor.typed.ActorSystem<Void> actorSystem;
         private Environment environment;
 
         @Inject
@@ -51,10 +51,10 @@ public class AppModule extends AbstractModule {
                 // In Prod mode, there's no need to do anything since
                 // the default behavior will be to read the seed node list
                 // from the configuration.
-                // If you prefer use Akka Cluster Management, then set it up here.
+                // If you prefer use Pekko Cluster Management, then set it up here.
             }
 
-            // Initialize the ClusterSingleton Akka extension
+            // Initialize the ClusterSingleton Pekko extension
             ClusterSingleton clusterSingleton = ClusterSingleton.get(actorSystem);
 
             SingletonActor<Command> singletonActor = SingletonActor.of(CounterActor.create(), "counter-actor");

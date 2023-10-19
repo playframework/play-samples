@@ -1,13 +1,13 @@
 # Play Java gRPC Example
 
-This example application shows how to use Akka gRPC to both expose and use gRPC services inside an Play application.
+This example application shows how to use Pekko gRPC to both expose and use gRPC services inside an Play application.
 
 The [Play Framework](https://www.playframework.com/) combines productivity and performance making it easy to build
 scalable web applications with Java and Scala. Play is developer friendly with a "just hit refresh" workflow and
 built-in testing support. With Play, applications scale predictably due to a stateless and non-blocking architecture.
 
 [Akka gRPC](https://developer.lightbend.com/docs/akka-grpc/current/overview.html) is a toolkit for building streaming
-gRPC servers and clients on top of Akka Streams.
+gRPC servers and clients on top of Pekko Streams.
 
 For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://developer.lightbend.com/docs/akka-grpc/current/.
 
@@ -19,7 +19,7 @@ kickstart your Play gRPC project on [Lightbend's Tech Hub](https://developer.lig
 ## What this example does
 
 This example runs a Play application which serves both HTTP/1.1 and gRPC (over HTTP/2) enpoints. This application also
-uses an Akka-gRPC client to send a request to itself. When you sent a `GET` request `/` the request is handled by a
+uses an Pekko-gRPC client to send a request to itself. When you sent a `GET` request `/` the request is handled by a
 vanilla Play `Controller` that sends a request over gRPC to the gRPC endpoint:
 
 

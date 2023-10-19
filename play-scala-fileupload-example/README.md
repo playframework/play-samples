@@ -1,6 +1,6 @@
 # Play File Upload using a custom BodyParser
 
-This is a sample project that shows how to upload a file through Akka Streams using a custom BodyParser using Akka Streams using the Scala API.
+This is a sample project that shows how to upload a file through Pekko Streams using a custom BodyParser using Pekko Streams using the Scala API.
 
 Play's Scala API for `parse.multipartFormData` uses a `BodyParser[MultipartFormData[TemporaryFile]]`.  The `TemporaryFile` wrapper class creates a file under a "temporary" name and then deletes it only when the system is under GC pressure.
 

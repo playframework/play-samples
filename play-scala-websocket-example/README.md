@@ -2,9 +2,9 @@
 
 This is an example Play application that shows how to use Play's Websocket API in Scala, by showing a series of stock tickers updated using WebSocket.
 
-The Websocket API is built on Akka Streams, and so is async, non-blocking, and backpressure aware.  Using Akka Streams also means that interacting with Akka Actors is simple.
+The Websocket API is built on Pekko Streams, and so is async, non-blocking, and backpressure aware.  Using Pekko Streams also means that interacting with Pekko Actors is simple.
 
-## Reactive Push using Akka Streams
+## Reactive Push using Pekko Streams
 
 This application uses a WebSocket to push data to the browser in real-time.  To create a WebSocket connection in Play, first a route must be defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file.  Here is the route which will be used to setup the WebSocket connection:
 
@@ -70,8 +70,8 @@ The client-side of Reactive Requests and Reactive Composition is no different th
 
 ## Further Learning
 
-The Reactive Stocks example combines Reactive Push, Reactive Requests, Reactive Composition, and a Reactive UI to create a Resilient, Interactive, Scalable, and Event-Driven application.  For more information, please see the documentation for Websockets and Akka Streams:
+The Reactive Stocks example combines Reactive Push, Reactive Requests, Reactive Composition, and a Reactive UI to create a Resilient, Interactive, Scalable, and Event-Driven application.  For more information, please see the documentation for Websockets and Pekko Streams:
 
 * <https://www.playframework.com/documentation/latest/ScalaWebSockets>
-* <http://doc.akka.io/docs/akka/2.6/scala/stream/stream-flows-and-basics.html#stream-materialization>
-* <http://doc.akka.io/docs/akka/2.6/scala/stream/stream-integrations.html#integrating-with-actors>
+* <https://pekko.apache.org/docs/pekko/current/scala/stream/stream-flows-and-basics.html#stream-materialization>
+* <https://pekko.apache.org/docs/pekko/current/scala/stream/stream-integrations.html#integrating-with-actors>

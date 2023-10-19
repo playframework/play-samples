@@ -1,5 +1,5 @@
-import play.core.PlayVersion.akkaVersion
-import play.core.PlayVersion.akkaHttpVersion
+import play.core.PlayVersion.pekkoVersion
+import play.core.PlayVersion.pekkoHttpVersion
 import play.grpc.gen.javadsl.{ PlayJavaClientCodeGenerator, PlayJavaServerCodeGenerator }
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.java.grpc.sample.BuildInfo
@@ -12,7 +12,7 @@ version := "1.0-SNAPSHOT"
 lazy val `play-java-grpc-example` = (project in file("."))
   .enablePlugins(PlayJava)
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
-  .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
+  .enablePlugins(PlayPekkoHttp2Support) // enables serving HTTP/2 and gRPC
   // #grpc_play_plugins
   .settings(
     akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java),
@@ -60,9 +60,9 @@ val CompileDeps = Seq(
   guice,
   javaWs,
   "com.lightbend.play"      %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
-  "com.typesafe.akka"       %% "akka-discovery"       % akkaVersion,
-  "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
-  "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
+  "org.apache.pekko"       %% "pekko-discovery"       % pekkoVersion,
+  "org.apache.pekko"       %% "pekko-http"            % pekkoHttpVersion,
+  "org.apache.pekko"       %% "pekko-http-spray-json" % pekkoHttpVersion,
   // Test Database
   "com.h2database" % "h2" % "2.2.224"
 )

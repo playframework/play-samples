@@ -2,19 +2,19 @@ package actors;
 
 import actors.StocksActor.Stocks;
 import actors.StocksActor.GetStocks;
-import akka.Done;
-import akka.NotUsed;
-import akka.actor.typed.ActorRef;
-import akka.actor.typed.Behavior;
-import akka.actor.typed.PostStop;
-import akka.actor.typed.Scheduler;
-import akka.actor.typed.javadsl.ActorContext;
-import akka.actor.typed.javadsl.Behaviors;
-import akka.japi.Pair;
-import akka.stream.KillSwitches;
-import akka.stream.Materializer;
-import akka.stream.UniqueKillSwitch;
-import akka.stream.javadsl.*;
+import org.apache.pekko.Done;
+import org.apache.pekko.NotUsed;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.PostStop;
+import org.apache.pekko.actor.typed.Scheduler;
+import org.apache.pekko.actor.typed.javadsl.ActorContext;
+import org.apache.pekko.actor.typed.javadsl.Behaviors;
+import org.apache.pekko.japi.Pair;
+import org.apache.pekko.stream.KillSwitches;
+import org.apache.pekko.stream.Materializer;
+import org.apache.pekko.stream.UniqueKillSwitch;
+import org.apache.pekko.stream.javadsl.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
 import stocks.Stock;
@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
 
-import static akka.actor.typed.javadsl.AskPattern.ask;
+import static org.apache.pekko.actor.typed.javadsl.AskPattern.ask;
 import static java.util.Objects.requireNonNull;
 
 /**

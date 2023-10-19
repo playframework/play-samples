@@ -1,20 +1,20 @@
 import actors.*;
-import akka.actor.ActorSystem;
-import akka.actor.typed.ActorRef;
-import akka.actor.typed.Behavior;
-import akka.actor.typed.javadsl.Adapter;
-import akka.stream.Materializer;
+import org.apache.pekko.actor.ActorSystem;
+import org.apache.pekko.actor.typed.ActorRef;
+import org.apache.pekko.actor.typed.Behavior;
+import org.apache.pekko.actor.typed.javadsl.Adapter;
+import org.apache.pekko.stream.Materializer;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.typesafe.config.Config;
-import play.libs.akka.AkkaGuiceSupport;
+import play.libs.pekko.PekkoGuiceSupport;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
 @SuppressWarnings("unused")
-public class Module extends AbstractModule implements AkkaGuiceSupport {
+public class Module extends AbstractModule implements PekkoGuiceSupport {
     @Override
     protected void configure() {
         bind(new TypeLiteral<ActorRef<StocksActor.GetStocks>>() {})

@@ -1,9 +1,9 @@
 package controllers;
 
-import akka.actor.ActorSystem;
+import org.apache.pekko.actor.ActorSystem;
 import javax.inject.*;
 
-import akka.actor.Scheduler;
+import org.apache.pekko.actor.Scheduler;
 import play.*;
 import play.mvc.*;
 import java.util.concurrent.Executor;
@@ -31,7 +31,7 @@ public class AsyncController extends Controller {
      * {@link Scheduler} to run code after a delay.
      * @param exec We need a Java {@link Executor} to apply the result
      * of the {@link CompletableFuture} and a Scala
-     * {@link ExecutionContext} so we can use the Akka {@link Scheduler}.
+     * {@link ExecutionContext} so we can use the Pekko {@link Scheduler}.
      * An {@link ExecutionContextExecutor} implements both interfaces.
      */
     @Inject

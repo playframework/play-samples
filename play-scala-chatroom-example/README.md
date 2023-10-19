@@ -2,7 +2,7 @@
 
 This is a simple chatroom using Play and Websockets with the Scala API.
 
-This project makes use of [dynamic streams](http://doc.akka.io/docs/akka/2.6/scala/stream/stream-dynamic.html) from Akka Streams, notably `BroadcastHub` and `MergeHub`.  By [combining MergeHub and BroadcastHub](https://doc.akka.io/docs/akka/2.6/stream/stream-dynamic.html?language=scala#dynamic-fan-in-and-fan-out-with-mergehub-broadcasthub-and-partitionhub), you can get publish/subscribe functionality.
+This project makes use of [dynamic streams](https://pekko.apache.org/docs/pekko/current/scala/stream/stream-dynamic.html) from Pekko Streams, notably `BroadcastHub` and `MergeHub`.  By [combining MergeHub and BroadcastHub](https://pekko.apache.org/docs/pekko/current/stream/stream-dynamic.html?language=scala#dynamic-fan-in-and-fan-out-with-mergehub-broadcasthub-and-partitionhub), you can get publish/subscribe functionality.
 
 ## The good bit
 
@@ -12,7 +12,7 @@ The flow is defined once in the controller, and used everywhere from the `chat` 
 import javax.inject._
 import play.api.mvc._
 
-import akka.stream.scaladsl._
+import org.apache.pekko.stream.scaladsl._
 import scala.concurrent._
 
 class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {

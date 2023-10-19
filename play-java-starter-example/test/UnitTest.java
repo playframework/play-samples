@@ -1,4 +1,4 @@
-import akka.actor.ActorSystem;
+import org.apache.pekko.actor.ActorSystem;
 import controllers.AsyncController;
 import controllers.CountController;
 import org.junit.Test;

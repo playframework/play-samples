@@ -16,7 +16,7 @@ lazy val two = (project in file("modules/two"))
   .settings(commonSettings)
 
 lazy val root = (project in file("."))
-  .enablePlugins(PlayScala, PlayAkkaHttp2Support)
+  .enablePlugins(PlayScala, PlayPekkoHttp2Support)
   .settings(commonSettings)
   .settings(
     name := """play-scala-tls-example""",
@@ -34,7 +34,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       ws,
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-RC2" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0-M1" % Test,
     )
   )
   .aggregate(one, two)

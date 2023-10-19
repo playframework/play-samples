@@ -1,4 +1,4 @@
-import akka.actor.ActorSystem
+import org.apache.pekko.actor.ActorSystem
 import controllers.{AsyncController, CountController}
 import org.scalatestplus.play._
 import play.api.test.Helpers._

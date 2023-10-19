@@ -3,7 +3,7 @@ package controllers
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-import akka.stream.scaladsl.Source
+import org.apache.pekko.stream.scaladsl.Source
 import play.api.libs.json._
 
 import scala.concurrent.duration._

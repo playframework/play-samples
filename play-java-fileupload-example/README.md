@@ -1,6 +1,6 @@
 # Play File Upload using a custom BodyParser
 
-This is a sample project that shows how to upload a file through Akka Streams using a custom BodyParser using Akka Streams using the Java API.
+This is a sample project that shows how to upload a file through Pekko Streams using a custom BodyParser using Pekko Streams using the Java API.
 
 ## Default MultipartFormData Body Parser
 
@@ -83,7 +83,7 @@ class MyMultipartFormDataBodyParser extends DelegatingMultipartFormDataBodyParse
 }
 ```
 
-The core Accumulator is generated from an `akka.streams.FileIO` sink which writes out bytes to the filesystem, and exposes a CompletionStage when the write operation has been completed.
+The core Accumulator is generated from an `org.apache.pekko.streams.FileIO` sink which writes out bytes to the filesystem, and exposes a CompletionStage when the write operation has been completed.
 
 Because this code delegates to the Scala API implementation, the underlying `DelegatingMultipartFormDataBodyParser<A>` exposes an abstract method:
 

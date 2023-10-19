@@ -48,7 +48,7 @@
   </appender>
 
   <logger name="controllers.HomeController" level="DEBUG"/>
-  <logger name="akka" level="INFO"/>
+  <logger name="org.apache.pekko" level="INFO"/>
 
   <root level="INFO">
     <appender-ref ref="ASYNCFILE"/>

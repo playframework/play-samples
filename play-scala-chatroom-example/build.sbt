@@ -1,4 +1,4 @@
-import play.core.PlayVersion.akkaVersion
+import play.core.PlayVersion.pekkoVersion
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
@@ -9,16 +9,16 @@ lazy val root = (project in file("."))
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
-      "org.webjars" %% "webjars-play" % "2.9.0-RC2",
+      "org.webjars" %% "webjars-play" % "3.0.0-M3",
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
       "org.jsoup" % "jsoup" % "1.16.1",
       "ch.qos.logback" % "logback-classic" % "1.4.11",
-      "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
-      "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
-      "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0-RC2" % Test
+      "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
+      "org.apache.pekko" %% "pekko-testkit" % pekkoVersion % Test,
+      "org.apache.pekko" %% "pekko-stream-testkit" % pekkoVersion % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0-M1" % Test
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(

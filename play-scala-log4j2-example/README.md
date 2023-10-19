@@ -39,16 +39,16 @@ After you define the log4j system property, running the application should look 
 No play.logger.configurator found: logging must be configured entirely by the application.
 --- (Running the application, auto-reloading is enabled) ---
 
-[INFO ] 2017-12-20 09:41:12.268 [pool-7-thread-2] AkkaHttpServer - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
+[INFO ] 2017-12-20 09:41:12.268 [pool-7-thread-2] PekkoHttpServer - Listening for HTTP on /0:0:0:0:0:0:0:0:9000
 
 (Server started, use Enter to stop and go back to the console...)
 
 [info] Compiling 1 Scala source to /Users/player/play-scala-log4j2-example/target/scala-2.12/classes ...
 [info] Done compiling.
-[INFO ] 2017-12-20 09:41:41.296 [play-dev-mode-akka.actor.default-dispatcher-4] application - ApplicationTimer demo: Starting application at 2017-12-20T11:41:41.295Z.
-[INFO ] 2017-12-20 09:41:41.477 [application-akka.actor.default-dispatcher-2] Slf4jLogger - Slf4jLogger started
-[WARN ] 2017-12-20 09:41:41.655 [play-dev-mode-akka.actor.default-dispatcher-4] application - Using the following cache for assets
-[INFO ] 2017-12-20 09:41:41.670 [play-dev-mode-akka.actor.default-dispatcher-4] Play - Application started (Dev)
+[INFO ] 2017-12-20 09:41:41.296 [play-dev-mode-pekko.actor.default-dispatcher-4] application - ApplicationTimer demo: Starting application at 2017-12-20T11:41:41.295Z.
+[INFO ] 2017-12-20 09:41:41.477 [application-pekko.actor.default-dispatcher-2] Slf4jLogger - Slf4jLogger started
+[WARN ] 2017-12-20 09:41:41.655 [play-dev-mode-pekko.actor.default-dispatcher-4] application - Using the following cache for assets
+[INFO ] 2017-12-20 09:41:41.670 [play-dev-mode-pekko.actor.default-dispatcher-4] Play - Application started (Dev)
 ````
 
 Note that you will see

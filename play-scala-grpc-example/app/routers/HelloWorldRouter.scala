@@ -1,7 +1,7 @@
 package routers
 
-import akka.actor.ActorSystem
-import akka.stream.Materializer
+import org.apache.pekko.actor.ActorSystem
+import org.apache.pekko.stream.Materializer
 import example.myapp.helloworld.grpc.AbstractGreeterServiceRouter
 import example.myapp.helloworld.grpc.{ HelloReply, HelloRequest }
 import javax.inject.Inject

@@ -4,9 +4,9 @@ import java.io.File
 import java.nio.file.{Files, Path}
 import javax.inject._
 
-import akka.stream.IOResult
-import akka.stream.scaladsl._
-import akka.util.ByteString
+import org.apache.pekko.stream.IOResult
+import org.apache.pekko.stream.scaladsl._
+import org.apache.pekko.util.ByteString
 import play.api._
 import play.api.data.Form
 import play.api.data.Forms._

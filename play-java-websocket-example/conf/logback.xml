@@ -18,14 +18,14 @@
 
   <appender name="STDOUT" class="ConsoleAppender">
     <encoder class="PatternLayoutEncoder">
-      <pattern>%highlight(%-5level) %logger{15} - [%X{akkaSource}] %message%n%xException{10}</pattern>
+      <pattern>%highlight(%-5level) %logger{15} - [%X{pekkoSource}] %message%n%xException{10}</pattern>
     </encoder>
   </appender>
 
   <logger name="play" level="INFO"/>
 
-  <logger name="akka" level="INFO"/>
-  <logger name="akka.stream.Log" level="INFO"/>
+  <logger name="org.apache.pekko" level="INFO"/>
+  <logger name="org.apache.pekko.stream.Log" level="INFO"/>
 
   <logger name="actors" level="INFO"/>
   <logger name="controllers" level="INFO"/>

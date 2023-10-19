@@ -3,8 +3,8 @@ package controllers
 import java.io._
 import java.nio.file.Files
 
-import akka.stream.scaladsl._
-import akka.util.ByteString
+import org.apache.pekko.stream.scaladsl._
+import org.apache.pekko.util.ByteString
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api.libs.ws.WSClient

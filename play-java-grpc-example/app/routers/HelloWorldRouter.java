@@ -1,7 +1,7 @@
 package routers;
 
-import akka.actor.ActorSystem;
-import akka.stream.Materializer;
+import org.apache.pekko.actor.ActorSystem;
+import org.apache.pekko.stream.Materializer;
 import example.myapp.helloworld.grpc.HelloReply;
 import example.myapp.helloworld.grpc.HelloRequest;
 

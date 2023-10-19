@@ -3,11 +3,11 @@ package controllers
 import javax.inject._
 
 import actors._
-import akka.NotUsed
-import akka.actor.typed.{ ActorRef, Scheduler }
-import akka.actor.typed.scaladsl.AskPattern._
-import akka.stream.scaladsl._
-import akka.util.Timeout
+import org.apache.pekko.NotUsed
+import org.apache.pekko.actor.typed.{ ActorRef, Scheduler }
+import org.apache.pekko.actor.typed.scaladsl.AskPattern._
+import org.apache.pekko.stream.scaladsl._
+import org.apache.pekko.util.Timeout
 import play.api.Logger
 import play.api.libs.json._
 import play.api.mvc._

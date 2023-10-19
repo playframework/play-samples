@@ -1,8 +1,8 @@
 package stocks
 
-import akka.NotUsed
-import akka.stream.ThrottleMode
-import akka.stream.scaladsl.Source
+import org.apache.pekko.NotUsed
+import org.apache.pekko.stream.ThrottleMode
+import org.apache.pekko.stream.scaladsl.Source
 
 import scala.concurrent.duration._
 
