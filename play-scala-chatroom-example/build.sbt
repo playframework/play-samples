@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       "org.webjars" %% "webjars-play" % "2.9.0-RC2",
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
-      "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
+      "net.logstash.logback" % "logstash-logback-encoder" % "7.4",
       "org.jsoup" % "jsoup" % "1.16.1",
       "ch.qos.logback" % "logback-classic" % "1.4.11",
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
