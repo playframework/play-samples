@@ -67,15 +67,15 @@ In the terminals you should see activity like:
 
 
 ```
-2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:25521] - Node [pekko://application@127.0.0.1:25521] is JOINING itself (with roles [dc-default]) and forming new cluster
-2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:25521] - is the new leader among reachable nodes (more leaders may exist)
-2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:25521] - Leader is moving node [pekko://application@127.0.0.1:25521] to [Up]
+2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:73551] - Node [pekko://application@127.0.0.1:73551] is JOINING itself (with roles [dc-default]) and forming new cluster
+2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:73551] - is the new leader among reachable nodes (more leaders may exist)
+2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:73551] - Leader is moving node [pekko://application@127.0.0.1:73551] to [Up]
 ```
 
-The logs above indicate node 1 (identified as `pekko://application@127.0.0.1:25521`) and node 2 (identified as `pekko://application@127.0.0.1:25522
-`) have seen each other and established a connection, then `pekko://application@127.0.0.1:25521` became the leader and that leader decided to mark
- `pekko://application@127.0.0.1:25521`'s status as `Up`. Finally, the singleton `counter-actor` that we use on this sample app is available. You
-  should also see, in the logs, how the node 3 (identified as `pekko://application@127.0.0.1:25523`) also joins the cluster.
+The logs above indicate node 1 (identified as `pekko://application@127.0.0.1:73551`) and node 2 (identified as `pekko://application@127.0.0.1:73552
+`) have seen each other and established a connection, then `pekko://application@127.0.0.1:73551` became the leader and that leader decided to mark
+ `pekko://application@127.0.0.1:73551`'s status as `Up`. Finally, the singleton `counter-actor` that we use on this sample app is available. You
+  should also see, in the logs, how the node 3 (identified as `pekko://application@127.0.0.1:73553`) also joins the cluster.
 
 Finally, open three browser tabs to the URLs http://localhost:9001/, http://localhost:9002/, and http://localhost:9003/ (each points to a different
  Play instance) and interact with the UI. Note how all three increment a single counter in the singleton.
