@@ -17,7 +17,7 @@ import scala.concurrent.Future
  * same while you had several different ip addresses.
  */
 class ClusterSystem @Inject() (configuration: Configuration, applicationLifecycle: ApplicationLifecycle) {
-  private val systems = startup(Seq("2551", "2552"))
+  private val systems = startup(Seq("7354", "7355"))
 
   def startup(ports: Seq[String]): Seq[ActorSystem] = {
     ports.map { port =>
