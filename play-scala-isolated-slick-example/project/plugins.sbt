@@ -1,4 +1,4 @@
-libraryDependencies += "com.h2database" % "h2" % "1.4.196" // Can't use latest h2 currently: https://github.com/flyway/flyway-sbt/issues/82#issuecomment-1636728997
+libraryDependencies += "com.h2database" % "h2" % "1.4.200" // Can't use latest h2 currently: https://github.com/flyway/flyway-sbt/issues/82#issuecomment-1636728997
 
 // Database migration
 // https://github.com/flyway/flyway-sbt
@@ -9,4 +9,4 @@ addSbtPlugin("io.github.davidmweber" % "flyway-sbt" % "7.4.0")
 addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "2.0.0")
 
 // The Play plugin
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.0-RC2")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.0-RC3")
