@@ -12,7 +12,7 @@ val FlywayVersion = "9.21.1"
 
 (ThisBuild / libraryDependencies) ++= Seq(
   "javax.inject" % "javax.inject" % "1",
-  "com.google.inject" % "guice" % "6.0.0"
+  "com.google.inject" % "guice" % "7.0.0"
 )
 
 (ThisBuild / scalaVersion) := "2.13.12"
