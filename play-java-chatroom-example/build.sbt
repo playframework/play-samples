@@ -8,7 +8,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "org.webjars" %% "webjars-play" % "2.9.0-RC2",
       "org.webjars" % "flot" % "0.8.3",
-      "org.webjars" % "bootstrap" % "3.4.1",
+      "org.webjars" % "bootstrap" % "5.3.2",
       guice,
       ws,
       "org.assertj" % "assertj-core" % "3.12.2" % Test,
