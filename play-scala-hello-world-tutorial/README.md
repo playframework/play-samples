@@ -3,7 +3,7 @@
 To follow the steps in this tutorial, you will need the correct version of Java and sbt. The tutorial requires:
 
 * Java Software Developer's Kit (SE) 11 or higher
-* sbt 1.9.6 or higher. Note: if you downloaded this project as a zip file from https://developer.lightbend.com, the file includes an sbt distribution for your convenience.
+* sbt 1.9.6 or higher.
 
 To check your Java version, enter the following in a command window:
 
@@ -19,7 +19,7 @@ sbt sbtVersion
 
 If you do not have the required versions, follow these links to obtain them:
 
-* [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* [Java SE](https://adoptium.net/)
 * [sbt](http://www.scala-sbt.org/download.html)
 
 ## Build and run the project
