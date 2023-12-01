@@ -50,3 +50,7 @@ bin/
 
 #general
 *.class
+
+# Gradle
+.gradle
+build
