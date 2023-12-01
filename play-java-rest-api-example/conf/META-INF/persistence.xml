@@ -6,6 +6,11 @@
   <persistence-unit name="defaultPersistenceUnit" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <non-jta-data-source>DefaultDS</non-jta-data-source>
+    <!--
+      Gradle workaround to use Play with JPA
+      https://www.playframework.com/documentation/latest/JavaJPA#Deploying-Play-with-JPA
+     -->
+    <jar-file>build/classes/scala/main</jar-file>
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
     </properties>
