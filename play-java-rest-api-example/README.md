@@ -18,11 +18,13 @@ public CompletionStage<Result> list() {
 
 There is more detail in <https://www.playframework.com/documentation/latest/ThreadPools> -- notably, you can always bump up the number of threads in the rendering thread pool rather than do this -- but it gives you an idea of best practices.
 
-## Load Testing
+## Play in production mode
 
 The best way to see what Play can do is to run a load test.  We've included Gatling in this test project for integrated load testing.
 
-Start Play in production mode, by [staging the application](https://www.playframework.com/documentation/latest/Deploying) and running the play script:s
+### Play in production mode (Sbt) 
+
+Start Play in production mode, by [staging the application](https://www.playframework.com/documentation/latest/Deploying) and running the next script
 
 ```bash
 sbt stage
@@ -30,10 +32,22 @@ cd target/universal/stage
 ./bin/play-java-rest-api-example -Dplay.http.secret.key=some-long-key-that-will-be-used-by-your-application
 ```
 
+### Play in production mode (Gradle)
+
+Start Play in production mode, by [building a distribution](https://docs.gradle.org/current/userguide/application_plugin.html#sec:the_distribution) and running the next script
+
+```bash
+./gradlew installDist
+cd build/install/play-java-rest-api-example
+./bin/play-java-rest-api-example
+```
+
+## Load Testing
+
 Then you'll start the Gatling load test up (it's already integrated into the project):
 
 ```bash
-sbt ";project;gatling:test"
+sbt ";project gatling;gatling:test"
 ```
 
 For best results, start the gatling load test up on another machine so you do not have contending resources.  You can edit the [Gatling simulation](http://gatling.io/docs/2.3/general/simulation_structure.html#simulation-structure), and change the numbers as appropriate.
@@ -41,7 +55,7 @@ For best results, start the gatling load test up on another machine so you do no
 Once the test completes, you'll see an HTML file containing the load test chart, for example:
 
 ```bash
- ./play-java-rest-api-example/target/gatling/gatlingspec-1472579540405/index.html
+ ./play-java-rest-api-example/gatling/target/gatling/gatlingspec-1472579540405/index.html
 ```
 
 That will contain your load test results.

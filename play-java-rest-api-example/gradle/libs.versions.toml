@@ -1,0 +1,23 @@
+[versions]
+twirl = "2.0.3"
+play = "3.0.2-773ecf9b-SNAPSHOT"
+failsafe = "2.4.4"
+url-builder = "1.1.5"
+h2 = "2.2.224"
+hibernate = "6.3.1.Final"
+metrics = "4.2.21"
+junit = "4.13.1"
+scalatestplus-play = "7.0.0"
+
+[libraries]
+failsafe = { group = "net.jodah", name = "failsafe", version.ref = "failsafe" }
+url-builder = { group = "com.palominolabs.http", name = "url-builder", version.ref = "url-builder" }
+h2 = { group = "com.h2database", name = "h2", version.ref = "h2" }
+hibernate-core = { group = "org.hibernate", name = "hibernate-core", version.ref = "hibernate" }
+metrics-core = { group = "io.dropwizard.metrics", name = "metrics-core", version.ref = "metrics" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
+
+[plugins]
+twirl = { id = "org.playframework.twirl", version.ref = "twirl" }
+play = { id = "org.playframework.play", version.ref = "play" }
