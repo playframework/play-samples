@@ -6,6 +6,8 @@ This is the example project for making a REST API in Play.
 
 ### Running
 
+#### Running (Sbt)
+
 You need to download and install sbt for this application to run.
 
 Once you have sbt installed, the following at the command prompt will start up Play in development mode:
@@ -13,6 +15,16 @@ Once you have sbt installed, the following at the command prompt will start up P
 ```bash
 sbt run
 ```
+
+#### Running (Gradle)
+
+The following at the command prompt will start up Play in development mode:
+
+```bash
+./gradlew playRun
+```
+
+#### Hot-reload
 
 Play will start up on the HTTP port at <http://localhost:9000/>.   You don't need to deploy or reload anything -- changing any source code while the server is running will automatically recompile and hot-reload the application on the next HTTP request.
 
@@ -52,6 +64,8 @@ POST /v1/posts HTTP/1.1
 
 The best way to see what Play can do is to run a load test.  We've included Gatling in this test project for integrated load testing.
 
+#### Play in production mode (Sbt)
+
 Start Play in production mode, by [staging the application](https://www.playframework.com/documentation/latest/Deploying) and running the play scripts:
 
 ```bash
@@ -59,6 +73,18 @@ sbt stage
 cd target/universal/stage
 ./bin/play-scala-rest-api-example -Dplay.http.secret.key=some-long-key-that-will-be-used-by-your-application
 ```
+
+### Play in production mode (Gradle)
+
+Start Play in production mode, by [building a distribution](https://docs.gradle.org/current/userguide/application_plugin.html#sec:the_distribution) and running the next script
+
+```bash
+./gradlew installDist
+cd build/install/play-scala-rest-api-example
+JAVA_OPTS="-Dplay.http.secret.key=some-long-key-that-will-be-used-by-your-application" ./bin/play-scala-rest-api-example
+```
+
+#### Gatling
 
 Then you'll start the Gatling load test up (it's already integrated into the project):
 
@@ -71,7 +97,7 @@ For best results, start the gatling load test up on another machine so you do no
 Once the test completes, you'll see an HTML file containing the load test chart:
 
 ```bash
-./play-scala-rest-api-example/target/gatling/gatlingspec-1472579540405/index.html
+./play-scala-rest-api-example/gatling/target/gatling/gatlingspec-1472579540405/index.html
 ```
 
 That will contain your load test results.

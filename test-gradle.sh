@@ -27,7 +27,7 @@ pushd play-java-rest-api-example        && scripts/test-gradle && popd
 # pushd play-scala-isolated-slick-example && scripts/test-gradle && popd
 # pushd play-scala-log4j2-example         && scripts/test-gradle && popd
 # pushd play-scala-macwire-di-example     && scripts/test-gradle && popd
-# pushd play-scala-rest-api-example       && scripts/test-gradle && popd
+pushd play-scala-rest-api-example       && scripts/test-gradle && popd
 # Uses libsodium
 # pushd play-scala-secure-session-example && scripts/test-gradle && popd
 # pushd play-scala-slick-example          && scripts/test-gradle && popd
