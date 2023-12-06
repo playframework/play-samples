@@ -7,12 +7,20 @@ It is intentionally very simple and basic to show how compile time DI works in P
 There is also an example using Java compile time DI with [Dagger 2](https://google.github.io/dagger/):
 the "play-java-dagger2-example" in the [play-samples](https://github.com/playframework/play-samples) repo.
 
-## Running
+## Running (Sbt)
 
 Start up the server with sbt:
 
 ```bash
 sbt run
+```
+
+## Running (Gradle)
+
+Start up the server with Gradle:
+
+```bash
+./gradlew playRun
 ```
 
 Then go to the server at <http://localhost:9000> to see "Hello".

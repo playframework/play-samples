@@ -1,0 +1,9 @@
+[versions]
+play = "3.0.2-773ecf9b-SNAPSHOT"
+junit = "4.13.1"
+
+[libraries]
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+[plugins]
+play = { id = "org.playframework.play", version.ref = "play" }
