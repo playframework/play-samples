@@ -4,8 +4,12 @@ This project shows how to use Play Java with [Dagger 2](https://google.github.io
 
 ## Running
 
-```
+```bash
 sbt run
+```
+or
+```bash
+./gradlew playRun
 ```
 
 Then go to http://localhost:9000 to see the time and change the time zone.
