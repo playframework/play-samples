@@ -3,7 +3,7 @@ if [ -z "$MATRIX_SCALA" ]; then
     echo "Error: the environment variable MATRIX_SCALA is not set"
     exit 1
 fi
-# pushd play-java-chatroom-example        && scripts/test-gradle && popd
+pushd play-java-chatroom-example        && scripts/test-gradle && popd
 pushd play-java-compile-di-example      && scripts/test-gradle && popd
 pushd play-java-dagger2-example         && scripts/test-gradle && popd
 # pushd play-java-ebean-example           && scripts/test-gradle && popd

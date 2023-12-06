@@ -7,15 +7,24 @@ import org.apache.pekko.event.LoggingAdapter;
 import org.apache.pekko.japi.Pair;
 import org.apache.pekko.japi.pf.PFBuilder;
 import org.apache.pekko.stream.Materializer;
-import org.apache.pekko.stream.javadsl.*;
+import org.apache.pekko.stream.javadsl.BroadcastHub;
+import org.apache.pekko.stream.javadsl.Flow;
+import org.apache.pekko.stream.javadsl.Keep;
+import org.apache.pekko.stream.javadsl.MergeHub;
+import org.apache.pekko.stream.javadsl.Sink;
+import org.apache.pekko.stream.javadsl.Source;
 import org.webjars.play.WebJarsUtil;
 import play.libs.F;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Http;
+import play.mvc.Result;
+import play.mvc.Results;
+import play.mvc.WebSocket;
 
-import javax.inject.Inject;
 import java.net.URI;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import javax.inject.Inject;
 
 /**
  * A very simple chat client using websockets.
@@ -27,6 +36,7 @@ public class HomeController extends Controller {
 
 
     @Inject
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public HomeController(ActorSystem actorSystem,
                           Materializer mat,
                           WebJarsUtil webJarsUtil) {
@@ -70,7 +80,7 @@ public class HomeController extends Controller {
      * http://blog.dewhurstsecurity.com/2013/08/30/security-testing-html5-websockets.html
      */
     private boolean sameOriginCheck(Http.RequestHeader request) {
-        List<String> origins = request.getHeaders().getAll("Origin");
+        List<String> origins = request.headers().getAll("Origin");
         if (origins.size() > 1) {
             // more than one origin found
             return false;

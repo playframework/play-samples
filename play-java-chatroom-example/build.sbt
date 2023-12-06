@@ -12,8 +12,8 @@ lazy val root = (project in file("."))
       "org.webjars" % "bootstrap" % "3.4.1",
       guice,
       ws,
-      "org.assertj" % "assertj-core" % "3.12.2" % Test,
-      "org.awaitility" % "awaitility" % "3.1.6" % Test
+      "org.assertj" % "assertj-core" % "3.24.2" % Test,
+      "org.awaitility" % "awaitility" % "4.2.0" % Test
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
     // Needed to make JUnit report the tests being run
