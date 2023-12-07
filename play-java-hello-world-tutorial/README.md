@@ -3,7 +3,7 @@
 To follow the steps in this tutorial, you will need the correct version of Java and sbt. The tutorial requires:
 
 * Java Software Developer's Kit (SE) 11 or higher
-* sbt 1.9.6 or higher.
+* sbt 1.9.6 or higher. _(Optional)_
 
 To check your Java version, enter the following in a command window:
 
@@ -30,7 +30,7 @@ To build and run the project:
 
 1. Use a command window to change into the example project directory, for example: `cd play-java-hello-world-tutorial`
 
-2. Build the project. Enter: `sbt run`. The project builds and starts the embedded HTTP server. Since this downloads libraries and dependencies, the amount of time required depends partly on your connection's speed.
+2. Build the project. Enter: `sbt run` or `./gradlew playRun`. The project builds and starts the embedded HTTP server. Since this downloads libraries and dependencies, the amount of time required depends partly on your connection's speed.
 
 3. After the message `Server started, ...` displays, enter the following URL in a browser: <http://localhost:9000>
 
