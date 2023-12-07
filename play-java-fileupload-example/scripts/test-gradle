@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+echo "+-------------------------------+"
+echo "| Executing tests using Gradle  |"
+echo "+-------------------------------+"
+./gradlew -Dscala.version="$MATRIX_SCALA" check
