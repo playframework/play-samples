@@ -6,6 +6,7 @@
   <persistence-unit name="defaultPersistenceUnit" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <non-jta-data-source>DefaultDS</non-jta-data-source>
+    <jar-file>build/classes/scala/main</jar-file>
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
     </properties>
