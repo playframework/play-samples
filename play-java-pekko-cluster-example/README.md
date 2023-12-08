@@ -42,7 +42,13 @@ For more detailed information, refer to the Play Framework [documentation](https
 
 To run this sample in `Dev Mode` use the regular 
 
-`sbt run` 
+```bash
+sbt run
+```
+or
+```bash
+./gradlew playRun
+```
 
 and open the URL http://localhost:9000/.
 
@@ -52,8 +58,8 @@ You can run this sample in `Production Mode` on your local machine. This section
  and forming a cluster between them. The following steps will package the application and prepare folder with necessary artifacts for the execution: 
  
 1. open a terminal and change directory to the `play-java-pekko-cluster-example` folder.
-2. package the application using `sbt dist` from the 
-3. locate the file `play-java-pekko-cluster-example/target/universal/play-java-pekko-cluster-example-1.0-SNAPSHOT.zip`, copy it to a folder of your
+2. package the application using `sbt dist` or `./gradlew distZip` from the 
+3. locate the file `play-java-pekko-cluster-example/target/universal/play-java-pekko-cluster-example-1.0-SNAPSHOT.zip` or `build/distributions/play-java-pekko-cluster-example.zip`, copy it to a folder of your
  choice and `unzip` it.
 
 > NOTE: This sample application ships with extra config files that make it very easy to run multiple nodes on a single machine. If you want to
@@ -63,25 +69,44 @@ You can run this sample in `Production Mode` on your local machine. This section
 
 Open three separate terminals on the folder where you unzipped the file and run the following commands (one on each terminal):
  
-`bin/play-java-pekko-cluster-example  -Dconfig.file=local1.conf`
+```bash
+bin/play-java-pekko-cluster-example  -Dconfig.file=local1.conf
+```
+or for Gradle distribution
+```bash
+JAVA_OPTS="-Dconfig.resource=local1.conf -Dplay.http.secret.key=some-long-key-that-will-be-used-by-your-application" ./bin/play-java-pekko-cluster-example
+```
 
-`bin/play-java-pekko-cluster-example  -Dconfig.file=local2.conf`
+```bash
+bin/play-java-pekko-cluster-example  -Dconfig.file=local2.conf
+```
+or for Gradle distribution
+```bash
+JAVA_OPTS="-Dconfig.resource=local2.conf -Dplay.http.secret.key=some-long-key-that-will-be-used-by-your-application" ./bin/play-java-pekko-cluster-example
+```
 
-`bin/play-java-pekko-cluster-example  -Dconfig.file=local3.conf`
+
+```bash
+bin/play-java-pekko-cluster-example  -Dconfig.file=local3.conf
+```
+or for Gradle distribution
+```bash
+JAVA_OPTS="-Dconfig.resource=local3.conf -Dplay.http.secret.key=some-long-key-that-will-be-used-by-your-application" ./bin/play-java-pekko-cluster-example
+```
 
 In the terminals you should see activity like:
 
 
 ```
-2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:73551] - Node [pekko://application@127.0.0.1:73551] is JOINING itself (with roles [dc-default]) and forming new cluster
-2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:73551] - is the new leader among reachable nodes (more leaders may exist)
-2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:73551] - Leader is moving node [pekko://application@127.0.0.1:73551] to [Up]
+2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:63551] - Node [pekko://application@127.0.0.1:63551] is JOINING itself (with roles [dc-default]) and forming new cluster
+2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:63551] - is the new leader among reachable nodes (more leaders may exist)
+2020-09-01 11:40:45 INFO  org.apache.pekko.cluster.Cluster Cluster(pekko://application) Cluster Node [pekko://application@127.0.0.1:63551] - Leader is moving node [pekko://application@127.0.0.1:63551] to [Up]
 ```
 
-The logs above indicate node 1 (identified as `pekko://application@127.0.0.1:73551`) and node 2 (identified as `pekko://application@127.0.0.1:73552
-`) have seen each other and established a connection, then `pekko://application@127.0.0.1:73551` became the leader and that leader decided to mark
- `pekko://application@127.0.0.1:73551`'s status as `Up`. Finally, the singleton `counter-actor` that we use on this sample app is available. You
-  should also see, in the logs, how the node 3 (identified as `pekko://application@127.0.0.1:73553`) also joins the cluster.
+The logs above indicate node 1 (identified as `pekko://application@127.0.0.1:63551`) and node 2 (identified as `pekko://application@127.0.0.1:63552
+`) have seen each other and established a connection, then `pekko://application@127.0.0.1:63551` became the leader and that leader decided to mark
+ `pekko://application@127.0.0.1:63551`'s status as `Up`. Finally, the singleton `counter-actor` that we use on this sample app is available. You
+  should also see, in the logs, how the node 3 (identified as `pekko://application@127.0.0.1:63553`) also joins the cluster.
 
 Finally, open three browser tabs to the URLs http://localhost:9001/, http://localhost:9002/, and http://localhost:9003/ (each points to a different
  Play instance) and interact with the UI. Note how all three increment a single counter in the singleton.
