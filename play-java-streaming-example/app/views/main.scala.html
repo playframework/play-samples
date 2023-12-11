@@ -1,4 +1,6 @@
-@(content: Html)
+@import views.html.helper.CSPNonce
+@import play.api.mvc.RequestHeader
+@(content: Html)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
 
@@ -7,8 +9,8 @@
         <title>EventSource clock</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-3.2.0.slim.js")" type="text/javascript"></script>
-        <script type="text/javascript" src="@routes.HomeController.javascriptRoutes"></script>
+        <script @{CSPNonce.attr} src="@routes.Assets.at("javascripts/jquery-3.2.0.slim.js")" type="text/javascript"></script>
+        <script @{CSPNonce.attr} src="@routes.HomeController.javascriptRoutes" type="text/javascript"></script>
     </head>
     <body>
         @content

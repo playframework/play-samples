@@ -6,10 +6,11 @@
 
 GET        /                                  controllers.HomeController.index()
 
-GET        /java/comet                         controllers.JavaCometController.index()
+GET        /java/comet                         controllers.JavaCometController.index(request: Request)
++ nocsp
 GET        /java/comet/liveClock               controllers.JavaCometController.streamClock()
 
-GET        /java/eventSource                   controllers.JavaEventSourceController.index()
+GET        /java/eventSource                   controllers.JavaEventSourceController.index(request: Request)
 GET        /java/eventSource/liveClock         controllers.JavaEventSourceController.streamClock()
 
 GET        /javascriptRoutes                  controllers.HomeController.javascriptRoutes

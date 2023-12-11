@@ -7,7 +7,7 @@ import play.api.routing._
 
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-  def index() = Action {
+  def index(): Action[AnyContent] = Action { implicit request =>
     Ok(views.html.index())
   }
 

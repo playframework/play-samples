@@ -10,8 +10,8 @@ import javax.inject.Singleton;
 @Singleton
 public class JavaCometController extends Controller implements JavaTicker {
 
-    public Result index() {
-        return ok(views.html.javacomet.render());
+    public Result index(Http.Request request) {
+        return ok(views.html.javacomet.render(request.asScala()));
     }
 
     public Result streamClock() {

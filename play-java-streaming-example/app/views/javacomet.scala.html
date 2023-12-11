@@ -1,4 +1,6 @@
-@()
+@import play.api.mvc.RequestHeader
+@import views.html.helper.CSPNonce
+@()(implicit request: RequestHeader)
 
 @main {
 
@@ -10,8 +12,8 @@
         Clock events are pushed from the Server using a Comet connection.
     </p>
 
-    <script src="@routes.Assets.at("javascripts/comet.js")"></script>
+    <script @{CSPNonce.attr} src="@routes.Assets.at("javascripts/comet.js")"></script>
 
-    <iframe id="comet" src="@routes.JavaCometController.streamClock().unique()"></iframe>
+    <iframe id="comet" hidden src="@routes.JavaCometController.streamClock().unique()"></iframe>
 
 }

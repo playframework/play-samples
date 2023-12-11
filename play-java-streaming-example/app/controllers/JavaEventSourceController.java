@@ -11,8 +11,8 @@ import javax.inject.Singleton;
 @Singleton
 public class JavaEventSourceController extends Controller implements JavaTicker {
 
-    public Result index() {
-        return ok(views.html.javaeventsource.render());
+    public Result index(Http.Request request) {
+        return ok(views.html.javaeventsource.render(request.asScala()));
     }
 
     public Result streamClock() {
