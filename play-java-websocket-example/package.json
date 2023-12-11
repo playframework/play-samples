@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "coffeescript": "^2.7.0",
+    "less": "^4.2.0"
+  }
+}
