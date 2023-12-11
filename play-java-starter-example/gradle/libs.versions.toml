@@ -1,0 +1,17 @@
+[versions]
+twirl = "2.0.3"
+play = "3.0.1-03969c1e-SNAPSHOT"
+junit = "4.13.1"
+h2 = "2.2.224"
+assertj = "3.24.2"
+awaitility = "4.2.0"
+
+[libraries]
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+h2 = { group = "com.h2database", name = "h2", version.ref = "h2" }
+assertj = { group = "org.assertj", name = "assertj-core", version.ref = "assertj" }
+awaitility = { group = "org.awaitility", name = "awaitility", version.ref = "awaitility" }
+
+[plugins]
+twirl = { id = "org.playframework.twirl", version.ref = "twirl" }
+play = { id = "org.playframework.play", version.ref = "play" }

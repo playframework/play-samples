@@ -13,7 +13,7 @@ pushd play-java-forms-example           && scripts/test-gradle && popd
 # pushd play-java-hello-world-tutorial    && scripts/test-gradle && popd
 pushd play-java-jpa-example             && scripts/test-gradle && popd
 pushd play-java-rest-api-example        && scripts/test-gradle && popd
-# pushd play-java-starter-example         && scripts/test-gradle && popd
+pushd play-java-starter-example         && scripts/test-gradle && popd
 pushd play-java-streaming-example       && scripts/test-gradle && popd
 pushd play-java-websocket-example       && scripts/test-gradle && popd
 pushd play-java-pekko-cluster-example    && scripts/test-gradle && popd
