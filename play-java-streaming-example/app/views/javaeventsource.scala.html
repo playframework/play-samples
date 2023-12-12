@@ -1,4 +1,4 @@
-@()
+@()(implicit request: JRequestHeader)
 
 @main {
     <h1>Server Sent Event clock</h1>
@@ -9,5 +9,5 @@
         Clock events are pushed from the Server using a Server Sent Event connection.
     </p>
 
-    <script src="@routes.Assets.at("javascripts/eventsource.js")"></script>
+    <script @{CSPNonce.attr} src="@routes.Assets.at("javascripts/eventsource.js")"></script>
 }
