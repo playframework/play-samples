@@ -4,15 +4,15 @@
 
 # Home page
 
-GET        /                                  controllers.HomeController.index()
+GET        /                                  controllers.HomeController.index(request: Request)
 
-GET        /java/comet                         controllers.JavaCometController.index()
-GET        /java/comet/liveClock               controllers.JavaCometController.streamClock()
+GET        /java/comet                         controllers.JavaCometController.index(request: Request)
+GET        /java/comet/liveClock               controllers.JavaCometController.streamClock(request: Request)
 
-GET        /java/eventSource                   controllers.JavaEventSourceController.index()
+GET        /java/eventSource                   controllers.JavaEventSourceController.index(request: Request)
 GET        /java/eventSource/liveClock         controllers.JavaEventSourceController.streamClock()
 
-GET        /javascriptRoutes                  controllers.HomeController.javascriptRoutes
+GET        /javascriptRoutes                  controllers.HomeController.javascriptRoutes(request: Request)
 
 # Map static resources from the /public folder to the /assets URL path
 GET        /assets/*file                      controllers.Assets.at(path="/public", file)
