@@ -1,7 +1,7 @@
 import play.core.PlayVersion.pekkoVersion
 import play.core.PlayVersion.pekkoHttpVersion
-import play.grpc.gen.javadsl.{ PlayJavaClientCodeGenerator, PlayJavaServerCodeGenerator }
-import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
+import play.grpc.gen.javadsl.{PlayJavaClientCodeGenerator, PlayJavaServerCodeGenerator}
+import com.typesafe.sbt.packager.docker.{Cmd, CmdLike, DockerAlias, ExecCmd}
 import play.java.grpc.sample.BuildInfo
 
 name := "play-java-grpc-example"
@@ -11,18 +11,18 @@ version := "1.0-SNAPSHOT"
 // build.sbt
 lazy val `play-java-grpc-example` = (project in file("."))
   .enablePlugins(PlayJava)
-  .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
+  .enablePlugins(PekkoGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayPekkoHttp2Support) // enables serving HTTP/2 and gRPC
   // #grpc_play_plugins
   .settings(
-    akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Java),
+    pekkoGrpcGeneratedLanguages := Seq(PekkoGrpc.Java),
     // #grpc_client_generators
     // build.sbt
-    akkaGrpcExtraGenerators += PlayJavaClientCodeGenerator,
+    pekkoGrpcExtraGenerators += PlayJavaClientCodeGenerator,
     // #grpc_client_generators
     // #grpc_server_generators
     // build.sbt
-    akkaGrpcExtraGenerators += PlayJavaServerCodeGenerator,
+    pekkoGrpcExtraGenerators += PlayJavaServerCodeGenerator,
     Test / javaOptions += "-Dtestserver.httpsport=9443",
     // #grpc_server_generators
     PlayKeys.devSettings ++= Seq(
@@ -49,8 +49,9 @@ lazy val `play-java-grpc-example` = (project in file("."))
   .settings(
     libraryDependencies ++= CompileDeps ++ TestDeps
   )
-  
+
 scalaVersion := "2.13.12"
+crossScalaVersions := Seq("2.13.12", "3.3.1")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
 // Needed for ssl-config to create self signed certificated under Java 17
@@ -59,7 +60,7 @@ Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAM
 val CompileDeps = Seq(
   guice,
   javaWs,
-  "com.lightbend.play"      %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
+  "org.playframework"      %% "play-grpc-runtime"     % BuildInfo.playGrpcVersion,
   "org.apache.pekko"       %% "pekko-discovery"       % pekkoVersion,
   "org.apache.pekko"       %% "pekko-http"            % pekkoHttpVersion,
   "org.apache.pekko"       %% "pekko-http-spray-json" % pekkoHttpVersion,
@@ -69,7 +70,7 @@ val CompileDeps = Seq(
 
 val TestDeps = Seq(
   // used in tests
-  "com.lightbend.play" %% "play-grpc-testkit" % BuildInfo.playGrpcVersion % Test
+  "org.playframework" %% "play-grpc-testkit" % BuildInfo.playGrpcVersion % Test
 )
 
 // Make verbose tests

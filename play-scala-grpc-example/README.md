@@ -4,7 +4,7 @@ This example is described in the [Play Scala gRPC Example site](https://develope
 
 This is an example application that shows how to use Pekko gRPC to both expose and use gRPC services inside an Play application.
 
-For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://developer.lightbend.com/docs/akka-grpc/current/ .
+For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://pekko.apache.org/docs/pekko-grpc/current/.
 
 
 ## Sample license

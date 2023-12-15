@@ -12,18 +12,18 @@ version := "1.0-SNAPSHOT"
 // build.sbt
 lazy val `play-scala-grpc-example` = (project in file("."))
   .enablePlugins(PlayScala)
-  .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
+  .enablePlugins(PekkoGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayPekkoHttp2Support) // enables serving HTTP/2 and gRPC
 // #grpc_play_plugins
     .settings(
-      akkaGrpcGeneratedLanguages := Seq(AkkaGrpc.Scala),
+      pekkoGrpcGeneratedLanguages := Seq(PekkoGrpc.Scala),
       // #grpc_client_generators
       // build.sbt
-      akkaGrpcExtraGenerators += PlayScalaClientCodeGenerator,
+      pekkoGrpcExtraGenerators += PlayScalaClientCodeGenerator,
       // #grpc_client_generators
       // #grpc_server_generators
       // build.sbt
-      akkaGrpcExtraGenerators += PlayScalaServerCodeGenerator,
+      pekkoGrpcExtraGenerators += PlayScalaServerCodeGenerator,
       Test / javaOptions += "-Dtestserver.httpsport=0",
       // #grpc_server_generators
       PlayKeys.devSettings ++= Seq(
@@ -53,7 +53,7 @@ lazy val `play-scala-grpc-example` = (project in file("."))
 
 val CompileDeps = Seq(
   guice,
-  "com.lightbend.play"      %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
+  "org.playframework"      %% "play-grpc-runtime"     % BuildInfo.playGrpcVersion,
   "org.apache.pekko"       %% "pekko-discovery"       % pekkoVersion,
   "org.apache.pekko"       %% "pekko-http"            % pekkoHttpVersion,
   "org.apache.pekko"       %% "pekko-http-spray-json" % pekkoHttpVersion,
@@ -63,14 +63,15 @@ val CompileDeps = Seq(
 
 val playVersion = play.core.PlayVersion.current
 val TestDeps = Seq(
-  "com.lightbend.play"      %% "play-grpc-scalatest" % BuildInfo.playGrpcVersion % Test, 
-  "com.lightbend.play"      %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test, 
+  "org.playframework"       %% "play-grpc-scalatest" % BuildInfo.playGrpcVersion % Test,
+  "org.playframework"       %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test,
   "org.playframework"       %% "play-test"           % playVersion     % Test,
   "org.playframework"       %% "play-specs2"         % playVersion     % Test,
   "org.scalatestplus.play"  %% "scalatestplus-play"  % "7.0.0" % Test,
 )
 
 scalaVersion := "2.13.12"
+crossScalaVersions := Seq("2.13.12", "3.3.1")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 // Needed for ssl-config to create self signed certificated under Java 17
 Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAMED")

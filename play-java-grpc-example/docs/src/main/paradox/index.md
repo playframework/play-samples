@@ -6,10 +6,10 @@ The [Play Framework](https://www.playframework.com/) combines productivity and p
 scalable web applications with Java and Scala. Play is developer friendly with a "just hit refresh" workflow and
 built-in testing support. With Play, applications scale predictably due to a stateless and non-blocking architecture.
 
-[Akka gRPC](https://developer.lightbend.com/docs/akka-grpc/current/overview.html) is a toolkit for building streaming
+[Pekko gRPC](https://pekko.apache.org/docs/pekko-grpc/current/) is a toolkit for building streaming
 gRPC servers and clients on top of Pekko Streams.
 
-For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://developer.lightbend.com/docs/akka-grpc/current/.
+For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://pekko.apache.org/docs/pekko-grpc/current/.
 
 ## Obtaining this example
 
