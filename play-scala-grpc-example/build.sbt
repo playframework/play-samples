@@ -36,10 +36,10 @@ lazy val `play-scala-grpc-example` = (project in file("."))
     .settings(
       // workaround to https://github.com/akka/akka-grpc/pull/470#issuecomment-442133680
       dockerBaseImage := "openjdk:8-alpine",
-      dockerCommands  := 
+      dockerCommands  :=
         Seq.empty[CmdLike] ++
         Seq(
-          Cmd("FROM", "openjdk:8-alpine"), 
+          Cmd("FROM", "openjdk:8-alpine"),
           ExecCmd("RUN", "apk", "add", "--no-cache", "bash")
         ) ++
         dockerCommands.value.tail ,
@@ -52,7 +52,7 @@ lazy val `play-scala-grpc-example` = (project in file("."))
 
 val CompileDeps = Seq(
   guice,
-  "com.lightbend.play"      %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
+  "com.typesafe.play"       %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
   "com.typesafe.akka"       %% "akka-discovery"       % akkaVersion,
   "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
   "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
@@ -62,11 +62,11 @@ val CompileDeps = Seq(
 
 val playVersion = play.core.PlayVersion.current
 val TestDeps = Seq(
-  "com.lightbend.play"      %% "play-grpc-scalatest" % BuildInfo.playGrpcVersion % Test, 
-  "com.lightbend.play"      %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test, 
-  "com.typesafe.play"       %% "play-test"           % playVersion     % Test, 
-  "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test, 
-  "org.scalatestplus.play"  %% "scalatestplus-play"  % "5.0.0" % Test, 
+  "com.typesafe.play"       %% "play-grpc-scalatest" % BuildInfo.playGrpcVersion % Test,
+  "com.typesafe.play"       %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test,
+  "com.typesafe.play"       %% "play-test"           % playVersion     % Test,
+  "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test,
+  "org.scalatestplus.play"  %% "scalatestplus-play"  % "5.0.0" % Test,
 )
 
 scalaVersion := "2.12.18"
