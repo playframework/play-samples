@@ -16,3 +16,8 @@ javacOptions ++= Seq(
   "-Xlint:deprecation",
   "-Werror"
 )
+
+TwirlKeys.templateImports ++= Seq(
+  "play.mvc.Http.{ RequestHeader => JRequestHeader }",
+  "views.html.helper.CSPNonce"
+)
