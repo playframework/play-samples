@@ -9,7 +9,7 @@ lazy val root = (project in file("."))
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
-      "org.webjars" %% "webjars-play" % "3.0.0",
+      "org.webjars" %% "webjars-play" % "3.0.1",
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
