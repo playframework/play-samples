@@ -12,7 +12,7 @@ class BrowserSpec extends PlaySpec with GuiceOneServerPerSuite with OneBrowserPe
       val tmpPath = JFiles.createTempFile(null, null)
       writeFile(tmpPath, "hello")
 
-      // http://doc.scalatest.org/3.0.0/index.html#org.scalatest.selenium.WebBrowser
+      // http://doc.scalatest.org/3.0.1/index.html#org.scalatest.selenium.WebBrowser
       go to s"http://localhost:$port/"
       click on name("name")
       pressKeys(tmpPath.toAbsolutePath.toString)
