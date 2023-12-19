@@ -49,14 +49,14 @@ lazy val `play-java-grpc-example` = (project in file("."))
     libraryDependencies ++= CompileDeps ++ TestDeps
   )
   
-scalaVersion := "2.12.18"
+scalaVersion := "2.13.12"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
 
 val CompileDeps = Seq(
   guice,
   javaWs,
-  "com.lightbend.play"      %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
+  "com.typesafe.play"      %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
   "com.typesafe.akka"       %% "akka-discovery"       % akkaVersion,
   "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
   "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
@@ -66,7 +66,7 @@ val CompileDeps = Seq(
 
 val TestDeps = Seq(
   // used in tests
-  "com.lightbend.play" %% "play-grpc-testkit" % BuildInfo.playGrpcVersion % Test
+  "com.typesafe.play" %% "play-grpc-testkit" % BuildInfo.playGrpcVersion % Test
 )
 
 // Make verbose tests
