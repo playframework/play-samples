@@ -4,5 +4,5 @@ if (!!window.EventSource) {
         $('#clock').html(e.data.replace(/(\d)/g, '<span>$1</span>'))
     });
 } else {
-    $("#clock").html("Sorry. This browser doesn't seem to support Server sent event. Check <a href='http://html5test.com/compare/feature/communication-eventSource.html'>html5test</a> for browser compatibility.");
+    $("#clock").html("Sorry. This browser doesn't seem to support Server sent event. Check <a href='https://html5test.com/compare/feature/communication.eventSource.html'>html5test</a> for browser compatibility.");
 }
