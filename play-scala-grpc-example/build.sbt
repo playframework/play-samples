@@ -36,11 +36,11 @@ lazy val `play-scala-grpc-example` = (project in file("."))
     )
     .settings(
       // workaround to https://github.com/akka/akka-grpc/pull/470#issuecomment-442133680
-      dockerBaseImage := "openjdk:8-alpine",
-      dockerCommands  := 
+      dockerBaseImage := "eclipse-temurin:11-alpine",
+      dockerCommands  :=
         Seq.empty[CmdLike] ++
         Seq(
-          Cmd("FROM", "openjdk:8-alpine"), 
+          Cmd("FROM", "eclipse-temurin:11-alpine"),
           ExecCmd("RUN", "apk", "add", "--no-cache", "bash")
         ) ++
         dockerCommands.value.tail ,
