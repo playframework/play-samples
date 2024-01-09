@@ -2,7 +2,7 @@
 
 Adding gRPC support to a vanilla Play application requires a few steps:
 
-### 1. `sbt-akka-grpc`
+### 1. `sbt-pekko-grpc`
 
 Add the Pekko gRPC plugin on `project/plugins.sbt`
 
@@ -12,13 +12,13 @@ and enable it on your project (in `build.sbt`):
 
 @@snip [build.sbt](../../../../build.sbt) { #grpc_play_plugins }
 
-The `AkkaGrpcPlugin` locates the gRPC `.proto` files and generates source code from it. Remember to enable the plugin
+The `PekkoGrpcPlugin` locates the gRPC `.proto` files and generates source code from it. Remember to enable the plugin
 in all the projects of your build that want to use it.
 
 Note how the `PlayPekkoHttp2Support` is also enabled. gRPC requires HTTP/2 transport and Play supports it only as an opt-in plugin.
 
 
-### 2.a Serving (Akka) gRPC Services
+### 2.a Serving (Pekko) gRPC Services
 
 Have a look at the `conf/routes` file where you'll notice how to embed a gRPC router within a normal play application.
 You can in fact mix normal Play routes with gRPC routers like this to offer a mixed service. You'll notice that we
@@ -51,4 +51,4 @@ Which in turn allows us to inject clients to any of the services defined in our 
 
 Since you may want to configure what service discovery or hardcoded location to use for each client, you may do so
 as well in `conf/application.conf`, though we will not dive into this here. Refer to the documentation on
-[using Pekko Discovery for endpoint discovery](https://developer.lightbend.com/docs/akka-grpc/current/client/configuration.html#using-akka-discovery-for-endpoint-discovery) for more details.
+[using Pekko Discovery for endpoint discovery](https://pekko.apache.org/docs/pekko-grpc/current/client/configuration.html#using-pekko-discovery-for-endpoint-discovery) for more details.

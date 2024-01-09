@@ -38,7 +38,7 @@ class HelloScalaTestSpec extends PlaySpec with GuiceOneServerPerTest with Server
         .get().futureValue
       result.status must be(200) // Maybe should be a 426, see #396
     }
-    "work with a gRPC client" in withGrpcClient[GreeterServiceClient] { client: GreeterServiceClient =>
+    "work with a gRPC client" in withGrpcClient[GreeterServiceClient] { (client: GreeterServiceClient) =>
       val reply = client.sayHello(HelloRequest("Alice")).futureValue
       reply.message must be("Hello, Alice!")
     }
