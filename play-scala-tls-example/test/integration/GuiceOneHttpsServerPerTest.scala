@@ -45,7 +45,7 @@ trait GuiceOneHttpsServerPerTest extends TestSuiteMixin with ServerProvider with
     synchronized { privateApp = newAppForTest(test) }
 
     val testServer = new TestServer(
-      ServerConfig(port = Some(0), sslPort = Some(httpsPort), mode = Mode.Test, rootDir = app.path),
+      ServerConfig(port = None, sslPort = Some(httpsPort), mode = Mode.Test, rootDir = app.path),
       app,
       None
     )
