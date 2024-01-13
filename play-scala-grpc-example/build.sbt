@@ -53,7 +53,7 @@ lazy val `play-scala-grpc-example` = (project in file("."))
 
 val CompileDeps = Seq(
   guice,
-  "com.typesafe.play"       %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
+  "org.playframework"       %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
   "com.typesafe.akka"       %% "akka-discovery"       % akkaVersion,
   "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
   "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
@@ -63,8 +63,8 @@ val CompileDeps = Seq(
 
 val playVersion = play.core.PlayVersion.current
 val TestDeps = Seq(
-  "com.typesafe.play"       %% "play-grpc-scalatest" % BuildInfo.playGrpcVersion % Test,
-  "com.typesafe.play"       %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test,
+  "org.playframework"       %% "play-grpc-scalatest" % BuildInfo.playGrpcVersion % Test,
+  "org.playframework"       %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test,
   "com.typesafe.play"       %% "play-test"           % playVersion     % Test,
   "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test,
   "org.scalatestplus.play"  %% "scalatestplus-play"  % "6.0.0" % Test,

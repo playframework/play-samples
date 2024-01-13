@@ -59,7 +59,7 @@ Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAM
 val CompileDeps = Seq(
   guice,
   javaWs,
-  "com.typesafe.play"       %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
+  "org.playframework"       %% "play-grpc-runtime"    % BuildInfo.playGrpcVersion,
   "com.typesafe.akka"       %% "akka-discovery"       % akkaVersion,
   "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
   "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
@@ -69,7 +69,7 @@ val CompileDeps = Seq(
 
 val TestDeps = Seq(
   // used in tests
-  "com.typesafe.play" %% "play-grpc-testkit" % BuildInfo.playGrpcVersion % Test
+  "org.playframework" %% "play-grpc-testkit" % BuildInfo.playGrpcVersion % Test
 )
 
 // Make verbose tests
