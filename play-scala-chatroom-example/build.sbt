@@ -18,7 +18,7 @@ lazy val root = (project in file("."))
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-testkit" % pekkoVersion % Test,
       "org.apache.pekko" %% "pekko-stream-testkit" % pekkoVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(
