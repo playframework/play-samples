@@ -14,11 +14,11 @@ lazy val root = (project in file("."))
       "org.webjars" % "bootstrap" % "3.3.7-1",
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
       "org.jsoup" % "jsoup" % "1.17.2",
-      "ch.qos.logback" % "logback-classic" % "1.4.11",
+      "ch.qos.logback" % "logback-classic" % "1.4.14",
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-testkit" % pekkoVersion % Test,
       "org.apache.pekko" %% "pekko-stream-testkit" % pekkoVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.0" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(
