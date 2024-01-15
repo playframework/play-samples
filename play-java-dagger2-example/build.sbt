@@ -7,8 +7,8 @@ lazy val root = (project in file("."))
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       ws,
-      "com.google.dagger" % "dagger" % "2.48.1",
-      "com.google.dagger" % "dagger-compiler" % "2.48.1"
+      "com.google.dagger" % "dagger" % "2.50",
+      "com.google.dagger" % "dagger-compiler" % "2.50"
     ),
     // move the java annotation code into generated directory
     (Compile / javacOptions) := { (Compile / managedSourceDirectories).value.head.mkdirs(); javacOptions.value },
