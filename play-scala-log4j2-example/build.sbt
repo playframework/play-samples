@@ -1,4 +1,4 @@
-val log4jVersion = "2.22.0"
+val log4jVersion = "2.22.1"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
@@ -13,7 +13,7 @@ lazy val root = (project in file("."))
       "org.apache.logging.log4j" % "log4j-slf4j-impl" % log4jVersion,
       "org.apache.logging.log4j" % "log4j-api" % log4jVersion,
       "org.apache.logging.log4j" % "log4j-core" % log4jVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

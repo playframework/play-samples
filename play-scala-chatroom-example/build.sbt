@@ -14,11 +14,11 @@ lazy val root = (project in file("."))
       "org.webjars" % "bootstrap" % "3.3.7-1",
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
       "org.jsoup" % "jsoup" % "1.17.2",
-      "ch.qos.logback" % "logback-classic" % "1.4.11",
+      "ch.qos.logback" % "logback-classic" % "1.4.14",
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
       "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
       "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.0" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(
