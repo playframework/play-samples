@@ -3,5 +3,5 @@
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |"
 echo "+----------------------------+"
-rm -f test.mv.db
+rm -f test.mv.db test.trace.db
 sbt ++$MATRIX_SCALA clean flyway/flywayMigrate slickCodegen test
