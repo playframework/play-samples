@@ -82,7 +82,9 @@ lazy val root = (project in file("."))
     TwirlKeys.templateImports += "com.example.user.User",
     libraryDependencies ++= Seq(
       guice,
-      "com.h2database" % "h2" % "2.2.224",
+      "com.h2database" % "h2" % "1.4.200", // Can't use latest h2 currently: flyway-sbt comes with an outdated flyway version that does not support h2 2.x yet...:
+      // https://github.com/flyway/flyway-sbt/blob/7fc35d2833531b2b9e5a98a594d76fd047a077a8/build.sbt#L1
+      // https://github.com/flyway/flyway-sbt/issues/82#issuecomment-1636728997
       ws % Test,
       "org.flywaydb" % "flyway-core" % FlywayVersion % Test,
       "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
