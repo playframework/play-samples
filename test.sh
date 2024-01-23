@@ -5,6 +5,7 @@ if [ -z "$MATRIX_SCALA" ]; then
 fi
 if [[ $* == --netty ]]; then
     find -name build.sbt | xargs sed -i 's/\/\/.enablePlugins(PlayNettyServer)/.enablePlugins(PlayNettyServer)/g'
+    find -name build.sbt | xargs sed -i 's/.cross(CrossVersion.for3Use2_13)//g'
 fi
 
 pushd play-java-chatroom-example        && scripts/test-sbt && popd
