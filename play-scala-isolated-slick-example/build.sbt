@@ -77,6 +77,7 @@ lazy val slick = (project in file("modules/slick"))
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
+  //.enablePlugins(PlayNettyServer).disablePlugins(PlayAkkaHttpServer) // uncomment to use the Netty backend
   .settings(
     name := """play-scala-isolated-slick-example""",
     TwirlKeys.templateImports += "com.example.user.User",

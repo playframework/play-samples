@@ -1,5 +1,6 @@
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava, PlayEbean)
+  //.enablePlugins(PlayNettyServer).disablePlugins(PlayAkkaHttpServer) // uncomment to use the Netty backend
   .settings(
     name := "play-java-ebean-example",
     version := "1.0.0-SNAPSHOT",

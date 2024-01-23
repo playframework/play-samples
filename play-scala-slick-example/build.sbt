@@ -13,6 +13,7 @@ lazy val root = (project in file("."))
 def sampleProject(name: String) =
   Project(s"$name-sample", file("samples") / name)
     .enablePlugins(PlayScala)
+    //.enablePlugins(PlayNettyServer).disablePlugins(PlayAkkaHttpServer) // uncomment to use the Netty backend
     .settings(
       scalaVersion := "2.13.12",
       scalacOptions ++= Seq(
