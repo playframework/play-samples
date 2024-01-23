@@ -1,5 +1,6 @@
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
+  //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
   .settings(
     name := """play-scala-macwire-di-example""",
     version := "1.0-SNAPSHOT",

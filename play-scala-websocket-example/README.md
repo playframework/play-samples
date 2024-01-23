@@ -4,6 +4,12 @@ This is an example Play application that shows how to use Play's Websocket API i
 
 The Websocket API is built on Pekko Streams, and so is async, non-blocking, and backpressure aware.  Using Pekko Streams also means that interacting with Pekko Actors is simple.
 
+## Server backend
+
+By default, the project uses the Akka HTTP Server backend. To switch to the Netty Server backend, enable the `PlayNettyServer` sbt plugin in the `build.sbt` file.
+In the `build.sbt` of this project, you'll find a commented line for this setting; simply uncomment it to make the switch.
+For more detailed information, refer to the Play Framework [documentation](https://www.playframework.com/documentation/3.0.x/Server).
+
 ## Reactive Push using Pekko Streams
 
 This application uses a WebSocket to push data to the browser in real-time.  To create a WebSocket connection in Play, first a route must be defined in the <a href="#code/conf/routes" class="shortcut">routes</a> file.  Here is the route which will be used to setup the WebSocket connection:

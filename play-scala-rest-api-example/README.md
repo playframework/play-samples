@@ -16,6 +16,12 @@ sbt run
 
 Play will start up on the HTTP port at <http://localhost:9000/>.   You don't need to deploy or reload anything -- changing any source code while the server is running will automatically recompile and hot-reload the application on the next HTTP request.
 
+## Server backend
+
+By default, the project uses the Akka HTTP Server backend. To switch to the Netty Server backend, enable the `PlayNettyServer` sbt plugin in the `build.sbt` file.
+In the `build.sbt` of this project, you'll find a commented line for this setting; simply uncomment it to make the switch.
+For more detailed information, refer to the Play Framework [documentation](https://www.playframework.com/documentation/3.0.x/Server).
+
 ### Usage
 
 If you call the same URL from the command line, you’ll see JSON. Using [httpie](https://httpie.org/), we can execute the command:

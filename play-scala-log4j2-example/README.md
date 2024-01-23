@@ -4,6 +4,12 @@ This is an example project showing a sample Play application that use Log4J 2 in
 
 Please see [Using a custom logging framework](https://www.playframework.com/documentation/latest/SettingsLogger#Using-a-Custom-Logging-Framework) in the Play documentation for more details.
 
+## Server backend
+
+By default, the project uses the Akka HTTP Server backend. To switch to the Netty Server backend, enable the `PlayNettyServer` sbt plugin in the `build.sbt` file.
+In the `build.sbt` of this project, you'll find a commented line for this setting; simply uncomment it to make the switch.
+For more detailed information, refer to the Play Framework [documentation](https://www.playframework.com/documentation/3.0.x/Server).
+
 ## Running in Production
 
 This application will package everything correctly when you run `sbt dist` and run the packaged script.

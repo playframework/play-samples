@@ -6,6 +6,7 @@ crossScalaVersions := Seq("2.13.12", "3.3.1")
 scalaVersion := crossScalaVersions.value.head
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
+  //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
 
 libraryDependencies += guice
 
