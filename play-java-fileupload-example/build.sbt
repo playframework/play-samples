@@ -1,5 +1,6 @@
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
+  //.enablePlugins(PlayNettyServer).disablePlugins(PlayAkkaHttpServer) // uncomment to use the Netty backend
   .settings(
     name := """play-java-fileupload-example""",
     version := "1.0-SNAPSHOT",

@@ -1,5 +1,6 @@
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
+  //.enablePlugins(PlayNettyServer).disablePlugins(PlayAkkaHttpServer) // uncomment to use the Netty backend
   .settings(
     name := "play-scala-streaming-example",
     version := "1.0-SNAPSHOT",

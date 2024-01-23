@@ -2,6 +2,7 @@ val log4jVersion = "2.22.1"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
+  //.enablePlugins(PlayNettyServer).disablePlugins(PlayAkkaHttpServer) // uncomment to use the Netty backend
   .disablePlugins(PlayLogback)
   .settings(
     name := """play-scala-log4j2-example""",

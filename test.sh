@@ -3,6 +3,11 @@ if [ -z "$MATRIX_SCALA" ]; then
     echo "Error: the environment variable MATRIX_SCALA is not set"
     exit 1
 fi
+if [[ $* == --netty ]]; then
+    find -name build.sbt | xargs sed -i 's/\/\/.enablePlugins(PlayNettyServer)/.enablePlugins(PlayNettyServer)/g'
+    find -name build.sbt | xargs sed -i 's/.cross(CrossVersion.for3Use2_13)//g'
+fi
+
 pushd play-java-chatroom-example        && scripts/test-sbt && popd
 pushd play-java-compile-di-example      && scripts/test-sbt && popd
 pushd play-java-dagger2-example         && scripts/test-sbt && popd

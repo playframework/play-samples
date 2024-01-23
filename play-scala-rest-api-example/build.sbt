@@ -6,6 +6,7 @@ lazy val scala3 = "3.3.1"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayService, PlayLayoutPlugin, Common)
+  //.enablePlugins(PlayNettyServer).disablePlugins(PlayAkkaHttpServer) // uncomment to use the Netty backend
   .settings(
     name := "play-scala-rest-api-example",
     scalaVersion := scala213,

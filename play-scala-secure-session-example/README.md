@@ -50,6 +50,12 @@ sbt run
 
 Then go to <http://localhost:9000> to see the server.
 
+## Server backend
+
+By default, the project uses the Akka HTTP Server backend. To switch to the Netty Server backend, enable the `PlayNettyServer` sbt plugin in the `build.sbt` file.
+In the `build.sbt` of this project, you'll find a commented line for this setting; simply uncomment it to make the switch.
+For more detailed information, refer to the Play Framework [documentation](https://www.playframework.com/documentation/3.0.x/Server).
+
 ## Encryption
 
 Encryption is handled by `services.encryption.EncryptionService`.  It uses secret key authenticated encryption with [Kalium](https://github.com/abstractj/kalium/), a thin Java wrapper around libsodium.  Kalium's `SecretBox` is an object oriented mapping to libsodium's `crypto_secretbox_easy` and `crypto_secretbox_open_easy`, described [here](https://download.libsodium.org/doc/secret-key_cryptography/authenticated_encryption.html).  The underlying stream cipher is XSalsa20, used with a Poly1305 MAC.
