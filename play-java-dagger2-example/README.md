@@ -12,6 +12,12 @@ Then go to http://localhost:9000 to see the time and change the time zone.
 
 Go to http://localhost:9000/ws to see the WS client pull the time from a remote service (really the app itself). 
 
+## Server backend
+
+By default, the project uses the Akka HTTP Server backend. To switch to the Netty Server backend, enable the `PlayNettyServer` sbt plugin in the `build.sbt` file.
+In the `build.sbt` of this project, you'll find a commented line for this setting; simply uncomment it to make the switch.
+For more detailed information, refer to the Play Framework [documentation](https://www.playframework.com/documentation/3.0.x/Server).
+
 ## Background
 
 [Dagger 2](https://google.github.io/dagger/) is a compile time dependency injection system. This means that [dependencies are still declared](https://google.github.io/dagger/users-guide.html#declaring-dependencies) with `@Inject`, but the compiler is responsible for resolving the graph.

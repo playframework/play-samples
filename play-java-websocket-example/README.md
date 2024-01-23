@@ -6,6 +6,12 @@ The Websocket API is built on Akka Streams, and so is async, non-blocking, and b
 
 There are also tests showing how Junit and Akka Testkit are used to test actors and flows.
 
+## Server backend
+
+By default, the project uses the Akka HTTP Server backend. To switch to the Netty Server backend, enable the `PlayNettyServer` sbt plugin in the `build.sbt` file.
+In the `build.sbt` of this project, you'll find a commented line for this setting; simply uncomment it to make the switch.
+For more detailed information, refer to the Play Framework [documentation](https://www.playframework.com/documentation/3.0.x/Server).
+
 ## Reactive Push
 
 This application uses a WebSocket to push data to the browser in real-time.  To create a WebSocket connection in Play, first a route must be defined in the `routes` file.  Here is the route which will be used to setup the WebSocket connection:
