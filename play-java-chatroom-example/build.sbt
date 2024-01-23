@@ -1,5 +1,6 @@
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
+  //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
   .settings(
     name := """play-java-chatroom-example""",
     version := "1.0-SNAPSHOT",
