@@ -6,7 +6,7 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 
 // run with "sbt gatling:test" on another machine so you don't have resources contending.
-// http://gatling.io/docs/2.2.2/general/simulation_structure.html#simulation-structure
+// https://gatling.io/docs/gatling/reference/current/core/simulation/
 class GatlingSpec extends Simulation {
 
   // change this to another machine, make sure you have Play running in producion mode
