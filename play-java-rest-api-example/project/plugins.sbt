@@ -2,5 +2,5 @@
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.1")
 
 // Load testing tool:
-// http://gatling.io/docs/2.2.2/extensions/sbt_plugin.html
+// https://gatling.io/docs/gatling/reference/current/extensions/sbt_plugin/
 addSbtPlugin("io.gatling" % "gatling-sbt" % "4.8.1")
