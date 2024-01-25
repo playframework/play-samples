@@ -5,7 +5,7 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.1")
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.6")
 
 // Load testing tool:
-// http://gatling.io/docs/2.2.2/extensions/sbt_plugin.html
+// https://gatling.io/docs/gatling/reference/current/extensions/sbt_plugin/
 addSbtPlugin("io.gatling" % "gatling-sbt" % "4.8.1")
 
 // Scala formatting: "sbt scalafmt"
