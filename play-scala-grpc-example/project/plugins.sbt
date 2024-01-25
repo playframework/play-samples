@@ -6,7 +6,7 @@ buildInfoPackage := "play.scala.grpc.sample"
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.1")
 
-addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.5")
+addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.6")
 
 // #grpc_sbt_plugin
 // project/plugins.sbt
