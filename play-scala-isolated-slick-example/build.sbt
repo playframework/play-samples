@@ -88,7 +88,7 @@ lazy val root = (project in file("."))
       // https://github.com/flyway/flyway-sbt/issues/82#issuecomment-1636728997
       ws % Test,
       "org.flywaydb" % "flyway-core" % FlywayVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
     ),
     (Test / fork) := true
   )
