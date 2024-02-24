@@ -11,6 +11,8 @@ import dao.CompaniesDAO
 import dao.ComputersDAO
 import play.api.test.WithApplication
 
+import java.util.Date
+
 class ModelSpec extends Specification {
 
   import models._
@@ -34,23 +36,29 @@ class ModelSpec extends Specification {
     }
 
     "be retrieved by id" in new WithApplication {
-      val macintosh = Await.result(computersDao.findById(21), Duration.Inf).get
-      macintosh.name must equalTo("Macintosh")
-      macintosh.introduced must beSome.which(dateIs(_, "1984-01-24"))
+      override def running() = {
+        val macintosh = Await.result(computersDao.findById(21), Duration.Inf).get
+        macintosh.name must equalTo("Macintosh")
+        macintosh.introduced must beSome[Date].which(dateIs(_, "1984-01-24"))
+      }
     }
 
     "be listed along its companies" in new WithApplication {
-      val computers = Await.result(computersDao.list(), Duration.Inf)
-      computers.total must equalTo(574)
-      computers.items must have length (10)
+      override def running() = {
+        val computers = Await.result(computersDao.list(), Duration.Inf)
+        computers.total must equalTo(574)
+        computers.items must have length (10)
+      }
     }
 
     "be updated if needed" in new WithApplication {
-      Await.result(computersDao.update(21, Computer(name = "The Macintosh", introduced = None, discontinued = None, companyId = Some(1))), Duration.Inf)
+      override def running() = {
+        Await.result(computersDao.update(21, Computer(name = "The Macintosh", introduced = None, discontinued = None, companyId = Some(1))), Duration.Inf)
 
-      val macintosh = Await.result(computersDao.findById(21), Duration.Inf).get
-      macintosh.name must equalTo("The Macintosh")
-      macintosh.introduced must beNone
+        val macintosh = Await.result(computersDao.findById(21), Duration.Inf).get
+        macintosh.name must equalTo("The Macintosh")
+        macintosh.introduced must beNone
+      }
 
     }
 
