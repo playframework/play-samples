@@ -10,7 +10,7 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{ ExecutionContext, Future }
 
 @Singleton()
-class ComputersDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext) extends CompaniesComponent
+class ComputersDAO @Inject() (override protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext) extends CompaniesDAO(dbConfigProvider)
     with HasDatabaseConfigProvider[JdbcProfile] {
   import profile.api._
 
@@ -29,7 +29,6 @@ class ComputersDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProv
   }
 
   private val computers = TableQuery[Computers]
-  private val companies = TableQuery[Companies]
 
   /** Retrieve a computer from the id. */
   def findById(id: Long): Future[Option[Computer]] =
@@ -71,7 +70,7 @@ class ComputersDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProv
     db.run(computers += computer).map(_ => ())
 
   /** Insert new computers. */
-  def insert(computers: Seq[Computer]): Future[Unit] =
+  def insertComputers(computers: Seq[Computer]): Future[Unit] =
     db.run(this.computers ++= computers).map(_ => ())
 
   /** Update a computer. */
