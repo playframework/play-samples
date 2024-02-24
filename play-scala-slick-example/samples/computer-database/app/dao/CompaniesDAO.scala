@@ -7,7 +7,10 @@ import models.Company
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }
 import slick.jdbc.JdbcProfile
 
-trait CompaniesComponent { self: HasDatabaseConfigProvider[JdbcProfile] =>
+@Singleton()
+class CompaniesDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext)
+    extends HasDatabaseConfigProvider[JdbcProfile] {
+
   import profile.api._
 
   class Companies(tag: Tag) extends Table[Company](tag, "COMPANY") {
@@ -15,14 +18,6 @@ trait CompaniesComponent { self: HasDatabaseConfigProvider[JdbcProfile] =>
     def name = column[String]("NAME")
     def * = (id.?, name) <> (Company.tupled, Company.unapply _)
   }
-}
-
-@Singleton()
-class CompaniesDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProvider)(implicit executionContext: ExecutionContext)
-    extends CompaniesComponent
-    with HasDatabaseConfigProvider[JdbcProfile] {
-
-  import profile.api._
 
   val companies = TableQuery[Companies]
 
@@ -40,6 +35,6 @@ class CompaniesDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProv
     db.run(companies += company).map(_ => ())
 
   /** Insert new companies */
-  def insert(companies: Seq[Company]): Future[Unit] =
+  def insertCompanies(companies: Seq[Company]): Future[Unit] =
     db.run(this.companies ++= companies).map(_ => ())
 }
