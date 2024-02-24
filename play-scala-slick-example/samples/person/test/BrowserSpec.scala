@@ -13,10 +13,12 @@ class BrowserSpec extends Specification {
   "Application" should {
 
     "work from within a browser" in new WithBrowser {
+      override def running() = {
 
-      browser.goTo("http://localhost:" + port)
+        browser.goTo("http://localhost:" + port)
 
-      browser.pageSource must contain("Add Person")
+        browser.pageSource must contain("Add Person")
+      }
     }
   }
 }
