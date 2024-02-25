@@ -1,8 +1,12 @@
+lazy val scala213 = "2.13.12"
+lazy val scala3 = "3.3.1"
+
 lazy val root = (project in file("."))
   .settings(
     name := "play-scala-slick-examples",
     version := "1.0-SNAPSHOT",
-    scalaVersion := "2.13.12",
+    scalaVersion := scala3,
+    crossScalaVersions := Seq(scala213, scala3),
   )
   .aggregate(
     basicSample,
@@ -15,16 +19,16 @@ def sampleProject(name: String) =
     .enablePlugins(PlayScala)
     //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
     .settings(
-      scalaVersion := "2.13.12",
+      scalaVersion := scala3,
+      crossScalaVersions := Seq(scala213, scala3),
       scalacOptions ++= Seq(
         "-feature",
-        "-deprecation",
         "-Werror"
       ),
       libraryDependencies ++= Seq(
         guice,
-        "org.playframework" %% "play-slick" % "6.0.0",
-        "org.playframework" %% "play-slick-evolutions" % "6.0.0",
+        "org.playframework" %% "play-slick" % "6.1.0-RC1",
+        "org.playframework" %% "play-slick-evolutions" % "6.1.0-RC1",
         "com.h2database" % "h2" % "2.2.224",
         specs2 % Test,
       ),
