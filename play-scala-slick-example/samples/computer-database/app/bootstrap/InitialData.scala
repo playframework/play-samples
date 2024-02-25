@@ -19,8 +19,8 @@ private[bootstrap] class InitialData @Inject() (
   def insert(): Unit = {
     val insertInitialDataFuture = for {
       count <- computersDao.count() if count == 0
-      _ <- companiesDao.insert(InitialData.companies)
-      _ <- computersDao.insert(InitialData.computers)
+      _ <- companiesDao.insertCompanies(InitialData.companies)
+      _ <- computersDao.insertComputers(InitialData.computers)
     } yield ()
 
     Try(Await.result(insertInitialDataFuture, Duration.Inf))

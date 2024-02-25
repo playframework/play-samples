@@ -30,7 +30,7 @@ class PersonController @Inject()(repo: PersonRepository,
   /**
    * The index action.
    */
-  def index = Action { implicit request =>
+  def index: Action[AnyContent] = Action { implicit request =>
     Ok(views.html.index(personForm))
   }
 
@@ -76,3 +76,7 @@ class PersonController @Inject()(repo: PersonRepository,
  * that is generated once it's created.
  */
 case class CreatePersonForm(name: String, age: Int)
+object CreatePersonForm {
+  def unapply(cpf: CreatePersonForm): Option[(String, Int)] = Some((cpf.name, cpf.age))
+  def tupled = (this.apply _).tupled
+}
