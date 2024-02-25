@@ -28,17 +28,13 @@ fi
 #  pushd play-scala-grpc-example           && scripts/test-gradle && popd
 #fi
 # pushd play-scala-hello-world-tutorial   && scripts/test-gradle && popd
-# if [ "$MATRIX_SCALA" != "3.x" ]; then
-#   pushd play-scala-isolated-slick-example && scripts/test-gradle && popd
-# fi
+# pushd play-scala-isolated-slick-example && scripts/test-gradle && popd
 # pushd play-scala-log4j2-example         && scripts/test-gradle && popd
 # pushd play-scala-macwire-di-example     && scripts/test-gradle && popd
 # pushd play-scala-rest-api-example       && scripts/test-gradle && popd
 # Uses libsodium
 # pushd play-scala-secure-session-example && scripts/test-gradle && popd
-# if [ "$MATRIX_SCALA" != "3.x" ]; then
-#   pushd play-scala-slick-example          && scripts/test-gradle && popd
-# fi
+# pushd play-scala-slick-example          && scripts/test-gradle && popd
 # pushd play-scala-starter-example        && scripts/test-gradle && popd
 # pushd play-scala-streaming-example      && scripts/test-gradle && popd
 # uses vanilla sbt
