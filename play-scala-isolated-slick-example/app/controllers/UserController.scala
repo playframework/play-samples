@@ -3,6 +3,7 @@ package controllers
 import com.example.user.{User, UserDAO}
 import models.UserRequest
 import play.api.i18n.{Lang, Messages}
+import play.api.libs.json.Json
 import play.api.mvc._
 
 import java.time.Instant
@@ -26,6 +27,16 @@ class UserController @Inject() (userDAO: UserDAO, cc: ControllerComponents)(
   def index: Action[AnyContent] = Action.async { implicit unused =>
     userDAO.all.map { users =>
       Ok(views.html.index(users))
+    }
+  }
+
+  /**
+   * GET - Find all Users  and return them on a String array ids.
+   * @return List[String] of all the user ids.
+   */
+  def findAll: Action[AnyContent] = Action.async{implicit unused =>
+    userDAO.all.map{ users=>
+      Ok(Json.toJson(users.map(_.id)))
     }
   }
 
