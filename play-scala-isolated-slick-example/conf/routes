@@ -5,7 +5,7 @@
 # User Routes
 
 GET     /                                         controllers.UserController.index
-
+GET     /users/all          controllers.UserController.findAll
 
 GET     /users/new          controllers.UserController.create
 POST    /users              controllers.UserController.save
