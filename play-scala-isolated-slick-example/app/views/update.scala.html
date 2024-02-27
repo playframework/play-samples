@@ -1,0 +1,16 @@
+@(userForm: Form[UserRequest])(implicit messages: Messages)
+
+@import views.html.helper._
+
+@main("Update User") {
+
+    <h1>Update User</h1>
+
+    @form(routes.UserController.update(userForm("id").value.get)) {
+
+        @inputText(userForm("email"))
+
+        <button type="submit">Update</button>
+
+    }
+}

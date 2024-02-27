@@ -1,22 +1,32 @@
 @(users: Seq[User])
 
-@main("Title Page") {
-    <h2>Users</h2>
-
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Email</th>
-            <th>Created At</th>
-            <th>Updated At</th>
-        </tr>
-        @for(user <- users){
+    @import helper._
+    @main("Title Page") {
+        <h2>Users</h2>
+        <a href="@routes.UserController.create" class="add-button">Create User</a>
+        <br>
+        <br>
+        <br>
+        <table>
             <tr>
-                <td>@user.id</td>
-                <td>@user.email</td>
-                <td>@user.createdAt</td>
-                <td>@user.updatedAt</td>
+                <th>Id</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
             </tr>
-        }
-    </table>
-}
+            @for(user <- users) {
+                <tr>
+                    <td>@user.id</td>
+                    <td>@user.email</td>
+                    <td>@user.createdAt</td>
+                    <td>@user.updatedAt</td>
+                    <td>
+                        <a href="@routes.UserController.edit(user.id)" class="edit-button">Edit</a>
+                        <a href="@routes.UserController.delete(user.id)" class="delete-button">Delete</a>
+
+                    </td>
+                </tr>
+            }
+        </table>
+    }
