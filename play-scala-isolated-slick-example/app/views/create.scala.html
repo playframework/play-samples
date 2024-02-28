@@ -1,0 +1,13 @@
+@(userForm: Form[UserRequest])(implicit messages: Messages)
+
+    @import views.html.helper._
+
+    @main("Create User") {
+
+        <h1 >Create a new User</h1>
+
+        @form(action = routes.UserController.save) {
+            @inputText(userForm("email"))
+            <button type="submit">Create</button>
+        }
+    }
