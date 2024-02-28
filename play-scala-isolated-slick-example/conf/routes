@@ -2,8 +2,18 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                           controllers.HomeController.index
+# User Routes
+
+GET     /                                         controllers.UserController.index
+GET     /users/all          controllers.UserController.findAll
+
+GET     /users/new          controllers.UserController.create
+POST    /users              controllers.UserController.save
+
+GET     /users/:id/edit     controllers.UserController.edit(id: String)
+POST    /users/:id          controllers.UserController.update(id: String)
+
+GET     /users/:id/delete   controllers.UserController.delete(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

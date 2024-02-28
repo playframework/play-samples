@@ -1,7 +1,5 @@
 package controller
 
-import java.util.Properties
-
 import com.google.inject.Inject
 import org.flywaydb.core.Flyway
 import org.flywaydb.core.internal.jdbc.DriverDataSource
