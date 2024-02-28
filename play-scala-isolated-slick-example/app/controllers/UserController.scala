@@ -24,7 +24,7 @@ class UserController @Inject() (userDAO: UserDAO, cc: ControllerComponents)(
    * GET - Get the List of all the users from the userDao
    * @return Html View of Index with all the users
    */
-  def index: Action[AnyContent] = Action.async { implicit unused =>
+  def index: Action[AnyContent] = Action.async { implicit request =>
     userDAO.all.map { users =>
       Ok(views.html.index(users))
     }
@@ -34,7 +34,7 @@ class UserController @Inject() (userDAO: UserDAO, cc: ControllerComponents)(
    * GET - Find all Users  and return them on a String array ids.
    * @return List[String] of all the user ids.
    */
-  def findAll: Action[AnyContent] = Action.async{implicit unused =>
+  def findAll: Action[AnyContent] = Action.async{implicit request =>
     userDAO.all.map{ users=>
       Ok(Json.toJson(users.map(_.id)))
     }
@@ -78,7 +78,7 @@ class UserController @Inject() (userDAO: UserDAO, cc: ControllerComponents)(
    * @param id The Id Parameter of the edited user.
    * @return The Html page of the edit filled with the user email to be edited.
    */
-  def edit(id: String): Action[AnyContent] = Action.async { implicit unused =>
+  def edit(id: String): Action[AnyContent] = Action.async { implicit request =>
     userDAO.lookup(id).map { userData =>
       userData.fold(
         Redirect(routes.UserController.index)
