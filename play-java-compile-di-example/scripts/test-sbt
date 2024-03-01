@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-echo "+----------------------------+"
-echo "| Executing tests using sbt  |" 
-echo "+----------------------------+"
-sbt ++$MATRIX_SCALA test
