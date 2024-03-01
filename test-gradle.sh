@@ -18,7 +18,7 @@ fi
 # pushd play-java-starter-example         && scripts/test-gradle && popd
 # pushd play-java-streaming-example       && scripts/test-gradle && popd
 # pushd play-java-websocket-example       && scripts/test-gradle && popd
-# pushd play-java-pekko-cluster-example    && scripts/test-gradle && popd
+# pushd play-java-akka-cluster-example    && scripts/test-gradle && popd
 #pushd play-scala-anorm-example          && scripts/test-gradle && popd
 # pushd play-scala-chatroom-example       && scripts/test-gradle && popd
 # pushd play-scala-compile-di-example     && scripts/test-gradle && popd
