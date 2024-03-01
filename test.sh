@@ -3,40 +3,85 @@ if [ -z "$MATRIX_SCALA" ]; then
     echo "Error: the environment variable MATRIX_SCALA is not set"
     exit 1
 fi
-if [[ $* == --netty ]]; then
-    find -name build.sbt | xargs sed -i 's/\/\/.enablePlugins(PlayNettyServer)/.enablePlugins(PlayNettyServer)/g'
-fi
 
-pushd play-java-chatroom-example        && scripts/test-sbt && popd
-pushd play-java-compile-di-example      && scripts/test-sbt && popd
-pushd play-java-dagger2-example         && scripts/test-sbt && popd
-pushd play-java-ebean-example           && scripts/test-sbt && popd
-pushd play-java-fileupload-example      && scripts/test-sbt && popd
-pushd play-java-forms-example           && scripts/test-sbt && popd
-pushd play-java-grpc-example            && scripts/test-sbt && popd
-pushd play-java-hello-world-tutorial    && scripts/test-sbt && popd
-pushd play-java-jpa-example             && scripts/test-sbt && popd
-pushd play-java-rest-api-example        && scripts/test-sbt && popd
-pushd play-java-starter-example         && scripts/test-sbt && popd
-pushd play-java-streaming-example       && scripts/test-sbt && popd
-pushd play-java-websocket-example       && scripts/test-sbt && popd
-pushd play-java-pekko-cluster-example    && scripts/test-sbt && popd
-#pushd play-scala-anorm-example          && scripts/test-sbt && popd
-pushd play-scala-chatroom-example       && scripts/test-sbt && popd
-pushd play-scala-compile-di-example     && scripts/test-sbt && popd
-pushd play-scala-fileupload-example     && scripts/test-sbt && popd
-pushd play-scala-forms-example          && scripts/test-sbt && popd
-pushd play-scala-grpc-example           && scripts/test-sbt && popd
-pushd play-scala-hello-world-tutorial   && scripts/test-sbt && popd
-pushd play-scala-isolated-slick-example && scripts/test-sbt && popd
-pushd play-scala-log4j2-example         && scripts/test-sbt && popd
-pushd play-scala-macwire-di-example     && scripts/test-sbt && popd
-pushd play-scala-rest-api-example       && scripts/test-sbt && popd
-# Uses libsodium
-pushd play-scala-secure-session-example && scripts/test-sbt && popd
-pushd play-scala-slick-example          && scripts/test-sbt && popd
-pushd play-scala-starter-example        && scripts/test-sbt && popd
-pushd play-scala-streaming-example      && scripts/test-sbt && popd
-# uses vanilla sbt
-pushd play-scala-tls-example            && scripts/test-sbt && popd
-pushd play-scala-websocket-example      && scripts/test-sbt && popd
+# Initialize variables
+sample=""
+backend_server="pekko"
+build_tool="sbt"
+
+# Parse command line arguments
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    --build-tool=*) build_tool="${1#*=}" ;;  # Extract the value right of the equal sign
+    --backend-server=*) backend_server="${1#*=}" ;;  # Extract the value right of the equal sign
+    --sample=*) sample="${1#*=}" ;;  # Extract the value right of the equal sign
+    *) echo "Unknown parameter passed: $1"; exit 1 ;;
+  esac
+  shift  # Move to next argument
+done
+
+function buildSample() {
+    local dir=$1
+    pushd $dir
+    if [[ $build_tool == "gradle" ]]; then
+      if [ -f scripts/test-gradle ]; then
+        scripts/test-gradle
+      else
+        echo "+-------------------------------+"
+        echo "| Executing tests using Gradle  |"
+        echo "+-------------------------------+"
+        ./gradlew -Dscala.version="$MATRIX_SCALA" check
+      fi
+    elif [[ $build_tool == "sbt" ]]; then
+      if [[ $backend_server == "netty" ]]; then
+          find . -name build.sbt | xargs perl -i -pe 's/\/\/\.enablePlugins\(PlayNettyServer\)/.enablePlugins(PlayNettyServer)/g'
+      fi
+      if [ -f scripts/test-sbt ]; then
+        scripts/test-sbt
+      else
+        echo "+----------------------------+"
+        echo "| Executing tests using sbt  |"
+        echo "+----------------------------+"
+        sbt ++$MATRIX_SCALA test
+      fi
+    fi
+    popd
+}
+
+if [ -n "$sample" ]; then
+  # Sample is set and not empty
+  buildSample $sample
+else
+  # sample not set, therefore run all samples
+  buildSample play-java-chatroom-example
+  buildSample play-java-compile-di-example
+  buildSample play-java-dagger2-example
+  buildSample play-java-ebean-example
+  buildSample play-java-fileupload-example
+  buildSample play-java-forms-example
+  buildSample play-java-hello-world-tutorial
+  buildSample play-java-jpa-example
+  buildSample play-java-rest-api-example
+  buildSample play-java-starter-example
+  buildSample play-java-streaming-example
+  buildSample play-java-websocket-example
+  buildSample play-java-pekko-cluster-example
+  buildSample play-scala-rest-api-example
+#    buildSample play-scala-anorm-example
+  buildSample play-java-grpc-example
+  buildSample play-scala-chatroom-example
+  buildSample play-scala-compile-di-example
+  buildSample play-scala-fileupload-example
+  buildSample play-scala-forms-example
+  buildSample play-scala-grpc-example
+  buildSample play-scala-hello-world-tutorial
+  buildSample play-scala-isolated-slick-example
+  buildSample play-scala-log4j2-example
+  buildSample play-scala-macwire-di-example
+  buildSample play-scala-secure-session-example
+  buildSample play-scala-slick-example
+  buildSample play-scala-starter-example
+  buildSample play-scala-streaming-example
+  buildSample play-scala-tls-example
+  buildSample play-scala-websocket-example
+fi

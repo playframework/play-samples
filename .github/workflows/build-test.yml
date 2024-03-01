@@ -19,43 +19,518 @@ jobs:
 #    with:
 #      cmd: sbt validateCode
 
-  tests-pekko-http:
-    name: Sbt Tests Pekko HTTP
-#    needs:
-#      - "check-code-style"
-    uses: playframework/.github/.github/workflows/cmd.yml@v3
-    with:
-      java: 17, 11
-      scala: 2.13.x, 3.x
-      cmd: |
-        # sudo add-apt-repository -y ppa:ondrej/php && sudo apt-get -qq update && sudo apt-get install -y libsodium-dev # for secure session examples
-        ./test.sh
+  changes:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      samples: ${{ steps.filter.outputs.changes }}
+    steps:
+      # For pull requests it's not necessary to checkout the code
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            java-chatroom: play-java-chatroom-example/**
+            java-compile-di: play-java-compile-di-example/**
+            java-dagger2: play-java-dagger2-example/**
+            java-ebean: play-java-ebean-example/**
+            java-fileupload: play-java-fileupload-example/**
+            java-forms: play-java-forms-example/**
+            java-grpc: play-java-grpc-example/**
+            java-hello-world: play-java-hello-world-tutorial/**
+            java-jpa: play-java-jpa-example/**
+            java-pekko-cluster: play-java-pekko-cluster-example/**
+            java-rest-api: play-java-rest-api-example/**
+            java-starter: play-java-starter-example/**
+            java-streaming: play-java-streaming-example/**
+            java-websocket: play-java-websocket-example/**
+            scala-anorm: play-scala-anorm-example/**
+            scala-chatroom: play-scala-chatroom-example/**
+            scala-compile-di: play-scala-compile-di-example/**
+            scala-fileupload: play-scala-fileupload-example/**
+            scala-forms: play-scala-forms-example/**
+            scala-grpc: play-scala-grpc-example/**
+            scala-hello-world: play-scala-hello-world-tutorial/**
+            scala-isolated-slick: play-scala-isolated-slick-example/**
+            scala-log4j2: play-scala-log4j2-example/**
+            scala-macwire-di: play-scala-macwire-di-example/**
+            scala-rest-api: play-scala-rest-api-example/**
+            scala-secure-session: play-scala-secure-session-example/**
+            scala-slick: play-scala-slick-example/**
+            scala-starter: play-scala-starter-example/**
+            scala-streaming: play-scala-streaming-example/**
+            scala-tls: play-scala-tls-example/**
+            scala-websocket: play-scala-websocket-example/**
 
-  tests-netty-http:
-    name: Sbt Tests Netty HTTP
-#    needs:
-#      - "check-code-style"
-    uses: playframework/.github/.github/workflows/cmd.yml@v3
+  java-chatroom:
+    name: "Java :: Chatroom"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-chatroom')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
+      gradle-build-root: play-java-chatroom-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
       cmd: |
-        ./test.sh --netty
+        ./test.sh --sample=play-java-chatroom-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
-  gradle-tests:
-    name: Gradle Tests
-    uses: playframework/.github/.github/workflows/cmd.yml@v3
+  java-compile-di:
+    name: "Java :: Compile DI"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-compile-di')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
+      gradle-build-root: play-java-compile-di-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
       cmd: |
-        ./test-gradle.sh
+        ./test.sh --sample=play-java-compile-di-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  java-dagger2:
+    name: "Java :: Dagger2"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-dagger2')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-dagger2-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-dagger2-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  java-ebean:
+    name: "Java :: EBean"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-ebean')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-ebean-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-ebean-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        
+  java-fileupload:
+    name: "Java :: File Upload"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-fileupload')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-fileupload-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-fileupload-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        
+  java-forms:
+    name: "Java :: Forms"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-forms')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-forms-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-forms-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  java-grpc:
+    name: "Java :: gRPC"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-grpc')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-grpc-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-grpc-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  java-hello-world:
+    name: "Java :: Hello World"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-hello-world')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-hello-world-tutorial
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-hello-world-tutorial --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  java-jpa:
+    name: "Java :: JPA"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-jpa')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-jpa-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-jpa-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  java-pekko-cluster:
+    name: "Java :: Pekko Cluster"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-pekko-cluster')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-pekko-cluster-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-pekko-cluster-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  java-rest-api:
+    name: "Java :: REST API"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-rest-api')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-rest-api-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-rest-api-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  java-starter:
+    name: "Java :: Starter"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-starter')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-starter-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-starter-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  java-streaming:
+    name: "Java :: Streaming"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-streaming')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-streaming-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-streaming-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  java-websocket:
+    name: "Java :: WebSocket"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-websocket')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-java-websocket-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-java-websocket-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+#  scala-anorm:
+#    name: "Scala :: Anorm"
+#    uses: playframework/.github/.github/workflows/cmd.yml@v4
+#    needs: changes
+#    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-anorm')}}
+#    with:
+#      java: 17, 21
+#      scala: 2.13.x, 3.x
+#      gradle-build-root: play-scala-anorm-example
+#      add-dimensions: >-
+#        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+#      cmd: |
+#        ./test.sh --sample=play-scala-anorm-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-chatroom:
+    name: "Scala :: Chatroom"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-chatroom')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-chatroom-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-chatroom-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-compile-di:
+    name: "Scala :: Compile DI"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-compile-di')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-compile-di-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-compile-di-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-fileupload:
+    name: "Scala :: File Upload"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-fileupload')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-fileupload-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-fileupload-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-forms:
+    name: "Scala :: Forms"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-forms')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-forms-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-forms-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-grpc:
+    name: "Scala :: gRPC"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-grpc')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-grpc-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-grpc-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-hello-world:
+    name: "Scala :: Hello World"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-hello-world')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-hello-world-tutorial
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-hello-world-tutorial --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-isolated-slick:
+    name: "Scala :: Slick (isolated)"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-isolated-slick')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-isolated-slick-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-isolated-slick-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-log4j2:
+    name: "Scala :: Log4j2"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-log4j2')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-log4j2-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-log4j2-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-macwire-di:
+    name: "Scala :: Macwire DI"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-macwire-di')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-macwire-di-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-macwire-di-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-rest-api:
+    name: "Scala :: REST API"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-rest-api')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-rest-api-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-rest-api-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-secure-session:
+    name: "Scala :: Secure Session"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-secure-session')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-secure-session-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-secure-session-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-slick:
+    name: "Scala :: Slick"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-slick')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-slick-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-slick-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-starter:
+    name: "Scala :: Starter"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-starter')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-starter-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-starter-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-streaming:
+    name: "Scala :: Streaming"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-streaming')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-streaming-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-streaming-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-tls:
+    name: "Scala :: TLS"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-tls')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-tls-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-tls-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+
+  scala-websocket:
+    name: "Scala :: WebSocket"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-websocket')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-websocket-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-websocket-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   finish:
     name: Finish
-    if: github.event_name == 'pull_request'
+    if: ${{ github.event_name == 'pull_request' && !failure() && !cancelled() }}
     needs: # Should be last
-      - "tests-pekko-http"
-      - "tests-netty-http"
-      - "gradle-tests"
-    uses: playframework/.github/.github/workflows/rtm.yml@v3
+      - "java-chatroom"
+      - "java-compile-di"
+      - "java-dagger2"
+      - "java-ebean"
+      - "java-fileupload"
+      - "java-forms"
+      - "java-grpc"
+      - "java-hello-world"
+      - "java-jpa"
+      - "java-pekko-cluster"
+      - "java-rest-api"
+      - "java-starter"
+      - "java-streaming"
+      - "java-websocket"
+#      - "scala-anorm"
+      - "scala-chatroom"
+      - "scala-compile-di"
+      - "scala-fileupload"
+      - "scala-forms"
+      - "scala-grpc"
+      - "scala-hello-world"
+      - "scala-isolated-slick"
+      - "scala-log4j2"
+      - "scala-macwire-di"
+      - "scala-rest-api"
+      - "scala-secure-session"
+      - "scala-slick"
+      - "scala-starter"
+      - "scala-streaming"
+      - "scala-tls"
+      - "scala-websocket"
+    uses: playframework/.github/.github/workflows/rtm.yml@v4
