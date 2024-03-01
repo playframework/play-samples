@@ -2,7 +2,7 @@ name := "play-java-streaming-example"
 
 version := "1.0-SNAPSHOT"
 
-crossScalaVersions := Seq("2.13.12", "3.3.1")
+crossScalaVersions := Seq("2.13.13", "3.3.3")
 scalaVersion := crossScalaVersions.value.head
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
