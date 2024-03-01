@@ -4,7 +4,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-compile-di-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.12", "3.3.1"),
+    crossScalaVersions := Seq("2.13.13", "3.3.3"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1",
     scalacOptions ++= List(
