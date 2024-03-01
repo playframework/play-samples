@@ -1,5 +1,5 @@
 val commonSettings = Seq(
-  crossScalaVersions := Seq("2.13.12", "3.3.3"),
+  crossScalaVersions := Seq("2.13.13", "3.3.3"),
   scalaVersion := crossScalaVersions.value.head,
   scalacOptions ++= Seq(
     "-feature",
