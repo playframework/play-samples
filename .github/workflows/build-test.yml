@@ -15,7 +15,7 @@ concurrency:
 jobs:
 #  check-code-style:
 #    name: Code Style
-#    uses: playframework/.github/.github/workflows/cmd.yml@v3
+#    uses: playframework/.github/.github/workflows/cmd.yml@v4
 #    with:
 #      cmd: sbt validateCode
 
@@ -23,7 +23,7 @@ jobs:
     name: Sbt Tests Pekko HTTP
 #    needs:
 #      - "check-code-style"
-    uses: playframework/.github/.github/workflows/cmd.yml@v3
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
     with:
       java: 17, 11
       scala: 2.13.x, 3.x
@@ -35,7 +35,7 @@ jobs:
     name: Sbt Tests Netty HTTP
 #    needs:
 #      - "check-code-style"
-    uses: playframework/.github/.github/workflows/cmd.yml@v3
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
     with:
       java: 17, 11
       scala: 2.13.x, 3.x
@@ -44,7 +44,7 @@ jobs:
 
   gradle-tests:
     name: Gradle Tests
-    uses: playframework/.github/.github/workflows/cmd.yml@v3
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
     with:
       java: 17, 11
       scala: 2.13.x, 3.x
@@ -58,4 +58,4 @@ jobs:
       - "tests-pekko-http"
       - "tests-netty-http"
       - "gradle-tests"
-    uses: playframework/.github/.github/workflows/rtm.yml@v3
+    uses: playframework/.github/.github/workflows/rtm.yml@v4
