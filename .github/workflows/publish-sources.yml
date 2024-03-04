@@ -1,0 +1,33 @@
+name: Publish
+
+on:
+  push:
+    branches: # Snapshots
+      - main
+
+jobs:
+  publish-sources:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Package sources
+        run: |
+          ./sources.sh
+      - name: Delete Release
+        run: gh release delete nightly --cleanup-tag || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish nightly sources
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: true
+          name: nightly
+          tag_name: nightly
+          target_commitish: ${{ github.ref_name }}
+          files: |
+            *-example.zip
+            *-tutorial.zip
+          fail_on_unmatched_files: true
