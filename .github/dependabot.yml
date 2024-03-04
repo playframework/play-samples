@@ -9,8 +9,12 @@ updates:
     schedule:
       interval: "weekly"
     target-branch: "3.0.x"
+    commit-message:
+      prefix: "[3.0.x] "
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     target-branch: "2.9.x"
+    commit-message:
+      prefix: "[2.9.x] "
