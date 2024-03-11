@@ -6,7 +6,7 @@ addSbtPlugin("io.github.davidmweber" % "flyway-sbt" % "7.4.0")
 
 // Slick code generation
 // https://github.com/tototoshi/sbt-slick-codegen
-addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "2.2.0-RC2")
+addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "2.2.0")
 
 // The Play plugin
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.2")
