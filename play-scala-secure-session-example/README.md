@@ -14,10 +14,15 @@ As with all Play projects, you must have JDK 11 and [sbt](http://www.scala-sbt.o
 
 However, you must install libsodium before using this application, which is a non-Java binary install.
 
-If you are on MacOS, you can use Homebrew:
+If you are on Mac OS, you can use Homebrew:
 
 ```bash
 brew install libsodium
+```
+
+If you are on Mac OS (Apple Silicon), you also should link `libsodium` library
+```bash
+mkdir -p lib && ln -s /opt/homebrew/lib/libsodium.dylib lib/libsodium.dylib
 ```
 
 If you are on Ubuntu >= 15.04 or Debian >= 8, you can install with apt-get:
