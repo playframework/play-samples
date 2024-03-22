@@ -17,7 +17,7 @@ lazy val root = (project in file("."))
 
       // Testing libraries for dealing with CompletionStage...
       "org.assertj" % "assertj-core" % "3.25.3" % Test,
-      "org.awaitility" % "awaitility" % "4.2.0" % Test,
+      "org.awaitility" % "awaitility" % "4.2.1" % Test,
     ),
     LessKeys.compress := true,
     javacOptions ++= Seq(
