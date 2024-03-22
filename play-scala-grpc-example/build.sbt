@@ -65,8 +65,8 @@ val playVersion = play.core.PlayVersion.current
 val TestDeps = Seq(
   "com.typesafe.play"       %% "play-grpc-scalatest" % BuildInfo.playGrpcVersion % Test,
   "com.typesafe.play"       %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test,
-  "com.typesafe.play"       %% "play-test"           % playVersion     % Test,
-  "com.typesafe.play"       %% "play-specs2"         % playVersion     % Test,
+  "org.playframework"       %% "play-test"           % playVersion     % Test,
+  "org.playframework"       %% "play-specs2"         % playVersion     % Test,
   "org.scalatestplus.play"  %% "scalatestplus-play"  % "6.0.1" % Test,
 )
 
