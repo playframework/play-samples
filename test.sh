@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+
+# -e          Exit script immediately if any command returns a non-zero exit status.
+# -u          Exit script immediately if an undefined variable is used.
+# -o pipefail Ensure Bash pipelines return a non-zero status if any of the commands fail,
+#             rather than returning the exit status of the last command in the pipeline.
+set -euo pipefail
+
 if [ -z "$MATRIX_SCALA" ]; then
     echo "Error: the environment variable MATRIX_SCALA is not set"
     exit 1
