@@ -14,7 +14,7 @@ val FlywayVersion = "10.21.0"
 
 (ThisBuild / libraryDependencies) ++= Seq(
   "jakarta.inject" % "jakarta.inject-api" % "2.0.1",
-  "com.google.inject" % "guice" % "6.0.0"
+  "com.google.inject" % "guice" % "7.0.0"
 )
 
 (ThisBuild / crossScalaVersions) := Seq("2.13.16", "3.3.4")
