@@ -15,7 +15,7 @@ val FlywayVersion = "9.21.1"
   "com.google.inject" % "guice" % "6.0.0"
 )
 
-(ThisBuild / crossScalaVersions) := Seq("2.13.13", "3.3.3")
+(ThisBuild / crossScalaVersions) := Seq("2.13.14", "3.3.3")
 (ThisBuild / scalaVersion) := crossScalaVersions.value.head
 (ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
@@ -46,8 +46,8 @@ lazy val slick = (project in file("modules/slick"))
   .settings(
     libraryDependencies ++= Seq(
       "com.zaxxer" % "HikariCP" % "5.1.0",
-      "com.typesafe.slick" %% "slick" % "3.5.0",
-      "com.typesafe.slick" %% "slick-hikaricp" % "3.5.0"
+      "com.typesafe.slick" %% "slick" % "3.5.1",
+      "com.typesafe.slick" %% "slick-hikaricp" % "3.5.1"
     ),
 
     slickCodegenDatabaseUrl := databaseUrl,

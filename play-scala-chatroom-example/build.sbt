@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-chatroom-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.13", "3.3.3"),
+    crossScalaVersions := Seq("2.13.14", "3.3.3"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
       "org.webjars" % "bootstrap" % "3.3.7-1",
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
       "org.jsoup" % "jsoup" % "1.17.2",
-      "ch.qos.logback" % "logback-classic" % "1.5.0",
+      "ch.qos.logback" % "logback-classic" % "1.5.6",
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-testkit" % pekkoVersion % Test,
       "org.apache.pekko" %% "pekko-stream-testkit" % pekkoVersion % Test,

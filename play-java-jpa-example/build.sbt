@@ -4,7 +4,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-java-jpa-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.13", "3.3.3"),
+    crossScalaVersions := Seq("2.13.14", "3.3.3"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       "com.h2database" % "h2" % "2.2.224",
       "org.hibernate" % "hibernate-core" % "6.4.8.Final",
       javaWs % "test",
-      "org.awaitility" % "awaitility" % "4.2.0" % "test",
+      "org.awaitility" % "awaitility" % "4.2.1" % "test",
       "org.assertj" % "assertj-core" % "3.25.3" % "test",
       "org.mockito" % "mockito-core" % "5.11.0" % "test",
     ),

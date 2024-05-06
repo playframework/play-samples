@@ -4,7 +4,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-java-websocket-example",
     version := "1.0",
-    crossScalaVersions := Seq("2.13.13", "3.3.3"),
+    crossScalaVersions := Seq("2.13.14", "3.3.3"),
     scalaVersion := crossScalaVersions.value.head,
     // https://github.com/sbt/junit-interface
     testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
@@ -17,7 +17,7 @@ lazy val root = (project in file("."))
 
       // Testing libraries for dealing with CompletionStage...
       "org.assertj" % "assertj-core" % "3.25.3" % Test,
-      "org.awaitility" % "awaitility" % "4.2.0" % Test,
+      "org.awaitility" % "awaitility" % "4.2.1" % Test,
     ),
     LessKeys.compress := true,
     javacOptions ++= Seq(
