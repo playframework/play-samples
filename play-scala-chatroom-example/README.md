@@ -57,13 +57,18 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
 
 ## Prerequisites
 
-You will need [JDK 11](https://adoptopenjdk.net/) and [sbt](http://www.scala-sbt.org/) installed.
+You will need [JDK 17](https://adoptium.net/) and [sbt](http://www.scala-sbt.org/) installed.
 
 ## Running
 
 ```bash
 sbt run
 ```
+or
+```bash
+./gradlew playRun
+```
+
 
 Go to <http://localhost:9000> and open it in two different browsers.  Typing into one browser will cause it to show up in another browser.
 

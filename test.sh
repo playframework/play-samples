@@ -74,10 +74,10 @@ else
   buildSample play-java-websocket-example
   buildSample play-java-pekko-cluster-example
   buildSample play-scala-rest-api-example
+  buildSample play-scala-chatroom-example
   if [[ $build_tool == "sbt" ]]; then
 #    buildSample play-scala-anorm-example
     buildSample play-java-grpc-example
-    buildSample play-scala-chatroom-example
     buildSample play-scala-compile-di-example
     buildSample play-scala-fileupload-example
     buildSample play-scala-forms-example

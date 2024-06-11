@@ -1,0 +1,21 @@
+[versions]
+twirl = "2.0.3"
+play = "3.0.1-03969c1e-SNAPSHOT"
+webjars-play = "3.0.1"
+jsoup = "1.17.2"
+flot = "0.8.3-1"
+bootstrap = "3.3.7-1"
+scalatestplus-play = "7.0.0"
+
+[libraries]
+jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
+flot = { group = "org.webjars", name = "flot", version.ref = "flot" }
+bootstrap = { group = "org.webjars", name = "bootstrap", version.ref = "bootstrap" }
+logstash-logback-encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version = "7.3" }
+scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.1.12" }
+scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
+
+
+[plugins]
+twirl = { id = "org.playframework.twirl", version.ref = "twirl" }
+play = { id = "org.playframework.play", version.ref = "play" }
