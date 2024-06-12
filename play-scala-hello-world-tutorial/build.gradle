@@ -1,0 +1,47 @@
+import play.gradle.Language
+import play.gradle.plugin.PlayPlugin
+
+plugins {
+    alias(libs.plugins.twirl)
+    alias(libs.plugins.play)
+}
+
+play {
+    lang = Language.SCALA
+}
+
+def scalaVersion = System.getProperty('scala.version', PlayPlugin.DEFAULT_SCALA_VERSION).replaceAll('\\D*$', '')
+
+dependencies {
+    implementation platform("org.playframework:play-bom_${scalaVersion}:${libs.versions.play.get()}")
+
+    implementation "org.playframework:play-pekko-http-server_${scalaVersion}"
+    implementation "org.playframework:play-guice_${scalaVersion}"
+    implementation "org.playframework:play-logback_${scalaVersion}"
+
+    testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaVersion}:${libs.versions.scalatestplus.play.get()}"
+    testImplementation libs.scalatest.junit.runner
+}
+
+run {
+    systemProperties System.properties
+}
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.additionalParameters = ["-feature"]
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines 'scalatest'
+    }
+}
+
+// TODO: Remove after release Play Gradle Plugin
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+    }
+    mavenLocal()
+}

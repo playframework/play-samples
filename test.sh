@@ -78,11 +78,11 @@ else
   buildSample play-scala-compile-di-example
   buildSample play-scala-fileupload-example
   buildSample play-scala-forms-example
+  buildSample play-scala-hello-world-tutorial
   if [[ $build_tool == "sbt" ]]; then
 #    buildSample play-scala-anorm-example
     buildSample play-java-grpc-example
     buildSample play-scala-grpc-example
-    buildSample play-scala-hello-world-tutorial
     buildSample play-scala-isolated-slick-example
     buildSample play-scala-log4j2-example
     buildSample play-scala-macwire-di-example
