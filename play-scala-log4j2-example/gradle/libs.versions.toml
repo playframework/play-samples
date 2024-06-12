@@ -1,0 +1,17 @@
+[versions]
+twirl = "2.0.3"
+play = "3.0.1-03969c1e-SNAPSHOT"
+scalatestplus-play = "7.0.1"
+log4j = "2.23.1"
+
+[libraries]
+log4j-slf4j-impl = { group = "org.apache.logging.log4j", name = "log4j-slf4j-impl", version.ref = "log4j" }
+log4j-api = { group = "org.apache.logging.log4j", name = "log4j-api", version.ref = "log4j" }
+log4j-core = { group = "org.apache.logging.log4j", name = "log4j-core", version.ref = "log4j" }
+scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.1.12" }
+scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
+
+
+[plugins]
+twirl = { id = "org.playframework.twirl", version.ref = "twirl" }
+play = { id = "org.playframework.play", version.ref = "play" }
