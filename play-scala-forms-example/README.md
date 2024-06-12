@@ -9,6 +9,10 @@ Start the Play app:
 ```bash
 sbt run
 ```
+or
+```bash
+./gradlew playRun
+```
 
 And open [http://localhost:9000/](http://localhost:9000/)
 
