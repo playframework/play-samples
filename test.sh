@@ -80,12 +80,12 @@ else
   buildSample play-scala-forms-example
   buildSample play-scala-hello-world-tutorial
   buildSample play-scala-log4j2-example
+  buildSample play-scala-macwire-di-example
   if [[ $build_tool == "sbt" ]]; then
 #    buildSample play-scala-anorm-example
     buildSample play-java-grpc-example
     buildSample play-scala-grpc-example
     buildSample play-scala-isolated-slick-example
-    buildSample play-scala-macwire-di-example
     buildSample play-scala-secure-session-example
     buildSample play-scala-slick-example
     buildSample play-scala-starter-example
