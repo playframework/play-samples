@@ -22,7 +22,7 @@ brew install libsodium
 
 If you are on Mac OS (Apple Silicon), you also should link `libsodium` library
 ```bash
-mkdir -p lib && ln -s /opt/homebrew/lib/libsodium.dylib lib/libsodium.dylib
+mkdir -p lib && ln -s /opt/homebrew/lib/libsodium.dylib /usr/local/lib/libsodium.dylib
 ```
 
 If you are on Ubuntu >= 15.04 or Debian >= 8, you can install with apt-get:
@@ -47,10 +47,14 @@ For Windows, you can download pre-built libraries using the [install page](https
 
 ## Running
 
-Run sbt from the command line:
+Run from the command line:
 
 ```bash
 sbt run
+```
+or
+```bash
+./gradlew playRun
 ```
 
 Then go to <http://localhost:9000> to see the server.
