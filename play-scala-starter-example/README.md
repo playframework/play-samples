@@ -9,6 +9,10 @@ Run this using [sbt](http://www.scala-sbt.org/).  If you downloaded this project
 ```bash
 sbt run
 ```
+or
+```bash
+./gradlew playRun
+```
 
 And then go to <http://localhost:9000> to see the running web application.
 
