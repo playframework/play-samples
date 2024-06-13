@@ -454,7 +454,7 @@ jobs:
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-secure-session-example
       add-dimensions: >-
-        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
         ./test.sh --sample=play-scala-secure-session-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
