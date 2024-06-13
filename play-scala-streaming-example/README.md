@@ -13,6 +13,10 @@ Run the application:
 ```bash
 sbt run
 ```
+or
+```bash
+./gradlew playRun
+```
 
 Once the application has been compiled and the server started, your application can be accessed at <http://localhost:9000>.
 

@@ -16,3 +16,7 @@ lazy val root = (project in file("."))
       "-Werror"
     )
   )
+
+TwirlKeys.templateImports ++= Seq(
+  "views.html.helper.CSPNonce"
+)
