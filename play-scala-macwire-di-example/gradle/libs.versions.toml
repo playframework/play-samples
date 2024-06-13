@@ -1,0 +1,15 @@
+[versions]
+twirl = "2.0.3"
+play = "3.0.1-03969c1e-SNAPSHOT"
+scalatestplus-play = "7.0.1"
+macwire = "2.5.9"
+
+[libraries]
+macwire = { group = "com.softwaremill.macwire", name = "macros_2.13", version.ref = "macwire" }
+scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.1.12" }
+scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
+
+
+[plugins]
+twirl = { id = "org.playframework.twirl", version.ref = "twirl" }
+play = { id = "org.playframework.play", version.ref = "play" }
