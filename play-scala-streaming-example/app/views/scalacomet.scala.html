@@ -1,3 +1,5 @@
+@()(implicit request: RequestHeader)
+
 @main {
 
     <h1>Comet clock</h1>
@@ -8,13 +10,13 @@
         Clock events are pushed from the Server using a Comet connection.
     </p>
 
-    <script type="text/javascript" charset="utf-8">
+    <script @{CSPNonce.attr} type="text/javascript" charset="utf-8">
             // Called for each Comet message
             var clockChanged = function(time) {
                 $('#clock').html(time.replace(/(\d)/g, '<span>$1</span>'))
             }
     </script>
 
-    <iframe id="comet" src="@routes.ScalaCometController.streamClock().unique"></iframe>
+    <iframe id="comet" hidden src="@routes.ScalaCometController.streamClock().unique"></iframe>
 
 }
