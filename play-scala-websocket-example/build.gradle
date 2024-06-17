@@ -1,0 +1,84 @@
+import play.gradle.Language
+import play.gradle.plugin.PlayPlugin
+
+plugins {
+    alias(libs.plugins.twirl)
+    alias(libs.plugins.play)
+    alias(libs.plugins.node)
+}
+
+play {
+    lang = Language.SCALA
+}
+
+def scalaVersion = System.getProperty('scala.version', PlayPlugin.DEFAULT_SCALA_VERSION).replaceAll('\\D*$', '')
+
+dependencies {
+    implementation platform("org.playframework:play-bom_${scalaVersion}:${libs.versions.play.asProvider().get()}")
+
+    implementation "org.playframework:play-pekko-http-server_${scalaVersion}"
+    implementation "org.playframework:play-guice_${scalaVersion}"
+    implementation "org.playframework:play-filters-helpers_${scalaVersion}"
+    implementation "org.playframework:play-logback_${scalaVersion}"
+    implementation libs.flot
+    implementation libs.bootstrap
+    implementation "org.webjars:webjars-play_${scalaVersion}:${libs.versions.webjars.play.get()}"
+    implementation "org.playframework:play-ahc-ws_${scalaVersion}:${libs.versions.play.ws.get()}"
+
+    testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaVersion}:${libs.versions.scalatestplus.play.get()}"
+    testImplementation libs.awaitility
+    testImplementation libs.scalatest.junit.runner
+}
+
+sourceSets {
+    main {
+        twirl {
+            templateImports.add("views.html.helper.CSPNonce")
+        }
+    }
+}
+
+tasks.register("compileCoffeeScript", NpxTask) {
+    dependsOn npmInstall
+    def destDir = sourceSets.main.assets.destinationDirectory
+    command = "coffee"
+    args = ["-c", "-m", "-o", destDir.get().toString(), "app/assets/"]
+    inputs.files("app/assets/javascripts/")
+    outputs.dir(destDir)
+}
+
+tasks.register("compileLess", NpxTask) {
+    dependsOn(tasks.npmInstall)
+    def destDir = sourceSets.main.assets.destinationDirectory.dir("stylesheets")
+    command = "lessc"
+    args = ["-x", "app/assets/stylesheets/main.less", destDir.get().file("main.min.css").toString()]
+    inputs.files("app/assets/stylesheets/")
+    outputs.dir(destDir)
+}
+
+tasks.processAssets {
+    dependsOn(compileCoffeeScript, compileLess)
+}
+
+run {
+    systemProperties System.properties
+}
+
+tasks.withType(ScalaCompile) {
+    scalaCompileOptions.additionalParameters = ["-feature"]
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines 'scalatest'
+    }
+}
+
+// TODO: Remove after release Play Gradle Plugin
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+    }
+    mavenLocal()
+}
