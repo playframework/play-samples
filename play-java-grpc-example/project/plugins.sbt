@@ -3,7 +3,7 @@ val playGrpcV = "0.11.0"
 buildInfoKeys := Seq[BuildInfoKey]("playGrpcVersion" -> playGrpcV)
 buildInfoPackage := "play.java.grpc.sample"
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.3")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.4")
 
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.7")
 
