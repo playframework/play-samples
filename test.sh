@@ -84,6 +84,7 @@ else
   buildSample play-scala-secure-session-example
   buildSample play-scala-starter-example
   buildSample play-scala-streaming-example
+  buildSample play-scala-websocket-example
   if [[ $build_tool == "sbt" ]]; then
 #    buildSample play-scala-anorm-example
     buildSample play-java-grpc-example
@@ -91,6 +92,5 @@ else
     buildSample play-scala-isolated-slick-example
     buildSample play-scala-slick-example
     buildSample play-scala-tls-example
-    buildSample play-scala-websocket-example
   fi
 fi
