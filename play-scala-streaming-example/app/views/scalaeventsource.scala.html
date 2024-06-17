@@ -1,3 +1,5 @@
+@()(implicit request: RequestHeader)
+
 @main {
 
     <h1>Server Sent Event clock</h1>
@@ -8,7 +10,7 @@
         Clock events are pushed from the Server using a Server Sent Event connection.
     </p>
 
-    <script type="text/javascript" charset="utf-8">
+    <script @{CSPNonce.attr} type="text/javascript" charset="utf-8">
 
        if (!!window.EventSource) {
          var stringSource = new EventSource("@routes.ScalaEventSourceController.streamClock()");

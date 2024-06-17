@@ -9,11 +9,11 @@ import play.api.mvc._
 @Singleton
 class ScalaEventSourceController @Inject()(cc: ControllerComponents) extends AbstractController(cc) with ScalaTicker {
 
-  def index() = Action {
+  def index(): Action[AnyContent] = Action { implicit request =>
     Ok(views.html.scalaeventsource())
   }
 
-  def streamClock() = Action {
+  def streamClock(): Action[AnyContent] = Action { implicit request =>
     Ok.chunked(stringSource via EventSource.flow).as(ContentTypes.EVENT_STREAM)
   }
 
