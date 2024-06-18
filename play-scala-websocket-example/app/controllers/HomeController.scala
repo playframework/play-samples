@@ -1,10 +1,9 @@
 package controllers
 
 import javax.inject._
-
 import actors._
 import org.apache.pekko.NotUsed
-import org.apache.pekko.actor.typed.{ ActorRef, Scheduler }
+import org.apache.pekko.actor.typed.{ActorRef, Scheduler}
 import org.apache.pekko.actor.typed.scaladsl.AskPattern._
 import org.apache.pekko.stream.scaladsl._
 import org.apache.pekko.util.Timeout
@@ -13,7 +12,7 @@ import play.api.libs.json._
 import play.api.mvc._
 
 import scala.concurrent.duration._
-import scala.concurrent.{ ExecutionContext, Future }
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  * This class creates the actions and the websocket needed.
@@ -21,7 +20,8 @@ import scala.concurrent.{ ExecutionContext, Future }
 @Singleton
 class HomeController @Inject()(userParentActor: ActorRef[UserParentActor.Create],
                                cc: ControllerComponents)
-                              (implicit ec: ExecutionContext, scheduler: Scheduler)
+                              (implicit ec: ExecutionContext, scheduler: Scheduler,
+                               webJarsUtil: org.webjars.play.WebJarsUtil)
   extends AbstractController(cc) with SameOriginCheck {
 
   val logger = play.api.Logger(getClass)

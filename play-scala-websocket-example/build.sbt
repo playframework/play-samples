@@ -11,12 +11,14 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       ws,
+      "org.webjars" %% "webjars-play" % "3.0.1",
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
       "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test,
       "org.awaitility" % "awaitility" % "4.2.1" % Test,
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
+    LessKeys.compress := true,
     scalacOptions ++= Seq(
       "-feature",
       "-Werror"
