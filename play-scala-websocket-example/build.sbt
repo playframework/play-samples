@@ -16,6 +16,9 @@ lazy val root = (project in file("."))
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test,
       "org.awaitility" % "awaitility" % "4.2.1" % Test,
     ),
+    TwirlKeys.templateImports ++= Seq(
+      "views.html.helper.CSPNonce"
+    ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(
       "-feature",
