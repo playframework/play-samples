@@ -24,10 +24,12 @@
 
   <logger name="play" level="INFO"/>
 
+  <!-- actors logging -->
   <logger name="akka" level="INFO"/>
   <logger name="akka.stream.Log" level="INFO"/>
+  <logger name="actors" level="DEBUG"/>
 
-  <logger name="actors" level="INFO"/>
+  <!-- controllers -->
   <logger name="controllers" level="INFO"/>
 
   <root level="INFO">

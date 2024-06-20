@@ -79,11 +79,6 @@ body {
   backface-visibility: hidden;
 }
 
-.details-holder {
-  z-index: 1;
-  transform-style: preserve-3d;
-}
-
 .chart-holder {
   z-index: 2;
   & p {
@@ -99,6 +94,8 @@ body {
 .details-holder {
   .transform(180deg);
   text-align: center;
+  z-index: 1;
+  transform-style: preserve-3d;
   & h4 {
     padding: 20px;
   }
