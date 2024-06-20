@@ -10,6 +10,7 @@ import akka.actor.typed.javadsl.AskPattern;
 import akka.stream.javadsl.Flow;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
+import org.webjars.play.WebJarsUtil;
 import play.libs.F.Either;
 import play.mvc.*;
 
@@ -33,14 +34,17 @@ public class HomeController extends Controller {
     private final ActorRef<UserParentActor.Create> userParentActor;
     private final ActorSystem system;
 
+    private WebJarsUtil webJarsUtil;
+
     @Inject
-    public HomeController(ActorRef<UserParentActor.Create> userParentActor, ActorSystem system) {
+    public HomeController(ActorRef<UserParentActor.Create> userParentActor, ActorSystem system, WebJarsUtil webJarsUtil) {
         this.userParentActor = userParentActor;
         this.system = system;
+        this.webJarsUtil = webJarsUtil;
     }
 
     public Result index(Http.Request request) {
-        return ok(views.html.index.render(request));
+        return ok(views.html.index.render(request, webJarsUtil));
     }
 
     public WebSocket ws() {
