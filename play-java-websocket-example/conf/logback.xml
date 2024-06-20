@@ -24,10 +24,12 @@
 
   <logger name="play" level="INFO"/>
 
+  <!-- actors logging -->
   <logger name="org.apache.pekko" level="INFO"/>
   <logger name="org.apache.pekko.stream.Log" level="INFO"/>
+  <logger name="actors" level="DEBUG"/>
 
-  <logger name="actors" level="INFO"/>
+  <!-- controllers -->
   <logger name="controllers" level="INFO"/>
 
   <root level="INFO">
