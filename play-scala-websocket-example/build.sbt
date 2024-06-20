@@ -1,5 +1,3 @@
-import play.core.PlayVersion.pekkoVersion
-
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
@@ -19,6 +17,7 @@ lazy val root = (project in file("."))
     TwirlKeys.templateImports ++= Seq(
       "views.html.helper.CSPNonce"
     ),
+    LessKeys.compress := true,
     (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(
       "-feature",
