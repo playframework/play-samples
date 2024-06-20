@@ -1,19 +1,15 @@
-@(request: play.mvc.Http.Request, webJarsUtil: org.webjars.play.WebJarsUtil)
+@(implicit request: play.mvc.Http.Request)
 <!DOCTYPE html>
 
 <html>
 <head>
     <title>Reactive Stock News Dashboard</title>
-
-    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-
-
-    @webJarsUtil.locate("bootstrap.min.css").css()
+    <link rel='stylesheet' href='@routes.Assets.at("lib/bootstrap/css/bootstrap.min.css")'>
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.min.css")">
-
-    @webJarsUtil.locate("jquery.min.js").script()
-    @webJarsUtil.locate("jquery.flot.js").script()
-    <script type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+    <script @{CSPNonce.attr} type='text/javascript' src='@routes.Assets.at("lib/jquery/jquery.min.js")'></script>
+    <script @{CSPNonce.attr} type='text/javascript' src='@routes.Assets.at("lib/flot/jquery.flot.js")'></script>
+    <script @{CSPNonce.attr} type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
 </head>
 <body data-ws-url="@routes.HomeController.ws.webSocketURL(request)">
     <div class="navbar navbar-inverse navbar-fixed-top">
