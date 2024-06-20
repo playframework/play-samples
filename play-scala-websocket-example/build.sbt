@@ -1,5 +1,3 @@
-import play.core.PlayVersion.akkaVersion
-
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   //.enablePlugins(PlayNettyServer).disablePlugins(PlayAkkaHttpServer) // uncomment to use the Netty backend
@@ -16,6 +14,10 @@ lazy val root = (project in file("."))
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test,
       "org.awaitility" % "awaitility" % "4.2.1" % Test,
     ),
+    TwirlKeys.templateImports ++= Seq(
+      "views.html.helper.CSPNonce"
+    ),
+    LessKeys.compress := true,
     (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(
       "-feature",
