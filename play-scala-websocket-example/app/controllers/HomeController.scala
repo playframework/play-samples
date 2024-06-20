@@ -8,6 +8,7 @@ import org.apache.pekko.actor.typed.{ ActorRef, Scheduler }
 import org.apache.pekko.actor.typed.scaladsl.AskPattern._
 import org.apache.pekko.stream.scaladsl._
 import org.apache.pekko.util.Timeout
+import org.webjars.play.WebJarsUtil
 import play.api.Logger
 import play.api.libs.json._
 import play.api.mvc._
@@ -19,7 +20,7 @@ import scala.concurrent.{ ExecutionContext, Future }
  * This class creates the actions and the websocket needed.
  */
 @Singleton
-class HomeController @Inject()(userParentActor: ActorRef[UserParentActor.Create],
+class HomeController @Inject()(userParentActor: ActorRef[UserParentActor.Create], webJarsUtil: org.webjars.play.WebJarsUtil,
                                cc: ControllerComponents)
                               (implicit ec: ExecutionContext, scheduler: Scheduler)
   extends AbstractController(cc) with SameOriginCheck {
@@ -28,7 +29,7 @@ class HomeController @Inject()(userParentActor: ActorRef[UserParentActor.Create]
 
   // Home page that renders template
   def index = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+    Ok(views.html.index(webJarsUtil))
   }
 
   /**
