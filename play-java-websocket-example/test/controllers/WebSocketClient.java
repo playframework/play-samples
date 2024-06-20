@@ -6,13 +6,18 @@ import play.shaded.ahc.org.asynchttpclient.ListenableFuture;
 import play.shaded.ahc.org.asynchttpclient.netty.ws.NettyWebSocket;
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocket;
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocketListener;
+
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocketUpgradeHandler;
 import org.slf4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+/**
+ * A quick wrapper around AHC WebSocket
+ *
+ * https://github.com/AsyncHttpClient/async-http-client/blob/2.0/client/src/main/java/org/asynchttpclient/ws/WebSocket.java
+ */
 public class WebSocketClient {
 
     private AsyncHttpClient client;
@@ -21,11 +26,11 @@ public class WebSocketClient {
         this.client = c;
     }
 
-    public CompletableFuture<NettyWebSocket> call(String url, String origin, WebSocketListener listener) throws ExecutionException, InterruptedException {
+    public CompletableFuture<NettyWebSocket> call(String url, String origin, WebSocketListener listener) {
         final BoundRequestBuilder requestBuilder = client.prepareGet(url).addHeader("Origin", origin);
 
         final WebSocketUpgradeHandler handler = new WebSocketUpgradeHandler.Builder().addWebSocketListener(listener).build();
-        final ListenableFuture<NettyWebSocket> future = requestBuilder.<NettyWebSocket>execute(handler);
+        final ListenableFuture<NettyWebSocket> future = requestBuilder.execute(handler);
         return future.toCompletableFuture();
     }
 
@@ -54,7 +59,7 @@ public class WebSocketClient {
         }
 
         public void onError(Throwable t) {
-            // do nothing
+            //logger.error("onError: ", t);
             throwableFound = t;
         }
 

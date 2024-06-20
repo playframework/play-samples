@@ -15,6 +15,7 @@ dependencies {
     implementation("org.playframework:play-pekko-http-server_$scalaVersion")
     implementation("org.playframework:play-guice_$scalaVersion")
     implementation("org.playframework:play-java-forms_$scalaVersion")
+    implementation("org.playframework:play-filters-helpers_$scalaVersion")
     implementation("org.playframework:play-logback_$scalaVersion")
     implementation("org.playframework:play-ws_$scalaVersion")
     implementation("org.webjars:webjars-play_$scalaVersion:${libs.versions.webjars.play.get()}")
@@ -26,6 +27,14 @@ dependencies {
     implementation("org.playframework:play-ahc-ws_$scalaVersion:${libs.versions.play.ws.get()}")
     testImplementation(libs.awaitility)
     testImplementation(libs.assertj)
+}
+
+sourceSets {
+    main {
+        twirl {
+            templateImports.add("views.html.helper.CSPNonce")
+        }
+    }
 }
 
 val compileCoffeeScript = tasks.register<NpxTask>("compileCoffeeScript") {
