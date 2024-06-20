@@ -96,5 +96,5 @@ handleFlip = (container) ->
         detailsHolder.append($("<h2>").text("Error: " + JSON.parse(jqXHR.responseText).error))
     # display loading info
     detailsHolder = container.find(".details-holder")
-    detailsHolder.append($("<h4>").text("Determing whether you should buy or sell based on the sentiment of recent tweets..."))
+    detailsHolder.append($("<h4>").text("Determining whether you should buy or sell based on the sentiment of recent tweets..."))
     detailsHolder.append($("<div>").addClass("progress progress-striped active").append($("<div>").addClass("bar").css("width", "100%")))
