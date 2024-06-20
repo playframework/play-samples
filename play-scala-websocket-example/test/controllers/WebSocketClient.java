@@ -8,6 +8,7 @@ import play.shaded.ahc.org.asynchttpclient.ws.WebSocket;
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocketListener;
 
 import play.shaded.ahc.org.asynchttpclient.ws.WebSocketUpgradeHandler;
+import org.slf4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -29,7 +30,7 @@ public class WebSocketClient {
         final BoundRequestBuilder requestBuilder = client.prepareGet(url).addHeader("Origin", origin);
 
         final WebSocketUpgradeHandler handler = new WebSocketUpgradeHandler.Builder().addWebSocketListener(listener).build();
-        ListenableFuture<NettyWebSocket> future = requestBuilder.execute(handler);
+        final ListenableFuture<NettyWebSocket> future = requestBuilder.execute(handler);
         return future.toCompletableFuture();
     }
 
@@ -39,6 +40,8 @@ public class WebSocketClient {
         public LoggingListener(Consumer<String> onMessageCallback) {
             this.onMessageCallback = onMessageCallback;
         }
+
+        private Logger logger = org.slf4j.LoggerFactory.getLogger(LoggingListener.class);
 
         private Throwable throwableFound = null;
 
@@ -62,6 +65,7 @@ public class WebSocketClient {
 
         @Override
         public void onTextFrame(String payload, boolean finalFragment, int rsv) {
+            //logger.info("onMessage: s = " + s);
             onMessageCallback.accept(payload);
         }
     }
