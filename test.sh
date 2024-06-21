@@ -60,19 +60,19 @@ if [ -n "$sample" ]; then
   buildSample $sample
 else
   # sample not set, therefore run all samples
-  buildSample play-java-chatroom-example
-  buildSample play-java-compile-di-example
-  buildSample play-java-dagger2-example
-  buildSample play-java-ebean-example
-  buildSample play-java-fileupload-example
-  buildSample play-java-forms-example
-  buildSample play-java-hello-world-tutorial
-  buildSample play-java-jpa-example
-  buildSample play-java-rest-api-example
-  buildSample play-java-starter-example
-  buildSample play-java-streaming-example
-  buildSample play-java-websocket-example
-  buildSample play-java-pekko-cluster-example
+  buildSample java/chatroom
+  buildSample java/compile-di
+  buildSample java/dagger2
+  buildSample java/ebean
+  buildSample java/fileupload
+  buildSample java/forms
+  buildSample java/hello-world
+  buildSample java/jpa
+  buildSample java/rest-api
+  buildSample java/starter
+  buildSample java/streaming
+  buildSample java/websocket
+  buildSample java/pekko-cluster
   buildSample play-scala-rest-api-example
   buildSample play-scala-chatroom-example
   buildSample play-scala-compile-di-example
@@ -87,7 +87,7 @@ else
   buildSample play-scala-websocket-example
   if [[ $build_tool == "sbt" ]]; then
 #    buildSample play-scala-anorm-example
-    buildSample play-java-grpc-example
+    buildSample java/grpc
     buildSample play-scala-grpc-example
     buildSample play-scala-isolated-slick-example
     buildSample play-scala-slick-example

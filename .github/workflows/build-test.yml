@@ -32,20 +32,20 @@ jobs:
         id: filter
         with:
           filters: |
-            java-chatroom: play-java-chatroom-example/**
-            java-compile-di: play-java-compile-di-example/**
-            java-dagger2: play-java-dagger2-example/**
-            java-ebean: play-java-ebean-example/**
-            java-fileupload: play-java-fileupload-example/**
-            java-forms: play-java-forms-example/**
-            java-grpc: play-java-grpc-example/**
-            java-hello-world: play-java-hello-world-tutorial/**
-            java-jpa: play-java-jpa-example/**
-            java-pekko-cluster: play-java-pekko-cluster-example/**
-            java-rest-api: play-java-rest-api-example/**
-            java-starter: play-java-starter-example/**
-            java-streaming: play-java-streaming-example/**
-            java-websocket: play-java-websocket-example/**
+            java-chatroom: java/chatroom/**
+            java-compile-di: java/compile-di/**
+            java-dagger2: java/dagger2/**
+            java-ebean: java/ebean/**
+            java-fileupload: java/fileupload/**
+            java-forms: java/forms/**
+            java-grpc: java/grpc/**
+            java-hello-world: java/hello-world/**
+            java-jpa: java/jpa/**
+            java-pekko-cluster: java/pekko-cluster/**
+            java-rest-api: java/rest-api/**
+            java-starter: java/starter/**
+            java-streaming: java/streaming/**
+            java-websocket: java/websocket/**
             scala-anorm: play-scala-anorm-example/**
             scala-chatroom: play-scala-chatroom-example/**
             scala-compile-di: play-scala-compile-di-example/**
@@ -72,13 +72,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-chatroom-example
+      gradle-build-root: java/chatroom
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-chatroom-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/chatroom --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-compile-di:
     name: "Java :: Compile DI"
@@ -88,13 +88,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-compile-di-example
+      gradle-build-root: java/compile-di
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-compile-di-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/compile-di --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-dagger2:
     name: "Java :: Dagger2"
@@ -104,13 +104,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-dagger2-example
+      gradle-build-root: java/dagger2
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-dagger2-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/dagger2 --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-ebean:
     name: "Java :: EBean"
@@ -120,13 +120,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-ebean-example
+      gradle-build-root: java/ebean
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-ebean-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/ebean --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
         
   java-fileupload:
     name: "Java :: File Upload"
@@ -136,13 +136,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-fileupload-example
+      gradle-build-root: java/fileupload
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-fileupload-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/fileupload --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
         
   java-forms:
     name: "Java :: Forms"
@@ -152,13 +152,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-forms-example
+      gradle-build-root: java/forms
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-forms-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/forms --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-grpc:
     name: "Java :: gRPC"
@@ -169,11 +169,11 @@ jobs:
       # Can't test with Java 21+ currently because of https://github.com/lightbend/ssl-config/issues/367
       java: 17
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-grpc-example
+      gradle-build-root: java/grpc
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
       cmd: |
-        ./test.sh --sample=play-java-grpc-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/grpc --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-hello-world:
     name: "Java :: Hello World"
@@ -183,13 +183,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-hello-world-tutorial
+      gradle-build-root: java/hello-world
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-hello-world-tutorial --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/hello-world --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-jpa:
     name: "Java :: JPA"
@@ -199,13 +199,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-jpa-example
+      gradle-build-root: java/jpa
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-jpa-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/jpa --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-pekko-cluster:
     name: "Java :: Pekko Cluster"
@@ -215,13 +215,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-pekko-cluster-example
+      gradle-build-root: java/pekko-cluster
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-pekko-cluster-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/pekko-cluster --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-rest-api:
     name: "Java :: REST API"
@@ -231,13 +231,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-rest-api-example
+      gradle-build-root: java/rest-api
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-rest-api-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/rest-api --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-starter:
     name: "Java :: Starter"
@@ -247,13 +247,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-starter-example
+      gradle-build-root: java/starter
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-starter-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/starter --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-streaming:
     name: "Java :: Streaming"
@@ -263,13 +263,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-streaming-example
+      gradle-build-root: java/streaming
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-streaming-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/streaming --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   java-websocket:
     name: "Java :: WebSocket"
@@ -279,13 +279,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-java-websocket-example
+      gradle-build-root: java/websocket
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-java-websocket-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=java/websocket --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
 #  scala-anorm:
 #    name: "Scala :: Anorm"
