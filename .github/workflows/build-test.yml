@@ -46,23 +46,23 @@ jobs:
             java-starter: java/starter/**
             java-streaming: java/streaming/**
             java-websocket: java/websocket/**
-            scala-anorm: play-scala-anorm-example/**
-            scala-chatroom: play-scala-chatroom-example/**
-            scala-compile-di: play-scala-compile-di-example/**
-            scala-fileupload: play-scala-fileupload-example/**
-            scala-forms: play-scala-forms-example/**
-            scala-grpc: play-scala-grpc-example/**
-            scala-hello-world: play-scala-hello-world-tutorial/**
-            scala-isolated-slick: play-scala-isolated-slick-example/**
-            scala-log4j2: play-scala-log4j2-example/**
-            scala-macwire-di: play-scala-macwire-di-example/**
-            scala-rest-api: play-scala-rest-api-example/**
-            scala-secure-session: play-scala-secure-session-example/**
-            scala-slick: play-scala-slick-example/**
-            scala-starter: play-scala-starter-example/**
-            scala-streaming: play-scala-streaming-example/**
-            scala-tls: play-scala-tls-example/**
-            scala-websocket: play-scala-websocket-example/**
+            scala-anorm: scala/anorm/**
+            scala-chatroom: scala/chatroom/**
+            scala-compile-di: scala/compile-di/**
+            scala-fileupload: scala/fileupload/**
+            scala-forms: scala/forms/**
+            scala-grpc: scala/grpc/**
+            scala-hello-world: scala/hello-world/**
+            scala-isolated-slick: scala/isolated-slick/**
+            scala-log4j2: scala/log4j2/**
+            scala-macwire-di: scala/macwire-di/**
+            scala-rest-api: scala/rest-api/**
+            scala-secure-session: scala/secure-session/**
+            scala-slick: scala/slick/**
+            scala-starter: scala/starter/**
+            scala-streaming: scala/streaming/**
+            scala-tls: scala/tls/**
+            scala-websocket: scala/websocket/**
 
   java-chatroom:
     name: "Java :: Chatroom"
@@ -295,11 +295,11 @@ jobs:
 #    with:
 #      java: 17, 21
 #      scala: 2.13.x, 3.x
-#      gradle-build-root: play-scala-anorm-example
+#      gradle-build-root: scala/anorm
 #      add-dimensions: >-
 #        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
 #      cmd: |
-#        ./test.sh --sample=play-scala-anorm-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+#        ./test.sh --sample=scala/anorm --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-chatroom:
     name: "Scala :: Chatroom"
@@ -309,11 +309,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-chatroom-example
+      gradle-build-root: scala/chatroom
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-chatroom-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/chatroom --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-compile-di:
     name: "Scala :: Compile DI"
@@ -323,11 +323,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-compile-di-example
+      gradle-build-root: scala/compile-di
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-compile-di-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/compile-di --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-fileupload:
     name: "Scala :: File Upload"
@@ -337,11 +337,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-fileupload-example
+      gradle-build-root: scala/fileupload
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-fileupload-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/fileupload --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-forms:
     name: "Scala :: Forms"
@@ -351,11 +351,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-forms-example
+      gradle-build-root: scala/forms
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-forms-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/forms --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-grpc:
     name: "Scala :: gRPC"
@@ -366,11 +366,11 @@ jobs:
       # Can't test with Java 21+ currently because of https://github.com/lightbend/ssl-config/issues/367
       java: 17
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-grpc-example
+      gradle-build-root: scala/grpc
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
       cmd: |
-        ./test.sh --sample=play-scala-grpc-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/grpc --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-hello-world:
     name: "Scala :: Hello World"
@@ -380,11 +380,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-hello-world-tutorial
+      gradle-build-root: scala/hello-world
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-hello-world-tutorial --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/hello-world --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-isolated-slick:
     name: "Scala :: Slick (isolated)"
@@ -394,11 +394,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-isolated-slick-example
+      gradle-build-root: scala/isolated-slick
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
       cmd: |
-        ./test.sh --sample=play-scala-isolated-slick-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/isolated-slick --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-log4j2:
     name: "Scala :: Log4j2"
@@ -408,11 +408,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-log4j2-example
+      gradle-build-root: scala/log4j2
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-log4j2-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/log4j2 --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-macwire-di:
     name: "Scala :: Macwire DI"
@@ -422,11 +422,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-macwire-di-example
+      gradle-build-root: scala/macwire-di
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-macwire-di-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/macwire-di --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-rest-api:
     name: "Scala :: REST API"
@@ -436,13 +436,13 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-rest-api-example
+      gradle-build-root: scala/rest-api
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       exclude: >-
         [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
-        ./test.sh --sample=play-scala-rest-api-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/rest-api --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-secure-session:
     name: "Scala :: Secure Session"
@@ -452,11 +452,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-secure-session-example
+      gradle-build-root: scala/secure-session
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-secure-session-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/secure-session --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-slick:
     name: "Scala :: Slick"
@@ -466,11 +466,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-slick-example
+      gradle-build-root: scala/slick
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
       cmd: |
-        ./test.sh --sample=play-scala-slick-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/slick --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-starter:
     name: "Scala :: Starter"
@@ -480,11 +480,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-starter-example
+      gradle-build-root: scala/starter
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-starter-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/starter --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-streaming:
     name: "Scala :: Streaming"
@@ -494,11 +494,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-streaming-example
+      gradle-build-root: scala/streaming
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-streaming-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/streaming --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-tls:
     name: "Scala :: TLS"
@@ -508,11 +508,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-tls-example
+      gradle-build-root: scala/tls
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
       cmd: |
-        ./test.sh --sample=play-scala-tls-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/tls --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-websocket:
     name: "Scala :: WebSocket"
@@ -522,11 +522,11 @@ jobs:
     with:
       java: 17, 21
       scala: 2.13.x, 3.x
-      gradle-build-root: play-scala-websocket-example
+      gradle-build-root: scala/websocket
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
       cmd: |
-        ./test.sh --sample=play-scala-websocket-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+        ./test.sh --sample=scala/websocket --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   finish:
     name: Finish

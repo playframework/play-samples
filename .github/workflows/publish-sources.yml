@@ -29,5 +29,4 @@ jobs:
           target_commitish: ${{ github.ref_name }}
           files: |
             *-example.zip
-            *-tutorial.zip
           fail_on_unmatched_files: true

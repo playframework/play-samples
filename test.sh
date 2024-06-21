@@ -73,24 +73,24 @@ else
   buildSample java/streaming
   buildSample java/websocket
   buildSample java/pekko-cluster
-  buildSample play-scala-rest-api-example
-  buildSample play-scala-chatroom-example
-  buildSample play-scala-compile-di-example
-  buildSample play-scala-fileupload-example
-  buildSample play-scala-forms-example
-  buildSample play-scala-hello-world-tutorial
-  buildSample play-scala-log4j2-example
-  buildSample play-scala-macwire-di-example
-  buildSample play-scala-secure-session-example
-  buildSample play-scala-starter-example
-  buildSample play-scala-streaming-example
-  buildSample play-scala-websocket-example
+  buildSample scala/chatroom
+  buildSample scala/compile-di
+  buildSample scala/fileupload
+  buildSample scala/forms
+  buildSample scala/hello-world
+  buildSample scala/log4j2
+  buildSample scala/macwire-di
+  buildSample scala/rest-api
+  buildSample scala/secure-session
+  buildSample scala/starter
+  buildSample scala/streaming
+  buildSample scala/websocket
   if [[ $build_tool == "sbt" ]]; then
-#    buildSample play-scala-anorm-example
+#    buildSample scala/anorm
     buildSample java/grpc
-    buildSample play-scala-grpc-example
-    buildSample play-scala-isolated-slick-example
-    buildSample play-scala-slick-example
-    buildSample play-scala-tls-example
+    buildSample scala/grpc
+    buildSample scala/isolated-slick
+    buildSample scala/slick
+    buildSample scala/tls
   fi
 fi

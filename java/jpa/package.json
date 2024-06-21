@@ -1,4 +1,5 @@
 {
+  "name": "play-java-jpa-example",
   "devDependencies": {
     "coffeescript": "^2.7.0"
   }
