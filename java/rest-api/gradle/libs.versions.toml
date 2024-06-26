@@ -1,5 +1,5 @@
 [versions]
-twirl = "2.0.3"
+twirl = "2.0.6"
 play = "3.0.2-773ecf9b-SNAPSHOT"
 failsafe = "2.4.4"
 url-builder = "1.1.5"
