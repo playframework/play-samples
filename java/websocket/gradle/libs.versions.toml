@@ -6,7 +6,7 @@ node = "7.0.1"
 webjars-play = "3.0.0"
 flot = "0.8.3"
 bootstrap = "3.4.1"
-junit = "4.13.1"
+junit = "4.13.2"
 assertj = "3.24.2"
 awaitility = "4.2.0"
 

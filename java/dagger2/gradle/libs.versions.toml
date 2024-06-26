@@ -1,7 +1,7 @@
 [versions]
 twirl = "2.0.3"
 play = "3.0.1-03969c1e-SNAPSHOT"
-junit = "4.13.1"
+junit = "4.13.2"
 dagger = "2.48.1"
 
 [libraries]

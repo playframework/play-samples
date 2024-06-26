@@ -6,7 +6,7 @@ url-builder = "1.1.5"
 h2 = "2.2.224"
 hibernate = "6.3.1.Final"
 metrics = "4.2.21"
-junit = "4.13.1"
+junit = "4.13.2"
 scalatestplus-play = "7.0.0"
 
 [libraries]
