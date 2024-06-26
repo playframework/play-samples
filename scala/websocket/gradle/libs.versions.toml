@@ -6,7 +6,7 @@ scalatestplus-play = "7.0.1"
 flot = "0.8.3"
 bootstrap = "3.4.1"
 webjars-play = "3.0.0"
-awaitility = "4.2.0"
+awaitility = "4.2.1"
 node = "7.0.1"
 
 [libraries]
