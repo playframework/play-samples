@@ -4,7 +4,7 @@ play = "3.0.1-03969c1e-SNAPSHOT"
 junit = "4.13.1"
 webjars-play = "3.0.0"
 flot = "0.8.3"
-bootstrap = "3.4.1"
+bootstrap = "5.3.3"
 assertj = "3.24.2"
 awaitility = "4.2.0"
 
