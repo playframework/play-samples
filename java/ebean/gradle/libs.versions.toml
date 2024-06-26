@@ -1,5 +1,5 @@
 [versions]
-twirl = "2.0.3"
+twirl = "2.0.6"
 play = "3.0.1-03969c1e-SNAPSHOT"
 ebean = "13.17.3" # Sync with Play Ebean version
 play-ebean = "8.0.0-M1"
