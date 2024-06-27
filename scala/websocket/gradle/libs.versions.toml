@@ -1,5 +1,5 @@
 [versions]
-twirl = "2.0.6"
+twirl = "2.0.7"
 play = "3.0.2-773ecf9b-SNAPSHOT"
 play-ws = "3.0.0"
 scalatestplus = "3.2.19.0"
