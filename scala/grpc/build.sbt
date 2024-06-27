@@ -4,6 +4,8 @@ import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCod
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.scala.grpc.sample.BuildInfo
 
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+
 name := "play-scala-grpc-example"
 version := "1.0-SNAPSHOT"
 
@@ -83,4 +85,4 @@ Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAM
 //    sbt "project docs" "~ paradox"
 //    open docs/target/paradox/site/main/index.html
 lazy val docs = (project in file("docs"))
-  .enablePlugins(ParadoxPlugin) 
+  .enablePlugins(ParadoxPlugin)

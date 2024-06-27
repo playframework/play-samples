@@ -1,3 +1,5 @@
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+
 name := "play-java-streaming-example"
 
 version := "1.0-SNAPSHOT"

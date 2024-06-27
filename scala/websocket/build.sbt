@@ -1,3 +1,5 @@
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend

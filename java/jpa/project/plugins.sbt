@@ -1,5 +1,6 @@
 // The Play plugin
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.3")
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-4009e5a0-SNAPSHOT")
 
 // Web plugins
 addSbtPlugin("com.github.sbt" % "sbt-coffeescript" % "2.0.1")

@@ -1,3 +1,5 @@
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+
 name := """play-java-hello-world-tutorial"""
 organization := "com.example"
 
