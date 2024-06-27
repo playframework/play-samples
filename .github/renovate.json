@@ -1,12 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "baseBranches": ["main"],
+  "schedule": ["monthly"],
   "extends": [
     "config:recommended"
   ],
   "enabledManagers": ["gradle", "gradle-wrapper"],
   "labels": [
     "type:updates"
+  ],
+  "rebaseWhen": "conflicted",
+  "packageRules": [
+    {
+      "matchPackageNames": ["org.webjars:bootstrap"],
+      "allowedVersions": "<3.5"
+    }
   ],
   "commitMessageTopic": "`{{depName}}`",
   "commitMessageExtra": "to `{{#if isPinDigest}}{{{newDigestShort}}}{{else}}{{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{#if newValue}}{{{newValue}}}{{else}}{{{newDigestShort}}}{{/if}}{{/if}}{{/if}}{{/if}}` (was `{{currentVersion}}`)"
