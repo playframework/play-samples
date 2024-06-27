@@ -19,7 +19,7 @@ dependencies {
     implementation("org.playframework:play-logback_$scalaVersion")
     implementation("org.playframework:play-ebean_$scalaVersion:${libs.versions.play.ebean.get()}")
     implementation(libs.h2)
-    annotationProcessor(libs.ebean.generator)
+    annotationProcessor("io.ebean:querybean-generator:${libs.versions.ebean.get()}")
 
     testImplementation(libs.junit)
     testImplementation("org.playframework:play-test_$scalaVersion")
