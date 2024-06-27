@@ -4,7 +4,7 @@ play = "3.0.1-03969c1e-SNAPSHOT"
 scalatestplus-play = "7.0.1"
 
 [libraries]
-scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.1.12" }
+scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.2.0" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
 
 

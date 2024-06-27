@@ -6,7 +6,7 @@ macwire = "2.5.9"
 
 [libraries]
 macwire = { group = "com.softwaremill.macwire", name = "macros_2.13", version.ref = "macwire" }
-scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.1.12" }
+scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.2.0" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
 
 

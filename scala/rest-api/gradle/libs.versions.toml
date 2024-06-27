@@ -7,7 +7,7 @@ scalatestplus-play = "7.0.0"
 
 [libraries]
 logstash-logback-encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version = "7.3" }
-scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.1.12" }
+scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.2.0" }
 scala-guice = { group = "net.codingwell", name = "scala-guice_2.13", version.ref = "scala-guice" }
 scala-uri = { group = "io.lemonlabs", name = "scala-uri_2.13", version.ref = "scala-uri" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
