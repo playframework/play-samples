@@ -1,8 +1,8 @@
 [versions]
 twirl = "2.0.6"
 play = "3.0.1-03969c1e-SNAPSHOT"
-ebean = "13.17.3" # Sync with Play Ebean version
-play-ebean = "8.0.0-M1"
+play-ebean = "8.3.0"
+ebean = "15.1.0" # Sync with Play Ebean version https://github.com/playframework/play-ebean/blob/main/project/Dependencies.scala#L19
 h2 = "2.2.224"
 junit = "4.13.2"
 assertj = "3.26.0"
@@ -15,7 +15,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 assertj = { group = "org.assertj", name = "assertj-core", version.ref = "assertj" }
 awaitility = { group = "org.awaitility", name = "awaitility", version.ref = "awaitility" }
 mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
-ebean-generator = { group = "io.ebean", name = "querybean-generator", version.ref = "ebean" }
+play-ebean = { group ="org.playframework", name = "play-ebean_2.13", version.ref = "play-ebean" }
 
 [plugins]
 ebean = { id = "io.ebean", version.ref = "ebean" }
