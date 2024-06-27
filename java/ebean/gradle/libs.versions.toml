@@ -5,7 +5,7 @@ ebean = "13.17.3" # Sync with Play Ebean version
 play-ebean = "8.0.0-M1"
 h2 = "2.2.224"
 junit = "4.13.2"
-assertj = "3.24.2"
+assertj = "3.26.0"
 awaitility = "4.2.1"
 mockito = "5.6.0"
 
