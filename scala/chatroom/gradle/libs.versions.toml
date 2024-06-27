@@ -5,7 +5,7 @@ webjars-play = "3.0.1"
 jsoup = "1.17.2"
 flot = "0.8.3-1"
 bootstrap = "3.3.7-1"
-scalatestplus-play = "7.0.0"
+scalatestplus-play = "7.0.1"
 
 [libraries]
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
