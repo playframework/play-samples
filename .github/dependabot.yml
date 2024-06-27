@@ -1,12 +1,5 @@
 version: 2
 updates:
-  - package-ecosystem: "gradle"
-    directories:
-      - "java/*"
-      - "scala/*"
-    schedule:
-      interval: "weekly"
-    target-branch: "main"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
