@@ -2,7 +2,7 @@
 twirl = "2.0.6"
 play = "3.0.1-03969c1e-SNAPSHOT"
 junit = "4.13.2"
-dagger = "2.48.1"
+dagger = "2.51.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
