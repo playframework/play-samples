@@ -20,7 +20,7 @@ dependencies {
     implementation "org.playframework:play-logback_${scalaVersion}"
 
     testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaVersion}:${libs.versions.scalatestplus.play.get()}"
-    testImplementation libs.scalatest.junit.runner
+    testRuntimeOnly "org.scalatestplus:junit-5-10_${scalaVersion}:${libs.versions.scalatestplus.asProvider().get()}"
 }
 
 run {

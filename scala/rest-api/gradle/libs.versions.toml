@@ -3,13 +3,14 @@ twirl = "2.0.6"
 play = "3.0.2-773ecf9b-SNAPSHOT"
 scala-guice = "6.0.0"
 scala-uri = "4.0.3"
+scalatestplus = "3.2.19.0"
 scalatestplus-play = "7.0.1"
 
 [libraries]
 logstash-logback-encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version = "7.3" }
-scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.1.12" }
 scala-guice = { group = "net.codingwell", name = "scala-guice_2.13", version.ref = "scala-guice" }
 scala-uri = { group = "io.lemonlabs", name = "scala-uri_2.13", version.ref = "scala-uri" }
+scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-10_2.13", version.ref = "scalatestplus" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
 
 [plugins]

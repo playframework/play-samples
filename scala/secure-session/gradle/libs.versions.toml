@@ -1,6 +1,7 @@
 [versions]
 twirl = "2.0.6"
 play = "3.0.1-03969c1e-SNAPSHOT"
+scalatestplus = "3.2.19.0"
 scalatestplus-play = "7.0.1"
 pekko = "1.0.2"
 
@@ -8,7 +9,7 @@ pekko = "1.0.2"
 kalium = { group = "org.abstractj.kalium", name = "kalium", version = "0.8.0" }
 jnr-ffi = { group = "com.github.jnr", name = "jnr-ffi", version = "2.2.16" }
 pekko-distributed-data = { group = "org.apache.pekko", name = "pekko-distributed-data_2.13", version.ref = "pekko" }
-scalatest-junit-runner = { group = "co.helmethair", name = "scalatest-junit-runner", version = "0.1.12" }
+scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-10_2.13", version.ref = "scalatestplus" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
 
 
