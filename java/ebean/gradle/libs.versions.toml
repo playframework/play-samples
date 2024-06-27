@@ -2,7 +2,7 @@
 twirl = "2.0.6"
 play = "3.0.1-03969c1e-SNAPSHOT"
 play-ebean = "8.3.0"
-ebean = "15.1.0" # Sync with Play Ebean version https://github.com/playframework/play-ebean/blob/main/project/Dependencies.scala#L19
+ebean = "15.4.0" # Sync with Play Ebean version https://github.com/playframework/play-ebean/blob/main/project/Dependencies.scala#L19
 h2 = "2.2.224"
 junit = "4.13.2"
 assertj = "3.26.0"
