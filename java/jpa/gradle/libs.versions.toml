@@ -1,5 +1,5 @@
 [versions]
-twirl = "2.0.6"
+twirl = "2.0.7"
 play = "3.0.1-03969c1e-SNAPSHOT"
 play-ws = "3.0.0"
 node = "7.0.2"
