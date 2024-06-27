@@ -25,7 +25,7 @@ dependencies {
     implementation "org.apache.pekko:pekko-cluster-typed_${scalaVersion}:${libs.versions.pekko.get()}"
 
     testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaVersion}:${libs.versions.scalatestplus.play.get()}"
-    testImplementation libs.scalatest.junit.runner
+    testRuntimeOnly "org.scalatestplus:junit-5-10_${scalaVersion}:${libs.versions.scalatestplus.asProvider().get()}"
 }
 
 run {

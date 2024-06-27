@@ -22,7 +22,7 @@ dependencies {
     compileOnly "com.softwaremill.macwire:macros_${scalaVersion}:${libs.versions.macwire.get()}"
 
     testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaVersion}:${libs.versions.scalatestplus.play.get()}"
-    testImplementation libs.scalatest.junit.runner
+    testRuntimeOnly "org.scalatestplus:junit-5-10_${scalaVersion}:${libs.versions.scalatestplus.asProvider().get()}"
 }
 
 run {
