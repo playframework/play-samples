@@ -2,7 +2,7 @@
 twirl = "2.0.6"
 play = "3.0.2-773ecf9b-SNAPSHOT"
 play-ws = "3.0.0"
-node = "7.0.1"
+node = "7.0.2"
 webjars-play = "3.0.0"
 flot = "0.8.3-1"
 bootstrap = "3.4.1"
