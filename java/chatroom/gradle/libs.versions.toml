@@ -1,6 +1,6 @@
 [versions]
 twirl = "2.0.3"
-play = "3.0.1-03969c1e-SNAPSHOT"
+play = "3.1.0-9632340d-SNAPSHOT"
 junit = "4.13.2"
 webjars-play = "3.0.0"
 flot = "0.8.3"
