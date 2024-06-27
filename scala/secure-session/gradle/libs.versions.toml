@@ -3,7 +3,7 @@ twirl = "2.0.7"
 play = "3.0.1-03969c1e-SNAPSHOT"
 scalatestplus = "3.2.19.0"
 scalatestplus-play = "7.0.1"
-pekko = "1.0.2"
+pekko = "1.0.3"
 
 [libraries]
 kalium = { group = "org.abstractj.kalium", name = "kalium", version = "0.8.0" }
