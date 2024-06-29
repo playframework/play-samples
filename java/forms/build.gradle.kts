@@ -1,3 +1,4 @@
+import play.TemplateImports
 import play.gradle.plugin.PlayPlugin
 
 plugins {
@@ -18,6 +19,14 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation("org.playframework:play-test_$scalaVersion")
+}
+
+sourceSets {
+    main {
+        twirl {
+            templateImports.set(TemplateImports.defaultJavaTemplateImports)
+        }
+    }
 }
 
 tasks.withType<ScalaCompile>().configureEach {

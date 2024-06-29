@@ -1,6 +1,8 @@
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import controllers.PersonController;
+import jakarta.validation.Validation;
+import jakarta.validation.ValidatorFactory;
 import models.Person;
 import models.PersonRepository;
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
@@ -18,8 +20,6 @@ import play.mvc.Result;
 import play.test.Helpers;
 import play.twirl.api.Content;
 
-import javax.validation.Validation;
-import javax.validation.ValidatorFactory;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ForkJoinPool;
 

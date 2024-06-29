@@ -1,6 +1,6 @@
 [versions]
 twirl = "2.0.7"
-play = "3.0.1-03969c1e-SNAPSHOT"
+play = "3.1.0-4009e5a0-SNAPSHOT"
 scalatestplus = "3.2.19.0"
 scalatestplus-play = "7.0.1"
 

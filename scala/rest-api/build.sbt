@@ -1,6 +1,8 @@
 import sbt.Keys._
 import play.sbt.PlaySettings
 
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+
 lazy val scala213 = "2.13.14"
 lazy val scala3 = "3.3.3"
 

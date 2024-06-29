@@ -1,3 +1,5 @@
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+
 name := """play-java-forms-example"""
 
 version := "1.0-SNAPSHOT"
@@ -18,4 +20,4 @@ javacOptions ++= Seq(
   "-Xlint:unchecked",
   "-Xlint:deprecation",
   "-Werror"
-) 
+)

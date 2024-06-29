@@ -1,3 +1,5 @@
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+
 val log4jVersion = "2.23.1"
 
 lazy val root = (project in file("."))

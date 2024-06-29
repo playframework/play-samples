@@ -1,5 +1,7 @@
 import play.core.PlayVersion
 
+resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+
 name := """play-java-pekko-cluster-example"""
 organization := "com.example"
 
