@@ -1,5 +1,5 @@
 [versions]
-play = "3.0.2-773ecf9b-SNAPSHOT"
+play = "3.1.0-4009e5a0-SNAPSHOT"
 junit = "4.13.2"
 
 [libraries]
