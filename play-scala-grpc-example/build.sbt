@@ -58,7 +58,7 @@ val CompileDeps = Seq(
   "org.apache.pekko"       %% "pekko-http"            % pekkoHttpVersion,
   "org.apache.pekko"       %% "pekko-http-spray-json" % pekkoHttpVersion,
   // Test Database
-  "com.h2database" % "h2" % "2.2.224"
+  "com.h2database" % "h2" % "2.3.230"
 )
 
 val playVersion = play.core.PlayVersion.current
