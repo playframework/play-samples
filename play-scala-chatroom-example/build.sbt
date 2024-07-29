@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
-      "org.jsoup" % "jsoup" % "1.17.2",
+      "org.jsoup" % "jsoup" % "1.18.1",
       "ch.qos.logback" % "logback-classic" % "1.5.6",
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-testkit" % pekkoVersion % Test,
