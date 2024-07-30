@@ -13,7 +13,7 @@ lazy val root = (project in file("."))
       "org.hibernate" % "hibernate-core" % "6.5.2.Final",
       javaWs % "test",
       "org.awaitility" % "awaitility" % "4.2.1" % "test",
-      "org.assertj" % "assertj-core" % "3.26.0" % "test",
+      "org.assertj" % "assertj-core" % "3.26.3" % "test",
       "org.mockito" % "mockito-core" % "5.12.0" % "test",
     ),
     Test / testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
