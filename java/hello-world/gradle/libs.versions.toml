@@ -1,6 +1,6 @@
 [versions]
 twirl = "2.0.7"
-play = "3.1.0-4009e5a0-SNAPSHOT"
+play = "3.1.0-d1f1b9f8-SNAPSHOT"
 junit = "4.13.2"
 
 [libraries]
