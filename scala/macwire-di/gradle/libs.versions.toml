@@ -1,6 +1,6 @@
 [versions]
 twirl = "2.0.7"
-play = "3.1.0-4009e5a0-SNAPSHOT"
+play = "3.1.0-d1f1b9f8-SNAPSHOT"
 scalatestplus = "3.2.19.0"
 scalatestplus-play = "7.0.1"
 macwire = "2.5.9"
