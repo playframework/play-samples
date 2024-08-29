@@ -29,7 +29,7 @@ def sampleProject(name: String) =
         guice,
         "org.playframework" %% "play-slick" % "6.1.1",
         "org.playframework" %% "play-slick-evolutions" % "6.1.1",
-        "com.h2database" % "h2" % "2.3.230",
+        "com.h2database" % "h2" % "2.3.232",
         specs2 % Test,
       ),
       (Global / concurrentRestrictions) += Tags.limit(Tags.Test, 1)
