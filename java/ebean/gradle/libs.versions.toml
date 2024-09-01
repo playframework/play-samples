@@ -6,7 +6,7 @@ ebean = "15.1.0" # Sync with Play Ebean version https://github.com/playframework
 h2 = "2.2.224"
 junit = "4.13.2"
 assertj = "3.26.3"
-awaitility = "4.2.1"
+awaitility = "4.2.2"
 mockito = "5.12.0"
 
 [libraries]
