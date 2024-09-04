@@ -4,7 +4,7 @@ play = "3.1.0-d1f1b9f8-SNAPSHOT"
 junit = "4.13.2"
 h2 = "2.3.232"
 assertj = "3.26.3"
-awaitility = "4.2.1"
+awaitility = "4.2.2"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
