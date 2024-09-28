@@ -1,4 +1,4 @@
-val log4jVersion = "2.23.1"
+val log4jVersion = "2.24.0"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
