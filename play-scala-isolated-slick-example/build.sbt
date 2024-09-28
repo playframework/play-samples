@@ -6,7 +6,7 @@ lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")
 lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "")
 
-val FlywayVersion = "9.21.1"
+val FlywayVersion = "9.21.2"
 
 (ThisBuild / version) := "1.1-SNAPSHOT"
 
@@ -15,7 +15,7 @@ val FlywayVersion = "9.21.1"
   "com.google.inject" % "guice" % "6.0.0"
 )
 
-(ThisBuild / crossScalaVersions) := Seq("2.13.14", "3.3.3")
+(ThisBuild / crossScalaVersions) := Seq("2.13.15", "3.3.3")
 (ThisBuild / scalaVersion) := crossScalaVersions.value.head
 (ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
