@@ -2,7 +2,7 @@
 twirl = "2.0.7"
 play = "3.1.0-d1f1b9f8-SNAPSHOT"
 play-ws = "3.0.0"
-node = "7.0.2"
+node = "7.1.0"
 h2 = "2.3.232"
 hibernate = "6.5.2.Final"
 junit = "4.13.2"
