@@ -5,7 +5,7 @@ webjars-play = "3.0.1"
 jsoup = "1.17.2"
 flot = "0.8.3-1"
 bootstrap = "3.4.1"
-scalatestplus = "3.2.19.0"
+scalatestplus = "3.2.19.1"
 scalatestplus-play = "7.0.1"
 
 [libraries]
