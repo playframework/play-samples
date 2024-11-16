@@ -6,7 +6,7 @@ lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")
 lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "")
 
-val FlywayVersion = "9.21.1"
+val FlywayVersion = "9.22.0"
 
 (ThisBuild / version) := "1.1-SNAPSHOT"
 
@@ -30,7 +30,11 @@ val FlywayVersion = "9.21.1"
 lazy val flyway = (project in file("modules/flyway"))
   .enablePlugins(FlywayPlugin)
   .settings(
-    libraryDependencies += "org.flywaydb" % "flyway-core" % FlywayVersion,
+    libraryDependencies += ("org.flywaydb" % "flyway-core" % FlywayVersion).excludeAll(
+      ExclusionRule("com.fasterxml.jackson.core"),
+      ExclusionRule("com.fasterxml.jackson.dataformat"),
+      ExclusionRule("com.fasterxml.jackson.datatype")
+    ),
     flywayLocations := Seq("classpath:db/migration"),
     flywayUrl := databaseUrl,
     flywayUser := databaseUser,
@@ -84,11 +88,13 @@ lazy val root = (project in file("."))
     TwirlKeys.templateImports += "com.example.user.User",
     libraryDependencies ++= Seq(
       guice,
-      "com.h2database" % "h2" % "1.4.200", // Can't use latest h2 currently: flyway-sbt comes with an outdated flyway version that does not support h2 2.x yet...:
-      // https://github.com/flyway/flyway-sbt/blob/7fc35d2833531b2b9e5a98a594d76fd047a077a8/build.sbt#L1
-      // https://github.com/flyway/flyway-sbt/issues/82#issuecomment-1636728997
+      "com.h2database" % "h2" % "2.3.232",
       ws % Test,
-      "org.flywaydb" % "flyway-core" % FlywayVersion % Test,
+      ("org.flywaydb" % "flyway-core" % FlywayVersion % Test).excludeAll(
+        ExclusionRule("com.fasterxml.jackson.core"),
+        ExclusionRule("com.fasterxml.jackson.dataformat"),
+        ExclusionRule("com.fasterxml.jackson.datatype")
+      ),
       "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
     ),
     (Test / fork) := true
