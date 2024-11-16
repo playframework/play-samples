@@ -287,19 +287,19 @@ jobs:
       cmd: |
         ./test.sh --sample=java/websocket --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
-#  scala-anorm:
-#    name: "Scala :: Anorm"
-#    uses: playframework/.github/.github/workflows/cmd.yml@v4
-#    needs: changes
-#    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-anorm')}}
-#    with:
-#      java: 17, 21
-#      scala: 2.13.x, 3.x
-#      gradle-build-root: scala/anorm
-#      add-dimensions: >-
-#        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
-#      cmd: |
-#        ./test.sh --sample=scala/anorm --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+  scala-anorm:
+    name: "Scala :: Anorm"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-anorm')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: scala/anorm
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=scala/anorm --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-chatroom:
     name: "Scala :: Chatroom"
@@ -546,7 +546,7 @@ jobs:
       - "java-starter"
       - "java-streaming"
       - "java-websocket"
-#      - "scala-anorm"
+      - "scala-anorm"
       - "scala-chatroom"
       - "scala-compile-di"
       - "scala-fileupload"
