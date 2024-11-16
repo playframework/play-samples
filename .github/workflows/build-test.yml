@@ -261,19 +261,19 @@ jobs:
       cmd: |
         ./test.sh --sample=play-java-websocket-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
-#  scala-anorm:
-#    name: "Scala :: Anorm"
-#    uses: playframework/.github/.github/workflows/cmd.yml@v4
-#    needs: changes
-#    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-anorm')}}
-#    with:
-#      java: 17, 21
-#      scala: 2.13.x, 3.x
-#      gradle-build-root: play-scala-anorm-example
-#      add-dimensions: >-
-#        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
-#      cmd: |
-#        ./test.sh --sample=play-scala-anorm-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
+  scala-anorm:
+    name: "Scala :: Anorm"
+    uses: playframework/.github/.github/workflows/cmd.yml@v4
+    needs: changes
+    if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-anorm')}}
+    with:
+      java: 17, 21
+      scala: 2.13.x, 3.x
+      gradle-build-root: play-scala-anorm-example
+      add-dimensions: >-
+        { "server": [ "pekko", "netty"], "build_tool": ["sbt"] }
+      cmd: |
+        ./test.sh --sample=play-scala-anorm-example --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
   scala-chatroom:
     name: "Scala :: Chatroom"
