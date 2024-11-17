@@ -4,7 +4,7 @@ import org.scalatestplus.play.guice.GuiceOneServerPerTest
 /**
  * Runs a browser based test against the application.
  *
- * http://doc.scalatest.org/3.0.0/index.html#org.scalatest.selenium.WebBrowser
+ * http://doc.scalatest.org/3.0.1/index.html#org.scalatest.selenium.WebBrowser
  * http://www.scalatest.org/user_guide/using_selenium
  * https://www.playframework.com/documentation/latest/ScalaFunctionalTestingWithScalaTest#Testing-with-a-web-browser
  */
