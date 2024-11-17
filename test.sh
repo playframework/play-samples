@@ -86,7 +86,7 @@ else
   buildSample scala/streaming
   buildSample scala/websocket
   if [[ $build_tool == "sbt" ]]; then
-#    buildSample scala/anorm
+    buildSample scala/anorm
     buildSample java/grpc
     buildSample scala/grpc
     buildSample scala/isolated-slick
