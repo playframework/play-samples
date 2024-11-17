@@ -518,7 +518,7 @@ jobs:
       - "java-starter"
       - "java-streaming"
       - "java-websocket"
-#      - "scala-anorm"
+      - "scala-anorm"
       - "scala-chatroom"
       - "scala-compile-di"
       - "scala-fileupload"
