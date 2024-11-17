@@ -70,7 +70,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-chatroom')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-chatroom-example
       add-dimensions: >-
@@ -84,7 +84,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-compile-di')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-compile-di-example
       add-dimensions: >-
@@ -98,7 +98,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-dagger2')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-dagger2-example
       add-dimensions: >-
@@ -112,7 +112,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-ebean')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-ebean-example
       add-dimensions: >-
@@ -126,7 +126,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-fileupload')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-fileupload-example
       add-dimensions: >-
@@ -140,7 +140,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-forms')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-forms-example
       add-dimensions: >-
@@ -154,7 +154,8 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-grpc')}}
     with:
-      java: 17, 11
+      # Can't test with Java 21+ currently because of https://github.com/lightbend/ssl-config/issues/367
+      java: 17
       scala: 2.13.x
       gradle-build-root: play-java-grpc-example
       add-dimensions: >-
@@ -168,7 +169,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-hello-world')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-hello-world-tutorial
       add-dimensions: >-
@@ -182,7 +183,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-jpa')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-jpa-example
       add-dimensions: >-
@@ -196,7 +197,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-akka-cluster')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-akka-cluster-example
       add-dimensions: >-
@@ -210,7 +211,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-rest-api')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-rest-api-example
       add-dimensions: >-
@@ -224,7 +225,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-starter')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-starter-example
       add-dimensions: >-
@@ -238,7 +239,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-streaming')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-streaming-example
       add-dimensions: >-
@@ -252,7 +253,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-websocket')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-websocket-example
       add-dimensions: >-
@@ -266,7 +267,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-anorm')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-anorm-example
       add-dimensions: >-
@@ -280,7 +281,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-chatroom')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-chatroom-example
       add-dimensions: >-
@@ -294,7 +295,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-compile-di')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-compile-di-example
       add-dimensions: >-
@@ -308,7 +309,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-fileupload')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-fileupload-example
       add-dimensions: >-
@@ -322,7 +323,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-forms')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-forms-example
       add-dimensions: >-
@@ -336,7 +337,8 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-grpc')}}
     with:
-      java: 17, 11
+      # Can't test with Java 21+ currently because of https://github.com/lightbend/ssl-config/issues/367
+      java: 17
       scala: 2.13.x
       gradle-build-root: play-scala-grpc-example
       add-dimensions: >-
@@ -350,7 +352,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-hello-world')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-hello-world-tutorial
       add-dimensions: >-
@@ -364,7 +366,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-isolated-slick')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-isolated-slick-example
       add-dimensions: >-
@@ -378,7 +380,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-log4j2')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-log4j2-example
       add-dimensions: >-
@@ -392,7 +394,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-macwire-di')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-macwire-di-example
       add-dimensions: >-
@@ -406,7 +408,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-rest-api')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-rest-api-example
       add-dimensions: >-
@@ -420,7 +422,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-secure-session')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-secure-session-example
       add-dimensions: >-
@@ -434,7 +436,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-slick')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-slick-example
       add-dimensions: >-
@@ -448,7 +450,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-starter')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-starter-example
       add-dimensions: >-
@@ -462,7 +464,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-streaming')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-streaming-example
       add-dimensions: >-
@@ -476,7 +478,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-tls')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-tls-example
       add-dimensions: >-
@@ -490,7 +492,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-websocket')}}
     with:
-      java: 17, 11
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-websocket-example
       add-dimensions: >-
