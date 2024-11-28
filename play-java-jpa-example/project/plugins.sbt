@@ -1,5 +1,5 @@
 // The Play plugin
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.5")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.6")
 
 // Web plugins
 addSbtPlugin("com.github.sbt" % "sbt-coffeescript" % "2.0.1")
