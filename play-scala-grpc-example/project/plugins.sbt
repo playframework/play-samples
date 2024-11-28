@@ -10,6 +10,6 @@ addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.7")
 
 // #grpc_sbt_plugin
 // project/plugins.sbt
-addSbtPlugin("org.apache.pekko" % "pekko-grpc-sbt-plugin" % "1.0.2")
+addSbtPlugin("org.apache.pekko" % "pekko-grpc-sbt-plugin" % "1.1.0")
 libraryDependencies += "org.playframework" %% "play-grpc-generators" % playGrpcV
 // #grpc_sbt_plugin
