@@ -6,6 +6,11 @@ This is an example application that shows how to use Pekko gRPC to both expose a
 
 For detailed documentation refer to https://www.playframework.com/documentation/latest/Home and https://pekko.apache.org/docs/pekko-grpc/current/.
 
+## Server backend
+
+By default, the project uses the Pekko HTTP Server backend. To switch to the Netty Server backend, enable the `PlayNettyServer` sbt plugin in the `build.sbt` file.
+In the `build.sbt` of this project, you'll find a commented line for this setting; simply uncomment it to make the switch.
+For more detailed information, refer to the Play Framework [documentation](https://www.playframework.com/documentation/3.0.x/Server).
 
 ## Sample license
 
