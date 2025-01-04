@@ -7,7 +7,7 @@ webjars-play = "3.0.0"
 flot = "0.8.3-1"
 bootstrap = "3.4.1"
 junit = "4.13.2"
-assertj = "3.26.3"
+assertj = "3.27.2"
 awaitility = "4.2.2"
 
 [libraries]
