@@ -1,4 +1,4 @@
-lazy val scala213 = "2.13.14"
+lazy val scala213 = "2.13.16"
 lazy val scala3 = "3.3.3"
 
 lazy val root = (project in file("."))

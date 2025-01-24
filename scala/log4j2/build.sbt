@@ -9,7 +9,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-log4j2-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.14", "3.3.3"),
+    crossScalaVersions := Seq("2.13.16", "3.3.3"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
