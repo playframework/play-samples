@@ -1,6 +1,6 @@
 package controllers
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents, RequestHeader}
 
 class HomeController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {

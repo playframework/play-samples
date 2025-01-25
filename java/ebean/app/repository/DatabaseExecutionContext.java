@@ -3,7 +3,7 @@ package repository;
 import org.apache.pekko.actor.ActorSystem;
 import play.libs.concurrent.CustomExecutionContext;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * Custom execution context, so that blocking database operations don't

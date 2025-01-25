@@ -1,6 +1,6 @@
 package services.session
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 import org.apache.pekko.actor.ActorSystem
 import com.typesafe.config.ConfigFactory

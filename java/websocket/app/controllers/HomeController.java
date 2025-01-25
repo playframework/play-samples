@@ -14,8 +14,8 @@ import org.webjars.play.WebJarsUtil;
 import play.libs.F.Either;
 import play.mvc.*;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;

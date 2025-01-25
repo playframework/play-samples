@@ -3,7 +3,7 @@ package repository;
 import io.ebean.DB;
 import models.Company;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;

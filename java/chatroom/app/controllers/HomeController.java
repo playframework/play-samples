@@ -24,7 +24,7 @@ import play.mvc.WebSocket;
 import java.net.URI;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * A very simple chat client using websockets.

@@ -1,6 +1,6 @@
 package controllers
 
-import javax.inject.{ Inject, Singleton }
+import jakarta.inject.{ Inject, Singleton }
 
 import play.api.data.Form
 import play.api.mvc._

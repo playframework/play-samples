@@ -1,6 +1,6 @@
 package router
 
-import javax.inject._
+import jakarta.inject._
 import play.api.ApplicationLoader.DevContext
 import play.api.OptionalDevContext
 import play.api.mvc.RequestHeader

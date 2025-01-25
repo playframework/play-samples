@@ -2,7 +2,7 @@ package services
 
 import java.time.{Clock, Instant}
 
-import javax.inject._
+import jakarta.inject._
 import org.slf4j.LoggerFactory
 import play.api.inject._
 

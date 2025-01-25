@@ -1,6 +1,6 @@
 package com.example.user.slick
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 
 import java.time.Instant
 import slick.jdbc.JdbcProfile

@@ -1,6 +1,6 @@
 package actors
 
-import javax.inject._
+import jakarta.inject._
 
 import actors.StocksActor.{ GetStocks, Stocks }
 import org.apache.pekko.actor.typed.scaladsl.{ ActorContext, Behaviors }

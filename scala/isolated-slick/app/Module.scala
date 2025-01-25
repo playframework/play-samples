@@ -1,4 +1,4 @@
-import javax.inject.{Inject, Provider, Singleton}
+import jakarta.inject.{Inject, Provider, Singleton}
 
 import com.example.user.UserDAO
 import com.example.user.slick.SlickUserDAO

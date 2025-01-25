@@ -2,7 +2,7 @@ package controllers
 
 import java.io.File
 import java.nio.file.{Files, Path}
-import javax.inject._
+import jakarta.inject._
 
 import org.apache.pekko.stream.IOResult
 import org.apache.pekko.stream.scaladsl._

@@ -6,7 +6,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import views.html.helper.CSPNonce;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class JavaCometController extends Controller implements JavaTicker {

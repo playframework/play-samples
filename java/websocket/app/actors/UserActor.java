@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
 import stocks.Stock;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;

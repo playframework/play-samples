@@ -1,4 +1,4 @@
-import javax.inject.{ Inject, Provider, Singleton }
+import jakarta.inject.{ Inject, Provider, Singleton }
 
 import actors._
 import org.apache.pekko.actor.typed.{ ActorRef, Behavior }

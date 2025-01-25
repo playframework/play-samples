@@ -19,7 +19,7 @@ import play.libs.ws.ahc.AhcWSComponents;
 import router.Routes;
 import scala.concurrent.ExecutionContext;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.time.Clock;
 import java.util.HashMap;
 import java.util.Map;

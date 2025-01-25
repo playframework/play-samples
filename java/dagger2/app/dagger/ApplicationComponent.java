@@ -1,6 +1,6 @@
 package dagger;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * The application component that specifies all the modules backing

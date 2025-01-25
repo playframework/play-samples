@@ -3,7 +3,7 @@ package v1.post;
 import org.apache.pekko.actor.ActorSystem;
 import play.libs.concurrent.CustomExecutionContext;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * Custom execution context wired to "post.repository" thread pool

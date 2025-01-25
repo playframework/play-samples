@@ -1,7 +1,7 @@
 package models
 
 import java.util.Date
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 import anorm.SqlParser.{ get, scalar }
 import anorm._
@@ -30,7 +30,7 @@ case class Page[A](items: Seq[A], page: Int, offset: Long, total: Long) {
 }
 
 
-@javax.inject.Singleton
+@jakarta.inject.Singleton
 class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepository)(implicit ec: DatabaseExecutionContext) {
 
   private val db = dbapi.database("default")

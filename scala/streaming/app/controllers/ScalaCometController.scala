@@ -6,7 +6,7 @@ import play.api.libs.Comet
 import play.api.mvc._
 import views.html.helper.CSPNonce
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 
 @Singleton
 class ScalaCometController @Inject()(cc: ControllerComponents, materializer: Materializer) extends AbstractController(cc)

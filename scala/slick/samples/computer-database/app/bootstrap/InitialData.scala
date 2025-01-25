@@ -1,7 +1,7 @@
 package bootstrap
 
 import java.text.SimpleDateFormat
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 import dao.{ CompaniesDAO, ComputersDAO }
 import models.{ Company, Computer }

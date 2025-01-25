@@ -1,6 +1,6 @@
 package services.session
 
-import javax.inject.{ Inject, Singleton }
+import jakarta.inject.{ Inject, Singleton }
 
 import org.apache.pekko.actor.typed.{ ActorRef, Scheduler }
 import org.apache.pekko.actor.typed.scaladsl.AskPattern._

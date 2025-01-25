@@ -11,7 +11,7 @@ import play.libs.streams.Accumulator;
 import play.mvc.BodyParser;
 import play.mvc.Http;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

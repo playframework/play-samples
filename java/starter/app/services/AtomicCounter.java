@@ -1,7 +1,7 @@
 package services;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.inject.*;
+import jakarta.inject.*;
 
 /**
  * This class is a concrete implementation of the {@link Counter} trait.
