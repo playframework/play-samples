@@ -18,7 +18,7 @@ lazy val root = (project in file("."))
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
       "io.lemonlabs" %% "scala-uri" % "4.0.3",
       "net.codingwell" %% "scala-guice" % "7.0.0",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

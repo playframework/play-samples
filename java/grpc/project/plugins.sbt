@@ -1,5 +1,5 @@
 enablePlugins(BuildInfoPlugin)
-val playGrpcV = "0.12.1"
+val playGrpcV = "0.13.0-M1"
 buildInfoKeys := Seq[BuildInfoKey]("playGrpcVersion" -> playGrpcV)
 buildInfoPackage := "play.java.grpc.sample"
 

@@ -17,7 +17,7 @@ lazy val root = (project in file("."))
       "com.github.jnr" % "jnr-ffi" % "2.2.16",
       "org.apache.pekko" %% "pekko-distributed-data" % pekkoVersion,
       "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

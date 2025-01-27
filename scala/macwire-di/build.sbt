@@ -10,7 +10,7 @@ lazy val root = (project in file("."))
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       "com.softwaremill.macwire" %% "macros" % "2.6.5" % "provided",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
