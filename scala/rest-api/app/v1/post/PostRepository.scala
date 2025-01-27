@@ -1,6 +1,6 @@
 package v1.post
 
-import javax.inject.{Inject, Singleton}
+import jakarta.inject.{Inject, Singleton}
 
 import org.apache.pekko.actor.ActorSystem
 import play.api.libs.concurrent.CustomExecutionContext

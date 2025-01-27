@@ -1,6 +1,6 @@
 package controllers
 
-import javax.inject._
+import jakarta.inject._
 
 import play.api.{Configuration, Logger}
 import play.api.libs.json.{JsObject, JsString, JsValue, Json, Reads}

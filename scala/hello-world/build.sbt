@@ -7,11 +7,11 @@ lazy val root = (project in file("."))
     name := """play-scala-hello-world-tutorial""",
     organization := "com.example",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.14", "3.3.3"),
+    crossScalaVersions := Seq("2.13.16", "3.3.4"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

@@ -9,7 +9,7 @@ This project makes use of [dynamic streams](https://pekko.apache.org/docs/pekko/
 The flow is defined once in the controller, and used everywhere from the `chat` action:
 
 ```scala
-import javax.inject._
+import jakarta.inject._
 import play.api.mvc._
 
 import org.apache.pekko.stream.scaladsl._

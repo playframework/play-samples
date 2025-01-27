@@ -4,7 +4,7 @@ package controllers
 //app/controllers/HomeController.scala
 import com.typesafe.config.Config
 import example.myapp.helloworld.grpc.{ GreeterServiceClient, HelloReply, HelloRequest }
-import javax.inject.Inject
+import jakarta.inject.Inject
 import play.api.mvc._
 
 import scala.concurrent.{ ExecutionContext, Future }

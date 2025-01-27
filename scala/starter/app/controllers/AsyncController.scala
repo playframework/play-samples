@@ -1,6 +1,6 @@
 package controllers
 
-import javax.inject._
+import jakarta.inject._
 
 import org.apache.pekko.actor.ActorSystem
 import play.api.mvc._

@@ -1,4 +1,4 @@
-import javax.inject._
+import jakarta.inject._
 
 import com.google.inject.AbstractModule
 import net.codingwell.scalaguice.ScalaModule

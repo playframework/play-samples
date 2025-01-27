@@ -6,8 +6,8 @@ import example.myapp.helloworld.grpc.HelloRequest;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class HelloWorldRouter extends example.myapp.helloworld.grpc.AbstractGreeterServiceRouter {

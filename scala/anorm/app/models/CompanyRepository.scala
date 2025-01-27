@@ -1,6 +1,6 @@
 package models
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 import scala.util.{ Failure, Success }
 
@@ -13,7 +13,7 @@ import scala.concurrent.Future
 
 case class Company(id: Option[Long] = None, name: String)
 
-@javax.inject.Singleton
+@jakarta.inject.Singleton
 class CompanyRepository @Inject()(dbapi: DBApi)(implicit ec: DatabaseExecutionContext) {
 
   private val db = dbapi.database("default")

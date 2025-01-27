@@ -1,4 +1,4 @@
-import javax.inject.{ Inject, Singleton }
+import jakarta.inject.{ Inject, Singleton }
 
 import play.api.http.SecretConfiguration
 import play.api.i18n.MessagesApi

@@ -13,8 +13,8 @@ import play.Environment;
 import services.CounterActor;
 import services.CounterActor.Command;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 /**
  *

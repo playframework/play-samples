@@ -59,7 +59,7 @@ The `PostRouter` examines the URL and extracts data to pass along to the control
 ```scala
 package v1.post
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 import play.api.routing.Router.Routes
 import play.api.routing.SimpleRouter
@@ -123,7 +123,7 @@ Using the action, the controller passes in a block of code that takes a [`Reques
 Here's a simple example of a Controller:
 
 ```scala
-import javax.inject.Inject
+import jakarta.inject.Inject
 import play.api.mvc._
 
 import scala.concurrent._
@@ -151,7 +151,7 @@ Let's take a look at the most important parts of the PostController:
 ```scala
 package v1.post
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 import play.api.Logger
 import play.api.data.Form

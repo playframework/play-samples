@@ -4,7 +4,7 @@ import play.mvc.*;
 
 import views.html.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * This controller contains an action to handle HTTP requests

@@ -6,7 +6,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Results;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.concurrent.CompletionStage;
 
 // #grpc_client_injection

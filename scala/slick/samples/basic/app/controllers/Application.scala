@@ -3,7 +3,7 @@ package controllers
 import dao.CatDAO
 import dao.DogDAO
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 import models.Cat
 import play.api.data.Form
 import play.api.data.Forms._

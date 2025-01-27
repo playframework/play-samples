@@ -1,7 +1,7 @@
 package controllers
 
 import java.net.URI
-import javax.inject._
+import jakarta.inject._
 
 import org.apache.pekko.actor.ActorSystem
 import org.apache.pekko.event.{Logging, LoggingAdapter}

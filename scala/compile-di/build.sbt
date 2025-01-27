@@ -6,9 +6,9 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-compile-di-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.14", "3.3.3"),
+    crossScalaVersions := Seq("2.13.16", "3.3.4"),
     scalaVersion := crossScalaVersions.value.head,
-    libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1",
+    libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1",
     scalacOptions ++= List(
       //"-encoding", "utf8", // These three get set by Play automatically
       //"-deprecation",

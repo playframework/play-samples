@@ -2,7 +2,7 @@ package services.encryption
 
 import java.nio.charset.StandardCharsets
 import java.security.SecureRandom
-import javax.inject.{ Inject, Singleton }
+import jakarta.inject.{ Inject, Singleton }
 
 import play.api.{ Configuration, Logger }
 import play.api.libs.json.{ JsResult, Json, Reads, Writes }

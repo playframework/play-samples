@@ -12,7 +12,7 @@ import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;

@@ -1,6 +1,6 @@
 package controllers
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 import dao.{ CompaniesDAO, ComputersDAO }
 import models.Computer

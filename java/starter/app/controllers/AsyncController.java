@@ -1,7 +1,7 @@
 package controllers;
 
 import org.apache.pekko.actor.ActorSystem;
-import javax.inject.*;
+import jakarta.inject.*;
 
 import org.apache.pekko.actor.Scheduler;
 import play.*;

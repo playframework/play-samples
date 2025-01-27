@@ -1,6 +1,6 @@
 package v1.post
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 import play.api.routing.Router.Routes
 import play.api.routing.SimpleRouter

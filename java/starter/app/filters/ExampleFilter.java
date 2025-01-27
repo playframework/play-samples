@@ -3,8 +3,8 @@ package filters;
 import play.mvc.EssentialAction;
 import play.mvc.EssentialFilter;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import java.util.concurrent.Executor;
 
 /**

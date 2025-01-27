@@ -8,8 +8,8 @@ import play.data.FormFactory;
 import play.i18n.MessagesApi;
 import play.mvc.*;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import java.util.List;
 
 import static play.libs.Scala.asScala;

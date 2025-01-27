@@ -1,4 +1,4 @@
-import javax.inject.Inject
+import jakarta.inject.Inject
 import play.api.OptionalDevContext
 import play.api.http._
 import play.api.mvc._

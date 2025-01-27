@@ -1,10 +1,10 @@
 [versions]
 twirl = "2.0.7"
-play = "3.1.0-d1f1b9f8-SNAPSHOT"
-scala-guice = "6.0.0"
+play = "3.1.0-2c77ebef-SNAPSHOT"
+scala-guice = "7.0.0"
 scala-uri = "4.0.3"
 scalatestplus = "3.2.19.1"
-scalatestplus-play = "7.0.1"
+scalatestplus-play = "8.0.0-M1"
 
 [libraries]
 logstash-logback-encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version = "7.3" }

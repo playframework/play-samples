@@ -1,6 +1,6 @@
 package controllers
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 import models._
 import play.api.data.Forms._
 import play.api.data._

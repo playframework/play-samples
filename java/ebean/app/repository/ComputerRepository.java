@@ -6,7 +6,7 @@ import io.ebean.PagedList;
 import io.ebean.Transaction;
 import models.Computer;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import v1.post.PostRepository;
 import v1.post.JPAPostRepository;
 
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 import java.util.concurrent.TimeUnit;
 
 /**

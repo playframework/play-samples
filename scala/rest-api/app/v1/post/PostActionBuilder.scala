@@ -1,6 +1,6 @@
 package v1.post
 
-import javax.inject.Inject
+import jakarta.inject.Inject
 
 import net.logstash.logback.marker.LogstashMarker
 import play.api.{Logger, MarkerContext}

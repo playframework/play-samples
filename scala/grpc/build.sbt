@@ -69,11 +69,11 @@ val TestDeps = Seq(
   "org.playframework"       %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test,
   "org.playframework"       %% "play-test"           % playVersion     % Test,
   "org.playframework"       %% "play-specs2"         % playVersion     % Test,
-  "org.scalatestplus.play"  %% "scalatestplus-play"  % "7.0.1" % Test,
+  "org.scalatestplus.play"  %% "scalatestplus-play"  % "8.0.0-M1" % Test,
 )
 
-scalaVersion := "2.13.14"
-crossScalaVersions := Seq("2.13.14", "3.3.3")
+scalaVersion := "2.13.16"
+crossScalaVersions := Seq("2.13.16", "3.3.4")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 // Needed for ssl-config to create self signed certificated under Java 17
 Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAMED")

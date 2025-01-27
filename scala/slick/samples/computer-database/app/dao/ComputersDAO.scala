@@ -1,7 +1,7 @@
 package dao
 
 import java.util.Date
-import javax.inject.{ Inject, Singleton }
+import jakarta.inject.{ Inject, Singleton }
 
 import models.{ Company, Computer, Page }
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfigProvider }

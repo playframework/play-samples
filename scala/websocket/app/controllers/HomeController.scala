@@ -1,6 +1,6 @@
 package controllers
 
-import javax.inject._
+import jakarta.inject._
 
 import actors._
 import org.apache.pekko.NotUsed

@@ -4,7 +4,7 @@ import com.palominolabs.http.url.UrlBuilder;
 import play.libs.concurrent.ClassLoaderExecutionContext;
 import play.mvc.Http;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.nio.charset.CharacterCodingException;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;

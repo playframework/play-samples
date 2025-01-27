@@ -1,6 +1,6 @@
 package controllers.two
 
-import javax.inject._
+import jakarta.inject._
 import play.api._
 import play.api.mvc._
 

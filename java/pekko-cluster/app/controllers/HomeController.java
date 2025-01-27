@@ -15,7 +15,7 @@ import services.CounterActor.Command;
 import services.CounterActor.GetValue;
 import services.CounterActor.Increment;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.time.Duration;
 import java.util.concurrent.CompletionStage;
 

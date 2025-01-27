@@ -1,5 +1,5 @@
-lazy val scala213 = "2.13.14"
-lazy val scala3 = "3.3.3"
+lazy val scala213 = "2.13.16"
+lazy val scala3 = "3.3.4"
 
 lazy val root = (project in file("."))
   .settings(
@@ -28,8 +28,8 @@ def sampleProject(name: String) =
       ),
       libraryDependencies ++= Seq(
         guice,
-        "org.playframework" %% "play-slick" % "6.1.0",
-        "org.playframework" %% "play-slick-evolutions" % "6.1.0",
+        "org.playframework" %% "play-slick" % "7.0.0-M1",
+        "org.playframework" %% "play-slick-evolutions" % "7.0.0-M1",
         "com.h2database" % "h2" % "2.2.224",
         specs2 % Test,
       ),

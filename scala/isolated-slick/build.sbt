@@ -13,11 +13,11 @@ val FlywayVersion = "10.21.0"
 (ThisBuild / version) := "1.1-SNAPSHOT"
 
 (ThisBuild / libraryDependencies) ++= Seq(
-  "javax.inject" % "javax.inject" % "1",
-  "com.google.inject" % "guice" % "6.0.0"
+  "jakarta.inject" % "jakarta.inject-api" % "2.0.1",
+  "com.google.inject" % "guice" % "7.0.0"
 )
 
-(ThisBuild / crossScalaVersions) := Seq("2.13.14", "3.3.3")
+(ThisBuild / crossScalaVersions) := Seq("2.13.16", "3.3.4")
 (ThisBuild / scalaVersion) := crossScalaVersions.value.head
 (ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
@@ -97,7 +97,7 @@ lazy val root = (project in file("."))
         ExclusionRule("com.fasterxml.jackson.dataformat"),
         ExclusionRule("com.fasterxml.jackson.datatype")
       ),
-      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test
     ),
     (Test / fork) := true
   )
