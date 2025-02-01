@@ -5,7 +5,7 @@ play-ebean = "9.0.0-M1"
 ebean = "15.8.1" # Sync with Play Ebean version https://github.com/playframework/play-ebean/blob/main/project/Dependencies.scala#L19
 h2 = "2.3.232"
 junit = "4.13.2"
-assertj = "3.27.2"
+assertj = "3.27.3"
 awaitility = "4.2.2"
 mockito = "5.15.2"
 
