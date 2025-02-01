@@ -8,7 +8,7 @@ hibernate = "6.6.4.Final"
 junit = "4.13.2"
 assertj = "3.27.2"
 awaitility = "4.2.2"
-mockito = "5.12.0"
+mockito = "5.15.2"
 
 [libraries]
 h2 = { group = "com.h2database", name = "h2", version.ref = "h2" }
