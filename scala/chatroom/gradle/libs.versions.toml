@@ -12,7 +12,7 @@ scalatestplus-play = "8.0.0-M1"
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
 flot = { group = "org.webjars", name = "flot", version.ref = "flot" }
 bootstrap = { group = "org.webjars", name = "bootstrap", version.ref = "bootstrap" }
-logstash-logback-encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version = "7.3" }
+logstash-logback-encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version = "7.4" }
 scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-10_2.13", version.ref = "scalatestplus" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
 
