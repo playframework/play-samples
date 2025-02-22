@@ -15,7 +15,7 @@ concurrency:
 jobs:
 #  check-code-style:
 #    name: Code Style
-#    uses: playframework/.github/.github/workflows/cmd.yml@v3
+#    uses: playframework/.github/.github/workflows/cmd.yml@v4
 #    with:
 #      cmd: sbt validateCode
 
