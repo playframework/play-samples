@@ -12,10 +12,10 @@ object Common extends AutoPlugin {
   override def projectSettings = Seq(
     organization := "com.example",
     version := "1.0-SNAPSHOT",
-    javacOptions ++= Seq("--release", "11"),
+    javacOptions ++= Seq("--release", "17"),
     scalacOptions ++= Seq(
       "-release",
-      "11", // yes, this is 2 args (could also be done as -release:11 however)
+      "17", // yes, this is 2 args (could also be done as -release:17 however)
     ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, _)) =>
         Seq(
