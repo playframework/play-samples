@@ -1,5 +1,5 @@
 [versions]
-twirl = "2.0.7"
+twirl = "2.0.8"
 play = "3.1.0-2c77ebef-SNAPSHOT"
 scala-guice = "7.0.0"
 scala-uri = "4.0.3"
