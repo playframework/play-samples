@@ -1,4 +1,4 @@
 paradoxTheme := Some(builtinParadoxTheme("generic"))
 
-scalaVersion := "2.13.15"
+scalaVersion := "2.13.16"
 

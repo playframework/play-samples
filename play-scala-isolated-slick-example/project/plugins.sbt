@@ -9,4 +9,4 @@ addSbtPlugin("com.github.sbt" % "flyway-sbt" % "10.21.0")
 addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "2.2.0")
 
 // The Play plugin
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.6")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.7")
