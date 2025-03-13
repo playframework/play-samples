@@ -50,8 +50,8 @@ lazy val `play-java-grpc-example` = (project in file("."))
     libraryDependencies ++= CompileDeps ++ TestDeps
   )
 
-scalaVersion := "2.13.15"
-crossScalaVersions := Seq("2.13.15", "3.3.3")
+scalaVersion := "2.13.16"
+crossScalaVersions := Seq("2.13.16", "3.3.5")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
 // Needed for ssl-config to create self signed certificated under Java 17

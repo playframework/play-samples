@@ -1,2 +1,2 @@
 // The Play plugin
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.6")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.7")
