@@ -6,7 +6,7 @@ jsoup = "1.18.3"
 flot = "0.8.3-1"
 bootstrap = "3.4.1"
 scalatestplus = "3.2.19.1"
-scalatestplus-play = "8.0.0-M1"
+scalatestplus-play = "8.0.0-M1+10-68d11f57-SNAPSHOT"
 
 [libraries]
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }

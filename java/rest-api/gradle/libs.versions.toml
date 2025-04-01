@@ -7,7 +7,7 @@ h2 = "2.3.232"
 hibernate = "6.6.4.Final"
 metrics = "4.2.30"
 junit = "4.13.2"
-scalatestplus-play = "8.0.0-M1"
+scalatestplus-play = "8.0.0-M1+10-68d11f57-SNAPSHOT"
 
 [libraries]
 failsafe = { group = "net.jodah", name = "failsafe", version.ref = "failsafe" }
