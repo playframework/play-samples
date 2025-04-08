@@ -1,0 +1,12 @@
+[versions]
+twirl = "2.0.8"
+play = "2.9.7"
+junit = "4.13.2"
+
+[libraries]
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+play-bom = { group = "com.typesafe.play", name = "play-bom_3", version.ref = "play" }
+
+[plugins]
+twirl = { id = "org.playframework.twirl", version.ref = "twirl" }
+play = { id = "org.playframework.play", version = "3.1.0-2c77ebef-SNAPSHOT" }
