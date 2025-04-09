@@ -61,39 +61,41 @@ if [ -n "$sample" ]; then
   buildSample $sample
 else
   # sample not set, therefore run all samples
-  buildSample play-java-chatroom-example
-  buildSample play-java-compile-di-example
-  buildSample play-java-dagger2-example
-  buildSample play-java-ebean-example
-  buildSample play-java-fileupload-example
-  buildSample play-java-forms-example
   buildSample play-java-hello-world-tutorial
-  buildSample play-java-jpa-example
-  buildSample play-java-rest-api-example
-  buildSample play-java-starter-example
-  buildSample play-java-streaming-example
-  buildSample play-java-websocket-example
-  buildSample play-java-akka-cluster-example
-  buildSample play-scala-rest-api-example
-  if [ "$MATRIX_SCALA" != "3.x" ]; then
-    buildSample play-java-grpc-example
+  if [[ $build_tool == "sbt" ]]; then
+    buildSample play-java-chatroom-example
+    buildSample play-java-compile-di-example
+    buildSample play-java-dagger2-example
+    buildSample play-java-ebean-example
+    buildSample play-java-fileupload-example
+    buildSample play-java-forms-example
+    buildSample play-java-jpa-example
+    buildSample play-java-rest-api-example
+    buildSample play-java-starter-example
+    buildSample play-java-streaming-example
+    buildSample play-java-websocket-example
+    buildSample play-java-akka-cluster-example
+    buildSample play-scala-rest-api-example
+    if [ "$MATRIX_SCALA" != "3.x" ]; then
+      buildSample play-java-grpc-example
+    fi
+    buildSample play-scala-anorm-example
+    buildSample play-scala-chatroom-example
+    buildSample play-scala-compile-di-example
+    buildSample play-scala-fileupload-example
+    buildSample play-scala-forms-example
+    if [ "$MATRIX_SCALA" != "3.x" ]; then
+      buildSample play-scala-grpc-example
+    fi
+    buildSample play-scala-hello-world-tutorial
+    buildSample play-scala-isolated-slick-example
+    buildSample play-scala-log4j2-example
+    buildSample play-scala-macwire-di-example
+    buildSample play-scala-secure-session-example
+    buildSample play-scala-slick-example
+    buildSample play-scala-starter-example
+    buildSample play-scala-streaming-example
+    buildSample play-scala-tls-example
+    buildSample play-scala-websocket-example
   fi
-  buildSample play-scala-anorm-example
-  buildSample play-scala-chatroom-example
-  buildSample play-scala-compile-di-example
-  buildSample play-scala-fileupload-example
-  buildSample play-scala-forms-example
-  if [ "$MATRIX_SCALA" != "3.x" ]; then
-    buildSample play-scala-grpc-example
-  fi
-  buildSample play-scala-hello-world-tutorial
-  buildSample play-scala-isolated-slick-example
-  buildSample play-scala-log4j2-example
-  buildSample play-scala-macwire-di-example
-  buildSample play-scala-secure-session-example
-  buildSample play-scala-slick-example
-  buildSample play-scala-starter-example
-  buildSample play-scala-streaming-example
-  buildSample play-scala-tls-example
-  buildSample play-scala-websocket-example
 fi
