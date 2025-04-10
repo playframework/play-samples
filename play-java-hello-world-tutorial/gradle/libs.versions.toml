@@ -9,4 +9,4 @@ play-bom = { group = "com.typesafe.play", name = "play-bom_3", version.ref = "pl
 
 [plugins]
 twirl = { id = "org.playframework.twirl", version.ref = "twirl" }
-play = { id = "org.playframework.play", version = "3.1.0-2c77ebef-SNAPSHOT" }
+play = { id = "org.playframework.play", version = "3.1.0-M2-045d7f6d-SNAPSHOT" }
