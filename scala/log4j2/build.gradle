@@ -11,11 +11,12 @@ play {
 }
 
 def scalaVersion = System.getProperty('scala.version', PlayPlugin.DEFAULT_SCALA_VERSION).replaceAll('\\D*$', '')
+def server = System.getProperty('backend.server', 'pekko-http').with {if (it == "pekko") "pekko-http" else it }
 
 dependencies {
     implementation platform("org.playframework:play-bom_${scalaVersion}:${libs.versions.play.get()}")
 
-    implementation "org.playframework:play-pekko-http-server_${scalaVersion}"
+    implementation "org.playframework:play-${server}-server_${scalaVersion}"
     implementation "org.playframework:play-guice_${scalaVersion}"
     implementation libs.log4j.slf4j.impl
     implementation libs.log4j.api

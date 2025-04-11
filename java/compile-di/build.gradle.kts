@@ -5,12 +5,13 @@ plugins {
 }
 
 val scalaVersion = System.getProperty("scala.version", PlayPlugin.DEFAULT_SCALA_VERSION).trimEnd { !it.isDigit() }
+val server = System.getProperty("backend.server", "netty").let { if (it == "pekko") "pekko-http" else it }
 
 dependencies {
     implementation(platform("org.playframework:play-bom_$scalaVersion:${libs.versions.play.get()}"))
 
     implementation("org.playframework:play-java_$scalaVersion")
-    implementation("org.playframework:play-pekko-http-server_$scalaVersion")
+    implementation("org.playframework:play-$server-server_$scalaVersion")
     implementation("org.playframework:play-filters-helpers_$scalaVersion")
     implementation("org.playframework:play-logback_$scalaVersion")
 
