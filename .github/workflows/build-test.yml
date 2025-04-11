@@ -75,8 +75,6 @@ jobs:
       gradle-build-root: java/chatroom
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/chatroom --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -91,8 +89,6 @@ jobs:
       gradle-build-root: java/compile-di
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/compile-di --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -107,8 +103,6 @@ jobs:
       gradle-build-root: java/dagger2
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/dagger2 --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -123,8 +117,6 @@ jobs:
       gradle-build-root: java/ebean
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/ebean --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
         
@@ -139,8 +131,6 @@ jobs:
       gradle-build-root: java/fileupload
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/fileupload --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
         
@@ -155,8 +145,6 @@ jobs:
       gradle-build-root: java/forms
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/forms --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -186,8 +174,6 @@ jobs:
       gradle-build-root: java/hello-world
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/hello-world --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -202,8 +188,6 @@ jobs:
       gradle-build-root: java/jpa
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/jpa --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -218,8 +202,6 @@ jobs:
       gradle-build-root: java/pekko-cluster
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/pekko-cluster --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -234,8 +216,6 @@ jobs:
       gradle-build-root: java/rest-api
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/rest-api --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -250,8 +230,6 @@ jobs:
       gradle-build-root: java/starter
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/starter --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -266,8 +244,6 @@ jobs:
       gradle-build-root: java/streaming
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/streaming --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -282,8 +258,6 @@ jobs:
       gradle-build-root: java/websocket
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=java/websocket --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 
@@ -439,8 +413,6 @@ jobs:
       gradle-build-root: scala/rest-api
       add-dimensions: >-
         { "server": [ "pekko", "netty"], "build_tool": ["sbt", "gradle"] }
-      exclude: >-
-        [{ "server": "netty", "build_tool": "gradle" }]
       cmd: |
         ./test.sh --sample=scala/rest-api --backend-server=$MATRIX_SERVER --build-tool=$MATRIX_BUILD_TOOL
 

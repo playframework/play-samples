@@ -13,7 +13,7 @@ fi
 
 # Initialize variables
 sample=""
-backend_server="pekko"
+backend_server="pekko-http"
 build_tool="sbt"
 
 # Parse command line arguments
@@ -37,7 +37,7 @@ function buildSample() {
         echo "+-------------------------------+"
         echo "| Executing tests using Gradle  |"
         echo "+-------------------------------+"
-        ./gradlew -Dscala.version="$MATRIX_SCALA" check
+        ./gradlew -Dscala.version="$MATRIX_SCALA" -Dbackend.server="$backend_server" clean check
       fi
     elif [[ $build_tool == "sbt" ]]; then
       if [[ $backend_server == "netty" ]]; then
