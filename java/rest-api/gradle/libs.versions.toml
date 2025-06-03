@@ -5,7 +5,7 @@ failsafe = "2.4.4"
 url-builder = "1.1.5"
 h2 = "2.3.232"
 hibernate = "6.6.4.Final"
-metrics = "4.2.30"
+metrics = "4.2.32"
 junit = "4.13.2"
 scalatestplus-play = "8.0.0-M1"
 
