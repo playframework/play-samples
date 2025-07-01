@@ -1,5 +1,5 @@
 // The Play plugin
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.7")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.8")
 
 // Web plugins
 addSbtPlugin("com.github.sbt" % "sbt-coffeescript" % "2.0.1")
