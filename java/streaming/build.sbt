@@ -1,4 +1,4 @@
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 name := "play-java-streaming-example"
 

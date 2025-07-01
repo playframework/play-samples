@@ -2,7 +2,7 @@ import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.{slickCodegenData
 import _root_.slick.codegen.SourceCodeGenerator
 import _root_.slick.{model => m}
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")

@@ -1,6 +1,6 @@
 import play.core.PlayVersion.pekkoVersion
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)

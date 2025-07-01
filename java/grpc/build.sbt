@@ -4,7 +4,7 @@ import play.grpc.gen.javadsl.{PlayJavaClientCodeGenerator, PlayJavaServerCodeGen
 import com.typesafe.sbt.packager.docker.{Cmd, CmdLike, DockerAlias, ExecCmd}
 import play.java.grpc.sample.BuildInfo
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 name := "play-java-grpc-example"
 version := "1.0-SNAPSHOT"

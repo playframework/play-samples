@@ -1,4 +1,4 @@
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava, PlayEbean)

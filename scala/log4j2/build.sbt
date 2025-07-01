@@ -1,4 +1,4 @@
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 val log4jVersion = "2.23.1"
 

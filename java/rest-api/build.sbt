@@ -1,4 +1,4 @@
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val scala213 = "2.13.16"
 lazy val scala3 = "3.3.5"

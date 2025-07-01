@@ -4,7 +4,7 @@ import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCod
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.scala.grpc.sample.BuildInfo
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 name := "play-scala-grpc-example"
 version := "1.0-SNAPSHOT"
