@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-java-jpa-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.16", "3.3.5"),
+    crossScalaVersions := Seq("2.13.16", "3.3.6"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
