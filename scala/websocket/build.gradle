@@ -15,7 +15,7 @@ def scalaVersion = System.getProperty('scala.version', PlayPlugin.DEFAULT_SCALA_
 def server = System.getProperty('backend.server', 'pekko-http').with {if (it == "pekko") "pekko-http" else it }
 
 dependencies {
-    implementation platform("org.playframework:play-bom_${scalaVersion}:${libs.versions.play.asProvider().get()}")
+    implementation platform("org.playframework:play-bom_${scalaVersion}:${libs.versions.play.get()}")
 
     implementation "org.playframework:play-${server}-server_${scalaVersion}"
     implementation "org.playframework:play-guice_${scalaVersion}"
@@ -24,7 +24,7 @@ dependencies {
     implementation libs.flot
     implementation libs.bootstrap
     implementation "org.webjars:webjars-play_${scalaVersion}:${libs.versions.webjars.play.get()}"
-    implementation "org.playframework:play-ahc-ws_${scalaVersion}:${libs.versions.play.ws.get()}"
+    implementation "org.playframework:play-ahc-ws_${scalaVersion}:${libs.versions.play.get()}"
 
     testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaVersion}:${libs.versions.scalatestplus.play.get()}"
     testImplementation libs.awaitility
