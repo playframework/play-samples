@@ -19,7 +19,7 @@ lazy val root = (project in file("."))
         .excludeAll(ExclusionRule("com.fasterxml.jackson.core")), // Avoid conflicts with Play's Jackson dependency
       "io.lemonlabs" %% "scala-uri" % "4.0.3",
       "net.codingwell" %% "scala-guice" % "7.0.0",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

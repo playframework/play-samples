@@ -97,7 +97,7 @@ lazy val root = (project in file("."))
         ExclusionRule("com.fasterxml.jackson.dataformat"),
         ExclusionRule("com.fasterxml.jackson.datatype")
       ),
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test
     ),
     (Test / fork) := true
   )

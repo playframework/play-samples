@@ -2,7 +2,7 @@
 twirl = "2.0.8"
 play = "3.1.0-M2-573139bb-SNAPSHOT"
 scalatestplus = "3.2.19.1"
-scalatestplus-play = "8.0.0-M1"
+scalatestplus-play = "8.0.0-M2"
 
 [libraries]
 scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-10_2.13", version.ref = "scalatestplus" }
