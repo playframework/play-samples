@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
       guice,
       "org.joda" % "joda-convert" % "2.2.3",
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
-      "io.lemonlabs" %% "scala-uri" % "4.0.3",
+      "com.indoorvivants" %% "scala-uri" % "4.2.0",
       "net.codingwell" %% "scala-guice" % "6.0.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
     ),
