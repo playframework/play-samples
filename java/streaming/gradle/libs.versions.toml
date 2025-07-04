@@ -1,5 +1,5 @@
 [versions]
-twirl = "2.0.8"
+twirl = "2.0.9"
 play = "3.1.0-M2-573139bb-SNAPSHOT"
 junit = "4.13.2"
 
