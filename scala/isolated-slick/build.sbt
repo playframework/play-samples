@@ -2,7 +2,7 @@ import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.{slickCodegenData
 import _root_.slick.codegen.SourceCodeGenerator
 import _root_.slick.{model => m}
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")
@@ -17,7 +17,7 @@ val FlywayVersion = "10.21.0"
   "com.google.inject" % "guice" % "7.0.0"
 )
 
-(ThisBuild / crossScalaVersions) := Seq("2.13.16", "3.3.5")
+(ThisBuild / crossScalaVersions) := Seq("2.13.16", "3.3.6")
 (ThisBuild / scalaVersion) := crossScalaVersions.value.head
 (ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
@@ -97,7 +97,7 @@ lazy val root = (project in file("."))
         ExclusionRule("com.fasterxml.jackson.dataformat"),
         ExclusionRule("com.fasterxml.jackson.datatype")
       ),
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test
     ),
     (Test / fork) := true
   )

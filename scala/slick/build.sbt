@@ -1,5 +1,5 @@
 lazy val scala213 = "2.13.16"
-lazy val scala3 = "3.3.5"
+lazy val scala3 = "3.3.6"
 
 lazy val root = (project in file("."))
   .settings(
@@ -19,7 +19,7 @@ def sampleProject(name: String) =
     .enablePlugins(PlayScala)
     //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
     .settings(
-      resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
+      resolvers += Resolver.sonatypeCentralSnapshots,
       scalaVersion := scala3,
       crossScalaVersions := Seq(scala213, scala3),
       scalacOptions ++= Seq(

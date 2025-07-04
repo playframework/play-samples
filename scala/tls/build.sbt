@@ -1,6 +1,6 @@
 val commonSettings = Seq(
-  resolvers ++= Resolver.sonatypeOssRepos("snapshots"),
-  crossScalaVersions := Seq("2.13.16", "3.3.5"),
+  resolvers += Resolver.sonatypeCentralSnapshots,
+  crossScalaVersions := Seq("2.13.16", "3.3.6"),
   scalaVersion := crossScalaVersions.value.head,
   scalacOptions ++= Seq(
     "-feature",
@@ -35,7 +35,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       ws,
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test,
     )
   )
   .aggregate(one, two)

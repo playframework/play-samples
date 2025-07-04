@@ -1,10 +1,10 @@
 import sbt.Keys._
 import play.sbt.PlaySettings
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val scala213 = "2.13.16"
-lazy val scala3 = "3.3.5"
+lazy val scala3 = "3.3.6"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayService, PlayLayoutPlugin, Common)
@@ -19,7 +19,7 @@ lazy val root = (project in file("."))
         .excludeAll(ExclusionRule("com.fasterxml.jackson.core")), // Avoid conflicts with Play's Jackson dependency
       "io.lemonlabs" %% "scala-uri" % "4.0.3",
       "net.codingwell" %% "scala-guice" % "7.0.0",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

@@ -3,8 +3,8 @@ val playGrpcV = "0.13.0-M1"
 buildInfoKeys := Seq[BuildInfoKey]("playGrpcVersion" -> playGrpcV)
 buildInfoPackage := "play.scala.grpc.sample"
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-2c77ebef-SNAPSHOT")
+resolvers += Resolver.sonatypeCentralSnapshots
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M2-573139bb-SNAPSHOT")
 
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.7")
 

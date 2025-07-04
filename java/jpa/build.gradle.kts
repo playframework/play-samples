@@ -11,7 +11,7 @@ val scalaVersion = System.getProperty("scala.version", PlayPlugin.DEFAULT_SCALA_
 val server = System.getProperty("backend.server", "netty").let { if (it == "pekko") "pekko-http" else it }
 
 dependencies {
-    implementation(platform("org.playframework:play-bom_$scalaVersion:${libs.versions.play.asProvider().get()}"))
+    implementation(platform("org.playframework:play-bom_$scalaVersion:${libs.versions.play.get()}"))
 
     implementation("org.playframework:play-$server-server_$scalaVersion")
     implementation("org.playframework:play-guice_$scalaVersion")
@@ -24,7 +24,7 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation("org.playframework:play-test_$scalaVersion")
-    testImplementation("org.playframework:play-ahc-ws_$scalaVersion:${libs.versions.play.ws.get()}")
+    testImplementation("org.playframework:play-ahc-ws_$scalaVersion:${libs.versions.play.get()}")
     testImplementation(libs.awaitility)
     testImplementation(libs.assertj)
     testImplementation(libs.mockito)
@@ -51,7 +51,7 @@ tasks.withType<ScalaCompile>().configureEach {
 repositories {
     mavenCentral()
     maven {
-        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+        url = uri("https://central.sonatype.com/repository/maven-snapshots")
     }
     mavenLocal()
 }

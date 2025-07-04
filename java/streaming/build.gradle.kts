@@ -34,7 +34,7 @@ sourceSets {
 repositories {
     mavenCentral()
     maven {
-        url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+        url = uri("https://central.sonatype.com/repository/maven-snapshots")
     }
     mavenLocal()
 }

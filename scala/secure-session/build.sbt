@@ -1,6 +1,6 @@
 import play.core.PlayVersion.pekkoVersion
 
-resolvers ++= Resolver.sonatypeOssRepos("snapshots")
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
@@ -8,7 +8,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-secure-session-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.16", "3.3.5"),
+    crossScalaVersions := Seq("2.13.16", "3.3.6"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       ws,
@@ -17,7 +17,7 @@ lazy val root = (project in file("."))
       "com.github.jnr" % "jnr-ffi" % "2.2.16",
       "org.apache.pekko" %% "pekko-distributed-data" % pekkoVersion,
       "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
