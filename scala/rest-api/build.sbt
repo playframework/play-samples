@@ -17,7 +17,7 @@ lazy val root = (project in file("."))
       guice,
       ("net.logstash.logback" % "logstash-logback-encoder" % "7.4")
         .excludeAll(ExclusionRule("com.fasterxml.jackson.core")), // Avoid conflicts with Play's Jackson dependency
-      "io.lemonlabs" %% "scala-uri" % "4.0.3",
+      "com.indoorvivants" %% "scala-uri" % "4.2.0",
       "net.codingwell" %% "scala-guice" % "7.0.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test
     ),
