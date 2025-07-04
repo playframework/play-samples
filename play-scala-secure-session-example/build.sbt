@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       ws,
       guice,
       "org.abstractj.kalium" % "kalium" % "0.8.0",
-      "com.github.jnr" % "jnr-ffi" % "2.2.16",
+      "com.github.jnr" % "jnr-ffi" % "2.2.17",
       ("com.typesafe.akka" %% "akka-distributed-data" % akkaVersion).cross(CrossVersion.for3Use2_13),
       ("com.typesafe.akka" %% "akka-cluster-typed" % akkaVersion).cross(CrossVersion.for3Use2_13),
       "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
