@@ -7,7 +7,7 @@ h2 = "2.3.232"
 junit = "4.13.2"
 assertj = "3.27.3"
 awaitility = "4.2.2"
-mockito = "5.15.2"
+mockito = "5.18.0"
 
 [libraries]
 h2 = { group = "com.h2database", name = "h2", version.ref = "h2" }
