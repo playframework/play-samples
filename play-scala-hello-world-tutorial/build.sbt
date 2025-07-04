@@ -9,7 +9,7 @@ lazy val root = (project in file("."))
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.2" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

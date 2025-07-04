@@ -34,7 +34,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       ws,
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.2" % Test,
     )
   )
   .aggregate(one, two)

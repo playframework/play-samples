@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
       "com.github.jnr" % "jnr-ffi" % "2.2.17",
       ("com.typesafe.akka" %% "akka-distributed-data" % akkaVersion).cross(CrossVersion.for3Use2_13),
       ("com.typesafe.akka" %% "akka-cluster-typed" % akkaVersion).cross(CrossVersion.for3Use2_13),
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.2" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
