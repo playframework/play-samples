@@ -13,7 +13,7 @@ lazy val root = (project in file("."))
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
       "org.assertj" % "assertj-core" % "3.26.3" % Test,
-      "org.awaitility" % "awaitility" % "4.2.2" % Test,
+      "org.awaitility" % "awaitility" % "4.3.0" % Test,
     ),
     TwirlKeys.templateImports ++= Seq(
       "views.html.helper.CSPNonce"
