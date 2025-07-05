@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-chatroom-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.16", "3.3.5"),
+    crossScalaVersions := Seq("2.13.16", "3.3.6"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
@@ -14,12 +14,12 @@ lazy val root = (project in file("."))
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
-      "org.jsoup" % "jsoup" % "1.18.1",
-      "ch.qos.logback" % "logback-classic" % "1.5.8",
+      "org.jsoup" % "jsoup" % "1.18.3",
+      "ch.qos.logback" % "logback-classic" % "1.5.18",
       "com.typesafe.akka" %% "akka-slf4j" % akkaVersion,
       "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
       "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.2" % Test
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(

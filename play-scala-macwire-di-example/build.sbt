@@ -4,11 +4,11 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-macwire-di-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.16", "3.3.5"),
+    crossScalaVersions := Seq("2.13.16", "3.3.6"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
-      "com.softwaremill.macwire" %% "macros" % "2.6.4" % "provided",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
+      "com.softwaremill.macwire" %% "macros" % "2.6.6" % "provided",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.2" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

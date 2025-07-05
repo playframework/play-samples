@@ -13,11 +13,11 @@ lazy val root = (project in file("."))
     crossScalaVersions := Seq(scala213, scala3),
     libraryDependencies ++= Seq(
       guice,
-      "org.joda" % "joda-convert" % "2.2.3",
+      "org.joda" % "joda-convert" % "2.2.4",
       "net.logstash.logback" % "logstash-logback-encoder" % "7.3",
       "io.lemonlabs" %% "scala-uri" % "4.0.3",
       "net.codingwell" %% "scala-guice" % "6.0.0",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.2" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

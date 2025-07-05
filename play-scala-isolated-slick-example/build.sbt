@@ -15,7 +15,7 @@ val FlywayVersion = "10.21.0"
   "com.google.inject" % "guice" % "6.0.0"
 )
 
-(ThisBuild / crossScalaVersions) := Seq("2.13.16", "3.3.5")
+(ThisBuild / crossScalaVersions) := Seq("2.13.16", "3.3.6")
 (ThisBuild / scalaVersion) := crossScalaVersions.value.head
 (ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
@@ -50,8 +50,8 @@ lazy val slick = (project in file("modules/slick"))
   .settings(
     libraryDependencies ++= Seq(
       "com.zaxxer" % "HikariCP" % "6.0.0",
-      "com.typesafe.slick" %% "slick" % "3.5.1",
-      "com.typesafe.slick" %% "slick-hikaricp" % "3.5.1"
+      "com.typesafe.slick" %% "slick" % "3.5.2",
+      "com.typesafe.slick" %% "slick-hikaricp" % "3.5.2"
     ),
 
     slickCodegenDatabaseUrl := databaseUrl,
@@ -95,7 +95,7 @@ lazy val root = (project in file("."))
         ExclusionRule("com.fasterxml.jackson.dataformat"),
         ExclusionRule("com.fasterxml.jackson.datatype")
       ),
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.2" % Test
     ),
     (Test / fork) := true
   )

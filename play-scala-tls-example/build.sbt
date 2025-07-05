@@ -1,5 +1,5 @@
 val commonSettings = Seq(
-  crossScalaVersions := Seq("2.13.16", "3.3.5"),
+  crossScalaVersions := Seq("2.13.16", "3.3.6"),
   scalaVersion := crossScalaVersions.value.head,
   scalacOptions ++= Seq(
     "-feature",
@@ -34,7 +34,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       ws,
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.1" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "6.0.2" % Test,
     )
   )
   .aggregate(one, two)
