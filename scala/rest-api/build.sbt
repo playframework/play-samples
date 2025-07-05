@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
     crossScalaVersions := Seq(scala213, scala3),
     libraryDependencies ++= Seq(
       guice,
-      ("net.logstash.logback" % "logstash-logback-encoder" % "7.4")
+      ("net.logstash.logback" % "logstash-logback-encoder" % "8.1")
         .excludeAll(ExclusionRule("com.fasterxml.jackson.core")), // Avoid conflicts with Play's Jackson dependency
       "io.lemonlabs" %% "scala-uri" % "4.0.3",
       "net.codingwell" %% "scala-guice" % "7.0.0",
