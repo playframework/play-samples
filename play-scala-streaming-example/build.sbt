@@ -4,12 +4,12 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-scala-streaming-example",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.16", "3.3.5"),
+    crossScalaVersions := Seq("2.13.16", "3.3.6"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
       ws % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

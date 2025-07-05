@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       javaJpa,
       "com.h2database" % "h2" % "2.3.232",
       "org.hibernate" % "hibernate-core" % "6.6.19.Final",
-      "io.dropwizard.metrics" % "metrics-core" % "4.2.27",
+      "io.dropwizard.metrics" % "metrics-core" % "4.2.33",
       "com.palominolabs.http" % "url-builder" % "1.1.5",
       "net.jodah" % "failsafe" % "2.4.4",
     ),

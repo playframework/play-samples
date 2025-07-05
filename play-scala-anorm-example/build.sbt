@@ -4,7 +4,7 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-scala-anorm-example",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.16", "3.3.5"),
+    crossScalaVersions := Seq("2.13.16", "3.3.6"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       evolutions,
       "com.h2database" % "h2" % "2.3.232",
       "org.playframework.anorm" %% "anorm" % "2.8.1",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.1" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test,
     ),
     scalacOptions ++= List("-feature", "-Werror"),
     javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror"),
