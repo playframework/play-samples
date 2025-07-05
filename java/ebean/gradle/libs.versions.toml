@@ -1,8 +1,8 @@
 [versions]
-twirl = "2.0.8"
+twirl = "2.0.9"
 play = "3.1.0-M2-573139bb-SNAPSHOT"
 play-ebean = "9.0.0-M1"
-ebean = "15.8.1" # Sync with Play Ebean version https://github.com/playframework/play-ebean/blob/main/project/Dependencies.scala#L19
+ebean = "15.8.2" # Sync with Play Ebean version https://github.com/playframework/play-ebean/blob/main/project/Dependencies.scala#L19
 h2 = "2.3.232"
 junit = "4.13.2"
 assertj = "3.27.3"
