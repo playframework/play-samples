@@ -6,7 +6,7 @@ webjars-play = "3.1.0-M1"
 flot = "0.8.3-1"
 bootstrap = "3.4.1"
 assertj = "3.27.3"
-awaitility = "4.2.2"
+awaitility = "4.3.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }

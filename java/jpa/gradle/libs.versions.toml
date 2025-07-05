@@ -6,7 +6,7 @@ h2 = "2.3.232"
 hibernate = "7.0.4.Final"
 junit = "4.13.2"
 assertj = "3.27.3"
-awaitility = "4.2.2"
+awaitility = "4.3.0"
 mockito = "5.18.0"
 
 [libraries]
