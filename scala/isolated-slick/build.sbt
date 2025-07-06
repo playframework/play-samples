@@ -52,8 +52,8 @@ lazy val slick = (project in file("modules/slick"))
   .settings(
     libraryDependencies ++= Seq(
       "com.zaxxer" % "HikariCP" % "6.3.0",
-      "com.typesafe.slick" %% "slick" % "3.5.2",
-      "com.typesafe.slick" %% "slick-hikaricp" % "3.5.2"
+      "com.typesafe.slick" %% "slick" % "3.6.1",
+      "com.typesafe.slick" %% "slick-hikaricp" % "3.6.1"
     ),
 
     slickCodegenDatabaseUrl := databaseUrl,
