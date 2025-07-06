@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       guice,
       jdbc,
       "com.h2database" % "h2" % "2.2.224",
-      "org.awaitility" % "awaitility" % "4.2.1" % Test,
+      "org.awaitility" % "awaitility" % "4.2.2" % Test,
       "org.assertj" % "assertj-core" % "3.24.2" % Test,
       "org.mockito" % "mockito-core" % "5.12.0" % Test,
     ),
