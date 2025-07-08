@@ -4,7 +4,7 @@ play = "3.1.0-M2-573139bb-SNAPSHOT"
 failsafe = "2.4.4"
 url-builder = "1.1.5"
 h2 = "2.3.232"
-hibernate = "6.6.19.Final"
+hibernate = "7.0.5.Final"
 metrics = "4.2.33"
 junit = "4.13.2"
 scalatestplus-play = "8.0.0-M2"
@@ -13,7 +13,7 @@ scalatestplus-play = "8.0.0-M2"
 failsafe = { group = "net.jodah", name = "failsafe", version.ref = "failsafe" }
 url-builder = { group = "com.palominolabs.http", name = "url-builder", version.ref = "url-builder" }
 h2 = { group = "com.h2database", name = "h2", version.ref = "h2" }
-hibernate-core = { group = "org.hibernate", name = "hibernate-core", version.ref = "hibernate" }
+hibernate-core = { group = "org.hibernate.orm", name = "hibernate-core", version.ref = "hibernate" }
 metrics-core = { group = "io.dropwizard.metrics", name = "metrics-core", version.ref = "metrics" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
