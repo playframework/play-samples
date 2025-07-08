@@ -3,7 +3,7 @@ twirl = "2.0.9"
 play = "3.1.0-M2-573139bb-SNAPSHOT"
 node = "7.1.0"
 h2 = "2.3.232"
-hibernate = "6.6.19.Final"
+hibernate = "7.0.5.Final"
 junit = "4.13.2"
 assertj = "3.27.3"
 awaitility = "4.3.0"
@@ -15,7 +15,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 assertj = { group = "org.assertj", name = "assertj-core", version.ref = "assertj" }
 awaitility = { group = "org.awaitility", name = "awaitility", version.ref = "awaitility" }
 mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
-hibernate-core = { group = "org.hibernate", name = "hibernate-core", version.ref = "hibernate" }
+hibernate-core = { group = "org.hibernate.orm", name = "hibernate-core", version.ref = "hibernate" }
 
 [plugins]
 twirl = { id = "org.playframework.twirl", version.ref = "twirl" }

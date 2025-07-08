@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
       guice,
       javaJpa,
       "com.h2database" % "h2" % "2.2.224",
-      "org.hibernate" % "hibernate-core" % "7.0.5.Final",
+      "org.hibernate.orm" % "hibernate-core" % "7.0.5.Final",
       "io.dropwizard.metrics" % "metrics-core" % "4.2.25",
       "com.palominolabs.http" % "url-builder" % "1.1.5",
       "net.jodah" % "failsafe" % "2.4.4",
