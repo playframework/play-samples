@@ -22,6 +22,4 @@ lazy val root = (project in file("."))
       "-feature",
       "-Werror"
     ),
-    // Needed for ssl-config to create self signed certificated under Java 17
-    Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAMED"),
   )
