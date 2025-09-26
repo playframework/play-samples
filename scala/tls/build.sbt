@@ -25,7 +25,7 @@ lazy val root = (project in file("."))
     (run / fork) := true,
     
     // Uncomment if you want to run "./play client" explicitly without SNI.
-    //javaOptions in run += "-Djsse.enableSNIExtension=false"
+    //(run / javaOptions) += "-Djsse.enableSNIExtension=false"
     (run / javaOptions) += "-Djavax.net.debug=ssl:handshake",
 
     // Must not run tests in fork because the `play` script sets
