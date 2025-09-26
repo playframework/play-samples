@@ -6,5 +6,8 @@ set -o pipefail
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |"
 echo "+----------------------------+"
-sbt ++$MATRIX_SCALA test docs/paradox
+# Do not run docs/paradox currently because sbt-paradox has not upgraded to sbt-web 1.6 yet:
+# https://github.com/lightbend/paradox/blob/v0.10.7/plugin/src/main/scala/com/lightbend/paradox/sbt/ParadoxPlugin.scala#L184
+# https://github.com/sbt/sbt-web/compare/1.5.8...1.6.0-M1#diff-ce81a99bce20c028fa631b7945b8317c5f614566c0df9ebadd3b3964e9e47817R589
+sbt ++$MATRIX_SCALA test # docs/paradox
 sbt ++$MATRIX_SCALA ";project gatling;gatling:compile"
