@@ -57,13 +57,12 @@ If there is no match, then a wildcard certificate will be used, and the main web
 
 Download SSLyze:
 
-[https://github.com/iSECPartners/sslyze/releases](https://github.com/iSECPartners/sslyze/releases)
+[https://github.com/nabla-c0d3/sslyze](https://github.com/nabla-c0d3/sslyze)
 
 And then run SSLyze against the play application:
 
 ```bash
-cd sslyze-0_9-osx64
-python sslyze.py --regular www.example.com:9443
+python -m sslyze --mozilla_config intermediate www.example.com:9443
 ```
 
 You should see results like:

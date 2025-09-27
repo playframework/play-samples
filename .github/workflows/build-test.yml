@@ -154,8 +154,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-grpc')}}
     with:
-      # Can't test with Java 21+ currently because of https://github.com/lightbend/ssl-config/issues/367
-      java: 17
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: java/grpc
       add-dimensions: >-
@@ -337,8 +336,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-grpc')}}
     with:
-      # Can't test with Java 21+ currently because of https://github.com/lightbend/ssl-config/issues/367
-      java: 17
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: scala/grpc
       add-dimensions: >-
