@@ -18,6 +18,6 @@ object UserRequest {
     mapping(
       "id" -> optional(nonEmptyText),
       "email" -> email
-    )(UserRequest.apply)(UserRequest.unapply)
+    )(UserRequest.apply)(u => Some((u.id, u.email)))
   )
 }
