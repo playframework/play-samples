@@ -3,7 +3,7 @@ twirl = "2.0.9"
 play = "3.1.0-M3"
 scalatestplus = "3.2.19.1"
 scalatestplus-play = "8.0.0-M2"
-macwire = "2.6.6"
+macwire = "2.6.7"
 
 [libraries]
 macwire = { group = "com.softwaremill.macwire", name = "macros_2.13", version.ref = "macwire" }
