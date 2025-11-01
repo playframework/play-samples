@@ -7,7 +7,7 @@ pekko = "1.0.3"
 
 [libraries]
 kalium = { group = "org.abstractj.kalium", name = "kalium", version = "0.8.0" }
-jnr-ffi = { group = "com.github.jnr", name = "jnr-ffi", version = "2.2.17" }
+jnr-ffi = { group = "com.github.jnr", name = "jnr-ffi", version = "2.2.18" }
 pekko-distributed-data = { group = "org.apache.pekko", name = "pekko-distributed-data_2.13", version.ref = "pekko" }
 scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-10_2.13", version.ref = "scalatestplus" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
