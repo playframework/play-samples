@@ -17,7 +17,7 @@ val FlywayVersion = "11.10.1"
   "com.google.inject" % "guice" % "7.0.0"
 )
 
-(ThisBuild / crossScalaVersions) := Seq("2.13.16", "3.3.6")
+(ThisBuild / crossScalaVersions) := Seq("2.13.17", "3.3.7")
 (ThisBuild / scalaVersion) := crossScalaVersions.value.head
 (ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args

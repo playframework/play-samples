@@ -1,9 +1,9 @@
 [versions]
-twirl = "2.0.9"
-play = "3.1.0-M3"
+twirl = "2.1.0-M5"
+play = "3.1.0-M4"
 scalatestplus = "3.2.19.1"
 scalatestplus-play = "8.0.0-M2"
-pekko = "1.0.3"
+pekko = "1.2.1"
 
 [libraries]
 kalium = { group = "org.abstractj.kalium", name = "kalium", version = "0.8.0" }

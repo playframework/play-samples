@@ -10,4 +10,4 @@ addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "2.2.0")
 
 // The Play plugin
 resolvers += Resolver.sonatypeCentralSnapshots
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M3")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M4")

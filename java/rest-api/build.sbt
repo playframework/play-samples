@@ -1,7 +1,7 @@
 resolvers += Resolver.sonatypeCentralSnapshots
 
-lazy val scala213 = "2.13.16"
-lazy val scala3 = "3.3.6"
+lazy val scala213 = "2.13.17"
+lazy val scala3 = "3.3.7"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
