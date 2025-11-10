@@ -8,7 +8,7 @@ version := "1.0-SNAPSHOT"
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
   //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
 
-crossScalaVersions := Seq("2.13.16", "3.3.6")
+crossScalaVersions := Seq("2.13.17", "3.3.6")
 
 scalaVersion := crossScalaVersions.value.head
 
