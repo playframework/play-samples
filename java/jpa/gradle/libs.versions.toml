@@ -5,7 +5,7 @@ node = "7.1.0"
 h2 = "2.3.232"
 hibernate = "6.6.34.Final"
 junit = "4.13.2"
-assertj = "3.27.3"
+assertj = "3.27.6"
 awaitility = "4.3.0"
 mockito = "5.18.0"
 
