@@ -1,5 +1,5 @@
 [versions]
-twirl = "2.0.9"
+twirl = "2.1.0-M5"
 play = "3.1.0-M4"
 play-ebean = "9.0.0-M1"
 ebean = "15.11.0" # Sync with Play Ebean version https://github.com/playframework/play-ebean/blob/main/project/Dependencies.scala#L19
