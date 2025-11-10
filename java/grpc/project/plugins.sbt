@@ -1,5 +1,5 @@
 enablePlugins(BuildInfoPlugin)
-val playGrpcV = "0.13.0-M1"
+val playGrpcV = "0.13.0-M3"
 buildInfoKeys := Seq[BuildInfoKey]("playGrpcVersion" -> playGrpcV)
 buildInfoPackage := "play.java.grpc.sample"
 
@@ -10,6 +10,6 @@ addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.7")
 
 // #grpc_sbt_plugin
 // project/plugins.sbt
-addSbtPlugin("org.apache.pekko" % "pekko-grpc-sbt-plugin" % "1.0.2")
+addSbtPlugin("org.apache.pekko" % "pekko-grpc-sbt-plugin" % "1.2.0")
 libraryDependencies += "org.playframework" %% "play-grpc-generators" % playGrpcV
 // #grpc_sbt_plugin
