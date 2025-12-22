@@ -1,5 +1,5 @@
 // The Play plugin
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.9")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.10")
 
 // sbt-paradox, used for documentation
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.7")
