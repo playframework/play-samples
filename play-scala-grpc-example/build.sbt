@@ -70,7 +70,7 @@ val TestDeps = Seq(
   "org.scalatestplus.play"  %% "scalatestplus-play"  % "6.0.2" % Test,
 )
 
-scalaVersion := "2.13.16"
+scalaVersion := "2.13.18"
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 // Needed for ssl-config to create self signed certificated under Java 17
 Test / javaOptions ++= List("--add-exports=java.base/sun.security.x509=ALL-UNNAMED")
