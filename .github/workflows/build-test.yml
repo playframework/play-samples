@@ -169,7 +169,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-hello-world')}}
     with:
-      java: 11, 21
+      java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-hello-world-tutorial
       add-dimensions: >-
