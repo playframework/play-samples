@@ -1,0 +1,201 @@
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+}
+
+/* Header styling */
+.table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+}
+
+/* Alternate row coloring (Zebra Stripes) */
+.table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+/* Hover effect for better UX */
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: 0.3s;
+}
+
+/* Responsive "Stacked" Design for Mobile */
+@media screen and (max-width: 600px) {
+    .table {
+        min-width: 100%;
+    }
+
+    .table thead {
+        display: none; /* Hide headers on mobile */
+    }
+
+    .table tr {
+        display: block;
+        margin-bottom: 0.625em;
+        border-bottom: 2px solid #ddd;
+    }
+
+    .table td {
+        display: block;
+        text-align: right;
+        font-size: 0.8em;
+        border-bottom: 1px dotted #ccc;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    /* Add labels before the data using data-label attribute */
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
+/* Form styling */
+.form {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* The wrapper for each field group */
+.form dl {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Label styling */
+.form dt {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #4a5568;
+    font-size: 0.95rem;
+}
+
+/* Control and Message containers */
+.form dd {
+    margin: 0;
+    padding: 0;
+}
+
+/* Universal Input Styling */
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"],
+.form input[type="number"],
+.form select,
+.form textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    background-color: #f8fafc;
+}
+
+/* Focus States */
+.form input:focus, .form select:focus, .form textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Info and Error Messages */
+.form dd.info,
+.form dd.error {
+    font-size: 0.85rem;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+.form dd.info {
+    color: #718096;
+}
+
+/* Error State Styling */
+.form dl.error dt label {
+    color: #e53e3e;
+}
+
+.form dl.error input {
+    border-color: #feb2b2;
+    background-color: #fff5f5;
+}
+
+.form dd.error {
+    color: #e53e3e;
+    font-weight: 500;
+}
+
+/* Submit Button */
+.form .actions {
+    margin-top: 2rem;
+}
+
+.form button {
+    width: 100%;
+    background-color: #3b82f6;
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* --- Responsive Design (Desktop) --- */
+@media (min-width: 640px) {
+    .form dl {
+        display: grid;
+        grid-template-columns: 1fr 2fr; /* Label takes 1/3, inputs take 2/3 */
+        gap: 0 20px;
+        align-items: start;
+    }
+
+    .form dt {
+        text-align: right;
+        margin-top: 12px; /* Aligns label text with the center of the input */
+    }
+
+    /* Force subsequent dd tags (errors/info) to start in the second column */
+    .form dd:not(:first-of-type) {
+        grid-column: 2;
+    }
+}

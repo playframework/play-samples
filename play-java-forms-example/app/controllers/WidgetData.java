@@ -17,6 +17,8 @@ public class WidgetData {
     @Constraints.Min(0)
     private int price;
 
+    private String description;
+
     public WidgetData() {
     }
 
@@ -36,4 +38,11 @@ public class WidgetData {
         this.price = price;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

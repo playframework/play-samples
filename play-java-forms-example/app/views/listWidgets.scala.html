@@ -10,13 +10,13 @@
     <div class="@name">@value</div>
     }
 
-    <table>
+    <table class="table">
         <thead>
-            <tr><th>Name</th><th>Price</th>
+            <tr><th>Name</th><th>Price</th><th>Description</th></tr>
         </thead>
         <tbody>
         @for(w <- widgets) {
-            <tr><td>@w.name</td><td>@w.price</td></tr>
+            <tr><td>@w.name</td><td>@w.price</td><td>@w.description</td></tr>
         }
         </tbody>
     </table>
@@ -32,12 +32,19 @@
         }
     }
 
-    @helper.form(routes.WidgetController.createWidget()) {
+    @helper.form(action = routes.WidgetController.createWidget(), Symbol("class") -> "form", Symbol("id") -> "widget-form") {
         @helper.CSRF.formField
 
-        @helper.inputText(form("name"))
+        @helper.inputText(
+            form("name"),
+            Symbol("_label") -> "Widget Name",
+            Symbol("placeholder") -> "Enter your widget name...",
+            Symbol("class") -> "modern-input"
+        )
 
-        @helper.inputText(form("price"))
+        @helper.inputText(form("price"), Symbol("_label") -> "Prices")
+
+        @helper.textarea(form("description"), Symbol("_label") -> "Description")
 
         <button type="submit">Create widget</button>
     }
