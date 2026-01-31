@@ -1,0 +1,18 @@
+@(form: Form[AuthController.VerificationCode])(implicit request: Http.Request, messagesProvider: MessagesProvider)
+
+@main("2FA Verification") {
+<h1>Enter Verification Code</h1>
+
+@if(request.flash.get("warning").isPresent()) {
+<p style="color: orange;">@request.flash.get("warning").get()</p>
+}
+
+@* Remove the parentheses from the action call *@
+@helper.form(action = routes.AuthController.verify) {
+@helper.CSRF.formField
+
+@helper.inputText(form("code"), '_label -> "Authentication Code", 'autocomplete -> "off")
+
+<button type="submit">Verify</button>
+}
+}

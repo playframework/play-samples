@@ -1,0 +1,19 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           controllers.HomeController.index()
+
+GET     /generate-secret                            controllers.TotpController.generateSecret()
+GET     /generate-qr-code/:issuer/:application      controllers.TotpController.generateQrCodeImage(issuer: String, application: String)
+
+# The page you want to protect
+GET    /protected-page         controllers.AuthController.protectedContent(request: play.mvc.Http.Request)
+
+# The verification form and handler
+GET    /verify                 controllers.AuthController.verifyPage(request: play.mvc.Http.Request)
+POST   /verify                 controllers.AuthController.verify(request: play.mvc.Http.Request)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
