@@ -1,5 +1,5 @@
 [versions]
-twirl = "2.1.0-M5"
+twirl = "2.1.0-M8+8-8944e333-SNAPSHOT"
 play = "3.1.0-M4"
 node = "7.1.0"
 webjars-play = "3.1.0-M1"
