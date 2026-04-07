@@ -3,7 +3,7 @@ import play.sbt.PlaySettings
 
 resolvers += Resolver.sonatypeCentralSnapshots
 
-lazy val scala213 = "2.13.17"
+lazy val scala213 = "2.13.18"
 lazy val scala3 = "3.8.3"
 
 lazy val root = (project in file("."))
