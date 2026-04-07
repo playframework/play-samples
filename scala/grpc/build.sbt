@@ -73,7 +73,7 @@ val TestDeps = Seq(
 )
 
 scalaVersion := "2.13.17"
-crossScalaVersions := Seq("2.13.17", "3.3.7")
+crossScalaVersions := Seq("2.13.17", "3.8.3")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 
 // Make verbose tests

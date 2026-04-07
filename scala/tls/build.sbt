@@ -1,6 +1,6 @@
 val commonSettings = Seq(
   resolvers += Resolver.sonatypeCentralSnapshots,
-  crossScalaVersions := Seq("2.13.17", "3.3.7"),
+  crossScalaVersions := Seq("2.13.17", "3.8.3"),
   scalaVersion := crossScalaVersions.value.head,
   scalacOptions ++= Seq(
     "-feature",

@@ -53,7 +53,7 @@ lazy val `play-java-grpc-example` = (project in file("."))
   )
 
 scalaVersion := "2.13.17"
-crossScalaVersions := Seq("2.13.17", "3.3.7")
+crossScalaVersions := Seq("2.13.17", "3.8.3")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
 
