@@ -4,7 +4,7 @@ buildInfoKeys := Seq[BuildInfoKey]("playGrpcVersion" -> playGrpcV)
 buildInfoPackage := "play.java.grpc.sample"
 
 resolvers += Resolver.sonatypeCentralSnapshots
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M4")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M5")
 
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.7")
 
