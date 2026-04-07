@@ -1,5 +1,14 @@
 version: 2
 updates:
+  - package-ecosystem: "gradle"
+    directories:
+      - "java/*"
+      - "scala/*"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "[Gradle] "
+    target-branch: "main"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
