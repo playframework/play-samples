@@ -25,7 +25,7 @@ class ComputersDAO @Inject() (override protected val dbConfigProvider: DatabaseC
     def discontinued = column[Option[Date]]("DISCONTINUED")
     def companyId = column[Option[Long]]("COMPANY_ID")
 
-    def * = (id.?, name, introduced, discontinued, companyId) <> (Computer.tupled, Computer.unapply _)
+    def * = (id.?, name, introduced, discontinued, companyId) <> (Computer.tupled, Computer.unapply)
   }
 
   private val computers = TableQuery[Computers]

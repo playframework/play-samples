@@ -67,7 +67,7 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
     db.withConnection { implicit connection =>
       SQL"select * from computer where id = $id".as(simple.singleOpt)
     }
-  }(ec)
+  }(using ec)
 
   /**
    * Return a page of (Computer,Company).
@@ -99,7 +99,7 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
 
       Page(computers, page, offset, totalRows)
     }
-  }(ec)
+  }(using ec)
 
   /**
    * Update a computer.
@@ -117,7 +117,7 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
       // case class binding using ToParameterList,
       // note using SQL(..) but not SQL.. interpolation
     }
-  }(ec)
+  }(using ec)
 
   /**
    * Insert a new computer.
@@ -133,7 +133,7 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
         )
       """).bind(computer).executeInsert()
     }
-  }(ec)
+  }(using ec)
 
   /**
    * Delete a computer.
@@ -144,6 +144,6 @@ class ComputerRepository @Inject()(dbapi: DBApi, companyRepository: CompanyRepos
     db.withConnection { implicit connection =>
       SQL"delete from computer where id = ${id}".executeUpdate()
     }
-  }(ec)
+  }(using ec)
 
 }

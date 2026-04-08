@@ -31,7 +31,7 @@ class BrowserSpec extends PlaySpec with GuiceOneServerPerSuite with OneBrowserPe
       // Wait for server to process...
       eventually {
         // Check to see that the value made into Flash message!
-        pageSource contains "Foo"
+        pageSource `contains` "Foo"
       }
     }
   }

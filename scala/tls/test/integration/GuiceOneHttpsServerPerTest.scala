@@ -12,7 +12,7 @@ import play.core.server.{PekkoHttpServer, ServerConfig, ServerProvider}
  */
 trait GuiceOneHttpsServerPerTest extends TestSuiteMixin with ServerProvider with GuiceFakeApplicationFactory { this: TestSuite =>
 
-  private var privateApp: Application = _
+  private var privateApp: Application = null
 
   /**
    * Implicit method that returns the `Application` instance for the current test.
@@ -55,7 +55,7 @@ trait GuiceOneHttpsServerPerTest extends TestSuiteMixin with ServerProvider with
     }
   }
 
-  def createServer(context: ServerProvider.Context) =
+  def createServer(context: ServerProvider.Context): PekkoHttpServer =
     new PekkoHttpServer(PekkoHttpServer.Context.fromServerProviderContext(context))
 
 }

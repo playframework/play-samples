@@ -69,7 +69,7 @@ class PostActionBuilder @Inject()(messagesApi: MessagesApi,
                               block: PostRequestBlock[A]): Future[Result] = {
     // Convert to marker context and use request in block
     implicit val markerContext: MarkerContext = requestHeaderToMarkerContext(
-      request)
+      using request)
     logger.trace(s"invokeBlock: ")
 
     val future = block(new PostRequest(request, messagesApi))

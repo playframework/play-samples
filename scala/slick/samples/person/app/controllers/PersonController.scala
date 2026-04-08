@@ -78,5 +78,5 @@ class PersonController @Inject()(repo: PersonRepository,
 case class CreatePersonForm(name: String, age: Int)
 object CreatePersonForm {
   def unapply(cpf: CreatePersonForm): Option[(String, Int)] = Some((cpf.name, cpf.age))
-  def tupled = (this.apply _).tupled
+  def tupled = (this.apply).tupled
 }

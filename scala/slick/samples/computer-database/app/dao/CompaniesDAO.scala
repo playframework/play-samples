@@ -16,7 +16,7 @@ class CompaniesDAO @Inject() (protected val dbConfigProvider: DatabaseConfigProv
   class Companies(tag: Tag) extends Table[Company](tag, "COMPANY") {
     def id = column[Long]("ID", O.PrimaryKey, O.AutoInc)
     def name = column[String]("NAME")
-    def * = (id.?, name) <> (Company.tupled, Company.unapply _)
+    def * = (id.?, name) <> (Company.tupled, Company.unapply)
   }
 
   val companies = TableQuery[Companies]

@@ -24,7 +24,7 @@ class ServerSpec extends PlaySpec with GuiceOneHttpsServerPerTest with ScalaFutu
 
   val name = "testing"
   val system = ActorSystem(name)
-  implicit val materializer: Materializer = Materializer.matFromSystem(system)
+  implicit val materializer: Materializer = Materializer.matFromSystem(using system)
 
   val config = ConfigFactory.load("ws").withFallback(ConfigFactory.defaultReference())
   val wsConfig = AhcWSClientConfigFactory.forConfig(config)

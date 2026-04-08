@@ -29,7 +29,7 @@ object Main {
     val config = AhcWSClientConfigFactory.forConfig(ConfigFactory.load("ws.conf"), getClass.getClassLoader)
     val name = "testing"
     val system = ActorSystem(name)
-    implicit val materializer = Materializer.matFromSystem(system)
+    implicit val materializer = Materializer.matFromSystem(using system)
 
     val client = AhcWSClient(config)
     val futureResponse = client.url("https://one.example.com:9443").get()
