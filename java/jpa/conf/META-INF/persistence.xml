@@ -6,6 +6,14 @@
   <persistence-unit name="defaultPersistenceUnit" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <non-jta-data-source>DefaultDS</non-jta-data-source>
+    <validation-mode>NONE</validation-mode>
+    <!--
+      Hibernate ORM 7 no longer performs the old automatic entity discovery by default.
+      Listing entities explicitly keeps this sample self-contained.
+      As an alternative, add org.hibernate.orm:hibernate-scan-jandex to your project dependencies
+      and use Jandex-based scanning.
+    -->
+    <class>models.Person</class>
     <jar-file>build/classes/scala/main</jar-file>
     <properties>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
