@@ -1,6 +1,6 @@
 // The Play plugin
 resolvers += Resolver.sonatypeCentralSnapshots
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M7")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M8")
 
 // Web plugins
 addSbtPlugin("com.github.sbt" % "sbt-coffeescript" % "2.0.1")
