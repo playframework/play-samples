@@ -2,6 +2,13 @@ import play.core.PlayVersion.pekkoVersion
 
 resolvers += Resolver.sonatypeCentralSnapshots
 
+def scala2OnlyScalacOptions(options: String*) = Def.setting {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, _)) => options
+    case _            => Seq.empty
+  }
+}
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
@@ -29,5 +36,5 @@ lazy val root = (project in file("."))
       "-feature",
       //"-deprecation", // gets set by Play automatically
       "-Werror"
-    )
+    ) ++ scala2OnlyScalacOptions("-Xsource:3").value
   )

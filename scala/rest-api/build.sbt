@@ -6,6 +6,13 @@ resolvers += Resolver.sonatypeCentralSnapshots
 lazy val scala213 = "2.13.18"
 lazy val scala3 = "3.8.3"
 
+def scala2OnlyScalacOptions(options: String*) = Def.setting {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, _)) => options
+    case _            => Seq.empty
+  }
+}
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayService, PlayLayoutPlugin, Common)
   //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
@@ -24,7 +31,7 @@ lazy val root = (project in file("."))
     scalacOptions ++= Seq(
       "-feature",
       "-Werror"
-    )
+    ) ++ scala2OnlyScalacOptions("-Xsource:3").value
   )
 
 lazy val gatlingVersion = "3.9.5"

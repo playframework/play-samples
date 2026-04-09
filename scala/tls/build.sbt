@@ -1,3 +1,10 @@
+def scala2OnlyScalacOptions(options: String*) = Def.setting {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, _)) => options
+    case _            => Seq.empty
+  }
+}
+
 val commonSettings = Seq(
   resolvers += Resolver.sonatypeCentralSnapshots,
   crossScalaVersions := Seq("2.13.18", "3.8.3"),
@@ -5,7 +12,7 @@ val commonSettings = Seq(
   scalacOptions ++= Seq(
     "-feature",
     "-Werror"
-  )
+  ) ++ scala2OnlyScalacOptions("-Xsource:3").value
 )
 
 lazy val one = (project in file("modules/one"))

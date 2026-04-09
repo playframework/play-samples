@@ -2,6 +2,13 @@ resolvers += Resolver.sonatypeCentralSnapshots
 
 val log4jVersion = "2.25.0"
 
+def scala2OnlyScalacOptions(options: String*) = Def.setting {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, _)) => options
+    case _            => Seq.empty
+  }
+}
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
@@ -21,5 +28,5 @@ lazy val root = (project in file("."))
     scalacOptions ++= Seq(
       "-feature",
       "-Werror"
-    ),
+    ) ++ scala2OnlyScalacOptions("-Xsource:3").value,
   )

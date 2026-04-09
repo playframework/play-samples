@@ -8,6 +8,13 @@ lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")
 lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "")
 
+def scala2OnlyScalacOptions(options: String*) = Def.setting {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, _)) => options
+    case _            => Seq.empty
+  }
+}
+
 val FlywayVersion = "11.10.1"
 
 (ThisBuild / version) := "1.1-SNAPSHOT"
@@ -26,7 +33,7 @@ val FlywayVersion = "11.10.1"
   "-unchecked",
   "-Xlint",
   "-Ywarn-numeric-widen"
-)
+) ++ scala2OnlyScalacOptions("-Xsource:3").value
 (ThisBuild / javacOptions) ++= Seq("--release", "17")
 
 lazy val flyway = (project in file("modules/flyway"))

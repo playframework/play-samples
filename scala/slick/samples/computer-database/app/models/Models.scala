@@ -10,11 +10,15 @@ case class Page[A](items: Seq[A], page: Int, offset: Long, total: Long) {
 case class Company(id: Option[Long], name: String)
 object Company {
   def unapply(c: Company): Option[(Option[Long], String)] = Some((c.id, c.name))
-  def tupled = (this.apply).tupled
+  def tupled: ((Option[Long], String)) => Company = {
+    case (id, name) => Company(id, name)
+  }
 }
 
 case class Computer(id: Option[Long] = None, name: String, introduced: Option[Date] = None, discontinued: Option[Date] = None, companyId: Option[Long] = None)
 object Computer {
   def unapply(c: Computer): Option[(Option[Long], String, Option[Date], Option[Date], Option[Long])] = Some((c.id, c.name, c.introduced, c.discontinued, c.companyId))
-  def tupled = (this.apply).tupled
+  def tupled: ((Option[Long], String, Option[Date], Option[Date], Option[Long])) => Computer = {
+    case (id, name, introduced, discontinued, companyId) => Computer(id, name, introduced, discontinued, companyId)
+  }
 }

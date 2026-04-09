@@ -6,6 +6,13 @@ import play.scala.grpc.sample.BuildInfo
 
 resolvers += Resolver.sonatypeCentralSnapshots
 
+def scala2OnlyScalacOptions(options: String*) = Def.setting {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, _)) => options
+    case _            => Seq.empty
+  }
+}
+
 name := "play-scala-grpc-example"
 version := "1.0-SNAPSHOT"
 
@@ -74,7 +81,7 @@ val TestDeps = Seq(
 
 scalaVersion := "2.13.18"
 crossScalaVersions := Seq("2.13.18", "3.8.3")
-scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
+scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked") ++ scala2OnlyScalacOptions("-Xsource:3").value
 
 // Make verbose tests
 (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
