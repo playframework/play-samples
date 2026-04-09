@@ -1,5 +1,12 @@
-lazy val scala213 = "2.13.17"
-lazy val scala3 = "3.3.7"
+lazy val scala213 = "2.13.18"
+lazy val scala3 = "3.8.3"
+
+def scala2OnlyScalacOptions(options: String*) = Def.setting {
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((2, _)) => options
+    case _            => Seq.empty
+  }
+}
 
 lazy val root = (project in file("."))
   .settings(
@@ -25,7 +32,7 @@ def sampleProject(name: String) =
       scalacOptions ++= Seq(
         "-feature",
         "-Werror"
-      ),
+      ) ++ scala2OnlyScalacOptions("-Xsource:3").value,
       libraryDependencies ++= Seq(
         guice,
         "org.playframework" %% "play-slick" % "7.0.0-M1",

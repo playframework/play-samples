@@ -22,5 +22,5 @@ class UserActorFactoryProvider @Inject()(
     mat: Materializer,
     ec: ExecutionContext,
 ) extends Provider[UserActor.Factory] {
-  def get() = UserActor(_, stocksActor)(mat, ec)
+  def get() = UserActor(_, stocksActor)(using mat, ec)
 }

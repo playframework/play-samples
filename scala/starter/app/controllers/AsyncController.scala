@@ -42,7 +42,7 @@ class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSyst
     val promise: Promise[String] = Promise[String]()
     actorSystem.scheduler.scheduleOnce(delayTime) {
       promise.success("Hi!")
-    }(actorSystem.dispatcher) // run scheduled tasks using the actor system's dispatcher
+    }(using actorSystem.dispatcher) // run scheduled tasks using the actor system's dispatcher
     promise.future
   }
 

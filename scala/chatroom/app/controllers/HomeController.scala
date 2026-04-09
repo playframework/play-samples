@@ -43,7 +43,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
     source.toMat(sink)(Keep.both).run()
   }
 
-  private val userFlow: Flow[WSMessage, WSMessage, _] = {
+  private val userFlow: Flow[WSMessage, WSMessage, ?] = {
     Flow.fromSinkAndSource(chatSink, chatSource)
   }
 
@@ -55,7 +55,7 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents, i
 
   def chat(): WebSocket = {
     WebSocket.acceptOrResult[WSMessage, WSMessage] {
-      case rh if sameOriginCheck(rh) =>
+      case rh if sameOriginCheck(using rh) =>
         Future.successful(userFlow).map { flow =>
           Right(flow)
         }.recover {

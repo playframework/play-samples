@@ -6,12 +6,12 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-java-websocket-example",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.17", "3.3.7"),
+    crossScalaVersions := Seq("2.13.18", "3.8.3"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
       ws,
-      "org.webjars" %% "webjars-play" % "3.1.0-M1",
+      "org.webjars" %% "webjars-play" % "3.1.0-M5",
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
       "org.assertj" % "assertj-core" % "3.26.3" % Test,

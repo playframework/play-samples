@@ -43,7 +43,9 @@ class PersonRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(impl
      * In this case, we are simply passing the id, name and page parameters to the Person case classes
      * apply and unapply methods.
      */
-    def * = (id, name, age) <> ((Person.apply _).tupled, Person.unapply)
+    def * = (id, name, age) <> ({
+      case (id, name, age) => Person(id, name, age)
+    }, Person.unapply)
   }
 
   /**

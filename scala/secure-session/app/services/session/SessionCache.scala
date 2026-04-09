@@ -40,7 +40,7 @@ class SessionCache(
   }
 
   private val distributedData: DistributedData = DistributedData(context.system)
-  private[this] implicit val uniqAddress: SelfUniqueAddress = distributedData.selfUniqueAddress
+  private implicit val uniqAddress: SelfUniqueAddress = distributedData.selfUniqueAddress
 
   def behavior(children: Map[String, ActorRef[RefreshSession.type]]): Behavior[Command] = Behaviors.receiveMessage {
     case PutInCache(key, value) =>

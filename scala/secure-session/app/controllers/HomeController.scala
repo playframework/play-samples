@@ -10,7 +10,7 @@ class HomeController @Inject() (
     cc: ControllerComponents
 ) extends AbstractController(cc) {
 
-  def index = userAction { implicit request: UserRequest[_] =>
+  def index = userAction { implicit request: UserRequest[?] =>
     Ok(views.html.index(form))
   }
 

@@ -30,7 +30,7 @@ class HomeControllerSpec extends PlaySpec with GuiceOneServerPerSuite with Injec
     }
   }
 
-  def postSource(tmpFile: File): Source[MultipartFormData.Part[Source[ByteString, _]], _] = {
+  def postSource(tmpFile: File): Source[MultipartFormData.Part[Source[ByteString, ?]], ?] = {
     import play.api.mvc.MultipartFormData._
     Source(FilePart("name", "hello.txt", Option("text/plain"),
       FileIO.fromPath(tmpFile.toPath)) :: DataPart("key", "value") :: List())

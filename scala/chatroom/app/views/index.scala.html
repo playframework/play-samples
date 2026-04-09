@@ -6,8 +6,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        @webJarsUtil.locate("bootstrap.min.css").css()
-        @webJarsUtil.locate("bootstrap-theme.min.css").css()
+        @webJarsUtil.locate("bootstrap", "css/bootstrap.min.css").css()
+        @webJarsUtil.locate("bootstrap", "css/bootstrap-theme.min.css").css()
 
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
@@ -46,8 +46,8 @@
             </div>
         </div>
 
-        @webJarsUtil.locate("jquery.min.js").script()
-        @webJarsUtil.locate("jquery.flot.min.js").script()
+        @webJarsUtil.locate("jquery", "jquery.min.js").script()
+        @webJarsUtil.locate("flot", "jquery.flot.min.js").script()
         <script type='text/javascript' src='@routes.Assets.at("javascripts/modernizr-3.5.0.js")'></script>
         <script type='text/javascript' src='@routes.Assets.at("javascripts/app.js")' data-url='@webSocketUrl'></script>
 

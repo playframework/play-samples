@@ -2,7 +2,7 @@ import play.api._
 import play.api.routing.Router
 
 class MyApplicationLoader extends ApplicationLoader {
-  private var components: MyComponents = _
+  private var components: MyComponents = null
 
   def load(context: ApplicationLoader.Context): Application = {
     components = new MyComponents(context)

@@ -1,14 +1,14 @@
-@(webJarsUtil: org.webjars.play.WebJarsUtil)(implicit r: Request[_])
+@(webJarsUtil: org.webjars.play.WebJarsUtil)(implicit r: Request[?])
 <!DOCTYPE html>
 
 <html>
 <head>
     <title>Reactive Stock News Dashboard</title>
-    @webJarsUtil.locate("bootstrap.min.css").css()
+    @webJarsUtil.locate("bootstrap", "css/bootstrap.min.css").css()
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.min.css")">
     <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-    @webJarsUtil.locate("jquery.min.js").script(scala.collection.immutable.Map("nonce" -> CSPNonce()))
-    @webJarsUtil.locate("jquery.flot.js").script(scala.collection.immutable.Map("nonce" -> CSPNonce()))
+    @webJarsUtil.locate("jquery", "jquery.min.js").script(scala.collection.immutable.Map("nonce" -> CSPNonce()))
+    @webJarsUtil.locate("flot", "jquery.flot.js").script(scala.collection.immutable.Map("nonce" -> CSPNonce()))
     <script @{CSPNonce.attr} type='text/javascript' src='@routes.Assets.at("javascripts/index.js")'></script>
 </head>
 <body data-ws-url="@routes.HomeController.ws.webSocketURL()">

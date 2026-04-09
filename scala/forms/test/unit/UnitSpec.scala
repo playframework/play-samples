@@ -20,7 +20,7 @@ class UnitSpec extends PlaySpec {
     "apply successfully from request" in {
       // The easiest way to test a form is by passing it a fake request.
       val call = controllers.routes.WidgetController.createWidget
-      implicit val request: Request[_] = FakeRequest(call).withFormUrlEncodedBody("name" -> "foo", "price" -> "100")
+      implicit val request: Request[?] = FakeRequest(call).withFormUrlEncodedBody("name" -> "foo", "price" -> "100")
       // A successful binding using an implicit request will give you a form with a value.
       val boundForm = WidgetForm.form.bindFromRequest()
       // You can then get the widget data out and test it.
@@ -80,7 +80,7 @@ class UnitSpec extends PlaySpec {
       val lang: Lang = Lang.defaultLang
       val messagesApi: MessagesApi = new DefaultMessagesApi(Map(lang.code -> Map("error.min" -> "Must be greater or equal to {0}")))
       val messagesProvider: MessagesProvider = messagesApi.preferred(Seq(lang))
-      val message: String = Messages(formError.message, formError.args: _*)(messagesProvider)
+      val message: String = Messages(formError.message, formError.args*)(using messagesProvider)
 
       // And the message will be run through with the arguments:
       message must equal("Must be greater or equal to 0")
