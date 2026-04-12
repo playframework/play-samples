@@ -49,3 +49,4 @@ lazy val root = (project in file("."))
   .dependsOn(one, two)
 
 addCommandAlias("client", "runMain Main")
+

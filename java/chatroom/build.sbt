@@ -25,3 +25,4 @@ lazy val root = (project in file("."))
       "-Xlint:deprecation"
     )
   )
+
