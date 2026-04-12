@@ -2,10 +2,35 @@
 
 set -euo pipefail
 
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+sample_path="$(pwd)"
+sample_path="${sample_path#$repo_root/}"
+
 sbt_bin="${SBT_BIN:-sbt}"
 run_sbt1="${RUN_SBT1_TESTS:-true}"
 sbt2_version="${MATRIX_SBT2:-2.0.0-RC11}"
 run_sbt2="${RUN_SBT2_TESTS:-true}"
+
+sbt2_blacklist=(
+    # https://github.com/gatling/gatling-sbt-plugin not published for sbt 2
+    "scala/rest-api"
+    "java/rest-api"
+     # https://github.com/tototoshi/sbt-slick-codegen/pull/103
+     "scala/isolated-slick"
+     # https://github.com/apache/pekko-grpc/issues/677
+     "scala/grpc"
+     "java/grpc"
+     # needs a fix in Play itself
+     "java/jpa"
+)
+
+skip_sbt2="false"
+for blacklisted_sample in "${sbt2_blacklist[@]}"; do
+    if [[ "$sample_path" == "$blacklisted_sample" ]]; then
+        skip_sbt2="true"
+        break
+    fi
+done
 
 if [ "$#" -eq 0 ]; then
     echo "Usage: $0 <sbt-args...>"
@@ -19,9 +44,11 @@ if [[ "$run_sbt1" == "true" ]]; then
     "$sbt_bin" "$@"
 fi
 
-if [[ "$run_sbt2" == "true" ]]; then
+if [[ "$run_sbt2" == "true" && "$skip_sbt2" != "true" ]]; then
     echo "+--------------------------------------+"
     echo "| Executing tests using sbt $sbt2_version |"
     echo "+--------------------------------------+"
     "$sbt_bin" -Dsbt.version="$sbt2_version" "$@"
+elif [[ "$run_sbt2" == "true" && "$skip_sbt2" == "true" ]]; then
+    echo "Skipping sbt $sbt2_version for blacklisted sample: $sample_path"
 fi
