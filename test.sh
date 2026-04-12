@@ -6,6 +6,8 @@
 #             rather than returning the exit status of the last command in the pipeline.
 set -euo pipefail
 
+repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 if [ -z "$MATRIX_SCALA" ]; then
     echo "Error: the environment variable MATRIX_SCALA is not set"
     exit 1
@@ -46,10 +48,7 @@ function buildSample() {
       if [ -f scripts/test-sbt ]; then
         scripts/test-sbt
       else
-        echo "+----------------------------+"
-        echo "| Executing tests using sbt  |"
-        echo "+----------------------------+"
-        sbt ++$MATRIX_SCALA test
+        "$repo_root/run-sbt-command" "++$MATRIX_SCALA" test
       fi
     fi
     popd

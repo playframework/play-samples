@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+sbt_bin="${SBT_BIN:-sbt}"
+sbt2_version="${MATRIX_SBT2:-2.0.0-RC11}"
+run_sbt2="${RUN_SBT2_TESTS:-true}"
+
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $0 <sbt-args...>"
+    exit 1
+fi
+
+echo "+-----------------------------+"
+echo "| Executing tests using sbt 1 |"
+echo "+-----------------------------+"
+"$sbt_bin" "$@"
+
+if [[ "$run_sbt2" == "true" ]]; then
+    echo "+--------------------------------------+"
+    echo "| Executing tests using sbt $sbt2_version |"
+    echo "+--------------------------------------+"
+    "$sbt_bin" -Dsbt.version="$sbt2_version" "$@"
+fi
