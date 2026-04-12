@@ -1,6 +1,6 @@
 // The Play plugin
 resolvers += Resolver.sonatypeCentralSnapshots
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M8")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M9")
 
 // Load testing tool:
 // https://gatling.io/docs/gatling/reference/current/extensions/sbt_plugin/

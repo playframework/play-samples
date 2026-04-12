@@ -20,8 +20,6 @@ sbt2_blacklist=(
      # https://github.com/apache/pekko-grpc/issues/677
      "scala/grpc"
      "java/grpc"
-     # needs a fix in Play itself
-     "java/jpa"
 )
 
 skip_sbt2="false"
