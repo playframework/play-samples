@@ -3,6 +3,7 @@
 set -euo pipefail
 
 sbt_bin="${SBT_BIN:-sbt}"
+run_sbt1="${RUN_SBT1_TESTS:-true}"
 sbt2_version="${MATRIX_SBT2:-2.0.0-RC11}"
 run_sbt2="${RUN_SBT2_TESTS:-true}"
 
@@ -11,10 +12,12 @@ if [ "$#" -eq 0 ]; then
     exit 1
 fi
 
-echo "+-----------------------------+"
-echo "| Executing tests using sbt 1 |"
-echo "+-----------------------------+"
-"$sbt_bin" "$@"
+if [[ "$run_sbt1" == "true" ]]; then
+    echo "+-----------------------------+"
+    echo "| Executing tests using sbt 1 |"
+    echo "+-----------------------------+"
+    "$sbt_bin" "$@"
+fi
 
 if [[ "$run_sbt2" == "true" ]]; then
     echo "+--------------------------------------+"
