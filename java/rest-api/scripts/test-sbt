@@ -3,10 +3,10 @@
 set -e
 set -o pipefail
 
-echo "+----------------------------+"
-echo "| Executing tests using sbt  |" 
-echo "+----------------------------+"
-sbt ++$MATRIX_SCALA test
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo_root="$(cd "$script_dir/../../.." && pwd)"
+
+"$repo_root/run-sbt-command" "++$MATRIX_SCALA" test
 
 # At least verifies that Gatling tests are compiling
-sbt ++$MATRIX_SCALA ";project gatling; gatling:compile"
+"$repo_root/run-sbt-command" "++$MATRIX_SCALA" ";project gatling; gatling:compile"

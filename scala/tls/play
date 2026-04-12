@@ -1,13 +1,21 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+set -euo pipefail
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Export the keystore password for use in ws.conf
 export KEY_PASSWORD=`cat scripts/password`
 
+launcher_args=()
+while [[ $# -gt 0 && "$1" == -D* ]]; do
+  launcher_args+=("$1")
+  shift
+done
+
 # Turn on HTTPS, turn off HTTP.
 # This should be https://example.com:9443
-JVM_OPTIONS="$JVM_OPTIONS -Dhttp.port=disabled"
+JVM_OPTIONS="${JVM_OPTIONS:-} -Dhttp.port=disabled"
 JVM_OPTIONS="$JVM_OPTIONS -Dhttps.port=9443"
 
 # Note that using the HTTPS port by itself doesn't set rh.secure=true.
@@ -60,4 +68,4 @@ JVM_OPTIONS="$JVM_OPTIONS -Dtestserver.httpsport=19001"
 #export SBT_OPTS="$SBT_OPTS -Djavax.net.debug=all"
 
 # Run Play
-sbt $JVM_OPTIONS $*;
+sbt "${launcher_args[@]}" $JVM_OPTIONS "$@"
