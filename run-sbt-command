@@ -8,7 +8,7 @@ sample_path="${sample_path#$repo_root/}"
 
 sbt_bin="${SBT_BIN:-sbt}"
 run_sbt1="${RUN_SBT1_TESTS:-true}"
-sbt2_version="${MATRIX_SBT2:-2.0.0-RC11}"
+sbt2_version="${MATRIX_SBT2:-2.0.0-RC12}"
 run_sbt2="${RUN_SBT2_TESTS:-true}"
 
 sbt2_blacklist=(
