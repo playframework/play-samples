@@ -6,7 +6,7 @@ buildInfoPackage := "play.java.grpc.sample"
 resolvers += Resolver.sonatypeCentralSnapshots
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M9")
 
-addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.7")
+addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.11.0-M4")
 
 // #grpc_sbt_plugin
 // project/plugins.sbt
