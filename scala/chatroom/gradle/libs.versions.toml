@@ -1,6 +1,6 @@
 [versions]
 twirl = "2.1.0-M9"
-play = "3.1.0-M9"
+play = "3.1.0-M10-95a4a789-SNAPSHOT"
 webjars-play = "3.1.0-M5"
 jsoup = "1.21.2"
 flot = "0.8.3-1"
