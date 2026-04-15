@@ -12,14 +12,6 @@ sbt2_version="${MATRIX_SBT2:-2.0.0-RC12}"
 run_sbt2="${RUN_SBT2_TESTS:-true}"
 
 sbt2_blacklist=(
-    # https://github.com/gatling/gatling-sbt-plugin not published for sbt 2
-    "scala/rest-api"
-    "java/rest-api"
-     # https://github.com/tototoshi/sbt-slick-codegen/pull/103
-     "scala/isolated-slick"
-     # https://github.com/apache/pekko-grpc/issues/677
-     "scala/grpc"
-     "java/grpc"
 )
 
 skip_sbt2="false"
