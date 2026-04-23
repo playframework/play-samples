@@ -40,3 +40,4 @@ lazy val gatling = (project in file("gatling"))
       "io.gatling" % "gatling-test-framework" % gatlingVersion % Test
     )
   )
+
