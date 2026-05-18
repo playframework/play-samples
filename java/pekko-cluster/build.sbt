@@ -24,3 +24,4 @@ libraryDependencies += "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersio
 // Sending messages from a node to another in the Pekko Cluster requires serializing. This
 // example application uses the default Pekko Jackson serializer with the CBOR format.
 // See also `conf/serialization.conf` and `services.CborSerializable` for more info.
+
