@@ -1,4 +1,4 @@
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.10")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.11")
 
 addSbtPlugin("com.github.sbt" % "sbt-less" % "2.0.1")
 
