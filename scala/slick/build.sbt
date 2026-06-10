@@ -1,5 +1,5 @@
 lazy val scala213 = "2.13.18"
-lazy val scala3 = "3.8.3"
+lazy val scala3 = "3.8.4"
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
