@@ -22,7 +22,7 @@ lazy val root = (project in file("."))
       "org.webjars" %% "webjars-play" % "3.1.0-M5",
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
-      ("net.logstash.logback" % "logstash-logback-encoder" % "8.1")
+      ("net.logstash.logback" % "logstash-logback-encoder" % "9.0")
         .excludeAll(ExclusionRule("com.fasterxml.jackson.core")), // Avoid conflicts with Play's Jackson dependency
       "org.jsoup" % "jsoup" % "1.17.2",
       "ch.qos.logback" % "logback-classic" % "1.5.18",
