@@ -97,7 +97,7 @@ lazy val root = (project in file("."))
     TwirlKeys.templateImports += "com.example.user.User",
     libraryDependencies ++= Seq(
       guice,
-      "com.h2database" % "h2" % "2.3.232",
+      "com.h2database" % "h2" % "2.4.240",
       ws % Test,
       ("org.flywaydb" % "flyway-core" % FlywayVersion % Test).excludeAll(
         ExclusionRule("com.fasterxml.jackson.core"),
