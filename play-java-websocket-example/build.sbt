@@ -4,15 +4,15 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-java-websocket-example",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.3.6"),
+    crossScalaVersions := Seq("2.13.18", "3.3.8"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
       ws,
-      "org.webjars" %% "webjars-play" % "3.0.2",
+      "org.webjars" %% "webjars-play" % "3.0.10",
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "3.3.7-1",
-      "org.assertj" % "assertj-core" % "3.27.3" % Test,
+      "org.assertj" % "assertj-core" % "3.27.7" % Test,
       "org.awaitility" % "awaitility" % "4.3.0" % Test,
     ),
     TwirlKeys.templateImports ++= Seq(
