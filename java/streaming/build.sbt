@@ -24,3 +24,4 @@ TwirlKeys.templateImports ++= Seq(
   "play.mvc.Http.{ RequestHeader => JRequestHeader }",
   "views.html.helper.CSPNonce"
 )
+

@@ -29,3 +29,4 @@ lazy val root = (project in file("."))
 TwirlKeys.templateImports ++= Seq(
   "views.html.helper.CSPNonce"
 )
+
