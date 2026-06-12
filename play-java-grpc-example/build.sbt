@@ -64,7 +64,7 @@ val CompileDeps = Seq(
   "com.typesafe.akka"       %% "akka-http"            % akkaHttpVersion,
   "com.typesafe.akka"       %% "akka-http-spray-json" % akkaHttpVersion,
   // Test Database
-  "com.h2database" % "h2" % "2.3.232"
+  "com.h2database" % "h2" % "2.4.240"
 )
 
 val TestDeps = Seq(
