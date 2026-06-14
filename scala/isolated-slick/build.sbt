@@ -15,7 +15,7 @@ def scala2OnlyScalacOptions(options: String*) = Def.setting {
   }
 }
 
-val FlywayVersion = "11.10.1"
+val FlywayVersion = "11.10.5"
 
 (ThisBuild / version) := "1.1-SNAPSHOT"
 
@@ -58,7 +58,7 @@ lazy val slick = (project in file("modules/slick"))
   .enablePlugins(CodegenPlugin)
   .settings(
     libraryDependencies ++= Seq(
-      "com.zaxxer" % "HikariCP" % "6.3.0",
+      "com.zaxxer" % "HikariCP" % "6.3.3",
       "com.typesafe.slick" %% "slick" % "3.6.1",
       "com.typesafe.slick" %% "slick-hikaricp" % "3.6.1"
     ),
