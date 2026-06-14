@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
       jdbc,
       evolutions,
       "com.h2database" % "h2" % "2.4.240",
-      "org.playframework.anorm" %% "anorm" % "2.11.0",
+      "org.playframework.anorm" %% "anorm" % "3.1.0",
       "org.scalatestplus.play" %% "scalatestplus-play" % "7.0.2" % Test,
     ),
     scalacOptions ++= List("-feature", "-Werror"),
