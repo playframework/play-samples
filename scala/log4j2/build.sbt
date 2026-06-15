@@ -1,6 +1,6 @@
 resolvers += Resolver.sonatypeCentralSnapshots
 
-val log4jVersion = "2.25.4"
+val log4jVersion = "2.26.0"
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
