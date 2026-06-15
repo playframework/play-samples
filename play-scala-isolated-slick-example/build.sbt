@@ -6,7 +6,7 @@ lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")
 lazy val databasePassword = sys.env.getOrElse("DB_DEFAULT_PASSWORD", "")
 
-val FlywayVersion = "11.10.1"
+val FlywayVersion = "11.10.5"
 
 (ThisBuild / version) := "1.1-SNAPSHOT"
 
@@ -15,7 +15,7 @@ val FlywayVersion = "11.10.1"
   "com.google.inject" % "guice" % "6.0.0"
 )
 
-(ThisBuild / crossScalaVersions) := Seq("2.13.18", "3.3.6")
+(ThisBuild / crossScalaVersions) := Seq("2.13.18", "3.3.8")
 (ThisBuild / scalaVersion) := crossScalaVersions.value.head
 (ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
@@ -49,7 +49,7 @@ lazy val slick = (project in file("modules/slick"))
   .enablePlugins(CodegenPlugin)
   .settings(
     libraryDependencies ++= Seq(
-      "com.zaxxer" % "HikariCP" % "6.3.0",
+      "com.zaxxer" % "HikariCP" % "6.3.3",
       "com.typesafe.slick" %% "slick" % "3.6.1",
       "com.typesafe.slick" %% "slick-hikaricp" % "3.6.1"
     ),
