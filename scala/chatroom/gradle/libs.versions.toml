@@ -2,7 +2,7 @@
 twirl = "2.1.0-M9"
 play = "3.1.0-M9"
 webjars-play = "3.1.0-M5"
-jsoup = "1.21.2"
+jsoup = "1.22.2"
 flot = "0.8.3-1"
 bootstrap = "3.4.1"
 scalatestplus = "3.2.19.1"
