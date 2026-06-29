@@ -13,3 +13,4 @@ crossScalaVersions := Seq("2.13.18", "3.8.3")
 scalaVersion := crossScalaVersions.value.head
 
 libraryDependencies += guice
+

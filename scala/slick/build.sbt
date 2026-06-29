@@ -51,3 +51,4 @@ lazy val computerDatabaseSample = sampleProject("computer-database")
 lazy val basicSample = sampleProject("basic")
 
 lazy val personSample = sampleProject("person")
+

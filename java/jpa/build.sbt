@@ -23,3 +23,4 @@ lazy val root = (project in file("."))
     javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror"),
     PlayKeys.externalizeResourcesExcludes += baseDirectory.value / "conf" / "META-INF" / "persistence.xml"
   )
+
