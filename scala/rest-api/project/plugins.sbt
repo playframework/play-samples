@@ -7,4 +7,4 @@ addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.11.0-M4")
 
 // Load testing tool:
 // https://gatling.io/docs/gatling/reference/current/extensions/sbt_plugin/
-addSbtPlugin("io.gatling" % "gatling-sbt" % "4.18.3")
+addSbtPlugin("io.gatling" % "gatling-sbt" % "4.18.4")
