@@ -39,7 +39,7 @@ trait RequestMarkerContext {
       implicit request: RequestHeader): MarkerContext = {
     MarkerContext {
       marker("id" -> request.id) && marker("host" -> request.host) && marker(
-        "remoteAddress" -> request.remote.identity)
+        "remoteIdentity" -> request.remote.identity)
     }
   }
 
