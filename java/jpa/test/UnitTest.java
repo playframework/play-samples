@@ -8,6 +8,7 @@ import models.PersonRepository;
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 import org.junit.Test;
 import play.api.test.CSRFTokenHelper;
+import play.api.i18n.DefaultLangs;
 import play.data.FormFactory;
 import play.data.format.Formatters;
 import play.i18n.Lang;
@@ -84,7 +85,7 @@ public class UnitTest {
                 .buildValidatorFactory();
 
         Config config = ConfigFactory.load();
-        FormFactory formFactory = new FormFactory(messagesApi, new Formatters(messagesApi), validatorFactory, config);
+        FormFactory formFactory = new FormFactory(messagesApi, new DefaultLangs().asJava(), new Formatters(messagesApi), validatorFactory, config);
 
         // It is okay to use commonPool here since this is just a test.
         ClassLoaderExecutionContext ec = new ClassLoaderExecutionContext(ForkJoinPool.commonPool());
