@@ -15,7 +15,7 @@ def scala2OnlyScalacOptions(options: String*) = Def.setting {
   }
 }
 
-val FlywayVersion = "12.11.0"
+val FlywayVersion = "13.0.0"
 
 (ThisBuild / version) := "1.1-SNAPSHOT"
 
