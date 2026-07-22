@@ -29,5 +29,6 @@ lazy val root = (project in file("."))
     scalacOptions ++= Seq(
       "-feature",
       "-Werror"
-    ) ++ scala2OnlyScalacOptions("-Xsource:3").value
+    ) ++ scala2OnlyScalacOptions("-Xsource:3").value,
+    Test / javaOptions ++= Seq("--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED"),
   )
