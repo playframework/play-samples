@@ -2,7 +2,7 @@
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.9.11")
 
 // sbt-paradox, used for documentation
-addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.10.7")
+addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.11.0")
 
 // Load testing tool:
 // https://gatling.io/docs/gatling/reference/current/extensions/sbt_plugin/
