@@ -40,9 +40,13 @@ lazy val flyway = (project in file("modules/flyway"))
   .enablePlugins(FlywayPlugin)
   .settings(
     libraryDependencies += ("org.flywaydb" % "flyway-core" % FlywayVersion).excludeAll(
-      ExclusionRule("com.fasterxml.jackson.core"),
-      ExclusionRule("com.fasterxml.jackson.dataformat"),
-      ExclusionRule("com.fasterxml.jackson.datatype")
+      // Note: Jackson 3 Databind still depends on Jackson 2 Annotations. We do not exclude the later however,
+      // because Jackson 2 Annotations hardly change. Even if Play or one of its component depend on a
+      // different jackson-databind version, that shouldn't really make a problem.
+      // https://repo1.maven.org/maven2/tools/jackson/core/jackson-databind/3.2.1/jackson-databind-3.2.1.pom
+      // https://github.com/FasterXML/jackson-databind/blob/jackson-databind-3.2.1/pom.xml#L92-L94
+      // --
+      //ExclusionRule("tools.jackson.core"), // Once Play switches to Jackson 3 and we want to avoid version clashes
     ),
     flywayLocations := Seq("classpath:db/migration"),
     flywayUrl := databaseUrl,
@@ -100,9 +104,13 @@ lazy val root = (project in file("."))
       "com.h2database" % "h2" % "2.4.240",
       ws % Test,
       ("org.flywaydb" % "flyway-core" % FlywayVersion % Test).excludeAll(
-        ExclusionRule("com.fasterxml.jackson.core"),
-        ExclusionRule("com.fasterxml.jackson.dataformat"),
-        ExclusionRule("com.fasterxml.jackson.datatype")
+        // Note: Jackson 3 Databind still depends on Jackson 2 Annotations. We do not exclude the later however,
+        // because Jackson 2 Annotations hardly change. Even if Play or one of its component depend on a
+        // different jackson-databind version, that shouldn't really make a problem.
+        // https://repo1.maven.org/maven2/tools/jackson/core/jackson-databind/3.2.1/jackson-databind-3.2.1.pom
+        // https://github.com/FasterXML/jackson-databind/blob/jackson-databind-3.2.1/pom.xml#L92-L94
+        // --
+        //ExclusionRule("tools.jackson.core"), // Once Play switches to Jackson 3 and we want to avoid version clashes
       ),
       "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test
     ),
