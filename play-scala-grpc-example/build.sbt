@@ -12,6 +12,7 @@ version := "1.0-SNAPSHOT"
 // build.sbt
 lazy val `play-scala-grpc-example` = (project in file("."))
   .enablePlugins(PlayScala)
+  //.enablePlugins(PlayNettyServer).disablePlugins(PlayAkkaHttpServer) // uncomment to use the Netty backend
   .enablePlugins(AkkaGrpcPlugin) // enables source generation for gRPC
   .enablePlugins(PlayAkkaHttp2Support) // enables serving HTTP/2 and gRPC
 // #grpc_play_plugins
