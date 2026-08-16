@@ -21,3 +21,4 @@ javacOptions ++= Seq(
   "-Xlint:deprecation",
   "-Werror"
 )
+

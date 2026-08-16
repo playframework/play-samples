@@ -27,3 +27,4 @@ lazy val root = (project in file("."))
     // Make verbose tests
     (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
   )
+

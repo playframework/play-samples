@@ -31,3 +31,4 @@ lazy val root = (project in file("."))
       "-Werror"
     ) ++ scala2OnlyScalacOptions("-Xsource:3").value
   )
+

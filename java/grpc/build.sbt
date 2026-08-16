@@ -81,3 +81,4 @@ val TestDeps = Seq(
 //    open docs/target/paradox/site/main/index.html
 lazy val docs = (project in file("docs"))
   .enablePlugins(ParadoxPlugin)
+
