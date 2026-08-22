@@ -78,7 +78,7 @@ class UserActor @Inject()(id: String, stocksActor: ActorRef[GetStocks])(implicit
     // Put the source and sink together to make a flow of hub source as output (aggregating all
     // stocks as JSON to the browser) and the actor as the sink (receiving any JSON messages
     // from the browse), using a coupled sink and source.
-    Flow.fromSinkAndSourceCoupled(jsonSink, hubSource).watchTermination() { (_, termination) =>
+    Flow.fromSinkAndSourceCoupled(jsonSink, hubSource).watchTermination { (_, termination) =>
       // When the flow shuts down, make sure this actor also stops.
       context.pipeToSelf(termination)((_: Try[Done]) => InternalStop)
       NotUsed
