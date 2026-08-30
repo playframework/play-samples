@@ -91,3 +91,4 @@ scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchec
 //    open docs/target/paradox/site/main/index.html
 lazy val docs = (project in file("docs"))
   .enablePlugins(ParadoxPlugin)
+
