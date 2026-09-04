@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
     name := """play-scala-hello-world-tutorial""",
     organization := "com.example",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.8.3"),
+    crossScalaVersions := Seq("3.9.0", "3.8.3"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
