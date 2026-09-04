@@ -3,7 +3,7 @@ import play.sbt.PlaySettings
 
 resolvers += Resolver.sonatypeCentralSnapshots
 
-lazy val scala213 = "2.13.18"
+lazy val scala213 = "3.9.0"
 lazy val scala3 = "3.8.4"
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
