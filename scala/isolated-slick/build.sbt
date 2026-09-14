@@ -101,7 +101,7 @@ lazy val root = (project in file("."))
     TwirlKeys.templateImports += "com.example.user.User",
     libraryDependencies ++= Seq(
       guice,
-      "com.h2database" % "h2" % "2.4.240",
+      "com.h2database" % "h2" % "2.5.250",
       ws % Test,
       ("org.flywaydb" % "flyway-core" % FlywayVersion % Test).excludeAll(
         // Note: Jackson 3 Databind still depends on Jackson 2 Annotations. We do not exclude the later however,
