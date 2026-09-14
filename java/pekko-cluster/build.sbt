@@ -21,6 +21,8 @@ val pekkoVersion =  PlayVersion.pekkoVersion
 // this dependency is required to form the Pekko Cluster
 libraryDependencies += "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion
 
+Test / javaOptions ++= Seq("--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED")
+
 // Sending messages from a node to another in the Pekko Cluster requires serializing. This
 // example application uses the default Pekko Jackson serializer with the CBOR format.
 // See also `conf/serialization.conf` and `services.CborSerializable` for more info.
