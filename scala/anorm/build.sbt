@@ -26,3 +26,4 @@ lazy val root = (project in file("."))
     scalacOptions ++= List("-feature", "-Werror") ++ scala2OnlyScalacOptions("-Xsource:3").value,
     javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror"),
   )
+

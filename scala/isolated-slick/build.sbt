@@ -118,3 +118,4 @@ lazy val root = (project in file("."))
   )
   .aggregate(slick)
   .dependsOn(slick)
+

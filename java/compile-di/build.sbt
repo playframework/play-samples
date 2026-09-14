@@ -15,3 +15,4 @@ ThisBuild / scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-featur
 ThisBuild / javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")
 
 Test / testOptions := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v"))
+
