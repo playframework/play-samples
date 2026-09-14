@@ -9,7 +9,7 @@ import play.api.mvc._
 import java.time.Instant
 import java.util.UUID
 import jakarta.inject.{Inject, Singleton}
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class UserController @Inject() (userDAO: UserDAO, cc: ControllerComponents)(
@@ -54,22 +54,22 @@ class UserController @Inject() (userDAO: UserDAO, cc: ControllerComponents)(
    * POST - Create a new user from the UserRequest.form validated
    * @return Redirect into the index view to see the new user
    */
-  def save: Action[AnyContent] = Action { implicit request =>
+  def save: Action[AnyContent] = Action.async { implicit request =>
     UserRequest.form
       .bindFromRequest()
       .fold(
-        formWithErrors => BadRequest(views.html.create(formWithErrors)),
-        formData => {
-          userDAO.create(
-            User(
-              UUID.randomUUID().toString,
-              formData.email,
-              createdAt = Instant.now(),
-              updatedAt = Option(Instant.now())
+        formWithErrors => Future.successful(BadRequest(views.html.create(formWithErrors))),
+        formData =>
+          userDAO
+            .create(
+              User(
+                UUID.randomUUID().toString,
+                formData.email,
+                createdAt = Instant.now(),
+                updatedAt = Option(Instant.now())
+              )
             )
-          )
-          Redirect(routes.UserController.index)
-        }
+            .map(_ => Redirect(routes.UserController.index))
       )
   }
 
@@ -97,27 +97,25 @@ class UserController @Inject() (userDAO: UserDAO, cc: ControllerComponents)(
    */
   def update(id: String): Action[AnyContent] = Action.async {
     implicit request =>
-      userDAO.lookup(id).map { userData =>
-        userData.fold(
-          Redirect(routes.UserController.index)
-        ) { user =>
+      userDAO.lookup(id).flatMap {
+        case None => Future.successful(Redirect(routes.UserController.index))
+        case Some(user) =>
           UserRequest.form
             .bindFromRequest()
             .fold(
-              formWithErrors => BadRequest(views.html.create(formWithErrors)),
-              formData => {
-                userDAO.update(
-                  User(
-                    id,
-                    formData.email,
-                    user.createdAt,
-                    updatedAt = Option(Instant.now())
+              formWithErrors => Future.successful(BadRequest(views.html.create(formWithErrors))),
+              formData =>
+                userDAO
+                  .update(
+                    User(
+                      id,
+                      formData.email,
+                      user.createdAt,
+                      updatedAt = Option(Instant.now())
+                    )
                   )
-                )
-                Redirect(routes.UserController.index)
-              }
+                  .map(_ => Redirect(routes.UserController.index))
             )
-        }
       }
   }
 
@@ -128,13 +126,9 @@ class UserController @Inject() (userDAO: UserDAO, cc: ControllerComponents)(
    */
   def delete(id: String): Action[AnyContent] = Action.async {
     implicit unused =>
-      userDAO.lookup(id).map { userData =>
-        userData.fold(
-          Redirect(routes.UserController.index)
-        ) { _ =>
-          userDAO.delete(id)
-          Redirect(routes.UserController.index)
-        }
+      userDAO.lookup(id).flatMap {
+        case None    => Future.successful(Redirect(routes.UserController.index))
+        case Some(_) => userDAO.delete(id).map(_ => Redirect(routes.UserController.index))
       }
   }
 }
