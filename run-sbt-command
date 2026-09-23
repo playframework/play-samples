@@ -8,7 +8,8 @@ sample_path="${sample_path#$repo_root/}"
 
 sbt_bin="${SBT_BIN:-sbt}"
 run_sbt1="${RUN_SBT1_TESTS:-true}"
-sbt2_version="${MATRIX_SBT2:-2.0.6}"
+sbt1_version="${MATRIX_SBT1:-1.13.0}"
+sbt2_version="${MATRIX_SBT2:-2.1.0-M2}"
 run_sbt2="${RUN_SBT2_TESTS:-true}"
 
 sbt2_blacklist=(
@@ -36,17 +37,41 @@ if [ "$#" -eq 0 ]; then
 fi
 
 if [[ "$run_sbt1" == "true" ]]; then
+    sbt1_args=()
+    first_arg=true
+    for arg in "$@"; do
+        if [[ "$first_arg" != "true" && "$arg" != \;* ]]; then
+            arg=";$arg"
+        fi
+        sbt1_args+=("$arg")
+        first_arg=false
+    done
     echo "+-----------------------------+"
     echo "| Executing tests using sbt 1 |"
     echo "+-----------------------------+"
-    "$sbt_bin" "$@"
+    "$sbt_bin" -Dsbt.version="$sbt1_version" "${sbt1_args[@]}"
 fi
 
 if [[ "$run_sbt2" == "true" && "$skip_sbt2" != "true" ]]; then
+    sbt2_args=()
+    first_arg=true
+    for arg in "$@"; do
+        # In sbt 2, `test` is the incremental `testQuick`; CI needs the full suite.
+        if [[ "$arg" == "test" ]]; then
+            arg=testFull
+        fi
+        # sbt 2 joins command arguments with spaces, so delimit each command
+        # explicitly rather than relying on sbt 1's CLI behavior.
+        if [[ "$first_arg" != "true" && "$arg" != \;* ]]; then
+            arg=";$arg"
+        fi
+        sbt2_args+=("$arg")
+        first_arg=false
+    done
     echo "+--------------------------------------+"
     echo "| Executing tests using sbt $sbt2_version |"
     echo "+--------------------------------------+"
-    "$sbt_bin" -Dsbt.version="$sbt2_version" "$@"
+    "$sbt_bin" -Dsbt.version="$sbt2_version" "${sbt2_args[@]}"
 elif [[ "$run_sbt2" == "true" && "$skip_sbt2" == "true" ]]; then
     echo "Skipping sbt $sbt2_version for blacklisted sample: $sample_path"
 fi
