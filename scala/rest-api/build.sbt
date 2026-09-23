@@ -34,7 +34,7 @@ lazy val root = (project in file("."))
     ) ++ scala2OnlyScalacOptions("-Xsource:3").value
   )
 
-lazy val gatlingVersion = "3.9.5"
+lazy val gatlingVersion = "3.15.1"
 lazy val gatling = (project in file("gatling"))
   .enablePlugins(GatlingPlugin)
   .settings(
