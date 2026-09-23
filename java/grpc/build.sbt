@@ -4,7 +4,7 @@ import play.grpc.gen.javadsl.{PlayJavaClientCodeGenerator, PlayJavaServerCodeGen
 import com.typesafe.sbt.packager.docker.{Cmd, CmdLike, DockerAlias, ExecCmd}
 import play.java.grpc.sample.BuildInfo
 
-resolvers += Resolver.sonatypeCentralSnapshots
+resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 name := "play-java-grpc-example"
 version := "1.0-SNAPSHOT"
@@ -53,7 +53,7 @@ lazy val `play-java-grpc-example` = (project in file("."))
   )
 
 scalaVersion := "2.13.18"
-crossScalaVersions := Seq("2.13.18", "3.8.3")
+crossScalaVersions := Seq("2.13.18", "3.3.8")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
 

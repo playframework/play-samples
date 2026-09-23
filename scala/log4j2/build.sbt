@@ -1,4 +1,4 @@
-resolvers += Resolver.sonatypeCentralSnapshots
+resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 val log4jVersion = "2.26.1"
 
@@ -16,14 +16,14 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-log4j2-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.8.3"),
+    crossScalaVersions := Seq("2.13.18", "3.3.8"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
       "org.apache.logging.log4j" % "log4j-slf4j-impl" % log4jVersion,
       "org.apache.logging.log4j" % "log4j-api" % log4jVersion,
       "org.apache.logging.log4j" % "log4j-core" % log4jVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

@@ -7,10 +7,26 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$repo_root/scala-versions.sh"
 
 if [ -z "$MATRIX_SCALA" ]; then
     echo "Error: the environment variable MATRIX_SCALA is not set"
     exit 1
+fi
+
+MATRIX_SCALA="$(resolveScalaVersion "$MATRIX_SCALA")"
+export MATRIX_SCALA
+
+supported_scala=false
+for tested_scala_version in "${testedScalaVersions[@]}"; do
+  if [[ "$MATRIX_SCALA" == "$tested_scala_version" ]]; then
+    supported_scala=true
+    break
+  fi
+done
+if [[ "$supported_scala" != true ]]; then
+  echo "Error: unsupported Scala version: $MATRIX_SCALA"
+  exit 1
 fi
 
 # Initialize variables
@@ -48,7 +64,7 @@ function buildSample() {
       if [ -f scripts/test-sbt ]; then
         scripts/test-sbt
       else
-        "$repo_root/run-sbt-command" "++$MATRIX_SCALA" test
+        "$repo_root/run-sbt-command" "++$MATRIX_SCALA!" clean test
       fi
     fi
     popd

@@ -4,4 +4,4 @@ export KEY_PASSWORD=`cat scripts/password`
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(cd "$script_dir/../../.." && pwd)"
 
-SBT_BIN=./play "$repo_root/run-sbt-command" "++$MATRIX_SCALA" test
+SBT_BIN=./play "$repo_root/run-sbt-command" "++$MATRIX_SCALA!" clean test

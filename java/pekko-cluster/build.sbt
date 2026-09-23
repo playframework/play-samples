@@ -1,6 +1,6 @@
 import play.core.PlayVersion
 
-resolvers += Resolver.sonatypeCentralSnapshots
+resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 name := """play-java-pekko-cluster-example"""
 organization := "com.example"
@@ -10,7 +10,7 @@ version := "1.0-SNAPSHOT"
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
   //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
 
-crossScalaVersions := Seq("2.13.18", "3.8.3")
+crossScalaVersions := Seq("2.13.18", "3.3.8")
 
 scalaVersion := crossScalaVersions.value.head
 

@@ -1,4 +1,4 @@
-resolvers += Resolver.sonatypeCentralSnapshots
+resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
@@ -6,10 +6,10 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-java-chatroom-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.8.3"),
+    crossScalaVersions := Seq("2.13.18", "3.3.8"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
-      "org.webjars" %% "webjars-play" % "3.1.0-M5",
+      "org.webjars" %% "webjars-play" % "3.1.0-M5+4-18ad4fde-SNAPSHOT",
       "org.webjars" % "flot" % "0.8.3",
       "org.webjars" % "bootstrap" % "3.4.1",
       guice,

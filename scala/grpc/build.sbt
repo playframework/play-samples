@@ -4,7 +4,7 @@ import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCod
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.scala.grpc.sample.BuildInfo
 
-resolvers += Resolver.sonatypeCentralSnapshots
+resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -76,11 +76,11 @@ val TestDeps = Seq(
   "org.playframework"       %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test,
   "org.playframework"       %% "play-test"           % playVersion     % Test,
   "org.playframework"       %% "play-specs2"         % playVersion     % Test,
-  "org.scalatestplus.play"  %% "scalatestplus-play"  % "8.0.0-M2" % Test,
+  "org.scalatestplus.play"  %% "scalatestplus-play"  % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test,
 )
 
 scalaVersion := "2.13.18"
-crossScalaVersions := Seq("2.13.18", "3.8.3")
+crossScalaVersions := Seq("2.13.18", "3.3.8")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked") ++ scala2OnlyScalacOptions("-Xsource:3").value
 
 // Make verbose tests

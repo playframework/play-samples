@@ -6,4 +6,4 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 repo_root="$(cd "$script_dir/../../.." && pwd)"
 
 rm -f test.mv.db test.trace.db
-"$repo_root/run-sbt-command" "++$MATRIX_SCALA" clean reload "++$MATRIX_SCALA" flyway/flywayMigrate slickCodegen test
+"$repo_root/run-sbt-command" "++$MATRIX_SCALA!" clean reload "++$MATRIX_SCALA!" flyway/flywayMigrate slickCodegen test

@@ -1,4 +1,4 @@
-resolvers += Resolver.sonatypeCentralSnapshots
+resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
@@ -6,7 +6,7 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-java-dagger2-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.8.3"),
+    crossScalaVersions := Seq("2.13.18", "3.3.8"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       ws,
@@ -17,6 +17,7 @@ lazy val root = (project in file("."))
     (Compile / javacOptions) := { (Compile / managedSourceDirectories).value.head.mkdirs(); javacOptions.value },
     (Compile / javacOptions) ++= Seq("-s", (Compile / managedSourceDirectories).value.head.getAbsolutePath),
     javacOptions ++= Seq(
+      "-proc:full",
       "-Xlint:unchecked",
       "-Xlint:deprecation",
       "-Werror"
