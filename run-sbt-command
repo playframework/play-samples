@@ -7,6 +7,8 @@ sample_path="$(pwd)"
 sample_path="${sample_path#$repo_root/}"
 
 sbt_bin="${SBT_BIN:-sbt}"
+# Keep each sbt version in its own JVM instead of reconnecting to a previous lane's server.
+sbt_process_args=(--server --no-server --batch)
 run_sbt1="${RUN_SBT1_TESTS:-true}"
 sbt1_version="${MATRIX_SBT1:-1.13.0}"
 sbt2_version="${MATRIX_SBT2:-2.1.0-M2}"
@@ -49,7 +51,7 @@ if [[ "$run_sbt1" == "true" ]]; then
     echo "+-----------------------------+"
     echo "| Executing tests using sbt 1 |"
     echo "+-----------------------------+"
-    "$sbt_bin" -Dsbt.version="$sbt1_version" "${sbt1_args[@]}"
+    "$sbt_bin" "${sbt_process_args[@]}" -Dsbt.version="$sbt1_version" "${sbt1_args[@]}"
 fi
 
 if [[ "$run_sbt2" == "true" && "$skip_sbt2" != "true" ]]; then
@@ -71,7 +73,7 @@ if [[ "$run_sbt2" == "true" && "$skip_sbt2" != "true" ]]; then
     echo "+--------------------------------------+"
     echo "| Executing tests using sbt $sbt2_version |"
     echo "+--------------------------------------+"
-    "$sbt_bin" -Dsbt.version="$sbt2_version" "${sbt2_args[@]}"
+    "$sbt_bin" "${sbt_process_args[@]}" -Dsbt.version="$sbt2_version" "${sbt2_args[@]}"
 elif [[ "$run_sbt2" == "true" && "$skip_sbt2" == "true" ]]; then
     echo "Skipping sbt $sbt2_version for blacklisted sample: $sample_path"
 fi
