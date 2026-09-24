@@ -6,8 +6,8 @@ def scala2OnlyScalacOptions(options: String*) = Def.setting {
 }
 
 val commonSettings = Seq(
-  resolvers += Resolver.sonatypeCentralSnapshots,
-  crossScalaVersions := Seq("2.13.18", "3.8.3"),
+  resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo),
+  crossScalaVersions := Seq("2.13.18", "3.3.8"),
   scalaVersion := crossScalaVersions.value.head,
   scalacOptions ++= Seq(
     "-feature",
@@ -42,7 +42,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       ws,
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test,
     )
   )
   .aggregate(one, two)

@@ -4,7 +4,7 @@ import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCod
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.scala.grpc.sample.BuildInfo
 
-resolvers += Resolver.sonatypeCentralSnapshots
+resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -25,6 +25,13 @@ lazy val `play-scala-grpc-example` = (project in file("."))
   .enablePlugins(PlayPekkoHttp2Support) // enables serving HTTP/2 and gRPC
 // #grpc_play_plugins
     .settings(
+      dependencyOverrides ++= Seq(
+        // TODO: Remove once Pekko gRPC 2.0.0-M3+ is released and Play gRPC pulls in these Pekko versions.
+        "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
+        "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
+      ),
+      // TODO: Remove once https://github.com/apache/pekko-grpc/pull/895 is included in a release.
+      Compile / unmanagedResourceDirectories ~= (_.distinct),
       pekkoGrpcGeneratedLanguages := Seq(PekkoGrpc.Scala),
       // #grpc_client_generators
       // build.sbt
@@ -76,11 +83,11 @@ val TestDeps = Seq(
   "org.playframework"       %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test,
   "org.playframework"       %% "play-test"           % playVersion     % Test,
   "org.playframework"       %% "play-specs2"         % playVersion     % Test,
-  "org.scalatestplus.play"  %% "scalatestplus-play"  % "8.0.0-M2" % Test,
+  "org.scalatestplus.play"  %% "scalatestplus-play"  % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test,
 )
 
 scalaVersion := "2.13.18"
-crossScalaVersions := Seq("2.13.18", "3.8.3")
+crossScalaVersions := Seq("2.13.18", "3.3.8")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked") ++ scala2OnlyScalacOptions("-Xsource:3").value
 
 // Make verbose tests
@@ -91,3 +98,4 @@ scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchec
 //    open docs/target/paradox/site/main/index.html
 lazy val docs = (project in file("docs"))
   .enablePlugins(ParadoxPlugin)
+  .settings(name := "play-scala-grpc-example-docs")

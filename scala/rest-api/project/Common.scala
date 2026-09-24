@@ -23,7 +23,7 @@ object Common extends AutoPlugin {
         )
       case _ => Seq.empty
     }),
-    scalacOptions in Test ++= (CrossVersion.partialVersion(scalaVersion.value) match {
+    Test / scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, _)) =>
         Seq(
           "-Yrangepos",

@@ -1,7 +1,7 @@
-resolvers += Resolver.sonatypeCentralSnapshots
+resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 lazy val scala213 = "2.13.18"
-lazy val scala3 = "3.9.0"
+lazy val scala3 = "3.3.8"
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
@@ -29,7 +29,7 @@ lazy val root = (project in file("."))
     )
   )
 
-val gatlingVersion = "3.9.5"
+val gatlingVersion = "3.15.1"
 lazy val gatling = (project in file("gatling"))
   .enablePlugins(GatlingPlugin)
   .settings(

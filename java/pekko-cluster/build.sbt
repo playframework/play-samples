@@ -1,6 +1,6 @@
 import play.core.PlayVersion
 
-resolvers += Resolver.sonatypeCentralSnapshots
+resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 name := """play-java-pekko-cluster-example"""
 organization := "com.example"
@@ -10,7 +10,7 @@ version := "1.0-SNAPSHOT"
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
   //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
 
-crossScalaVersions := Seq("2.13.18", "3.8.3")
+crossScalaVersions := Seq("2.13.18", "3.3.8")
 
 scalaVersion := crossScalaVersions.value.head
 
@@ -20,6 +20,8 @@ val pekkoVersion =  PlayVersion.pekkoVersion
 
 // this dependency is required to form the Pekko Cluster
 libraryDependencies += "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion
+
+Test / javaOptions ++= Seq("--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED")
 
 // Sending messages from a node to another in the Pekko Cluster requires serializing. This
 // example application uses the default Pekko Jackson serializer with the CBOR format.

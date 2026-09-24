@@ -1,4 +1,4 @@
-resolvers += Resolver.sonatypeCentralSnapshots
+resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -14,11 +14,11 @@ lazy val root = (project in file("."))
     name := """play-scala-hello-world-tutorial""",
     organization := "com.example",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.8.3"),
+    crossScalaVersions := Seq("2.13.18", "3.3.8"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
