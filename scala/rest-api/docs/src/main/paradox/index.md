@@ -2,37 +2,16 @@
 
 This is a multi-part guide to walk you through how to make a RESTful API with JSON using [Play Framework](https://playframework.com).
 
-We’ll demonstrate with a "best practices" REST API.  You can get source code for this guide two ways:
-
-## From Lightbend Tech Hub
-
-Download a pre-packaged bundle with this link: <https://example.lightbend.com/v1/download/play-samples-play-scala-rest-api-example>.
-
-**Linux/Mac:**
-
-```bash
-unzip play-scala-rest-api-example.zip
-cd play-scala-rest-api-example
-./sbt
-```
-
-**Windows:**
-
-1. Unzip the download
-1. From a command line `cd` into the directory where you expanded the downloaded `zip` file and run:
-
-```bash
-sbt.bat
-```
+We’ll demonstrate with a "best practices" REST API. You can get the source code for this guide from GitHub:
 
 ## [From GitHub](https://github.com/playframework/play-samples)
 
 ```bash
-git clone https://github.com/playframework/play-samples.git
-cd play-scala-rest-api-example
+git clone --branch main https://github.com/playframework/play-samples.git
+cd play-samples/scala/rest-api
 ```
 
-Make sure you're using the right Play version branch.
+These commands check out the development branch. For a released Play version, choose the corresponding branch in the repository.
 
 This example is in Scala, but Play also has a [Java API](https://www.playframework.com/documentation/latest/JavaHome) which looks and acts just like the [Scala API](https://www.playframework.com/documentation/latest/ScalaHome), and has a corresponding play-java-rest-api-example project in the [play-samples](https://github.com/playframework/play-samples) repo.  For instructions on running and using the project, please see the [[appendix]].  This project also comes with an integrated [Gatling](http://gatling.io/) load test -- again, instructions are in the appendix.
 
@@ -42,15 +21,15 @@ Note that there’s more involved in a REST API -- monitoring, representation, a
 
 Play makes a good REST API implementation because Play does the right thing out of the box.  Play makes simple things easy, makes hard things possible, and encourages code that scales because it works in sympathy with the JVM and the underlying hardware. But "safe and does the right thing" is the boring answer.
 
-The fun answer is that [Play is **fast**](https://www.lightbend.com/blog/why-is-play-framework-so-fast).
-
-In fact, Play is so fast that you have to turn off machines so that the rest of your architecture can keep up.  The Hootsuite team was able to **reduce the number of servers by 80%** by [switching to Play](https://www.lightbend.com/resources/case-studies-and-stories/how-hootsuite-modernized-its-url-shortener).  if you deploy Play with the same infrastructure that you were using for other web frameworks, you are effectively staging a denial of service attack against your own database.
+The fun answer is that [Play is **fast**](https://kevinwebber.ca/blog/what-makes-the-play-framework-fast/).
 
 Play is fast because Play is **built on reactive bedrock**.  Play starts from a reactive core, and builds on reactive principles all the way from the ground.  Play breaks network packets into a stream of small chunks of bytes.  It keeps a small pool of work stealing threads, mapped to the number of cores in the machine, and keeps those threads fed with those chunks.  Play exposes those byte chunks to the application for body parsing, Server Sent Events and WebSockets through [Pekko Streams](https://pekko.apache.org/docs/pekko/current/scala/stream/stream-introduction.html) -- the Reactive Streams implementation designed by the people who invented [Reactive Streams](http://www.reactive-streams.org/) and wrote the [Reactive Manifesto](http://www.reactivemanifesto.org/).
 
+For guidance on keeping applications responsive when using blocking APIs, see [Understanding Play thread pools](https://www.playframework.com/documentation/latest/ThreadPools).
+
 Linkedin uses Play throughout its infrastructure. It wins on all [four quadrants of scalability](http://www.slideshare.net/brikis98/the-play-framework-at-linkedin/128-Outline1_Getting_started_with_Play2) ([video](https://youtu.be/8z3h4Uv9YbE)).  Play's average "request per second" comes in around [tens of k on a basic quad core w/o any intentional tuning](https://twitter.com/kevinbowling1/status/764188720140398592) -- and it only gets better.
 
-Play provides an easy to use MVC paradigm, including hot-reloading without any JVM bytecode magic or container overhead.  Startup time for a developer on Play was **reduced by roughly 7 times** for [Walmart Canada](https://www.lightbend.com/resources/case-studies-and-stories/walmart-boosts-conversions-by-20-with-lightbend-reactive-platform), and using Play **reduced development times by 2x to 3x**.
+Play provides an easy to use MVC paradigm, including hot-reloading without any JVM bytecode magic or container overhead.
 
 Play combines this with a **reactive programming API** that lets you write async, non-blocking code in a straightforward fashion without worrying about complex and confusing "callback hell."  In both Java or Scala, Play works on the same principle: leverage the asynchronous computation API that the language provides to you.  In Play, you work with [`java.util.concurrent.CompletionStage`](https://docs.oracle.com/javase/8/docs/technotes/guides/concurrency/changes8.html) or [`scala.concurrent.Future`](http://docs.scala-lang.org/overviews/core/futures.html) API directly, and Play passes that asynchronous computation back through the framework.
 
