@@ -5,8 +5,8 @@ libraryDependencies += "com.h2database" % "h2" % "2.5.250"
 addSbtPlugin("com.github.sbt" % "flyway-sbt" % "12.0.0")
 
 // Slick code generation
-// https://github.com/tototoshi/sbt-slick-codegen
-addSbtPlugin("com.github.tototoshi" % "sbt-slick-codegen" % "2.2.0")
+// https://github.com/sbt/sbt-slick-codegen
+addSbtPlugin("com.github.sbt" % "sbt-slick-codegen" % "2.2.0+16-c6e18768-SNAPSHOT")
 
 // The Play plugin
 resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
