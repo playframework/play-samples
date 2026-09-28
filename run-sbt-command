@@ -15,8 +15,6 @@ sbt2_version="${MATRIX_SBT2:-2.1.0-M2}"
 run_sbt2="${RUN_SBT2_TESTS:-true}"
 
 sbt2_blacklist=(
-     # https://github.com/tototoshi/sbt-slick-codegen/pull/103
-     "scala/isolated-slick"
 )
 
 skip_sbt2="false"
