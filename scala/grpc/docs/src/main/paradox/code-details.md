@@ -32,7 +32,7 @@ You will need to enable the Pekko-gRPC generators for server-side code:
 
 @@snip [build.sbt](../../../../build.sbt) { #grpc_server_generators }
 
-You can read more about [Service gRPC from a Play App](https://developer.lightbend.com/docs/play-grpc/current/play/serving-grpc.html) in the docs.
+You can read more about [Serving gRPC from Play](https://github.com/playframework/play-grpc/blob/main/docs/modules/ROOT/pages/serving-grpc.adoc) in the docs.
 
 ### 2.b Injecting Pekko-gRPC Clients
 

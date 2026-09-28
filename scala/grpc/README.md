@@ -1,6 +1,6 @@
 # Play Scala gRPC Example
 
-This example is described in the [Play Scala gRPC Example site](https://developer.lightbend.com/guides/play-scala-grpc-example/).
+This example is described in the [Play Scala gRPC example guide](docs/src/main/paradox/index.md).
 
 This is an example application that shows how to use Pekko gRPC to both expose and use gRPC services inside an Play application.
 

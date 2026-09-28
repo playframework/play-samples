@@ -13,8 +13,7 @@ For detailed documentation refer to https://www.playframework.com/documentation/
 
 ## Obtaining this example
 
-You may download the code from [GitHub](https://github.com/playframework/play-scala-grpc-example) directly or you can
-kickstart your Play gRPC project on [Lightbend's Tech Hub](https://developer.lightbend.com/start/?group=play&project=play-scala-grpc-example).
+The source code is available in the [play-samples repository on GitHub](https://github.com/playframework/play-samples/tree/main/scala/grpc).
 
 ## What this example does
 
