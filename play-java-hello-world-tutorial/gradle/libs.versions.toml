@@ -1,6 +1,6 @@
 [versions]
 twirl = "2.0.9"
-play = "2.9.11"
+play = "2.9.12"
 junit = "4.13.2"
 
 [libraries]
