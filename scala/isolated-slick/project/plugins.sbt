@@ -6,7 +6,7 @@ addSbtPlugin("com.github.sbt" % "flyway-sbt" % "12.0.0")
 
 // Slick code generation
 // https://github.com/sbt/sbt-slick-codegen
-addSbtPlugin("com.github.sbt" % "sbt-slick-codegen" % "2.2.0+16-c6e18768-SNAPSHOT")
+addSbtPlugin("com.github.sbt" % "sbt-slick-codegen" % "2.2.0+18-7bef3ed4-SNAPSHOT")
 
 // The Play plugin
 resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
