@@ -6,7 +6,7 @@ buildInfoPackage := "play.java.grpc.sample"
 resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M10-e1f3c2a9-SNAPSHOT")
 
-addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.11.0")
+addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.11.1")
 
 // #grpc_sbt_plugin
 // project/plugins.sbt
