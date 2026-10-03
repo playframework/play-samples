@@ -17,13 +17,6 @@ lazy val `play-java-grpc-example` = (project in file("."))
   .enablePlugins(PlayPekkoHttp2Support) // enables serving HTTP/2 and gRPC
   // #grpc_play_plugins
   .settings(
-    dependencyOverrides ++= Seq(
-      // TODO: Remove once Pekko gRPC 2.0.0-M3+ is released and Play gRPC pulls in these Pekko versions.
-      "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
-      "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
-    ),
-    // TODO: Remove once https://github.com/apache/pekko-grpc/pull/895 is included in a release.
-    Compile / unmanagedResourceDirectories ~= (_.distinct),
     pekkoGrpcGeneratedLanguages := Seq(PekkoGrpc.Java),
     // #grpc_client_generators
     // build.sbt
