@@ -17,8 +17,8 @@ lazy val root = (project in file("."))
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
-      "com.h2database" % "h2" % "2.2.224",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test,
+      "com.h2database" % "h2" % "2.5.252",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test,
     ),
     scalacOptions ++= Seq(
       "-feature",

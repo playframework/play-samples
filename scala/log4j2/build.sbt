@@ -23,7 +23,7 @@ lazy val root = (project in file("."))
       "org.apache.logging.log4j" % "log4j-slf4j-impl" % log4jVersion,
       "org.apache.logging.log4j" % "log4j-api" % log4jVersion,
       "org.apache.logging.log4j" % "log4j-core" % log4jVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

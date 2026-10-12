@@ -1,10 +1,10 @@
 enablePlugins(BuildInfoPlugin)
-val playGrpcV = "0.13.0-M5+70-4d1a20b1-SNAPSHOT"
+val playGrpcV = "0.13.0-M5+86-69b1467c-SNAPSHOT"
 buildInfoKeys := Seq[BuildInfoKey]("playGrpcVersion" -> playGrpcV)
 buildInfoPackage := "play.scala.grpc.sample"
 
 resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M10-e1f3c2a9-SNAPSHOT")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M10-3968a052-SNAPSHOT")
 
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.11.1")
 

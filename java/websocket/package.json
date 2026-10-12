@@ -2,6 +2,6 @@
   "name": "play-java-websocket-example",
   "devDependencies": {
     "coffeescript": "^2.7.0",
-    "less": "^4.2.0"
+    "less": "^4.9.1"
   }
 }

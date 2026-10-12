@@ -21,15 +21,15 @@ lazy val root = (project in file("."))
       guice,
       "org.webjars" %% "webjars-play" % "3.1.0-M5+4-18ad4fde-SNAPSHOT",
       "org.webjars" % "flot" % "0.8.3-1",
-      "org.webjars" % "bootstrap" % "3.3.7-1",
+      "org.webjars" % "bootstrap" % "5.3.8",
       ("net.logstash.logback" % "logstash-logback-encoder" % "9.0")
         .excludeAll(ExclusionRule("com.fasterxml.jackson.core")), // Avoid conflicts with Play's Jackson dependency
-      "org.jsoup" % "jsoup" % "1.17.2",
+      "org.jsoup" % "jsoup" % "1.23.2",
       "ch.qos.logback" % "logback-classic" % "1.6.5",
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-testkit" % pekkoVersion % Test,
       "org.apache.pekko" %% "pekko-stream-testkit" % pekkoVersion % Test,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
     scalacOptions ++= Seq(

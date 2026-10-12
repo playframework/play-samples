@@ -74,7 +74,7 @@ val CompileDeps = Seq(
   "org.apache.pekko"       %% "pekko-http"            % pekkoHttpVersion,
   "org.apache.pekko"       %% "pekko-http-spray-json" % pekkoHttpVersion,
   // Test Database
-  "com.h2database" % "h2" % "2.2.224"
+  "com.h2database" % "h2" % "2.5.252"
 )
 
 val playVersion = play.core.PlayVersion.current
@@ -83,7 +83,7 @@ val TestDeps = Seq(
   "org.playframework"       %% "play-grpc-specs2"    % BuildInfo.playGrpcVersion % Test,
   "org.playframework"       %% "play-test"           % playVersion     % Test,
   "org.playframework"       %% "play-specs2"         % playVersion     % Test,
-  "org.scalatestplus.play"  %% "scalatestplus-play"  % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test,
+  "org.scalatestplus.play"  %% "scalatestplus-play"  % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test,
 )
 
 scalaVersion := "2.13.18"

@@ -1,15 +1,15 @@
 [versions]
-twirl = "2.1.0-M9+129-bab5ac69-SNAPSHOT"
-play = "3.1.0-M10-e1f3c2a9-SNAPSHOT"
-scalatestplus = "3.2.19.1"
-scalatestplus-play = "8.0.0-M2+52-be104c90-SNAPSHOT"
-log4j = "2.23.1"
+twirl = "2.1.0-M9+155-1fa74ed8-SNAPSHOT"
+play = "3.1.0-M10-3968a052-SNAPSHOT"
+scalatestplus = "3.2.20.0"
+scalatestplus-play = "8.0.0-M2+74-9a0b55de-SNAPSHOT"
+log4j = "2.26.1"
 
 [libraries]
 log4j-slf4j-impl = { group = "org.apache.logging.log4j", name = "log4j-slf4j-impl", version.ref = "log4j" }
 log4j-api = { group = "org.apache.logging.log4j", name = "log4j-api", version.ref = "log4j" }
 log4j-core = { group = "org.apache.logging.log4j", name = "log4j-core", version.ref = "log4j" }
-scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-10_2.13", version.ref = "scalatestplus" }
+scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-14_2.13", version.ref = "scalatestplus" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
 
 

@@ -3,7 +3,7 @@ package v1.post;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
-import net.jodah.failsafe.FailsafeException;
+import dev.failsafe.FailsafeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import play.libs.concurrent.Futures;

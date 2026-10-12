@@ -11,7 +11,7 @@ sbt_bin="${SBT_BIN:-sbt}"
 sbt_process_args=(--server --no-server --batch)
 run_sbt1="${RUN_SBT1_TESTS:-true}"
 sbt1_version="${MATRIX_SBT1:-1.13.0}"
-sbt2_version="${MATRIX_SBT2:-2.1.0-M2}"
+sbt2_version="${MATRIX_SBT2:-2.1.0-RC1}"
 run_sbt2="${RUN_SBT2_TESTS:-true}"
 
 sbt2_blacklist=(

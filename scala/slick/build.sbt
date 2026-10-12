@@ -35,9 +35,9 @@ def sampleProject(name: String) =
       ) ++ scala2OnlyScalacOptions("-Xsource:3").value,
       libraryDependencies ++= Seq(
         guice,
-        "org.playframework" %% "play-slick" % "7.0.0-M1+145-ccf1031c-SNAPSHOT",
-        "org.playframework" %% "play-slick-evolutions" % "7.0.0-M1+145-ccf1031c-SNAPSHOT",
-        "com.h2database" % "h2" % "2.2.224",
+        "org.playframework" %% "play-slick" % "7.0.0-M1+159-f032ece7-SNAPSHOT",
+        "org.playframework" %% "play-slick-evolutions" % "7.0.0-M1+159-f032ece7-SNAPSHOT",
+        "com.h2database" % "h2" % "2.5.252",
         specs2 % Test,
       ),
       (Global / concurrentRestrictions) += Tags.limit(Tags.Test, 1)
