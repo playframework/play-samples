@@ -39,6 +39,9 @@ run {
 
 tasks.withType(ScalaCompile) {
     scalaCompileOptions.additionalParameters = ["-feature"]
+    if (scalaBinaryVersion == '2.13') {
+        scalaCompileOptions.additionalParameters += ['-Xsource:3']
+    }
 }
 
 test {
