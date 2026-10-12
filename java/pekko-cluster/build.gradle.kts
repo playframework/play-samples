@@ -29,6 +29,10 @@ dependencies {
     testImplementation("org.playframework:play-test_$scalaBinaryVersion:${libs.versions.play.get()}")
 }
 
+tasks.test {
+    jvmArgs("--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED")
+}
+
 tasks.withType<ScalaCompile>().configureEach {
     options.compilerArgs.addAll(listOf("-Xlint:unchecked", "-Xlint:deprecation", "-Werror"))
 }

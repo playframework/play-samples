@@ -46,6 +46,7 @@ tasks.withType(ScalaCompile) {
 }
 
 test {
+    jvmArgs '--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED'
     useJUnitPlatform {
         includeEngines 'scalatest'
     }
