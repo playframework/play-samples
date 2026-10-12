@@ -1,15 +1,15 @@
 [versions]
-twirl = "2.1.0-M9+129-bab5ac69-SNAPSHOT"
-play = "3.1.0-M10-e1f3c2a9-SNAPSHOT"
-scalatestplus = "3.2.19.1"
-scalatestplus-play = "8.0.0-M2+52-be104c90-SNAPSHOT"
+twirl = "2.1.0-M9+155-1fa74ed8-SNAPSHOT"
+play = "3.1.0-M10-3968a052-SNAPSHOT"
+scalatestplus = "3.2.20.0"
+scalatestplus-play = "8.0.0-M2+74-9a0b55de-SNAPSHOT"
 pekko = "2.0.0-M4"
 
 [libraries]
 kalium = { group = "org.abstractj.kalium", name = "kalium", version = "0.8.0" }
 jnr-ffi = { group = "com.github.jnr", name = "jnr-ffi", version = "2.3.3" }
 pekko-distributed-data = { group = "org.apache.pekko", name = "pekko-distributed-data_2.13", version.ref = "pekko" }
-scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-10_2.13", version.ref = "scalatestplus" }
+scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-14_2.13", version.ref = "scalatestplus" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
 
 

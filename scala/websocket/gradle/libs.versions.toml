@@ -1,10 +1,10 @@
 [versions]
-twirl = "2.1.0-M9+129-bab5ac69-SNAPSHOT"
-play = "3.1.0-M10-e1f3c2a9-SNAPSHOT"
-scalatestplus = "3.2.19.1"
-scalatestplus-play = "8.0.0-M2+52-be104c90-SNAPSHOT"
+twirl = "2.1.0-M9+155-1fa74ed8-SNAPSHOT"
+play = "3.1.0-M10-3968a052-SNAPSHOT"
+scalatestplus = "3.2.20.0"
+scalatestplus-play = "8.0.0-M2+74-9a0b55de-SNAPSHOT"
 flot = "0.8.3-1"
-bootstrap = "3.4.1"
+bootstrap = "5.3.8"
 webjars-play = "3.1.0-M5+4-18ad4fde-SNAPSHOT"
 awaitility = "4.3.0"
 node = "7.1.0"
@@ -12,7 +12,7 @@ node = "7.1.0"
 [libraries]
 flot = { group = "org.webjars", name = "flot", version.ref = "flot" }
 bootstrap = { group = "org.webjars", name = "bootstrap", version.ref = "bootstrap" }
-scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-10_2.13", version.ref = "scalatestplus" }
+scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-14_2.13", version.ref = "scalatestplus" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
 awaitility = { group = "org.awaitility", name = "awaitility", version.ref = "awaitility" }
 

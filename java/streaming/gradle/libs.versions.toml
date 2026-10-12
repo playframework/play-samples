@@ -1,6 +1,6 @@
 [versions]
-twirl = "2.1.0-M9+129-bab5ac69-SNAPSHOT"
-play = "3.1.0-M10-e1f3c2a9-SNAPSHOT"
+twirl = "2.1.0-M9+155-1fa74ed8-SNAPSHOT"
+play = "3.1.0-M10-3968a052-SNAPSHOT"
 junit = "4.13.2"
 
 [libraries]

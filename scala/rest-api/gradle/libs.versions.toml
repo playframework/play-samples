@@ -1,16 +1,16 @@
 [versions]
-twirl = "2.1.0-M9+129-bab5ac69-SNAPSHOT"
-play = "3.1.0-M10-e1f3c2a9-SNAPSHOT"
+twirl = "2.1.0-M9+155-1fa74ed8-SNAPSHOT"
+play = "3.1.0-M10-3968a052-SNAPSHOT"
 scala-guice = "7.0.0"
-scala-uri = "4.0.3"
-scalatestplus = "3.2.19.1"
-scalatestplus-play = "8.0.0-M2+52-be104c90-SNAPSHOT"
+scala-uri = "4.2.0"
+scalatestplus = "3.2.20.0"
+scalatestplus-play = "8.0.0-M2+74-9a0b55de-SNAPSHOT"
 
 [libraries]
 logstash-logback-encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version = "9.0" }
 scala-guice = { group = "net.codingwell", name = "scala-guice_2.13", version.ref = "scala-guice" }
-scala-uri = { group = "io.lemonlabs", name = "scala-uri_2.13", version.ref = "scala-uri" }
-scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-10_2.13", version.ref = "scalatestplus" }
+scala-uri = { group = "com.indoorvivants", name = "scala-uri_2.13", version.ref = "scala-uri" }
+scalatest-junit5 = { group = "org.scalatestplus", name = "junit-5-14_2.13", version.ref = "scalatestplus" }
 scalatestplus-play = { group = "org.scalatestplus.play", name = "scalatestplus-play_2.13", version.ref = "scalatestplus-play" }
 
 [plugins]

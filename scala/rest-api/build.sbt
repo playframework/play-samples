@@ -26,7 +26,7 @@ lazy val root = (project in file("."))
         .excludeAll(ExclusionRule("com.fasterxml.jackson.core")), // Avoid conflicts with Play's Jackson dependency
       "com.indoorvivants" %% "scala-uri" % "4.2.0",
       "net.codingwell" %% "scala-guice" % "7.0.0",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
@@ -34,7 +34,7 @@ lazy val root = (project in file("."))
     ) ++ scala2OnlyScalacOptions("-Xsource:3").value
   )
 
-lazy val gatlingVersion = "3.15.1"
+lazy val gatlingVersion = "3.16.0"
 lazy val gatling = (project in file("gatling"))
   .enablePlugins(GatlingPlugin)
   .settings(

@@ -34,7 +34,7 @@ dependencies {
     implementation libs.logstash.logback.encoder
 
     testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaBinaryVersion}:${libs.versions.scalatestplus.play.get()}"
-    testRuntimeOnly "org.scalatestplus:junit-5-10_${scalaBinaryVersion}:${libs.versions.scalatestplus.asProvider().get()}"
+    testRuntimeOnly "org.scalatestplus:junit-5-14_${scalaBinaryVersion}:${libs.versions.scalatestplus.asProvider().get()}"
 }
 
 run {

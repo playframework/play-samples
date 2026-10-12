@@ -1,6 +1,6 @@
 package test
 
-import io.fluentlenium.core.filter.FilterConstructor.withText
+import com.codeborne.selenide.Condition.exactTextCaseSensitive
 import org.specs2.mutable.Specification
 
 import play.api.test.Helpers.HTMLUNIT
@@ -28,7 +28,7 @@ class IntegrationSpec extends Specification {
         browser.$("#searchsubmit").click()
 
         browser.$("section h1").first.text() must equalTo("13 computers found")
-        browser.$("section table tbody tr td a", withText("Apple II")).click()
+        browser.$("section table tbody tr td a").findBy(exactTextCaseSensitive("Apple II")).click()
 
         browser.$("section h1").first.text() must equalTo("Edit computer")
 
@@ -47,7 +47,7 @@ class IntegrationSpec extends Specification {
         browser.$("#searchbox").write("Apple")
         browser.$("#searchsubmit").click()
 
-        browser.$("a", withText("Apple II")).click()
+        browser.$("a").findBy(exactTextCaseSensitive("Apple II")).click()
         browser.$("input.danger").click()
 
         browser.$("section h1").first.text() must equalTo("573 computers found")

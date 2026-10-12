@@ -7,7 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         @webJarsUtil.locate("bootstrap", "css/bootstrap.min.css").css()
-        @webJarsUtil.locate("bootstrap", "css/bootstrap-theme.min.css").css()
 
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
@@ -31,17 +30,17 @@
             </div>
         </div>
 
-        <div class="footer navbar-fixed-bottom">
+        <div class="footer fixed-bottom">
             <div class="row">
-                <div class="col-xs-8 col-sm-9">
+                <div class="col-8 col-sm-9">
                     <input id="message" placeholder="Type Here" type="text"
                       autofocus
                       autocomplete="off" spellcheck="false" autocorrect="off"
-                      class="form-control input-lg" />
+                      class="form-control form-control-lg" />
                 </div>
 
-                <div class="col-xs-4 col-sm-3">
-                    <button id="send" type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+                <div class="col-4 col-sm-3">
+                    <button id="send" type="submit" class="btn btn-primary btn-lg w-100">Send</button>
                 </div>
             </div>
         </div>

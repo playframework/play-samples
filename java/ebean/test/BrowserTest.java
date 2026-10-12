@@ -1,4 +1,4 @@
-import static io.fluentlenium.core.filter.FilterConstructor.withText;
+import static com.codeborne.selenide.Condition.exactTextCaseSensitive;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -25,7 +25,7 @@ public class BrowserTest extends WithBrowser {
     browser.$("#searchsubmit").click();
 
     assertThat(browser.$("#page-title").first().text(), equalTo("13 computers found"));
-    browser.$("a", withText("Apple II")).click();
+    browser.$("a").findBy(exactTextCaseSensitive("Apple II")).click();
 
     assertThat(browser.$("#page-title").first().text(), equalTo("Edit computer"));
 
@@ -45,7 +45,7 @@ public class BrowserTest extends WithBrowser {
     browser.$("#searchbox").fill().with("Apple");
     browser.$("#searchsubmit").click();
 
-    browser.$("a", withText("Apple IIa")).click();
+    browser.$("a").findBy(exactTextCaseSensitive("Apple IIa")).click();
     browser.$("button.btn-danger").click();
 
     browser.takeHtmlDump("target/delete.html");

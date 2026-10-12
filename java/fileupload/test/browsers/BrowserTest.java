@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import io.fluentlenium.core.domain.FluentWebElement;
+import com.codeborne.selenide.SelenideElement;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import play.test.WithBrowser;
@@ -18,12 +18,10 @@ public class BrowserTest extends WithBrowser {
         Path tmpPath = Files.createTempFile(null, null);
         Files.write(tmpPath, "hello".getBytes());
 
-        // http://fluentlenium.org/docs/#filling-forms
         // https://saucelabs.com/resources/articles/best-practices-tips-selenium-file-upload
         browser.goTo("/");
-        FluentWebElement nameElement = browser.find(By.name("name")).first();
-        nameElement.click();
-        nameElement.fill().with(tmpPath.toAbsolutePath().toString());
+        SelenideElement nameElement = browser.find(By.name("name")).first();
+        nameElement.uploadFile(tmpPath.toFile());
         nameElement.submit();
 
         assertTrue(browser.pageSource().equals("file size = 5"));

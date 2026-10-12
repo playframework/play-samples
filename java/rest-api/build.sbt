@@ -14,11 +14,11 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       javaJpa,
-      "com.h2database" % "h2" % "2.2.224",
-      "org.hibernate.orm" % "hibernate-core" % "7.4.12.Final",
-      "io.dropwizard.metrics" % "metrics-core" % "4.2.25",
+      "com.h2database" % "h2" % "2.5.252",
+      "org.hibernate.orm" % "hibernate-core" % "7.4.13.Final",
+      "io.dropwizard.metrics" % "metrics-core" % "4.2.40",
       "com.palominolabs.http" % "url-builder" % "1.1.5",
-      "net.jodah" % "failsafe" % "2.4.4",
+      "dev.failsafe" % "failsafe" % "3.3.2",
     ),
     PlayKeys.externalizeResources := false,
     (Test / testOptions) := Seq(Tests.Argument(TestFrameworks.JUnit, "-a", "-v")),
@@ -29,7 +29,7 @@ lazy val root = (project in file("."))
     )
   )
 
-val gatlingVersion = "3.15.1"
+val gatlingVersion = "3.16.0"
 lazy val gatling = (project in file("gatling"))
   .enablePlugins(GatlingPlugin)
   .settings(

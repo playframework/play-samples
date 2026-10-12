@@ -1,7 +1,7 @@
 package v1.post;
 
-import net.jodah.failsafe.CircuitBreaker;
-import net.jodah.failsafe.Failsafe;
+import dev.failsafe.CircuitBreaker;
+import dev.failsafe.Failsafe;
 import play.db.jpa.JPAApi;
 
 import jakarta.inject.Inject;
@@ -25,7 +25,7 @@ public class JPAPostRepository implements PostRepository {
 
     private final JPAApi jpaApi;
     private final PostExecutionContext ec;
-    private final CircuitBreaker<Optional<PostData>> circuitBreaker = new CircuitBreaker<Optional<PostData>>().withFailureThreshold(1).withSuccessThreshold(3);
+    private final CircuitBreaker<Optional<PostData>> circuitBreaker = CircuitBreaker.<Optional<PostData>>builder().withFailureThreshold(1).withSuccessThreshold(3).build();
 
     @Inject
     public JPAPostRepository(JPAApi api, PostExecutionContext ec) {

@@ -11,10 +11,10 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       // Test Database
-      "com.h2database" % "h2" % "2.2.224",
+      "com.h2database" % "h2" % "2.5.252",
       // Testing libraries for dealing with CompletionStage...
-      "org.assertj" % "assertj-core" % "3.26.3" % Test,
-      "org.awaitility" % "awaitility" % "4.2.2" % Test,
+      "org.assertj" % "assertj-core" % "3.27.7" % Test,
+      "org.awaitility" % "awaitility" % "4.3.0" % Test,
     ),
     javacOptions ++= Seq(
       "-encoding", "UTF-8",

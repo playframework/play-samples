@@ -1,9 +1,9 @@
 [versions]
-twirl = "2.1.0-M9+129-bab5ac69-SNAPSHOT"
-play = "3.1.0-M10-e1f3c2a9-SNAPSHOT"
-play-ebean = "9.0.0-M2+80-59a82594-SNAPSHOT"
+twirl = "2.1.0-M9+155-1fa74ed8-SNAPSHOT"
+play = "3.1.0-M10-3968a052-SNAPSHOT"
+play-ebean = "9.0.0-M2+127-9383f3c1-SNAPSHOT"
 ebean = "19.6.0" # Sync with Play Ebean version https://github.com/playframework/play-ebean/blob/main/project/Dependencies.scala#L19
-h2 = "2.5.250"
+h2 = "2.5.252"
 junit = "4.13.2"
 assertj = "3.27.7"
 awaitility = "4.3.0"

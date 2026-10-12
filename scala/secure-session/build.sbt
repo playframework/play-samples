@@ -21,10 +21,10 @@ lazy val root = (project in file("."))
       ws,
       guice,
       "org.abstractj.kalium" % "kalium" % "0.8.0",
-      "com.github.jnr" % "jnr-ffi" % "2.2.19",
+      "com.github.jnr" % "jnr-ffi" % "2.3.3",
       "org.apache.pekko" %% "pekko-distributed-data" % pekkoVersion,
       "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+52-be104c90-SNAPSHOT" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",
