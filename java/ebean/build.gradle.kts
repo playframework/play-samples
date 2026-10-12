@@ -21,20 +21,18 @@ twirl {
 }
 
 dependencies {
-    implementation(platform("org.playframework:play-bom_$scalaBinaryVersion:${libs.versions.play.asProvider().get()}"))
-
-    implementation("org.playframework:play-$server-server_$scalaBinaryVersion")
-    implementation("org.playframework:play-guice_$scalaBinaryVersion")
-    implementation("org.playframework:play-jdbc_$scalaBinaryVersion")
-    implementation("org.playframework:play-java-forms_$scalaBinaryVersion")
-    implementation("org.playframework:play-filters-helpers_$scalaBinaryVersion")
-    implementation("org.playframework:play-logback_$scalaBinaryVersion")
+    implementation("org.playframework:play-$server-server_$scalaBinaryVersion:${libs.versions.play.asProvider().get()}")
+    implementation("org.playframework:play-guice_$scalaBinaryVersion:${libs.versions.play.asProvider().get()}")
+    implementation("org.playframework:play-jdbc_$scalaBinaryVersion:${libs.versions.play.asProvider().get()}")
+    implementation("org.playframework:play-java-forms_$scalaBinaryVersion:${libs.versions.play.asProvider().get()}")
+    implementation("org.playframework:play-filters-helpers_$scalaBinaryVersion:${libs.versions.play.asProvider().get()}")
+    implementation("org.playframework:play-logback_$scalaBinaryVersion:${libs.versions.play.asProvider().get()}")
     implementation("org.playframework:play-ebean_$scalaBinaryVersion:${libs.versions.play.ebean.get()}")
     implementation(libs.h2)
     annotationProcessor("io.ebean:querybean-generator:${libs.versions.ebean.get()}")
 
     testImplementation(libs.junit)
-    testImplementation("org.playframework:play-test_$scalaBinaryVersion")
+    testImplementation("org.playframework:play-test_$scalaBinaryVersion:${libs.versions.play.asProvider().get()}")
     testImplementation(libs.assertj)
     testImplementation(libs.awaitility)
 }
@@ -56,6 +54,9 @@ repositories {
     mavenCentral()
     maven {
         url = uri("https://central.sonatype.com/repository/maven-snapshots")
+    }
+    maven {
+        url = uri("https://repository.apache.org/content/repositories/snapshots/")
     }
     mavenLocal()
 }

@@ -19,15 +19,13 @@ twirl {
 }
 
 dependencies {
-    implementation(platform("org.playframework:play-bom_$scalaBinaryVersion:${libs.versions.play.get()}"))
-
-    implementation("org.playframework:play-$server-server_$scalaBinaryVersion")
-    implementation("org.playframework:play-guice_$scalaBinaryVersion")
-    implementation("org.playframework:play-java-forms_$scalaBinaryVersion")
-    implementation("org.playframework:play-logback_$scalaBinaryVersion")
+    implementation("org.playframework:play-$server-server_$scalaBinaryVersion:${libs.versions.play.get()}")
+    implementation("org.playframework:play-guice_$scalaBinaryVersion:${libs.versions.play.get()}")
+    implementation("org.playframework:play-java-forms_$scalaBinaryVersion:${libs.versions.play.get()}")
+    implementation("org.playframework:play-logback_$scalaBinaryVersion:${libs.versions.play.get()}")
 
     testImplementation(libs.junit)
-    testImplementation("org.playframework:play-test_$scalaBinaryVersion")
+    testImplementation("org.playframework:play-test_$scalaBinaryVersion:${libs.versions.play.get()}")
 }
 
 tasks.withType<ScalaCompile>().configureEach {
@@ -39,6 +37,9 @@ repositories {
     mavenCentral()
     maven {
         url = uri("https://central.sonatype.com/repository/maven-snapshots")
+    }
+    maven {
+        url = uri("https://repository.apache.org/content/repositories/snapshots/")
     }
     mavenLocal()
 }
