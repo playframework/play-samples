@@ -10,23 +10,33 @@ play {
     lang = Language.SCALA
 }
 
-def scalaVersion = System.getProperty('scala.version', PlayPlugin.DEFAULT_SCALA_VERSION).replaceAll('\\D*$', '')
+def scalaBinaryVersion = System.getProperty('scala.version', PlayPlugin.DEFAULT_SCALA_VERSION).with {
+    it.startsWith('3') ? '3' : it.tokenize('.').take(2).join('.')
+}
 def server = System.getProperty('backend.server', 'pekko-http').with {if (it == "pekko") "pekko-http" else it }
 
-dependencies {
-    implementation platform("org.playframework:play-bom_${scalaVersion}:${libs.versions.play.get()}")
+scala {
+    scalaVersion = providers.systemProperty('scala.version')
+}
 
-    implementation "org.playframework:play-${server}-server_${scalaVersion}"
-    implementation "org.playframework:play-guice_${scalaVersion}"
-    implementation "org.playframework:play-logback_${scalaVersion}"
-    implementation "net.codingwell:scala-guice_${scalaVersion}:${libs.versions.scala.guice.get()}"
-    implementation "io.lemonlabs:scala-uri_${scalaVersion}:${libs.versions.scala.uri.get()}"
+twirl {
+    scalaVersion = scalaBinaryVersion
+}
+
+dependencies {
+    implementation platform("org.playframework:play-bom_${scalaBinaryVersion}:${libs.versions.play.get()}")
+
+    implementation "org.playframework:play-${server}-server_${scalaBinaryVersion}"
+    implementation "org.playframework:play-guice_${scalaBinaryVersion}"
+    implementation "org.playframework:play-logback_${scalaBinaryVersion}"
+    implementation "net.codingwell:scala-guice_${scalaBinaryVersion}:${libs.versions.scala.guice.get()}"
+    implementation "io.lemonlabs:scala-uri_${scalaBinaryVersion}:${libs.versions.scala.uri.get()}"
     implementation libs.logstash.logback.encoder
 
-    testImplementation "org.playframework:play-test_${scalaVersion}"
-    testImplementation "org.playframework:play-filters-helpers_${scalaVersion}"
-    testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaVersion}:${libs.versions.scalatestplus.play.get()}"
-    testRuntimeOnly "org.scalatestplus:junit-5-10_${scalaVersion}:${libs.versions.scalatestplus.asProvider().get()}"
+    testImplementation "org.playframework:play-test_${scalaBinaryVersion}"
+    testImplementation "org.playframework:play-filters-helpers_${scalaBinaryVersion}"
+    testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaBinaryVersion}:${libs.versions.scalatestplus.play.get()}"
+    testRuntimeOnly "org.scalatestplus:junit-5-10_${scalaBinaryVersion}:${libs.versions.scalatestplus.asProvider().get()}"
 }
 
 run {
