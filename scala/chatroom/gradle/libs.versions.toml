@@ -1,12 +1,12 @@
 [versions]
-twirl = "2.1.0-M9"
-play = "3.1.0-M9"
-webjars-play = "3.1.0-M5"
+twirl = "2.1.0-M9+129-bab5ac69-SNAPSHOT"
+play = "3.1.0-M10-e1f3c2a9-SNAPSHOT"
+webjars-play = "3.1.0-M5+4-18ad4fde-SNAPSHOT"
 jsoup = "1.23.2"
 flot = "0.8.3-1"
 bootstrap = "3.4.1"
 scalatestplus = "3.2.19.1"
-scalatestplus-play = "8.0.0-M2"
+scalatestplus-play = "8.0.0-M2+52-be104c90-SNAPSHOT"
 
 [libraries]
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoup" }
