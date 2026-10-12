@@ -1,6 +1,6 @@
 [versions]
 twirl = "2.1.0-M9+129-bab5ac69-SNAPSHOT"
-play = "3.1.0-M10-e1f3c2a9-SNAPSHOT"
+play = "3.1.0-M10-18305524-SNAPSHOT"
 failsafe = "2.4.4"
 url-builder = "1.1.5"
 h2 = "2.5.250"
