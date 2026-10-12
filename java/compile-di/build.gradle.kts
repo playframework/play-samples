@@ -40,3 +40,14 @@ repositories {
     }
     mavenLocal()
 }
+
+// Play 3.1 requires Java 17, including the Scala compiler's Java output target.
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType<ScalaCompile>().configureEach {
+    options.compilerArgs.addAll(listOf("--release", "17"))
+    scalaCompileOptions.additionalParameters = (scalaCompileOptions.additionalParameters ?: emptyList()) + "-release:17"
+}
