@@ -1,6 +1,6 @@
 [versions]
 twirl = "2.1.0-M9+129-bab5ac69-SNAPSHOT"
-play = "3.1.0-M10-e1f3c2a9-SNAPSHOT"
+play = "3.1.0-M10-18305524-SNAPSHOT"
 play-ebean = "9.0.0-M2+80-59a82594-SNAPSHOT"
 ebean = "19.6.0" # Sync with Play Ebean version https://github.com/playframework/play-ebean/blob/main/project/Dependencies.scala#L19
 h2 = "2.5.250"
