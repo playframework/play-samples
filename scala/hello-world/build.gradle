@@ -29,7 +29,7 @@ dependencies {
     implementation "org.playframework:play-logback_${scalaBinaryVersion}:${libs.versions.play.get()}"
 
     testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaBinaryVersion}:${libs.versions.scalatestplus.play.get()}"
-    testRuntimeOnly "org.scalatestplus:junit-5-10_${scalaBinaryVersion}:${libs.versions.scalatestplus.asProvider().get()}"
+    testRuntimeOnly "org.scalatestplus:junit-5-14_${scalaBinaryVersion}:${libs.versions.scalatestplus.asProvider().get()}"
 }
 
 run {
