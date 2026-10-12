@@ -24,8 +24,10 @@ twirl {
 }
 
 dependencies {
-    implementation "org.playframework:play-${server}-server_${scalaBinaryVersion}:${libs.versions.play.get()}"
-    implementation "org.playframework:play-guice_${scalaBinaryVersion}:${libs.versions.play.get()}"
+    implementation platform("org.playframework:play-bom_${scalaBinaryVersion}:${libs.versions.play.get()}")
+
+    implementation "org.playframework:play-${server}-server_${scalaBinaryVersion}"
+    implementation "org.playframework:play-guice_${scalaBinaryVersion}"
     implementation libs.log4j.slf4j.impl
     implementation libs.log4j.api
     implementation libs.log4j.core

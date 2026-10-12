@@ -24,15 +24,17 @@ twirl {
 }
 
 dependencies {
-    implementation "org.playframework:play-${server}-server_${scalaBinaryVersion}:${libs.versions.play.get()}"
-    implementation "org.playframework:play-guice_${scalaBinaryVersion}:${libs.versions.play.get()}"
-    implementation "org.playframework:play-logback_${scalaBinaryVersion}:${libs.versions.play.get()}"
+    implementation platform("org.playframework:play-bom_${scalaBinaryVersion}:${libs.versions.play.get()}")
+
+    implementation "org.playframework:play-${server}-server_${scalaBinaryVersion}"
+    implementation "org.playframework:play-guice_${scalaBinaryVersion}"
+    implementation "org.playframework:play-logback_${scalaBinaryVersion}"
     implementation "net.codingwell:scala-guice_${scalaBinaryVersion}:${libs.versions.scala.guice.get()}"
     implementation "io.lemonlabs:scala-uri_${scalaBinaryVersion}:${libs.versions.scala.uri.get()}"
     implementation libs.logstash.logback.encoder
 
-    testImplementation "org.playframework:play-test_${scalaBinaryVersion}:${libs.versions.play.get()}"
-    testImplementation "org.playframework:play-filters-helpers_${scalaBinaryVersion}:${libs.versions.play.get()}"
+    testImplementation "org.playframework:play-test_${scalaBinaryVersion}"
+    testImplementation "org.playframework:play-filters-helpers_${scalaBinaryVersion}"
     testImplementation "org.scalatestplus.play:scalatestplus-play_${scalaBinaryVersion}:${libs.versions.scalatestplus.play.get()}"
     testRuntimeOnly "org.scalatestplus:junit-5-10_${scalaBinaryVersion}:${libs.versions.scalatestplus.asProvider().get()}"
 }
