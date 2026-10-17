@@ -24,10 +24,12 @@ twirl {
 }
 
 dependencies {
-    implementation "org.playframework:play-${server}-server_${scalaBinaryVersion}:${libs.versions.play.get()}"
-    implementation "org.playframework:play-guice_${scalaBinaryVersion}:${libs.versions.play.get()}"
-    implementation "org.playframework:play-filters-helpers_${scalaBinaryVersion}:${libs.versions.play.get()}"
-    implementation "org.playframework:play-logback_${scalaBinaryVersion}:${libs.versions.play.get()}"
+    implementation platform("org.playframework:play-bom_${scalaBinaryVersion}:${libs.versions.play.get()}")
+
+    implementation "org.playframework:play-${server}-server_${scalaBinaryVersion}"
+    implementation "org.playframework:play-guice_${scalaBinaryVersion}"
+    implementation "org.playframework:play-filters-helpers_${scalaBinaryVersion}"
+    implementation "org.playframework:play-logback_${scalaBinaryVersion}"
     implementation libs.kalium
     implementation libs.jnr.ffi
     implementation "org.apache.pekko:pekko-distributed-data_${scalaBinaryVersion}:${libs.versions.pekko.get()}"
