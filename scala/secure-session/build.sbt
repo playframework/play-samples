@@ -21,7 +21,7 @@ lazy val root = (project in file("."))
       ws,
       guice,
       "org.abstractj.kalium" % "kalium" % "0.8.0",
-      "com.github.jnr" % "jnr-ffi" % "2.3.3",
+      "com.github.jnr" % "jnr-ffi" % "2.3.4",
       "org.apache.pekko" %% "pekko-distributed-data" % pekkoVersion,
       "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
       "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test
