@@ -8,6 +8,12 @@ You must have JDK 11 installed on your machine to run this, to take advantage of
 
 * [Adoptium OpenJDK](https://adoptium.net/)
 
+## Server backend
+
+By default, the project uses the Akka HTTP Server backend. To switch to the Netty Server backend, enable the `PlayNettyServer` sbt plugin in the `build.sbt` file.
+In the `build.sbt` of this project, you'll find a commented line for this setting; simply uncomment it to make the switch.
+For more detailed information, refer to the Play Framework [documentation](https://www.playframework.com/documentation/3.0.x/Server).
+
 ## Generate Certificates
 
 To use HTTPS, you must have X.509 certificates.  Generating certificates can be painful, so all the scripts needed to generate the certificates needed are included in the `scripts` directory.  For more detail, you can see the [Certificate Generation](https://www.playframework.com/documentation/latest/CertificateGeneration) section in Play WS SSL.
