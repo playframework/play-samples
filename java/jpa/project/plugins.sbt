@@ -7,5 +7,5 @@ addSbtPlugin("com.github.sbt" % "sbt-coffeescript" % "2.1.0-M3+29-99381aea-SNAPS
 addSbtPlugin("com.github.sbt" % "sbt-less" % "2.1.0-M2+37-a6ff5697-SNAPSHOT")
 addSbtPlugin("com.github.sbt" % "sbt-jshint" % "2.1.0-M1+33-22eb7a8a-SNAPSHOT")
 addSbtPlugin("com.github.sbt" % "sbt-rjs" % "2.1.0-M1+33-d0d08f2d-SNAPSHOT")
-addSbtPlugin("com.github.sbt" % "sbt-digest" % "2.2.0-M1+35-897604da-SNAPSHOT")
+addSbtPlugin("com.github.sbt" % "sbt-digest" % "2.2.0-M1+37-182f1b3b-SNAPSHOT")
 addSbtPlugin("com.github.sbt" % "sbt-mocha" % "2.2.0-M3+18-843576a8-SNAPSHOT")
