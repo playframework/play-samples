@@ -14,13 +14,15 @@ scala {
 }
 
 dependencies {
-    implementation("org.playframework:play-java_$scalaBinaryVersion:${libs.versions.play.get()}")
-    implementation("org.playframework:play-$server-server_$scalaBinaryVersion:${libs.versions.play.get()}")
-    implementation("org.playframework:play-filters-helpers_$scalaBinaryVersion:${libs.versions.play.get()}")
-    implementation("org.playframework:play-logback_$scalaBinaryVersion:${libs.versions.play.get()}")
+    implementation(platform("org.playframework:play-bom_$scalaBinaryVersion:${libs.versions.play.get()}"))
+
+    implementation("org.playframework:play-java_$scalaBinaryVersion")
+    implementation("org.playframework:play-$server-server_$scalaBinaryVersion")
+    implementation("org.playframework:play-filters-helpers_$scalaBinaryVersion")
+    implementation("org.playframework:play-logback_$scalaBinaryVersion")
 
     testImplementation(libs.junit)
-    testImplementation("org.playframework:play-test_$scalaBinaryVersion:${libs.versions.play.get()}")
+    testImplementation("org.playframework:play-test_$scalaBinaryVersion")
 }
 
 tasks.withType<ScalaCompile>().configureEach {
