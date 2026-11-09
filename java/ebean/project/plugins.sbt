@@ -2,4 +2,4 @@
 resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M10-3968a052-SNAPSHOT")
 
-addSbtPlugin("org.playframework" % "sbt-play-ebean" % "9.0.0-M2+127-9383f3c1-SNAPSHOT")
+addSbtPlugin("org.playframework" % "sbt-play-ebean" % "9.0.0-M2+165-941a1974-SNAPSHOT")
