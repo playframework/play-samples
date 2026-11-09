@@ -112,7 +112,7 @@ lazy val root = (project in file("."))
         // --
         //ExclusionRule("tools.jackson.core"), // Once Play switches to Jackson 3 and we want to avoid version clashes
       ),
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+86-ba513f60-SNAPSHOT" % Test
     ),
     (Test / fork) := true
   )
