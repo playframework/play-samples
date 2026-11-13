@@ -2,7 +2,7 @@
 twirl = "2.1.0-M9+155-1fa74ed8-SNAPSHOT"
 play = "3.1.0-M10-3968a052-SNAPSHOT"
 junit = "4.13.2"
-pekko = "2.0.0-M4"
+pekko = "2.0.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
