@@ -35,8 +35,8 @@ def sampleProject(name: String) =
       ) ++ scala2OnlyScalacOptions("-Xsource:3").value,
       libraryDependencies ++= Seq(
         guice,
-        "org.playframework" %% "play-slick" % "7.0.0-M1+159-f032ece7-SNAPSHOT",
-        "org.playframework" %% "play-slick-evolutions" % "7.0.0-M1+159-f032ece7-SNAPSHOT",
+        "org.playframework" %% "play-slick" % "7.0.0-M1+167-9bc63f4a-SNAPSHOT",
+        "org.playframework" %% "play-slick-evolutions" % "7.0.0-M1+167-9bc63f4a-SNAPSHOT",
         "com.h2database" % "h2" % "2.5.252",
         specs2 % Test,
       ),
