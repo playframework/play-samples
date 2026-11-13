@@ -19,11 +19,13 @@ twirl {
 }
 
 dependencies {
-    implementation("org.playframework:play-$server-server_$scalaBinaryVersion:${libs.versions.play.get()}")
-    implementation("org.playframework:play-guice_$scalaBinaryVersion:${libs.versions.play.get()}")
-    implementation("org.playframework:play-java-forms_$scalaBinaryVersion:${libs.versions.play.get()}")
-    implementation("org.playframework:play-java-jpa_$scalaBinaryVersion:${libs.versions.play.get()}")
-    implementation("org.playframework:play-logback_$scalaBinaryVersion:${libs.versions.play.get()}")
+    implementation(platform("org.playframework:play-bom_$scalaBinaryVersion:${libs.versions.play.get()}"))
+
+    implementation("org.playframework:play-$server-server_$scalaBinaryVersion")
+    implementation("org.playframework:play-guice_$scalaBinaryVersion")
+    implementation("org.playframework:play-java-forms_$scalaBinaryVersion")
+    implementation("org.playframework:play-java-jpa_$scalaBinaryVersion")
+    implementation("org.playframework:play-logback_$scalaBinaryVersion")
     implementation(libs.failsafe)
     implementation(libs.url.builder)
     implementation(libs.h2)
@@ -31,7 +33,7 @@ dependencies {
     implementation(libs.metrics.core)
 
     testImplementation(libs.junit)
-    testImplementation("org.playframework:play-test_$scalaBinaryVersion:${libs.versions.play.get()}")
+    testImplementation("org.playframework:play-test_$scalaBinaryVersion")
     testImplementation("org.scalatestplus.play", "scalatestplus-play_$scalaBinaryVersion", libs.versions.scalatestplus.play.get())
 }
 
