@@ -4,7 +4,7 @@ import play.sbt.PlaySettings
 resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
 
 lazy val scala213 = "2.13.18"
-lazy val scala3 = "3.3.8"
+lazy val scala3 = "3.3.9"
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
