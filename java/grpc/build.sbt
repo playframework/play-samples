@@ -17,6 +17,11 @@ lazy val `play-java-grpc-example` = (project in file("."))
   .enablePlugins(PlayPekkoHttp2Support) // enables serving HTTP/2 and gRPC
   // #grpc_play_plugins
   .settings(
+    // Let javac handle the protected BuilderParent types in generated Protobuf Java sources.
+    Compile / compileOrder := CompileOrder.JavaThenScala,
+    // Reverse routes are unused here; omitting them avoids a Java/Scala compilation cycle.
+    Compile / generateReverseRouter := false,
+    Compile / generateJsReverseRouter := false,
     dependencyOverrides ++= Seq(
       // TODO: Remove once Pekko gRPC 2.0.0-M3+ is released and Play gRPC pulls in these Pekko versions.
       "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
