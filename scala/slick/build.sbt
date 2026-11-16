@@ -21,6 +21,9 @@ lazy val root = (project in file("."))
     personSample
   )
 
+// Serialize compilation to avoid intermittent Scala 3 compiler errors across the samples.
+Global / concurrentRestrictions += Tags.limit(Tags.Compile, 1)
+
 def sampleProject(name: String) =
   Project(s"$name-sample", file("samples") / name)
     .enablePlugins(PlayScala)
