@@ -24,7 +24,7 @@ lazy val root = (project in file("."))
       "org.webjars" % "bootstrap" % "5.3.8",
       ("net.logstash.logback" % "logstash-logback-encoder" % "9.0")
         .excludeAll(ExclusionRule("com.fasterxml.jackson.core")), // Avoid conflicts with Play's Jackson dependency
-      "org.jsoup" % "jsoup" % "1.23.2",
+      "org.jsoup" % "jsoup" % "1.24.1",
       "ch.qos.logback" % "logback-classic" % "1.6.6",
       "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion,
       "org.apache.pekko" %% "pekko-testkit" % pekkoVersion % Test,
