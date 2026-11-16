@@ -5,7 +5,7 @@ scalatestplus = "3.2.20.0"
 scalatestplus-play = "8.0.0-M2+74-9a0b55de-SNAPSHOT"
 flot = "0.8.3-1"
 bootstrap = "5.3.8"
-webjars-play = "3.1.0-M5+4-18ad4fde-SNAPSHOT"
+webjars-play = "3.1.0-M5+7-9491b067-SNAPSHOT"
 awaitility = "4.3.0"
 node = "7.1.0"
 
