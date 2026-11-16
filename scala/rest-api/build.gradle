@@ -28,7 +28,7 @@ dependencies {
     implementation "org.playframework:play-guice_${scalaBinaryVersion}:${libs.versions.play.get()}"
     implementation "org.playframework:play-logback_${scalaBinaryVersion}:${libs.versions.play.get()}"
     implementation "net.codingwell:scala-guice_${scalaBinaryVersion}:${libs.versions.scala.guice.get()}"
-    implementation "io.lemonlabs:scala-uri_${scalaBinaryVersion}:${libs.versions.scala.uri.get()}"
+    implementation "com.indoorvivants:scala-uri_${scalaBinaryVersion}:${libs.versions.scala.uri.get()}"
     implementation libs.logstash.logback.encoder
 
     testImplementation "org.playframework:play-test_${scalaBinaryVersion}:${libs.versions.play.get()}"
