@@ -21,7 +21,7 @@ lazy val root = (project in file("."))
       "org.webjars" %% "webjars-play" % "3.1.0-M5+7-9491b067-SNAPSHOT",
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "5.3.8",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+95-3cde726d-SNAPSHOT" % Test,
       "org.awaitility" % "awaitility" % "4.3.0" % Test,
     ),
     TwirlKeys.templateImports ++= Seq(

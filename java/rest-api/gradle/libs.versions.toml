@@ -7,7 +7,7 @@ h2 = "2.5.252"
 hibernate = "7.4.14.Final"
 metrics = "4.2.40"
 junit = "4.13.2"
-scalatestplus-play = "8.0.0-M2+74-9a0b55de-SNAPSHOT"
+scalatestplus-play = "8.0.0-M2+95-3cde726d-SNAPSHOT"
 
 [libraries]
 failsafe = { group = "dev.failsafe", name = "failsafe", version.ref = "failsafe" }
