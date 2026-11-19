@@ -1,10 +1,10 @@
 // The Play plugin
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M10-3968a052-SNAPSHOT")
+resolvers += Resolver.sonatypeCentralSnapshots
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M10-5da0b97a-SNAPSHOT")
 
 // sbt-paradox, used for documentation
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.11.1")
 
 // Load testing tool:
 // https://gatling.io/docs/gatling/reference/current/extensions/sbt_plugin/
-addSbtPlugin("io.gatling" % "gatling-sbt" % "4.19.2")
+addSbtPlugin("io.gatling" % "gatling-sbt" % "4.20.2")

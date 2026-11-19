@@ -1,10 +1,10 @@
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 name := "play-java-streaming-example"
 
 version := "1.0-SNAPSHOT"
 
-crossScalaVersions := Seq("2.13.18", "3.3.8")
+crossScalaVersions := Seq("2.13.18", "3.3.9")
 scalaVersion := crossScalaVersions.value.head
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)

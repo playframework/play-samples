@@ -1,4 +1,4 @@
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -13,12 +13,12 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-fileupload-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.3.8"),
+    crossScalaVersions := Seq("2.13.18", "3.3.9"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       ws,
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+95-3cde726d-SNAPSHOT" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

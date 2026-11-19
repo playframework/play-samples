@@ -4,7 +4,7 @@ import play.grpc.gen.javadsl.{PlayJavaClientCodeGenerator, PlayJavaServerCodeGen
 import com.typesafe.sbt.packager.docker.{Cmd, CmdLike, DockerAlias, ExecCmd}
 import play.java.grpc.sample.BuildInfo
 
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 name := "play-java-grpc-example"
 version := "1.0-SNAPSHOT"
@@ -17,13 +17,11 @@ lazy val `play-java-grpc-example` = (project in file("."))
   .enablePlugins(PlayPekkoHttp2Support) // enables serving HTTP/2 and gRPC
   // #grpc_play_plugins
   .settings(
-    dependencyOverrides ++= Seq(
-      // TODO: Remove once Pekko gRPC 2.0.0-M3+ is released and Play gRPC pulls in these Pekko versions.
-      "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
-      "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
-    ),
-    // TODO: Remove once https://github.com/apache/pekko-grpc/pull/895 is included in a release.
-    Compile / unmanagedResourceDirectories ~= (_.distinct),
+    // Let javac handle the protected BuilderParent types in generated Protobuf Java sources.
+    Compile / compileOrder := CompileOrder.JavaThenScala,
+    // Reverse routes are unused here; omitting them avoids a Java/Scala compilation cycle.
+    Compile / generateReverseRouter := false,
+    Compile / generateJsReverseRouter := false,
     pekkoGrpcGeneratedLanguages := Seq(PekkoGrpc.Java),
     // #grpc_client_generators
     // build.sbt
@@ -60,7 +58,7 @@ lazy val `play-java-grpc-example` = (project in file("."))
   )
 
 scalaVersion := "2.13.18"
-crossScalaVersions := Seq("2.13.18", "3.3.8")
+crossScalaVersions := Seq("2.13.18", "3.3.9")
 scalacOptions ++= List("-encoding", "utf8", "-deprecation", "-feature", "-unchecked")
 javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation")
 

@@ -1,10 +1,10 @@
 import sbt.Keys._
 import play.sbt.PlaySettings
 
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val scala213 = "2.13.18"
-lazy val scala3 = "3.3.8"
+lazy val scala3 = "3.3.9"
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -26,7 +26,7 @@ lazy val root = (project in file("."))
         .excludeAll(ExclusionRule("com.fasterxml.jackson.core")), // Avoid conflicts with Play's Jackson dependency
       "com.indoorvivants" %% "scala-uri" % "4.2.0",
       "net.codingwell" %% "scala-guice" % "7.0.0",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+95-3cde726d-SNAPSHOT" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

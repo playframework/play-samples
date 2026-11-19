@@ -1,6 +1,6 @@
 import play.core.PlayVersion.pekkoVersion
 
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -15,16 +15,16 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-scala-secure-session-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.3.8"),
+    crossScalaVersions := Seq("2.13.18", "3.3.9"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       ws,
       guice,
       "org.abstractj.kalium" % "kalium" % "0.8.0",
-      "com.github.jnr" % "jnr-ffi" % "2.3.4",
+      "com.github.jnr" % "jnr-ffi" % "2.3.7",
       "org.apache.pekko" %% "pekko-distributed-data" % pekkoVersion,
       "org.apache.pekko" %% "pekko-cluster-typed" % pekkoVersion,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+95-3cde726d-SNAPSHOT" % Test
     ),
     scalacOptions ++= Seq(
       "-feature",

@@ -1,4 +1,4 @@
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val root = (project in file("."))
   .enablePlugins(PlayJava)
@@ -6,13 +6,13 @@ lazy val root = (project in file("."))
   .settings(
     name := """play-java-jpa-example""",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.3.8"),
+    crossScalaVersions := Seq("2.13.18", "3.3.9"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
       javaJpa,
       "com.h2database" % "h2" % "2.5.252",
-      "org.hibernate.orm" % "hibernate-core" % "7.4.14.Final",
+      "org.hibernate.orm" % "hibernate-core" % "7.4.16.Final",
       javaWs % "test",
       "org.awaitility" % "awaitility" % "4.3.0" % "test",
       "org.assertj" % "assertj-core" % "3.27.7" % "test",

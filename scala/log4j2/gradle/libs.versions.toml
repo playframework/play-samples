@@ -1,8 +1,8 @@
 [versions]
-twirl = "2.1.0-M9+155-1fa74ed8-SNAPSHOT"
-play = "3.1.0-M10-3968a052-SNAPSHOT"
+twirl = "2.1.0-M9+179-f54ceedd-SNAPSHOT"
+play = "3.1.0-M10-5da0b97a-SNAPSHOT"
 scalatestplus = "3.2.20.0"
-scalatestplus-play = "8.0.0-M2+74-9a0b55de-SNAPSHOT"
+scalatestplus-play = "8.0.0-M2+95-3cde726d-SNAPSHOT"
 log4j = "2.26.1"
 
 [libraries]

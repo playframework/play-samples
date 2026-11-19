@@ -1,5 +1,5 @@
 lazy val scala213 = "2.13.18"
-lazy val scala3 = "3.3.8"
+lazy val scala3 = "3.3.9"
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -21,12 +21,15 @@ lazy val root = (project in file("."))
     personSample
   )
 
+// Serialize compilation to avoid intermittent Scala 3 compiler errors across the samples.
+Global / concurrentRestrictions += Tags.limit(Tags.Compile, 1)
+
 def sampleProject(name: String) =
   Project(s"$name-sample", file("samples") / name)
     .enablePlugins(PlayScala)
     //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
     .settings(
-      resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo),
+      resolvers += Resolver.sonatypeCentralSnapshots,
       scalaVersion := scala3,
       crossScalaVersions := Seq(scala213, scala3),
       scalacOptions ++= Seq(
@@ -35,8 +38,8 @@ def sampleProject(name: String) =
       ) ++ scala2OnlyScalacOptions("-Xsource:3").value,
       libraryDependencies ++= Seq(
         guice,
-        "org.playframework" %% "play-slick" % "7.0.0-M1+159-f032ece7-SNAPSHOT",
-        "org.playframework" %% "play-slick-evolutions" % "7.0.0-M1+159-f032ece7-SNAPSHOT",
+        "org.playframework" %% "play-slick" % "7.0.0-M1+173-17a69d28-SNAPSHOT",
+        "org.playframework" %% "play-slick-evolutions" % "7.0.0-M1+173-17a69d28-SNAPSHOT",
         "com.h2database" % "h2" % "2.5.252",
         specs2 % Test,
       ),

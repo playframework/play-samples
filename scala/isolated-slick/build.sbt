@@ -2,7 +2,7 @@ import com.github.tototoshi.sbt.slick.CodegenPlugin.autoImport.{slickCodegenData
 import _root_.slick.codegen.SourceCodeGenerator
 import _root_.slick.{model => m}
 
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val databaseUrl = sys.env.getOrElse("DB_DEFAULT_URL", "jdbc:h2:./test")
 lazy val databaseUser = sys.env.getOrElse("DB_DEFAULT_USER", "sa")
@@ -24,7 +24,7 @@ val FlywayVersion = "13.12.2"
   "com.google.inject" % "guice" % "7.0.0"
 )
 
-(ThisBuild / crossScalaVersions) := Seq("2.13.18", "3.3.8")
+(ThisBuild / crossScalaVersions) := Seq("2.13.18", "3.3.9")
 (ThisBuild / scalaVersion) := crossScalaVersions.value.head
 (ThisBuild / scalacOptions) ++= Seq(
   "-encoding", "UTF-8", // yes, this is 2 args
@@ -112,7 +112,7 @@ lazy val root = (project in file("."))
         // --
         //ExclusionRule("tools.jackson.core"), // Once Play switches to Jackson 3 and we want to avoid version clashes
       ),
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+95-3cde726d-SNAPSHOT" % Test
     ),
     (Test / fork) := true
   )

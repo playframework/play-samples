@@ -1,4 +1,4 @@
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -13,15 +13,15 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-scala-anorm-example",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.3.8"),
+    crossScalaVersions := Seq("2.13.18", "3.3.9"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
       jdbc,
       evolutions,
       "com.h2database" % "h2" % "2.5.252",
-      "org.playframework.anorm" %% "anorm" % "3.1.1-9e52b78b-SNAPSHOT",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test,
+      "org.playframework.anorm" %% "anorm" % "3.1.1-94a03feb-SNAPSHOT",
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+95-3cde726d-SNAPSHOT" % Test,
     ),
     scalacOptions ++= List("-feature", "-Werror") ++ scala2OnlyScalacOptions("-Xsource:3").value,
     javacOptions ++= List("-Xlint:unchecked", "-Xlint:deprecation", "-Werror"),

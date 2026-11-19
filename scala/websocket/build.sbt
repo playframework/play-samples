@@ -1,4 +1,4 @@
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -13,15 +13,15 @@ lazy val root = (project in file("."))
   .settings(
     name := "play-scala-websocket-example",
     version := "1.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.13.18", "3.3.8"),
+    crossScalaVersions := Seq("2.13.18", "3.3.9"),
     scalaVersion := crossScalaVersions.value.head,
     libraryDependencies ++= Seq(
       guice,
       ws,
-      "org.webjars" %% "webjars-play" % "3.1.0-M5+4-18ad4fde-SNAPSHOT",
+      "org.webjars" %% "webjars-play" % "3.1.0-M5+7-9491b067-SNAPSHOT",
       "org.webjars" % "flot" % "0.8.3-1",
       "org.webjars" % "bootstrap" % "5.3.8",
-      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+74-9a0b55de-SNAPSHOT" % Test,
+      "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+95-3cde726d-SNAPSHOT" % Test,
       "org.awaitility" % "awaitility" % "4.3.0" % Test,
     ),
     TwirlKeys.templateImports ++= Seq(
