@@ -4,7 +4,7 @@ import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCod
 import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.scala.grpc.sample.BuildInfo
 
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 def scala2OnlyScalacOptions(options: String*) = Def.setting {
   CrossVersion.partialVersion(scalaVersion.value) match {
@@ -25,13 +25,6 @@ lazy val `play-scala-grpc-example` = (project in file("."))
   .enablePlugins(PlayPekkoHttp2Support) // enables serving HTTP/2 and gRPC
 // #grpc_play_plugins
     .settings(
-      dependencyOverrides ++= Seq(
-        // TODO: Remove once Pekko gRPC 2.0.0-M3+ is released and Play gRPC pulls in these Pekko versions.
-        "org.apache.pekko" %% "pekko-stream" % pekkoVersion,
-        "org.apache.pekko" %% "pekko-discovery" % pekkoVersion,
-      ),
-      // TODO: Remove once https://github.com/apache/pekko-grpc/pull/895 is included in a release.
-      Compile / unmanagedResourceDirectories ~= (_.distinct),
       pekkoGrpcGeneratedLanguages := Seq(PekkoGrpc.Scala),
       // #grpc_client_generators
       // build.sbt
