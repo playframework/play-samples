@@ -1,14 +1,11 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
-bases:
-  - ../../base/
 resources:
-  - route.yml
-
-
+- ../../base
+- route.yml
+patches:
+- path: deployment-patch.yml
 images:
-- name: "play-java-grpc-example"
-  newName: "my-docker-registry.mycompany.com/play-java-grpc-example/play-java-grpc-example"
-  newTag: "1.0-SNAPSHOT"
+- name: play-java-grpc-example
+  newName: registry.example.org/my-organization/play-java-grpc-example
+  newTag: 1.0-SNAPSHOT

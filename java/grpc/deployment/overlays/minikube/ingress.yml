@@ -1,14 +1,16 @@
----
-apiVersion: "extensions/v1beta1"
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: "play-java-grpc-ingress"
+  name: play-java-grpc-ingress
 spec:
   rules:
-  - host: "myservice.example.org"
+  - host: myservice.example.org
     http:
       paths:
       - backend:
-          serviceName: "play-java-grpc-example"
-          servicePort: 9000
-
+          service:
+            name: play-java-grpc-example
+            port:
+              number: 9000
+        path: /
+        pathType: Prefix

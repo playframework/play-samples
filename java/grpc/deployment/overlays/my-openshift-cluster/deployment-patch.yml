@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: play-java-grpc-example-v1-0-snapshot
+spec:
+  template:
+    spec:
+      containers:
+      - name: play-java-grpc-example
+        env:
+        - name: JAVA_OPTS
+          value: "-Dplay.filters.hosts.allowed.0=myservice.example.org -Dplay.server.pidfile.path=/dev/null"

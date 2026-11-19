@@ -1,13 +1,11 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
-bases:
-- ../../base/
 resources:
+- ../../base
 - route.yml
-
+patches:
+- path: deployment-patch.yml
 images:
-- name: "play-scala-grpc-example"
-  newName: "my-docker-registry.mycompany.com/play-scala-grpc-example/play-scala-grpc-example"
-  newTag: "1.0-SNAPSHOT"
+- name: play-scala-grpc-example
+  newName: registry.example.org/my-organization/play-scala-grpc-example
+  newTag: 1.0-SNAPSHOT

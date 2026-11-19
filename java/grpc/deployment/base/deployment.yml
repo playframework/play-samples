@@ -1,5 +1,5 @@
 ---
-apiVersion: "apps/v1beta2"
+apiVersion: "apps/v1"
 kind: Deployment
 metadata:
   name: "play-java-grpc-example-v1-0-snapshot"
@@ -18,21 +18,31 @@ spec:
         appNameVersion: "play-java-grpc-example-v1-0-snapshot"
     spec:
       restartPolicy: Always
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: "play-java-grpc-example"
           image: "play-java-grpc-example:1.0-SNAPSHOT"
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
           env:
             - name: "JAVA_OPTS"
-              value: "-Dplay.http.secret.key=a-very-strong-key-for-production -Dplay.filters.hosts.allowed.0=myservice.example.org -Dplay.server.pidfile.path=/dev/null"
+              value: "-Dplay.filters.hosts.allowed.0=myservice.example.org -Dplay.server.pidfile.path=/dev/null"
+            - name: "APPLICATION_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: "play-java-grpc-example"
+                  key: "application-secret"
             - name: "TRANSPORT_HTTP_BIND_ADDRESS"
-              valueFrom:
-                fieldRef:
-                  fieldPath: "status.podIP"
+              value: "0.0.0.0"
             - name: "TRANSPORT_HTTPS_BIND_ADDRESS"
-              valueFrom:
-                fieldRef:
-                  fieldPath: "status.podIP"
+              value: "0.0.0.0"
             - name: "DEPLOYMENT_SERVICE_NAME"
               value: "play-java-grpc-example"
           ports:
@@ -40,7 +50,12 @@ spec:
               name: http
             - containerPort: 9443
               name: https
-          volumeMounts: []
-          command:
-            - "/opt/docker/bin/play-java-grpc-example"
-      volumes: []
+          readinessProbe:
+            tcpSocket:
+              port: https
+            periodSeconds: 5
+          startupProbe:
+            tcpSocket:
+              port: https
+            periodSeconds: 5
+            failureThreshold: 30
