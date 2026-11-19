@@ -1,6 +1,6 @@
 import play.core.PlayVersion
 
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 name := """play-java-pekko-cluster-example"""
 organization := "com.example"

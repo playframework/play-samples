@@ -29,7 +29,7 @@ def sampleProject(name: String) =
     .enablePlugins(PlayScala)
     //.enablePlugins(PlayNettyServer).disablePlugins(PlayPekkoHttpServer) // uncomment to use the Netty backend
     .settings(
-      resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo),
+      resolvers += Resolver.sonatypeCentralSnapshots,
       scalaVersion := scala3,
       crossScalaVersions := Seq(scala213, scala3),
       scalacOptions ++= Seq(

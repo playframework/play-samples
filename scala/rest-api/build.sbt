@@ -1,7 +1,7 @@
 import sbt.Keys._
 import play.sbt.PlaySettings
 
-resolvers ++= Seq(Resolver.sonatypeCentralSnapshots, Resolver.ApacheMavenSnapshotsRepo)
+resolvers += Resolver.sonatypeCentralSnapshots
 
 lazy val scala213 = "2.13.18"
 lazy val scala3 = "3.3.9"
