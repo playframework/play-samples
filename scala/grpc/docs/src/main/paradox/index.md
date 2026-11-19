@@ -44,6 +44,8 @@ Refer to @ref:[Networking](networking.md) for more details on how this sample wo
 * Running on a cluster: refer to the specific guides for @ref:[OpenShift](openshift.md) and @ref:[Kubernetes (`minikube`)](kubernetes.md)
 for specific information on deploying in Kubernetes-based clusters.
 
+* Run @ref[with Docker](docker.md)
+
 * Run @ref[locally](locally.md)
 
 
@@ -57,6 +59,7 @@ Refer to the @ref[understanding the code](code-details.md) for more details on h
  * [Running](running.md)
      * [Running on OpenShift](openshift.md)
      * [Running on Kubernetes (`minikube`)](kubernetes.md)
+     * [Running with Docker](docker.md)
      * [Running locally](locally.md)
  * [understanding the code](code-details.md)
 

@@ -15,13 +15,15 @@ Finally, for your convenience, a self-signed certificate for `CN='localhost'` is
 example (see `conf/selfsigned.keystore`). Setting up a keystore works different in DEV mode and PROD mode. Locate 
 the `play.server.https.keyStore.path` setting in `application.conf` and `build.sbt` for an example on how to set 
 the keystore on each environment.
-s
+
 ## Verifying
 
 Finally, since now we know what the application is: an HTTP endpoint that hits its own gRPC endpoint to reply to the incoming request. 
-We can trigger such request and see it correctly reply with a "Hello Caplin!" (which is the name of a nice Capybara, google it):
+We can trigger such request and see it correctly reply with a "Hello, Caplin!" (which is the name of a nice Capybara, google it):
 
 ```
 $ curl --insecure https://localhost:9443 ; echo
-Hello Caplin!
+Hello, Caplin!
 ```
+
+To run the packaged application in a Java 25 container, see @ref[Running with Docker](docker.md).

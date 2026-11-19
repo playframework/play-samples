@@ -25,3 +25,5 @@ We can trigger such request and see it correctly reply with a "Hello Caplin!" (w
 $ curl --insecure https://localhost:9443 ; echo
 Hello Caplin!
 ```
+
+To run the packaged application in a Java 25 container, see @ref[Running with Docker](docker.md).
