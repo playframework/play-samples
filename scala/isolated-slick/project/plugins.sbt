@@ -2,7 +2,7 @@ libraryDependencies += "com.h2database" % "h2" % "2.5.252"
 
 // Database migration
 // https://github.com/flyway/flyway-sbt
-addSbtPlugin("com.github.sbt" % "flyway-sbt" % "12.0.0")
+addSbtPlugin("com.github.sbt" % "flyway-sbt" % "13.0.0")
 
 // Slick code generation
 // https://github.com/sbt/sbt-slick-codegen
