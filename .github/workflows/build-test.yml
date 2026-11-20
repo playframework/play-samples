@@ -70,6 +70,9 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-chatroom')}}
     with:
+      # Keep all matrix combinations running after a failure.
+      # All sample jobs below share this value.
+      fail-fast: &matrix_fail_fast false
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/chatroom
@@ -84,6 +87,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-compile-di')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/compile-di
@@ -98,6 +102,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-dagger2')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/dagger2
@@ -112,6 +117,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-ebean')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/ebean
@@ -126,6 +132,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-fileupload')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/fileupload
@@ -140,6 +147,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-forms')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/forms
@@ -154,6 +162,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-grpc')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/grpc
@@ -168,6 +177,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-hello-world')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/hello-world
@@ -182,6 +192,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-jpa')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/jpa
@@ -196,6 +207,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-pekko-cluster')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/pekko-cluster
@@ -210,6 +222,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-rest-api')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/rest-api
@@ -224,6 +237,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-starter')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/starter
@@ -238,6 +252,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-streaming')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/streaming
@@ -252,6 +267,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-websocket')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: java/websocket
@@ -266,6 +282,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-anorm')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/anorm
@@ -280,6 +297,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-chatroom')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/chatroom
@@ -294,6 +312,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-compile-di')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/compile-di
@@ -308,6 +327,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-fileupload')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/fileupload
@@ -322,6 +342,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-forms')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/forms
@@ -336,6 +357,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-grpc')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/grpc
@@ -350,6 +372,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-hello-world')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/hello-world
@@ -364,6 +387,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-isolated-slick')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/isolated-slick
@@ -378,6 +402,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-log4j2')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/log4j2
@@ -392,6 +417,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-macwire-di')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/macwire-di
@@ -406,6 +432,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-rest-api')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/rest-api
@@ -420,6 +447,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-secure-session')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/secure-session
@@ -434,6 +462,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-slick')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/slick
@@ -448,6 +477,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-starter')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/starter
@@ -462,6 +492,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-streaming')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/streaming
@@ -476,6 +507,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-tls')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/tls
@@ -490,6 +522,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-websocket')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 25, 21, 17
       scala: 2.13.x, 3.3.x, 3.9.x, 3.next
       gradle-build-root: scala/websocket
