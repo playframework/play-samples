@@ -1,55 +1,72 @@
 # Deploy on Kubernetes
 
+## Prerequisites
 
-### Prerequisites
+Install Docker, sbt, a supported JDK, OpenSSL, [kubectl](https://kubernetes.io/docs/tasks/tools/),
+and [Minikube](https://minikube.sigs.k8s.io/docs/start/).
+Run the commands below from the `scala/grpc` sample directory.
 
-Install the following:
+## Build and load the image
 
-* [Docker](https://docs.docker.com/install/)
-* [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
-* [Minikube](https://github.com/kubernetes/minikube)
-* [`kustomize`](https://github.com/kubernetes-sigs/kustomize) (v2.0.0+)
-* [Sbt](https://www.scala-sbt.org/)
-
-
-### Running
-
-Once minikube is running the application can be deployed. Create the image:
+Start Minikube and build the image with the host's Docker daemon:
 
 ```bash
-$ eval $(minikube docker-env)
-$ sbt docker:publishLocal
+minikube start --driver=docker
+sbt Docker/publishLocal
+minikube image load play-scala-grpc-example:1.0-SNAPSHOT
 ```
 
-Apply the `Deployment`, the `Service` and the `Ingress` into your `minikube` cluster:   
+`minikube image load` imports the image into the cluster's container runtime, including
+containerd. It does not require switching the shell to Minikube's Docker daemon.
+The application image must match the architecture of the cluster nodes; see
+@ref[Running with Docker](docker.md).
+
+## Deploy
+
+Create a namespace and the application secret referenced by the Deployment:
 
 ```bash
-$ kustomize build deployment/overlays/minikube | kubectl apply -f -
+kubectl create namespace play-scala-grpc-example
+kubectl create secret generic play-scala-grpc-example \
+  --namespace play-scala-grpc-example \
+  --from-literal=application-secret="$(openssl rand -hex 32)"
+kubectl apply --namespace play-scala-grpc-example -k deployment/overlays/minikube
+kubectl rollout status --namespace play-scala-grpc-example \
+  deployment/play-scala-grpc-example-v1-0-snapshot
 ```
 
-Verify the deployment status:
+The Deployment starts two replicas. The Service exposes HTTP on port 9000 and HTTPS/gRPC
+on port 9443. Readiness checks keep pods out of the Service until their HTTPS endpoint is
+listening. Both replicas use the same application secret. Both server ports bind to
+`0.0.0.0`, allowing Service traffic and `kubectl port-forward` connections.
 
-```
-$ kubectl get all
-NAME                                                         READY   STATUS    RESTARTS   AGE
-pod/play-scala-grpc-example-v1-0-snapshot-6c7b575d86-9ql9r   1/1     Running   0          3m
-pod/play-scala-grpc-example-v1-0-snapshot-6c7b575d86-jlsfq   1/1     Running   0          3m
+## Verify the application
 
-NAME                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)               AGE
-service/kubernetes                ClusterIP   10.96.0.1       <none>        443/TCP               17h
-service/play-scala-grpc-example   ClusterIP   10.106.226.87   <none>        9000/TCP,9443/TCP     3m
+Forward the Service's HTTP port:
 
-NAME                                                    DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/play-scala-grpc-example-v1-0-snapshot   2         2         2            2           3m
-
-NAME                                                               DESIRED   CURRENT   READY   AGE
-replicaset.apps/play-scala-grpc-example-v1-0-snapshot-6c7b575d86   2         2         2       3m
+```bash
+kubectl port-forward --namespace play-scala-grpc-example service/play-scala-grpc-example 9000:9000
 ```
 
-And send a request:
+From another terminal:
 
-```
-$ curl -H "Host: myservice.example.org"  http://`minikube ip`/
-Hello, Caplin!
+```bash
+curl --fail --header 'Host: myservice.example.org' http://localhost:9000/
 ```
 
+The response is `Hello, Caplin!`. The HTTP controller calls the gRPC service through
+Kubernetes Service discovery before returning the reply.
+
+The overlay also includes a `networking.k8s.io/v1` Ingress for `myservice.example.org`.
+To use it, configure an Ingress controller and its default IngressClass, or set
+`spec.ingressClassName` in `deployment/overlays/minikube/ingress.yml` to your controller's class.
+Point that hostname at the controller's address. If you change the hostname, also update
+the allowed host in the Deployment's `JAVA_OPTS`.
+
+## Remove the example
+
+Delete the namespace created above when finished:
+
+```bash
+kubectl delete namespace play-scala-grpc-example
+```

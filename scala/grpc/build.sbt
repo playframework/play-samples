@@ -1,7 +1,6 @@
 import play.core.PlayVersion.pekkoVersion
 import play.core.PlayVersion.pekkoHttpVersion
 import play.grpc.gen.scaladsl.{ PlayScalaClientCodeGenerator, PlayScalaServerCodeGenerator }
-import com.typesafe.sbt.packager.docker.{ Cmd, CmdLike, DockerAlias, ExecCmd }
 import play.scala.grpc.sample.BuildInfo
 
 resolvers += Resolver.sonatypeCentralSnapshots
@@ -44,16 +43,10 @@ lazy val `play-scala-grpc-example` = (project in file("."))
       )
     )
     .settings(
-      // workaround to https://github.com/akka/akka-grpc/pull/470#issuecomment-442133680
-      dockerBaseImage := "eclipse-temurin:11-alpine",
-      dockerCommands  :=
-        Seq.empty[CmdLike] ++
-        Seq(
-          Cmd("FROM", "eclipse-temurin:11-alpine"),
-          ExecCmd("RUN", "apk", "add", "--no-cache", "bash")
-        ) ++
-        dockerCommands.value.tail ,
-      (Docker / dockerAliases) += DockerAlias(None, None, "play-scala-grpc-example", None),
+      dockerBaseImage := "eclipse-temurin:25-jre-resolute",
+      dockerExposedPorts := Seq(9000, 9443),
+      // gRPC's Netty transport loads native libraries.
+      Universal / javaOptions += "-J--enable-native-access=ALL-UNNAMED",
       (Docker / packageName) := "play-scala-grpc-example",
     )
     .settings(

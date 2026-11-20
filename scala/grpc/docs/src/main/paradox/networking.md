@@ -35,20 +35,20 @@ to the same pod where it running (see the client configuration in `application.c
 You can find the deployment descriptors on the `deployment/` folder of this sample application.
 @@@
 
-## `use-tls = true`
+## TLS between the HTTP controller and the gRPC service
 
-This sample demonstrates gRPC over `CYPHERTEXT HTTP/2` so we pay the price of 
-some added complexity: the Play process is using a self-signed certificate issued to 
-`localhost`. The consequence of using a certificate issued to `localhost` is that the TLS handshake between the gRPC client 
-running inside the `HomeController` and the Play server running the gRPC Router will only 
-succeed if the requests include `Host: localhost` as a header. If the gRPC request was sent to 
-`Host: my-service-name` the TLS handshake would fail. Therefor we hardcode the `Authority` 
-to `localhost`. Summing up: the `HomeController` opens a socket to the service public IP 
-for `HTTP/2 with TLS` but sends a request with the header `Host: localhost` so the TLS handshake 
-passes the hostname verification.     
+The gRPC client uses HTTP/2 with TLS. The server loads `conf/selfsigned.keystore`, which
+contains this example's self-signed certificate for `localhost`. The matching public
+certificate is exported as `conf/selfsigned.crt`; the client's `trusted = "/selfsigned.crt"`
+setting loads it from the classpath. This allows the client to verify that certificate
+without disabling certificate validation or modifying the JVM's global trust store.
 
-#### Using TLS on Kubernetes/OpenShift
+When connecting through a Kubernetes Service, its DNS name differs from the certificate's
+hostname. The client therefore uses `override-authority = "localhost"` for TLS hostname
+verification and the HTTP/2 authority. Overriding the authority does not establish trust
+by itself; both the trusted certificate and the matching hostname are required.
 
-It is out of the scope of this sample application to demonstrate how to use a CA and 
-a server certificate issued by the Kubernetes/OpenShift Secret manager. Instead, a 
-previously crafted, self-signed certificate are shipped with the application.
+The included certificate and private key are for demonstrating the example. For a real
+deployment, provision your own server keystore and the client's trusted CA certificate,
+and configure the authority to match the server certificate. Kubernetes/OpenShift Secret
+management and external HTTPS termination are outside this example's scope.
