@@ -1,6 +1,7 @@
 package test
 
 import example.myapp.helloworld.grpc.{ GreeterService, GreeterServiceClient, HelloRequest }
+import io.grpc.Status
 import org.scalatest.concurrent.{ IntegrationPatience, ScalaFutures }
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneServerPerTest
@@ -25,12 +26,12 @@ class HelloScalaTestSpec extends PlaySpec with GuiceOneServerPerTest with Server
       val result = wsUrl("/").get().futureValue
       result.status must be(404) // Maybe should be a 426, see #396
     }
-    "give an Ok header (and hopefully a not implemented trailer) when routing a non-existent gRPC method" in {
+    "give a gRPC UNIMPLEMENTED status when routing a non-existent gRPC method" in {
       val result = wsUrl(s"/${GreeterService.name}/FooBar")
         .addHttpHeaders("Content-Type" -> "application/grpc")
         .get().futureValue
-      result.status must be(200) // Maybe should be a 426, see #396
-      // TODO: Test that trailer has a not implemented status
+      result.status must be(200)
+      result.header("grpc-status") must be(Some(Status.Code.UNIMPLEMENTED.value().toString))
     }
     "give a 200 when routing an empty request to a gRPC method" in {
       val result = wsUrl(s"/${GreeterService.name}/SayHello")
