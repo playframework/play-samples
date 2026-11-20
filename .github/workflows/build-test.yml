@@ -70,6 +70,9 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-chatroom')}}
     with:
+      # Keep all matrix combinations running after a failure.
+      # All sample jobs below share this value.
+      fail-fast: &matrix_fail_fast false
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-chatroom-example
@@ -84,6 +87,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-compile-di')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-compile-di-example
@@ -98,6 +102,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-dagger2')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-dagger2-example
@@ -112,6 +117,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-ebean')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-ebean-example
@@ -126,6 +132,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-fileupload')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-fileupload-example
@@ -140,6 +147,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-forms')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-forms-example
@@ -154,6 +162,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-grpc')}}
     with:
+      fail-fast: *matrix_fail_fast
       # Can't test with Java 21+ currently because of https://github.com/lightbend/ssl-config/issues/367
       java: 17
       scala: 2.13.x, 3.x
@@ -169,6 +178,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-hello-world')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 17, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-hello-world-tutorial
@@ -183,6 +193,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-jpa')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-jpa-example
@@ -197,6 +208,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-pekko-cluster')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-pekko-cluster-example
@@ -211,6 +223,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-rest-api')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-rest-api-example
@@ -225,6 +238,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-starter')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-starter-example
@@ -239,6 +253,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-streaming')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-streaming-example
@@ -253,6 +268,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'java-websocket')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-java-websocket-example
@@ -267,6 +283,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-anorm')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-anorm-example
@@ -281,6 +298,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-chatroom')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-chatroom-example
@@ -295,6 +313,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-compile-di')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-compile-di-example
@@ -309,6 +328,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-fileupload')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-fileupload-example
@@ -323,6 +343,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-forms')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-forms-example
@@ -337,6 +358,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-grpc')}}
     with:
+      fail-fast: *matrix_fail_fast
       # Can't test with Java 21+ currently because of https://github.com/lightbend/ssl-config/issues/367
       java: 17
       scala: 2.13.x, 3.x
@@ -352,6 +374,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-hello-world')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-hello-world-tutorial
@@ -366,6 +389,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-isolated-slick')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 17, 21  # Flyway dependency supports only JDK 17+
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-isolated-slick-example
@@ -380,6 +404,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-log4j2')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-log4j2-example
@@ -394,6 +419,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-macwire-di')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-macwire-di-example
@@ -408,6 +434,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-rest-api')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-rest-api-example
@@ -422,6 +449,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-secure-session')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-secure-session-example
@@ -436,6 +464,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-slick')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-slick-example
@@ -450,6 +479,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-starter')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-starter-example
@@ -464,6 +494,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-streaming')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-streaming-example
@@ -478,6 +509,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-tls')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-tls-example
@@ -492,6 +524,7 @@ jobs:
     needs: changes
     if: ${{ (github.event_name != 'pull_request' && !failure() && !cancelled()) || contains(fromJSON(needs.changes.outputs.samples), 'scala-websocket')}}
     with:
+      fail-fast: *matrix_fail_fast
       java: 11, 21
       scala: 2.13.x, 3.x
       gradle-build-root: play-scala-websocket-example
