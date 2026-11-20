@@ -21,8 +21,19 @@ lazy val root = (project in file("."))
     personSample
   )
 
-// Serialize compilation to avoid intermittent Scala 3 compiler errors across the samples.
-Global / concurrentRestrictions += Tags.limit(Tags.Compile, 1)
+// Older Scala 3 compilers can fail during parallel compilation.
+// Fixed in Scala 3.10.2-RC1: https://github.com/scala/scala3/pull/27074
+Global / concurrentRestrictions ++= {
+  val affectedCompiler =
+    VersionNumber((LocalRootProject / scalaVersion).value).numbers match {
+      case Seq(3L, minor, patch, _*) =>
+        minor < 10L || (minor == 10L && patch < 2L)
+      case _ => false
+    }
+
+  if (affectedCompiler) Seq(Tags.limit(Tags.Compile, 1))
+  else Seq.empty
+}
 
 def sampleProject(name: String) =
   Project(s"$name-sample", file("samples") / name)
