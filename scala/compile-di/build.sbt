@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
     version := "1.0-SNAPSHOT",
     crossScalaVersions := Seq("2.13.18", "3.3.9"),
     scalaVersion := crossScalaVersions.value.head,
-    libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+95-3cde726d-SNAPSHOT",
+    libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "8.0.0-M2+99-ae5a27dd-SNAPSHOT",
     scalacOptions ++= List(
       //"-encoding", "utf8", // These three get set by Play automatically
       //"-deprecation",
