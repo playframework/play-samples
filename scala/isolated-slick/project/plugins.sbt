@@ -6,7 +6,7 @@ addSbtPlugin("com.github.sbt" % "flyway-sbt" % "13.0.0")
 
 // Slick code generation
 // https://github.com/sbt/sbt-slick-codegen
-addSbtPlugin("com.github.sbt" % "sbt-slick-codegen" % "2.2.0+30-eea7f36f-SNAPSHOT")
+addSbtPlugin("com.github.sbt" % "sbt-slick-codegen" % "2.2.0+34-8014bf08-SNAPSHOT")
 
 // The Play plugin
 resolvers += Resolver.sonatypeCentralSnapshots
