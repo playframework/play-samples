@@ -16,6 +16,8 @@
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <validation-mode>NONE</validation-mode>
     <properties>
+      <!-- Disable validation-derived DDL as well as lifecycle callbacks. -->
+      <property name="hibernate.tooling.schema.apply_validation_constraints" value="DISABLED"/>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
     </properties>
   </persistence-unit>
