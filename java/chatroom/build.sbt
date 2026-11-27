@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
       guice,
       ws,
       "org.assertj" % "assertj-core" % "3.27.7" % Test,
-      "org.awaitility" % "awaitility" % "4.3.0" % Test
+      "org.awaitility" % "awaitility" % "4.4.0" % Test
     ),
     (Test / javaOptions) += "-Dtestserver.port=19001",
     // Needed to make JUnit report the tests being run
