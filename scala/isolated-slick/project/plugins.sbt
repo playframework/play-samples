@@ -10,4 +10,4 @@ addSbtPlugin("com.github.sbt" % "sbt-slick-codegen" % "2.2.0+34-8014bf08-SNAPSHO
 
 // The Play plugin
 resolvers += Resolver.sonatypeCentralSnapshots
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M10-5da0b97a-SNAPSHOT")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M10-7902ed14-SNAPSHOT")
