@@ -1,6 +1,6 @@
 [versions]
 twirl = "2.1.0-M9+179-f54ceedd-SNAPSHOT"
-play = "3.1.0-M10-5da0b97a-SNAPSHOT"
+play = "3.1.0-M10-7902ed14-SNAPSHOT"
 scala-guice = "7.0.0"
 scala-uri = "4.2.0"
 scalatestplus = "3.2.20.0"

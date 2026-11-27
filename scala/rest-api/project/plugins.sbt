@@ -1,6 +1,6 @@
 // The Play plugin
 resolvers += Resolver.sonatypeCentralSnapshots
-addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M10-5da0b97a-SNAPSHOT")
+addSbtPlugin("org.playframework" % "sbt-plugin" % "3.1.0-M10-7902ed14-SNAPSHOT")
 
 // sbt-paradox, used for documentation
 addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.11.1")
