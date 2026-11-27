@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
       "com.h2database" % "h2" % "2.5.252",
       "org.awaitility" % "awaitility" % "4.3.0" % Test,
       "org.assertj" % "assertj-core" % "3.27.7" % Test,
-      "org.mockito" % "mockito-core" % "5.24.0" % Test,
+      "org.mockito" % "mockito-core" % "5.25.0" % Test,
     ),
     (Test / testOptions) += Tests.Argument(TestFrameworks.JUnit, "-a", "-v"),
     javacOptions ++= Seq("-Xlint:unchecked", "-Xlint:deprecation", "-Werror")
