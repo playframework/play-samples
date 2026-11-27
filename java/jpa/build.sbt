@@ -12,7 +12,7 @@ lazy val root = (project in file("."))
       guice,
       javaJpa,
       "com.h2database" % "h2" % "2.5.252",
-      "org.hibernate.orm" % "hibernate-core" % "7.4.17.Final",
+      "org.hibernate.orm" % "hibernate-core" % "8.0.0.CR2",
       javaWs % "test",
       "org.awaitility" % "awaitility" % "4.3.0" % "test",
       "org.assertj" % "assertj-core" % "3.27.7" % "test",
